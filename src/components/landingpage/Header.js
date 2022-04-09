@@ -61,7 +61,7 @@ const HeaderPage = () => {
                     lineHeight: 1.4
                   }}
                 >
-                  Build Your Next Project With
+                  One Dream Property
                   <Box component="span" sx={{ ml: 2, color: theme.palette.primary.main }}>
                     Berry
                   </Box>
