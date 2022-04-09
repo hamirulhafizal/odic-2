@@ -16,4 +16,12 @@ const nextConfig = withTM({
   reactStrictMode: true
 });
 
-module.exports = nextConfig;
+// module.exports = nextConfig;
+
+module.exports = {
+  nextConfig,
+  env: {
+    basePath: process.env.BASE_URL,
+    backEndUrl: process.env.BACKEND_URL
+  }
+};
