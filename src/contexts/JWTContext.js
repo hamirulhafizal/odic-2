@@ -1,3 +1,5 @@
+/* eslint-disable arrow-body-style */
+/* eslint-disable camelcase */
 import PropTypes from 'prop-types';
 import { createContext, useEffect, useReducer } from 'react';
 
@@ -22,10 +24,11 @@ const JWT_EXPIRES_TIME = JWT_API.timeout;
 const chance = new Chance();
 let users = [
   {
-    id: '5e86809283e28b96d2d38537',
+    username: '5e86809283e28b96d2d38537',
     email: 'info@codedthemes.com',
     password: '123456',
-    name: 'JWT User'
+    password2: '123456',
+    first_name: 'JWT User'
   }
 ];
 // constant
@@ -117,7 +120,7 @@ export const JWTProvider = ({ children }) => {
     }
     const serviceToken = jwt.sign({ userId: userFound.id }, JWT_SECRET, { expiresIn: JWT_EXPIRES_TIME });
     const user = {
-      id: userFound.id,
+      username: userFound.id,
       email: userFound.email,
       name: userFound.name
     };
@@ -131,27 +134,47 @@ export const JWTProvider = ({ children }) => {
     });
   };
 
-  const register = async (email, password, firstName, lastName) => {
+  const register = async (email, password, first_name, last_name) => {
+    const password2 = password;
     // todo: this flow need to be recode as it not verified
-    const id = chance.bb_pin();
-    const response = await axios.post('/api/account/register', {
-      id,
-      email,
-      password,
-      firstName,
-      lastName
-    });
+    const username = chance.bb_pin();
+    // const response = await axios.post('/api/account/register', {
+    //   id,
+    //   email,
+    //   password,
+    //   firstName,
+    //   lastName
+    // });
+    const response = await axios
+      .post(`${process.env.backEndUrl}/api/v1/auth/create-admin`, {
+        username,
+        email,
+        first_name,
+        last_name,
+        password,
+        password2
+      })
+      .then((res) => {
+        login({
+          email,
+          password
+        });
+        return res;
+      });
+
     let users = response.data;
+
+    console.log('users', users);
 
     if (window.localStorage.getItem('users') !== undefined && window.localStorage.getItem('users') !== null) {
       const localUsers = window.localStorage.getItem('users');
       users = [
         ...JSON.parse(localUsers),
         {
-          id,
+          username,
           email,
           password,
-          name: `${firstName} ${lastName}`
+          name: `${first_name} ${last_name}`
         }
       ];
     }
@@ -166,7 +189,7 @@ export const JWTProvider = ({ children }) => {
 
   const resetPassword = (email) => console.log(email);
 
-  const updateProfile = () => {};
+  const updateProfile = () => { };
 
   if (state.isInitialized !== undefined && !state.isInitialized) {
     return <Loader />;

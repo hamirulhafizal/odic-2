@@ -150,7 +150,7 @@ const EarningCard = ({ isLoading }) => {
               <Grid item>
                 <Grid container alignItems="center">
                   <Grid item>
-                    <Typography sx={{ fontSize: '2.125rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>$500.00</Typography>
+                    <Typography sx={{ fontSize: '2.125rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>500</Typography>
                   </Grid>
                   <Grid item>
                     <Avatar
@@ -174,7 +174,7 @@ const EarningCard = ({ isLoading }) => {
                     color: theme.palette.mode === 'dark' ? theme.palette.text.secondary : theme.palette.secondary[200]
                   }}
                 >
-                  Total Earning
+                  Total Agent
                 </Typography>
               </Grid>
             </Grid>
