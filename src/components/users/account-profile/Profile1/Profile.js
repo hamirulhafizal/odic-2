@@ -19,8 +19,12 @@ import {
   TableCell,
   TableContainer,
   TableRow,
-  Typography
+  Typography,
+  useMediaQuery
 } from '@mui/material';
+
+import { useTheme } from '@mui/material/styles';
+
 
 // project imports
 import useAuth from 'hooks/useAuth';
@@ -33,6 +37,7 @@ import { IconEdit } from '@tabler/icons';
 import PhonelinkRingTwoToneIcon from '@mui/icons-material/PhonelinkRingTwoTone';
 import PinDropTwoToneIcon from '@mui/icons-material/PinDropTwoTone';
 import MailTwoToneIcon from '@mui/icons-material/MailTwoTone';
+
 
 const Avatar3 = '/assets/images/users/avatar-3.png';
 
@@ -77,6 +82,8 @@ function createData(name, calories, fat, carbs, protein) {
 
 const Profile = () => {
   const { user } = useAuth();
+  const theme = useTheme();
+  const matchUpsm = useMediaQuery(theme.breakpoints.up('sm'));
 
   const rows = [
     createData('Full Name', ':', user ? user.name : 'Jone Doe'),
@@ -93,7 +100,7 @@ const Profile = () => {
       <Grid item lg={4} xs={12}>
         <SubCard
           title={
-            <Grid container spacing={2} alignItems="center">
+            <Grid sx={{ flexDirection: matchUpsm ? '' : 'column' }} container spacing={2} alignItems="center">
               <Grid item>
                 <Avatar alt="User 1" src={Avatar3} />
               </Grid>
@@ -311,36 +318,6 @@ const Profile = () => {
                       <Typography variant="subtitle2">Microsoft, TX, USA</Typography>
                     </Grid>
                   </Grid>
-                </Grid>
-              </Grid>
-            </SubCard>
-          </Grid>
-          <Grid item xs={12}>
-            <SubCard title="Skills">
-              <Grid container spacing={2}>
-                <Grid item xs={12} md={6}>
-                  <Typography variant="body2">Junior</Typography>
-                  <LinearProgressWithLabel color="primary" variant="determinate" value={70} />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <Typography variant="body2">UX Researcher</Typography>
-                  <LinearProgressWithLabel color="primary" variant="determinate" value={80} />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <Typography variant="body2">Wordpress</Typography>
-                  <LinearProgressWithLabel color="secondary" variant="determinate" value={25} />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <Typography variant="body2">Graphic Designer</Typography>
-                  <LinearProgressWithLabel color="primary" variant="determinate" value={80} />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <Typography variant="body2">HTML</Typography>
-                  <LinearProgressWithLabel color="secondary" variant="determinate" value={45} />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <Typography variant="body2">PHP</Typography>
-                  <LinearProgressWithLabel color="primary" variant="determinate" value={65} />
                 </Grid>
               </Grid>
             </SubCard>

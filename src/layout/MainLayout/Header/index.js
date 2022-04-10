@@ -35,7 +35,7 @@ const Header = () => {
           }
         }}
       >
-        <Box component="span" sx={{ display: { xs: 'none', md: 'block' }, flexGrow: 1 }}>
+        <Box component="span" sx={{ display: { xs: 'none', md: 'flex' }, flexGrow: 1 , justifyContent:"center", alignItems:"center" }}>
           <LogoSection />
         </Box>
         <Avatar

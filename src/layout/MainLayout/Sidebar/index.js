@@ -46,7 +46,6 @@ const Sidebar = ({ window }) => {
         }}
       >
         <MenuList />
-
       </PerfectScrollbar>
     ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -56,7 +55,7 @@ const Sidebar = ({ window }) => {
   const container = window !== undefined ? () => window.document.body : undefined;
 
   return (
-    <Box component="nav" sx={{ flexShrink: { md: 0 }, width: matchUpMd ? drawerWidth : 'auto' }} aria-label="mailbox folders">
+    <Box component="nav" sx={{  flexShrink: { md: 0 }, width: matchUpMd ? drawerWidth : 'auto' }} aria-label="mailbox folders">
       <Drawer
         container={container}
         variant={matchUpMd ? 'persistent' : 'temporary'}
@@ -64,6 +63,7 @@ const Sidebar = ({ window }) => {
         open={drawerOpen}
         onClose={() => dispatch(openDrawer(!drawerOpen))}
         sx={{
+          alignItems: 'center',
           '& .MuiDrawer-paper': {
             width: drawerWidth,
             background: theme.palette.background.default,

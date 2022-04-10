@@ -30,6 +30,7 @@ import useAuth from 'hooks/useAuth';
 // assets
 import { IconLogout, IconSettings, IconUser } from '@tabler/icons';
 import useConfig from 'hooks/useConfig';
+import Link from 'next/link';
 
 const User1 = '/assets/images/users/user-round.svg';
 
@@ -190,9 +191,9 @@ const ProfileSection = () => {
                             </ListItemIcon>
                             <ListItemText
                               primary={
-                                <Typography href="/app/user/account-profile/profile1" variant="body2">
-                                  Account Settings
-                                </Typography>
+                                <Link href="/app/user/account-profile/profile1">
+                                  <Typography variant="body2">Account Settings</Typography>
+                                </Link>
                               }
                             />
                           </ListItemButton>
@@ -206,23 +207,9 @@ const ProfileSection = () => {
                             </ListItemIcon>
                             <ListItemText
                               primary={
-                                <Grid container spacing={1} justifyContent="space-between">
-                                  <Grid item>
-                                    <Typography href="/app/user/social-profile/posts" variant="body2">
-                                      Social Profile
-                                    </Typography>
-                                  </Grid>
-                                  <Grid item>
-                                    <Chip
-                                      label="02"
-                                      size="small"
-                                      sx={{
-                                        bgcolor: theme.palette.mode === 'dark' ? theme.palette.dark.dark : theme.palette.warning.dark,
-                                        color: theme.palette.background.default
-                                      }}
-                                    />
-                                  </Grid>
-                                </Grid>
+                                <Link href="/app/user/social-profile/posts">
+                                  <Typography variant="body2">User Profile</Typography>
+                                </Link>
                               }
                             />
                           </ListItemButton>
