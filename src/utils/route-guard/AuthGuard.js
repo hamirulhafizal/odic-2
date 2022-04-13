@@ -13,12 +13,15 @@ import { useEffect } from 'react';
 const AuthGuard = ({ children }) => {
   const { isLoggedIn } = useAuth();
   const router = useRouter();
+
   useEffect(() => {
     if (!isLoggedIn) {
       router.push('/login');
     }
     // eslint-disable-next-line
   }, [isLoggedIn]);
+
+  console.log('isLoggedIn', isLoggedIn);
 
   return children;
 };

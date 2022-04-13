@@ -19,6 +19,9 @@ import {
   Typography
 } from '@mui/material';
 
+//next
+import { useRouter } from 'next/router';
+
 // third party
 import * as Yup from 'yup';
 import { Formik } from 'formik';
@@ -36,6 +39,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 const JWTLogin = ({ loginProp, ...others }) => {
   const theme = useTheme();
+  const router = useRouter();
 
   const { login } = useAuth();
   const scriptedRef = useScriptRef();
@@ -54,8 +58,8 @@ const JWTLogin = ({ loginProp, ...others }) => {
   return (
     <Formik
       initialValues={{
-        email: 'info@codedthemes.com',
-        password: '123456',
+        email: 'admin@admin.com',
+        password: 'admin',
         submit: null
       }}
       validationSchema={Yup.object().shape({
@@ -64,26 +68,35 @@ const JWTLogin = ({ loginProp, ...others }) => {
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {
-          await login(values.email, values.password);
+          await login(values.email, values.password).then((res) => {
+              console.log('res 1-->', res);
 
-          if (scriptedRef.current) {
-            setStatus({ success: true });
-            setSubmitting(false);
-          }
+              // if (window.localStorage.getItem('users') !== undefined && window.localStorage.getItem('users') !== null) {
+              // }
+
+              if (scriptedRef.current) {
+                setStatus({ success: true, msg: 'success' });
+                setSubmitting(false);
+              }
+              router.push(`/dashboard`);
+            })
+            .catch((err) => {
+              console.log('err', err);
+            });
         } catch (err) {
           console.error(err);
           if (scriptedRef.current) {
-            setStatus({ success: false });
+            setStatus({ success: false, msg: 'fail' });
             setErrors({ submit: err.message });
             setSubmitting(false);
           }
         }
       }}
     >
-      {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
+      {({ errors, status, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
         <form noValidate onSubmit={handleSubmit} {...others}>
           <FormControl fullWidth error={Boolean(touched.email && errors.email)} sx={{ ...theme.typography.customInput }}>
-            <InputLabel htmlFor="outlined-adornment-email-login">Email Address / Username</InputLabel>
+            <InputLabel htmlFor="outlined-adornment-email-login">Email</InputLabel>
             <OutlinedInput
               id="outlined-adornment-email-login"
               type="email"
@@ -92,6 +105,7 @@ const JWTLogin = ({ loginProp, ...others }) => {
               onBlur={handleBlur}
               onChange={handleChange}
               inputProps={{}}
+              label="Email"
             />
             {touched.email && errors.email && (
               <FormHelperText error id="standard-weight-helper-text-email-login">
@@ -161,8 +175,17 @@ const JWTLogin = ({ loginProp, ...others }) => {
           )}
           <Box sx={{ mt: 2 }}>
             <AnimateButton>
-              <Button color="secondary" disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained">
-                Sign In
+              <Button
+                color={`${status?.success ? 'success' : 'secondary'}`}
+                disabled={isSubmitting}
+                fullWidth
+                size="large"
+                type="submit"
+                variant="contained"
+              >
+                <FormHelperText id="standard-weight-helper-text-username-login">
+                  {status && status.success ? `${status.msg}` : 'Sign In'}
+                </FormHelperText>
               </Button>
             </AnimateButton>
           </Box>

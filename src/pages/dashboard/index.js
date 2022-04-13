@@ -5,19 +5,23 @@ import { Grid } from '@mui/material';
 
 // project imports
 import EarningCard from '../../components/dashboard/Default/EarningCard';
-import TotalOrderLineChartCard from '../../components/dashboard/Default/TotalOrderLineChartCard';
-import TotalIncomeDarkCard from '../../components/dashboard/Default/TotalIncomeDarkCard';
-import TotalIncomeLightCard from '../../components/dashboard/Default/TotalIncomeLightCard';
 import TotalGrowthBarChart from '../../components/dashboard/Default/TotalGrowthBarChart';
 import { gridSpacing } from '../../store/constant';
+
+
+// hooks
+
 
 // ==============================|| DEFAULT DASHBOARD ||============================== //
 
 const Dashboard = () => {
   const [isLoading, setLoading] = useState(true);
+
   useEffect(() => {
     setLoading(false);
   }, []);
+
+
 
   return (
     <Grid container spacing={gridSpacing}>

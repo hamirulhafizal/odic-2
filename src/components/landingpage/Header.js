@@ -107,7 +107,7 @@ const HeaderPage = () => {
                 <Grid container spacing={2} sx={{ justifyContent: { xs: 'center', md: 'flex-start' } }}>
                   <Grid item>
                     <AnimateButton>
-                      <Button component={Link} href="/dashboard/default" target="_blank" size="large" variant="contained" color="secondary">
+                      <Button component={Link} href="/dashboard/" target="_blank" size="large" variant="contained" color="secondary">
                         Live Preview
                       </Button>
                     </AnimateButton>

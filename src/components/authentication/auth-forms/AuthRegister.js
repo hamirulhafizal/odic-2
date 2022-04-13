@@ -95,7 +95,6 @@ const JWTRegister = ({ ...others }) => {
           try {
             await register(values.email, values.password, values.firstName, values.lastName).then((res) => {
               if (res) {
-                console.log('masuk', scriptedRef.current);
                 setStatus({ success: true });
                 setSubmitting(false);
                 dispatch(

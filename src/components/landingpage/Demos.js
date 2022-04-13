@@ -41,7 +41,7 @@ const DemosPage = () => (
             <FadeInWhenVisible>
               <ButtonBase
                 component={Link}
-                href="/dashboard/default"
+                href="/dashboard/"
                 sx={{ width: '100%', height: { xs: '220px', sm: '250px', md: '300px' }, position: 'relative' }}
               >
                 <Image src="/assets/images/landing/img-demo-1.jpg" alt="Berry Dashboard" layout="fill" width="100%" height="100%" />
@@ -63,7 +63,7 @@ const DemosPage = () => (
             <FadeInWhenVisible>
               <ButtonBase
                 component={Link}
-                href="/dashboard/default"
+                href="/dashboard/"
                 sx={{ width: '100%', height: { xs: '220px', sm: '250px', md: '300px' }, position: 'relative' }}
               >
                 <Image src="/assets/images/landing/img-demo-3.jpg" alt="Berry Mail App" layout="fill" width="100%" height="100%" />

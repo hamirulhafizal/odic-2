@@ -17,6 +17,12 @@ import accountReducer from 'store/accountReducer';
 import Loader from 'components/ui-component/Loader';
 import axios from 'utils/axios';
 
+import { BACKEND_PATH } from 'config';
+import axiosInstance from './axios';
+
+//next
+import { useRouter } from 'next/router';
+
 // constant
 const JWT_SECRET = JWT_API.secret;
 const JWT_EXPIRES_TIME = JWT_API.timeout;
@@ -62,34 +68,36 @@ const JWTContext = createContext(null);
 
 export const JWTProvider = ({ children }) => {
   const [state, dispatch] = useReducer(accountReducer, initialState);
+  const router = useRouter();
 
   useEffect(() => {
     const init = async () => {
       try {
-        const serviceToken = window.localStorage.getItem('serviceToken');
-        if (serviceToken && verifyToken(serviceToken)) {
-          setSession(serviceToken);
+        const serviceToken = window.localStorage.getItem('access');
+
+        if (serviceToken) {
           if (window.localStorage.getItem('users') !== undefined && window.localStorage.getItem('users') !== null) {
             const localUsers = window.localStorage.getItem('users');
             users = JSON.parse(localUsers);
           }
 
-          const jwData = jwt.verify(serviceToken, JWT_SECRET);
-          const { userId } = jwData;
-          const user = users.find((_user) => _user.id === userId);
+          // const jwData = jwt.verify(serviceToken, JWT_SECRET);
 
-          if (!user) {
-            return;
-          }
+          // const { userId } = jwData;
+          // const user = users.find((_user) => _user.id === userId);
+
+          // if (!user) {
+          //   return;
+          // }
 
           dispatch({
             type: LOGIN,
             payload: {
               isLoggedIn: true,
               user: {
-                email: user.email,
-                id: user.id,
-                name: user.name
+                email: users.email,
+                // id: user.id,
+                name: users.name
               }
             }
           });
@@ -110,28 +118,53 @@ export const JWTProvider = ({ children }) => {
   }, []);
 
   const login = async (email, password) => {
+    const user = {
+      username: 'username',
+      email: 'email',
+      name: 'name'
+    };
+
+    const response = await axiosInstance
+      .post(`${BACKEND_PATH}/api/v1/login`, {
+        email,
+        password
+      })
+      .then((res) => {
+        // const token = res.data.access;
+
+        // console.log(token);
+
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('access', res?.data?.access);
+          localStorage.setItem('refresh', res?.data?.refresh);
+
+          users = JSON.stringify(user);
+
+          localStorage.setItem('users', users);
+        }
+
+        dispatch({
+          type: LOGIN,
+          payload: {
+            isLoggedIn: true,
+            user
+          }
+        });
+
+        return res;
+      });
     if (window.localStorage.getItem('users') !== undefined && window.localStorage.getItem('users') !== null) {
       const localUsers = window.localStorage.getItem('users');
       users = JSON.parse(localUsers);
     }
-    const userFound = users.find((_user) => _user.email === email);
-    if (!userFound || userFound.password !== password) {
-      return;
-    }
-    const serviceToken = jwt.sign({ userId: userFound.id }, JWT_SECRET, { expiresIn: JWT_EXPIRES_TIME });
-    const user = {
-      username: userFound.id,
-      email: userFound.email,
-      name: userFound.name
-    };
-    setSession(serviceToken);
-    dispatch({
-      type: LOGIN,
-      payload: {
-        isLoggedIn: true,
-        user
-      }
-    });
+
+    // const user = {
+    //   username: userFound.id,
+    //   email: userFound.email,
+    //   name: userFound.name
+    // };
+
+    // setSession(token);
   };
 
   const register = async (email, password, first_name, last_name) => {
@@ -145,8 +178,8 @@ export const JWTProvider = ({ children }) => {
     //   firstName,
     //   lastName
     // });
-    const response = await axios
-      .post(`${process.env.backEndUrl}/api/v1/auth/create-admin`, {
+    const response = await axiosInstance
+      .post(`${BACKEND_PATH}/api/v1/auth/register`, {
         username,
         email,
         first_name,
@@ -155,6 +188,9 @@ export const JWTProvider = ({ children }) => {
         password2
       })
       .then((res) => {
+        history.push('/login');
+        console.log(res);
+
         login({
           email,
           password
@@ -185,11 +221,14 @@ export const JWTProvider = ({ children }) => {
   const logout = () => {
     setSession(null);
     dispatch({ type: LOGOUT });
+    window.localStorage.removeItem('access');
+    window.localStorage.removeItem('refresh');
+    window.localStorage.removeItem('users');
   };
 
   const resetPassword = (email) => console.log(email);
 
-  const updateProfile = () => { };
+  const updateProfile = () => {};
 
   if (state.isInitialized !== undefined && !state.isInitialized) {
     return <Loader />;

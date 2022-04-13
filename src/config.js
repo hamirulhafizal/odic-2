@@ -27,7 +27,9 @@ export const AWS_API = {
 // like '/berry-material-react/react/default'
 export const BASE_PATH = '';
 
-export const DASHBOARD_PATH = '/dashboard/';
+export const DASHBOARD_PATH = '/dashboard';
+
+export const BACKEND_PATH = 'https://agent-inventory.herokuapp.com';
 
 const config = {
   fontFamily: `'Roboto', sans-serif`,
