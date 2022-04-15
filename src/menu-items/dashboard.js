@@ -2,7 +2,7 @@
 import { FormattedMessage } from 'react-intl';
 
 // assets
-import { IconDashboard, IconDeviceAnalytics } from '@tabler/icons';
+import { IconDashboard, IconDeviceAnalytics, TablerIcon } from '@tabler/icons';
 
 // constant
 const icons = {
@@ -23,6 +23,14 @@ const dashboard = {
       type: 'item',
       url: '/dashboard/',
       icon: icons.IconDashboard,
+      breadcrumbs: false
+    },
+    {
+      id: 'default',
+      title: <FormattedMessage id="Lisiting" />,
+      type: 'item',
+      url: '/listing/create',
+      icon: icons.TablerIcon,
       breadcrumbs: false
     }
   ]

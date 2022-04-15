@@ -25,7 +25,7 @@ import {
 import Logo from '../Logo';
 
 // assets
-import { IconBook, IconCreditCard, IconDashboard, IconHome2 } from '@tabler/icons';
+import { IconBook, IconCreditCard, IconDashboard, IconHome2, IconLogin } from '@tabler/icons';
 import MenuIcon from '@mui/icons-material/Menu';
 
 function ElevationScroll({ children, window }) {
@@ -76,22 +76,10 @@ const AppBar = ({ ...others }) => {
             </Typography>
             <Stack direction="row" sx={{ display: { xs: 'none', sm: 'block' } }} spacing={2}>
               <Button color="inherit" component={Link} href="#" target="_blank">
-                Home
+                Login
               </Button>
-              <Button color="inherit" component={Link} href="login" target="_blank">
-                Dashboard
-              </Button>
-              <Button color="inherit" component={Link} href="https://codedthemes.gitbook.io/berry" target="_blank">
-                Documentation
-              </Button>
-              <Button
-                component={Link}
-                href="https://material-ui.com/store/items/berry-react-material-admin/"
-                disableElevation
-                variant="contained"
-                color="secondary"
-              >
-                Purchase Now
+              <Button component={Link} href="/listing" disableElevation variant="contained" color="secondary">
+                Post Ads Property
               </Button>
             </Stack>
             <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
@@ -102,7 +90,7 @@ const AppBar = ({ ...others }) => {
                 {drawerToggle && (
                   <Box sx={{ width: 'auto' }} role="presentation" onClick={drawerToggler(false)} onKeyDown={drawerToggler(false)}>
                     <List>
-                      <Link style={{ textDecoration: 'none' }} href="#" target="_blank">
+                      <Link style={{ textDecoration: 'none' }} href="/">
                         <ListItemButton component="a">
                           <ListItemIcon>
                             <IconHome2 />
@@ -110,32 +98,12 @@ const AppBar = ({ ...others }) => {
                           <ListItemText primary="Home" />
                         </ListItemButton>
                       </Link>
-                      <Link style={{ textDecoration: 'none' }} href="/login" target="_blank">
+                      <Link style={{ textDecoration: 'none' }} href="/login">
                         <ListItemButton component="a">
                           <ListItemIcon>
-                            <IconDashboard />
+                            <IconLogin />
                           </ListItemIcon>
-                          <ListItemText primary="Dashboard" />
-                        </ListItemButton>
-                      </Link>
-                      <Link style={{ textDecoration: 'none' }} href="https://codedthemes.gitbook.io/berry" target="_blank">
-                        <ListItemButton component="a">
-                          <ListItemIcon>
-                            <IconBook />
-                          </ListItemIcon>
-                          <ListItemText primary="Documentation" />
-                        </ListItemButton>
-                      </Link>
-                      <Link
-                        style={{ textDecoration: 'none' }}
-                        href="https://material-ui.com/store/items/berry-react-material-admin/"
-                        target="_blank"
-                      >
-                        <ListItemButton component="a">
-                          <ListItemIcon>
-                            <IconCreditCard />
-                          </ListItemIcon>
-                          <ListItemText primary="Purchase Now" />
+                          <ListItemText primary="Login" />
                         </ListItemButton>
                       </Link>
                     </List>

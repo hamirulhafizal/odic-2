@@ -63,7 +63,7 @@ const HeaderPage = () => {
                 >
                   One Dream Property
                   <Box component="span" sx={{ ml: 2, color: theme.palette.primary.main }}>
-                    Berry
+                    Legacy
                   </Box>
                 </Typography>
               </motion.div>
@@ -107,20 +107,14 @@ const HeaderPage = () => {
                 <Grid container spacing={2} sx={{ justifyContent: { xs: 'center', md: 'flex-start' } }}>
                   <Grid item>
                     <AnimateButton>
-                      <Button component={Link} href="/dashboard/" target="_blank" size="large" variant="contained" color="secondary">
+                      <Button component={Link} href="/dashboard/" size="large" variant="contained" color="secondary">
                         Live Preview
                       </Button>
                     </AnimateButton>
                   </Grid>
                   <Grid item>
-                    <Button
-                      component={Link}
-                      href="https://material-ui.com/store/items/berry-react-material-admin/"
-                      target="_blank"
-                      size="large"
-                      variant="text"
-                    >
-                      Purchase Now
+                    <Button component={Link} href="/login" size="large" variant="text">
+                      Login
                     </Button>
                   </Grid>
                 </Grid>

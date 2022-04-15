@@ -22,12 +22,14 @@ import axiosInstance from './axios';
 
 //next
 import { useRouter } from 'next/router';
+import user from 'store/slices/user';
 
 // constant
 const JWT_SECRET = JWT_API.secret;
 const JWT_EXPIRES_TIME = JWT_API.timeout;
 
 const chance = new Chance();
+
 let users = [
   {
     username: '5e86809283e28b96d2d38537',
@@ -37,6 +39,7 @@ let users = [
     first_name: 'JWT User'
   }
 ];
+
 // constant
 const initialState = {
   isLoggedIn: false,
@@ -44,31 +47,12 @@ const initialState = {
   user: null
 };
 
-const verifyToken = (serviceToken) => {
-  if (!serviceToken) {
-    return false;
-  }
-  const decoded = jwtDecode(serviceToken);
-
-  return decoded.exp > Date.now() / 1000;
-};
-
-const setSession = (serviceToken) => {
-  if (serviceToken) {
-    localStorage.setItem('serviceToken', serviceToken);
-    axios.defaults.headers.common.Authorization = `Bearer ${serviceToken}`;
-  } else {
-    localStorage.removeItem('serviceToken');
-    delete axios.defaults.headers.common.Authorization;
-  }
-};
-
 // ==============================|| JWT CONTEXT & PROVIDER ||============================== //
 const JWTContext = createContext(null);
 
 export const JWTProvider = ({ children }) => {
   const [state, dispatch] = useReducer(accountReducer, initialState);
-  const router = useRouter();
+  const history = useRouter();
 
   useEffect(() => {
     const init = async () => {
@@ -81,23 +65,15 @@ export const JWTProvider = ({ children }) => {
             users = JSON.parse(localUsers);
           }
 
-          // const jwData = jwt.verify(serviceToken, JWT_SECRET);
-
-          // const { userId } = jwData;
-          // const user = users.find((_user) => _user.id === userId);
-
-          // if (!user) {
-          //   return;
-          // }
-
           dispatch({
             type: LOGIN,
             payload: {
               isLoggedIn: true,
               user: {
                 email: users.email,
-                // id: user.id,
-                name: users.name
+                firstName: users.firstName,
+                lastName: users.lastName,
+                id: users.user
               }
             }
           });
@@ -107,7 +83,7 @@ export const JWTProvider = ({ children }) => {
           });
         }
       } catch (err) {
-        console.error(err);
+        // console.error(err);
         dispatch({
           type: LOGOUT
         });
@@ -118,109 +94,64 @@ export const JWTProvider = ({ children }) => {
   }, []);
 
   const login = async (email, password) => {
-    const user = {
-      username: 'username',
-      email: 'email',
-      name: 'name'
-    };
-
     const response = await axiosInstance
-      .post(`${BACKEND_PATH}/api/v1/login`, {
+      .post(`${BACKEND_PATH}/api/v1/user/login`, {
         email,
         password
       })
       .then((res) => {
-        // const token = res.data.access;
-
-        // console.log(token);
-
         if (typeof window !== 'undefined') {
+          axiosInstance.defaults.headers['Authorization'] = 'JWT ' + localStorage.getItem('access');
           localStorage.setItem('access', res?.data?.access);
           localStorage.setItem('refresh', res?.data?.refresh);
-
-          users = JSON.stringify(user);
-
-          localStorage.setItem('users', users);
         }
+
+        getProfile(res?.data?.user_name);
 
         dispatch({
           type: LOGIN,
           payload: {
-            isLoggedIn: true,
-            user
+            isLoggedIn: true
           }
         });
 
+        history.push('/dashboard');
+
         return res;
       });
-    if (window.localStorage.getItem('users') !== undefined && window.localStorage.getItem('users') !== null) {
-      const localUsers = window.localStorage.getItem('users');
-      users = JSON.parse(localUsers);
-    }
-
-    // const user = {
-    //   username: userFound.id,
-    //   email: userFound.email,
-    //   name: userFound.name
-    // };
-
-    // setSession(token);
   };
 
   const register = async (email, password, first_name, last_name) => {
-    const password2 = password;
     // todo: this flow need to be recode as it not verified
-    const username = chance.bb_pin();
-    // const response = await axios.post('/api/account/register', {
-    //   id,
-    //   email,
-    //   password,
-    //   firstName,
-    //   lastName
-    // });
+    const user_name = first_name + last_name;
     const response = await axiosInstance
-      .post(`${BACKEND_PATH}/api/v1/auth/register`, {
-        username,
+      .post(`${BACKEND_PATH}/api/v1/user/register`, {
         email,
+        user_name,
         first_name,
-        last_name,
-        password,
-        password2
+        password
       })
       .then((res) => {
-        history.push('/login');
         console.log(res);
 
-        login({
-          email,
-          password
-        });
+        login(email, password, user_name);
+
+        history.push('/login');
         return res;
       });
-
-    let users = response.data;
-
-    console.log('users', users);
-
-    if (window.localStorage.getItem('users') !== undefined && window.localStorage.getItem('users') !== null) {
-      const localUsers = window.localStorage.getItem('users');
-      users = [
-        ...JSON.parse(localUsers),
-        {
-          username,
-          email,
-          password,
-          name: `${first_name} ${last_name}`
-        }
-      ];
-    }
-
-    window.localStorage.setItem('users', JSON.stringify(users));
   };
 
-  const logout = () => {
-    setSession(null);
+  const logout = async () => {
+    // const response = await axiosInstance.post(`${BACKEND_PATH}/api/v1/user/logout`)
+    // .then((res) => {
+    //   history.push('/login');
+    //   return res;
+    // });
+
+    // let off = response.data;
+
     dispatch({ type: LOGOUT });
+
     window.localStorage.removeItem('access');
     window.localStorage.removeItem('refresh');
     window.localStorage.removeItem('users');
@@ -228,7 +159,43 @@ export const JWTProvider = ({ children }) => {
 
   const resetPassword = (email) => console.log(email);
 
-  const updateProfile = () => {};
+  const getProfile = async (user_name) => {
+    axiosInstance.defaults.headers['Authorization'] = 'JWT ' + localStorage.getItem('access');
+    const response = await axiosInstance.get(`${BACKEND_PATH}/api/v1/profile/${user_name}`).then((res) => {
+      if (typeof window !== 'undefined') {
+        const users = JSON.stringify(res.data);
+        localStorage.setItem('users', users);
+
+        dispatch({
+          payload: {
+            isLoggedIn: true,
+            users
+          }
+        });
+      }
+
+      return res;
+    });
+  };
+
+  const updateProfile = async (user_name) => {
+    // axiosInstance.defaults.headers['Authorization'] = 'JWT ' + localStorage.getItem('access');
+    const response = await axiosInstance.put(`${BACKEND_PATH}/api/v1/profile/${user_name}`, {}).then((res) => {
+      if (typeof window !== 'undefined') {
+        const users = JSON.stringify(res.data);
+        localStorage.setItem('users', users);
+
+        dispatch({
+          payload: {
+            isLoggedIn: true,
+            users
+          }
+        });
+      }
+
+      return res;
+    });
+  };
 
   if (state.isInitialized !== undefined && !state.isInitialized) {
     return <Loader />;

@@ -4,10 +4,6 @@ import { BACKEND_PATH } from 'config';
 
 const baseURL = BACKEND_PATH;
 
-let access;
-
-// access = typeof window !== 'undefined' ? localStorage.getItem('access') : null;
-
 const axiosInstance = axios.create({
   baseURL: baseURL,
   timeout: 5000,
@@ -26,9 +22,11 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.response.use(
+
   (response) => {
     return response;
   },
+
   async function (error) {
     const originalRequest = error.config;
 
@@ -39,7 +37,7 @@ axiosInstance.interceptors.response.use(
       return Promise.reject(error);
     }
 
-    if (error.response.status === 401 && originalRequest.url === baseURL + 'token/refresh/') {
+    if (error.response.status === 401 && originalRequest.url === baseURL + '/api/v1/login/refresh') {
       window.location.href = '/login/';
       return Promise.reject(error);
     }

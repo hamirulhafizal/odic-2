@@ -35,7 +35,7 @@ const Header = () => {
           }
         }}
       >
-        <Box component="span" sx={{ display: { xs: 'none', md: 'flex' }, flexGrow: 1 , justifyContent:"center", alignItems:"center" }}>
+        <Box component="span" sx={{ display: { xs: 'none', md: 'flex' }, flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
           <LogoSection />
         </Box>
         <Avatar
@@ -60,23 +60,11 @@ const Header = () => {
       </Box>
 
       {/* header search */}
-      {/* <SearchSection /> */}
       <Box sx={{ flexGrow: 1 }} />
       <Box sx={{ flexGrow: 1 }} />
 
-      {/* live customization & localization */}
-      <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-        <LocalizationSection />
-      </Box>
-
-      {/* notification & profile */}
-      <NotificationSection />
+      {/* profile */}
       <ProfileSection />
-
-      {/* mobile header */}
-      <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
-        <MobileSection />
-      </Box>
     </>
   );
 };
