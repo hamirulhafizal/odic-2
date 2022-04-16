@@ -25,7 +25,6 @@ import {
 
 import { useTheme } from '@mui/material/styles';
 
-
 // project imports
 import useAuth from 'hooks/useAuth';
 import Avatar from 'components/ui-component/extended/Avatar';
@@ -37,7 +36,6 @@ import { IconEdit } from '@tabler/icons';
 import PhonelinkRingTwoToneIcon from '@mui/icons-material/PhonelinkRingTwoTone';
 import PinDropTwoToneIcon from '@mui/icons-material/PinDropTwoTone';
 import MailTwoToneIcon from '@mui/icons-material/MailTwoTone';
-
 
 const Avatar3 = '/assets/images/users/avatar-3.png';
 

@@ -8,7 +8,7 @@ import AuthFooter from 'components/ui-component/cards/AuthFooter';
 
 // ===============================|| AUTH3 - LISITING ||=============================== //
 
-const Create = () => {
+const Listing = () => {
   // const theme = useTheme();
   // const { user } = useAuth();
   return (
@@ -16,7 +16,7 @@ const Create = () => {
       <Grid item xs={12}>
         <Grid container justifyContent="center" alignItems="center" sx={{ minHeight: 'calc(100vh - 68px)' }}>
           <Grid item sx={{ m: { xs: 1, sm: 3 }, mb: 0 }}>
-            <Typography variant="subtitle1">Create You Listing</Typography>
+            <Typography variant="subtitle1">Your Listing</Typography>
           </Grid>
         </Grid>
       </Grid>
@@ -26,5 +26,5 @@ const Create = () => {
     </Grid>
   );
 };
-// Create.Layout = 'authGuard';
-export default Create;
+Listing.Layout = 'authGuard';
+export default Listing;

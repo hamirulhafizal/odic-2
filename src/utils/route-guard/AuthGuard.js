@@ -21,8 +21,6 @@ const AuthGuard = ({ children }) => {
     // eslint-disable-next-line
   }, [isLoggedIn]);
 
-  console.log('isLoggedIn', isLoggedIn);
-
   return children;
 };
 

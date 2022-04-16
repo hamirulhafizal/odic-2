@@ -1,8 +1,10 @@
 {
   "dashboard": "Tableau de bord",
+
+  "listing":"Listing",
+
   "default": ",Défaut",
   "analytics": "Analytique",
-
   "widget": "Widget",
   "statistics": "Statistiques",
   "data": "Donnés",

@@ -25,7 +25,7 @@ import {
 import Logo from '../Logo';
 
 // assets
-import { IconBook, IconCreditCard, IconDashboard, IconHome2, IconLogin } from '@tabler/icons';
+import { IconHome2, IconLogin } from '@tabler/icons';
 import MenuIcon from '@mui/icons-material/Menu';
 
 function ElevationScroll({ children, window }) {

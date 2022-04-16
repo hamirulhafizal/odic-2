@@ -62,8 +62,7 @@ const SelectForms = () => {
               </Select>
               {formik.errors.age && (
                 <FormHelperText error id="standard-weight-helper-text-email-login">
-                  {' '}
-                  {formik.errors.age}{' '}
+                  {formik.errors.age}
                 </FormHelperText>
               )}
             </FormControl>

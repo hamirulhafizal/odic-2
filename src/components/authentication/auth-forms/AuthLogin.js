@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import Link from 'Link';
 
 // material-ui
@@ -19,7 +19,7 @@ import {
   Typography
 } from '@mui/material';
 
-//next
+// next
 import { useRouter } from 'next/router';
 
 // third party
@@ -40,13 +40,13 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 const JWTLogin = ({ loginProp, ...others }) => {
   const theme = useTheme();
   const router = useRouter();
-
-  const { login } = useAuth();
   const scriptedRef = useScriptRef();
 
-  const [checked, setChecked] = React.useState(true);
+  const { login } = useAuth();
 
+  const [checked, setChecked] = React.useState(true);
   const [showPassword, setShowPassword] = React.useState(false);
+
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -68,12 +68,8 @@ const JWTLogin = ({ loginProp, ...others }) => {
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {
-          await login(values.email, values.password).then((res) => {
-              console.log('res 1-->', res);
-
-              // if (window.localStorage.getItem('users') !== undefined && window.localStorage.getItem('users') !== null) {
-              // }
-
+          await login(values.email, values.password)
+            .then((res) => {
               if (scriptedRef.current) {
                 setStatus({ success: true, msg: 'success' });
                 setSubmitting(false);
@@ -113,7 +109,6 @@ const JWTLogin = ({ loginProp, ...others }) => {
               </FormHelperText>
             )}
           </FormControl>
-
           <FormControl fullWidth error={Boolean(touched.password && errors.password)} sx={{ ...theme.typography.customInput }}>
             <InputLabel htmlFor="outlined-adornment-password-login">Password</InputLabel>
             <OutlinedInput
@@ -145,7 +140,6 @@ const JWTLogin = ({ loginProp, ...others }) => {
               </FormHelperText>
             )}
           </FormControl>
-
           <Grid container alignItems="center" justifyContent="space-between">
             <Grid item>
               <FormControlLabel
@@ -167,7 +161,6 @@ const JWTLogin = ({ loginProp, ...others }) => {
               </Typography>
             </Grid>
           </Grid>
-
           {errors.submit && (
             <Box sx={{ mt: 3 }}>
               <FormHelperText error>{errors.submit}</FormHelperText>
@@ -189,6 +182,7 @@ const JWTLogin = ({ loginProp, ...others }) => {
               </Button>
             </AnimateButton>
           </Box>
+          {console.log('status', status)}
         </form>
       )}
     </Formik>

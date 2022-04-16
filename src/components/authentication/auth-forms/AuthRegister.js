@@ -94,7 +94,7 @@ const JWTRegister = ({ ...others }) => {
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
             await register(values.email, values.password, values.firstName, values.lastName).then((res) => {
-              if (res) {
+              if (scriptedRef.current) {
                 setStatus({ success: true });
                 setSubmitting(false);
                 dispatch(
@@ -128,7 +128,7 @@ const JWTRegister = ({ ...others }) => {
           }
         }}
       >
-        {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
+        {({ errors, status, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
           <form noValidate onSubmit={handleSubmit} {...others}>
             <Grid container spacing={matchDownSM ? 0 : 2}>
               <Grid item xs={12} sm={6}>
@@ -245,6 +245,7 @@ const JWTRegister = ({ ...others }) => {
                 />
               </Grid>
             </Grid>
+
             {errors.submit && (
               <Box sx={{ mt: 3 }}>
                 <FormHelperText error>{errors.submit}</FormHelperText>

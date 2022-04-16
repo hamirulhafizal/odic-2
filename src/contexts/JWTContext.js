@@ -69,12 +69,7 @@ export const JWTProvider = ({ children }) => {
             type: LOGIN,
             payload: {
               isLoggedIn: true,
-              user: {
-                email: users.email,
-                firstName: users.firstName,
-                lastName: users.lastName,
-                id: users.user
-              }
+              user: users
             }
           });
         } else {
@@ -99,14 +94,14 @@ export const JWTProvider = ({ children }) => {
         email,
         password
       })
-      .then((res) => {
+      .then(async (res) => {
         if (typeof window !== 'undefined') {
           axiosInstance.defaults.headers['Authorization'] = 'JWT ' + localStorage.getItem('access');
           localStorage.setItem('access', res?.data?.access);
           localStorage.setItem('refresh', res?.data?.refresh);
         }
 
-        getProfile(res?.data?.user_name);
+        await getProfile(res?.data?.user_name);
 
         dispatch({
           type: LOGIN,
@@ -169,7 +164,7 @@ export const JWTProvider = ({ children }) => {
         dispatch({
           payload: {
             isLoggedIn: true,
-            users
+            users: users
           }
         });
       }
@@ -178,30 +173,43 @@ export const JWTProvider = ({ children }) => {
     });
   };
 
-  const updateProfile = async (user_name) => {
-    // axiosInstance.defaults.headers['Authorization'] = 'JWT ' + localStorage.getItem('access');
-    const response = await axiosInstance.put(`${BACKEND_PATH}/api/v1/profile/${user_name}`, {}).then((res) => {
-      if (typeof window !== 'undefined') {
-        const users = JSON.stringify(res.data);
-        localStorage.setItem('users', users);
+  const updateProfile = async (user_name, firstName, lastName, phone, photo, email) => {
+    const response = await axiosInstance
+      .put(`${BACKEND_PATH}/api/v1/profile/${user_name}`, {
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        phone: phone,
+        photo: photo.file
+      })
+      .then((res) => {
+        console.log('res', res);
 
-        dispatch({
-          payload: {
-            isLoggedIn: true,
-            users
-          }
-        });
-      }
+        if (typeof window !== 'undefined') {
+          const users = JSON.stringify(res.data);
+          localStorage.setItem('users', users);
 
-      return res;
-    });
+          dispatch({
+            payload: {
+              isLoggedIn: true,
+              users
+            }
+          });
+        }
+
+        return res;
+      });
   };
 
   if (state.isInitialized !== undefined && !state.isInitialized) {
     return <Loader />;
   }
 
-  return <JWTContext.Provider value={{ ...state, login, logout, register, resetPassword, updateProfile }}>{children}</JWTContext.Provider>;
+  return (
+    <JWTContext.Provider value={{ ...state, login, logout, register, resetPassword, updateProfile, getProfile }}>
+      {children}
+    </JWTContext.Provider>
+  );
 };
 
 JWTProvider.propTypes = {

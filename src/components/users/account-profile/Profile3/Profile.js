@@ -1,76 +1,93 @@
+import { useState, useRef, useEffect } from 'react';
+
 // material-ui
-import {
-  Avatar,
-  Button,
-  Grid,
-  Stack,
-  TextField,
-  Typography,
-  Box,
-  Checkbox,
-  FormControl,
-  FormControlLabel,
-  FormHelperText,
-  IconButton,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
-  useMediaQuery
-} from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import { Box, Grid, Stack, Avatar, Button, TextField, Typography, useMediaQuery, FormHelperText } from '@mui/material';
+import { useTheme, styled } from '@mui/material/styles';
 
 // project imports
 import useAuth from 'hooks/useAuth';
 import SubCard from 'components/ui-component/cards/SubCard';
 import AnimateButton from 'components/ui-component/extended/AnimateButton';
+import ItemAttachments from 'components/ui-component/third-party/ItemAttachments';
 import { gridSpacing } from 'store/constant';
-import { Formik } from 'formik';
-
-import PropTypes from 'prop-types';
-import React from 'react';
-import Link from 'Link';
+import { Form, Formik } from 'formik';
+import { openSnackbar } from 'store/slices/snackbar';
 
 // third party
 import * as Yup from 'yup';
 
-// assets
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
+// hook
+import useScriptRef from 'hooks/useScriptRef';
 
-// assets
-const Avatar1 = '/assets/images/users/avatar-1.png';
+// store
+import { useDispatch } from 'store';
+
+// yup
+import { object, string, mixed, number } from 'yup';
+import { useSelector } from 'store';
 
 // ==============================|| PROFILE 3 - PROFILE ||============================== //
 
+const Input = styled('input')({
+  display: 'none'
+});
+
+// const validationSchema = object().shape({
+//   firstName: string().max(255).required('Name is required'),
+//   lastName: string().max(255).required('Name is required'),
+//   photo: mixed().test(1000, 'File Size is too large', (value) => value?.size <= 2000000),
+//   phone: number().max(255).required('Tel is required'),
+//   email: string().email().required('Email is required')
+// });
+
 const Profile = ({ ...others }) => {
-  const { user, updateProfile } = useAuth();
+
+  const { updateProfile } = useAuth();
+
+  const { user } = useSelector((state) => state.account);
+
   const theme = useTheme();
+  const dispatch = useDispatch();
+  const scriptedRef = useScriptRef();
 
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
 
+  const [user1, setUser] = useState();
+
   console.log('user', user);
+
+  useEffect(() => {
+    if (user1 == null) {
+      if (window.localStorage.getItem('users') !== undefined && window.localStorage.getItem('users') !== null) {
+        const user = window.localStorage.getItem('users');
+        const users = JSON.parse(user);
+        setUser(users);
+      }
+    }
+  }, [user1]);
 
   return (
     <Formik
+      enableReinitialize={true}
       initialValues={{
-        firstName: '',
-        lastName: '',
-        email: '',
-        photo: '',
-        phone:'',
+        firstName: user?.firstName || '',
+        lastName: user?.lastName || '',
+        email: user?.email || '',
+        photo: user?.photo || null,
+        phone: user?.phone || null,
         submit: null
       }}
+      validator={() => ({})}
       validationSchema={Yup.object().shape({
-        firstName: Yup.string().max(255).required('Name is required'),
-        lastName: Yup.string().max(255).required('Name is required'),
-        photo: Yup.string().max(255).required('Name is required'),
-        phone: Yup.string().max(255).required('Tel is required'),
+        photo: Yup.mixed().test(200000, 'File Size is too large', (value) => value?.size <= 2000000)
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
+        const { firstName, lastName, phone, photo, email } = values;
+
         try {
-          await updateProfile(values.firstName, values.lastName, values.phone, values.photo).then((res) => {
-            if (res) {
-              setStatus({ success: true });
+          await updateProfile(user?.user_name, firstName, lastName, phone, photo, email).then((res) => {
+            if (scriptedRef.current) {
+              setStatus({ success: true, msg: 'success' });
               setSubmitting(false);
               dispatch(
                 openSnackbar({
@@ -83,15 +100,11 @@ const Profile = ({ ...others }) => {
                   close: false
                 })
               );
-
-              setTimeout(() => {
-                router.push('/login');
-              }, 1500);
             }
           });
         } catch (err) {
           if (scriptedRef.current === false) {
-            setStatus({ success: false });
+            setStatus({ success: false, msg: 'fail' });
             if (err.password[0] !== null) {
               setErrors({ submit: 'try stronger password' });
             }
@@ -103,25 +116,39 @@ const Profile = ({ ...others }) => {
         }
       }}
     >
-      {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
+      {({ errors, status, handleBlur, handleChange, handleSubmit, setFieldValue, values }) => (
         <>
-          {' '}
-          <form noValidate onSubmit={handleSubmit} {...others}>
+          <Form noValidate onSubmit={handleSubmit} {...others}>
             <Grid container spacing={gridSpacing}>
               <Grid item sm={6} md={4}>
                 <SubCard title="Profile Picture" contentSX={{ textAlign: 'center' }}>
                   <Grid container spacing={2}>
                     <Grid item xs={12}>
-                      <Avatar alt={user.nickname} src={user.photo} sx={{ width: 100, height: 100, margin: '0 auto' }} />
+                      <Avatar alt={user?.nickname} src={user?.photo || null} sx={{ width: 100, height: 100, margin: '0 auto' }} />
                     </Grid>
+
                     <Grid item xs={12}>
                       <Typography variant="subtitle2" align="center">
                         Upload/Change Your Profile Image
                       </Typography>
                     </Grid>
+
                     <Grid item xs={12}>
                       <AnimateButton>
-                        <Button variant="contained" >Upload Avatar</Button>
+                        <label htmlFor="contained-button-file">
+                          <Input
+                            accept="image/*"
+                            id="contained-button-file"
+                            type="file"
+                            value={setFieldValue.photo}
+                            onChange={(event) => {
+                              setFieldValue('photo', event.currentTarget.files[0]);
+                            }}
+                          />
+                          <Button variant="contained" component="span">
+                            Upload Avatar
+                          </Button>
+                        </label>
                       </AnimateButton>
                     </Grid>
                   </Grid>
@@ -132,24 +159,26 @@ const Profile = ({ ...others }) => {
                   <Grid container spacing={gridSpacing}>
                     <Grid item xs={12}>
                       <TextField
+                        required
                         fullWidth
                         label="First Name"
                         id="outlined-basic1"
                         name="firstName"
                         type="text"
-                        value={user.firstName}
+                        value={values.firstName}
                         onBlur={handleBlur}
                         onChange={handleChange}
                       />
                     </Grid>
                     <Grid item xs={12}>
                       <TextField
+                        required
                         fullWidth
                         id="outlined-basic6"
                         label="Last Name"
                         name="lastName"
                         type="text"
-                        value={user.lastName}
+                        value={values.lastName}
                         onBlur={handleBlur}
                         onChange={handleChange}
                       />
@@ -160,32 +189,17 @@ const Profile = ({ ...others }) => {
                         fullWidth
                         id="outlined-basic4"
                         label="Phone number"
-                        name="lastName"
-                        type="text"
-                        value={user.phone}
+                        name="phone"
+                        type="number"
+                        value={values.phone}
                         onBlur={handleBlur}
                         onChange={handleChange}
                       />
                     </Grid>
 
                     <Grid item xs={12} md={6}>
-                      <TextField
-                        fullWidth
-                        id="outlined-basic6"
-                        disabled
-                        type="email"
-                        value={user.email}
-                        name="email"
-                        id="filled-disabled"
-                        label="Email"
-                      />
+                      <TextField fullWidth disabled type="email" value={values.email} name="email" id="filled-disabled" label="Email" />
                     </Grid>
-
-                    {/* {errors.submit && (
-                    <Box sx={{ mt: 3 }}>
-                      <FormHelperText error>{errors.submit}</FormHelperText>
-                    </Box>
-                  )} */}
 
                     <Grid item xs={12}>
                       <Stack direction="row">
@@ -195,16 +209,21 @@ const Profile = ({ ...others }) => {
                           </Button>
                         </AnimateButton>
                       </Stack>
+
+                      <Box sx={{ mt: 3 }}>
+                        <FormHelperText>{status?.success && `${status?.msg}`}</FormHelperText>
+                      </Box>
                     </Grid>
                   </Grid>
                 </SubCard>
               </Grid>
             </Grid>
-          </form>
+          </Form>
         </>
       )}
     </Formik>
   );
 };
 
+Profile.Layout = 'authGuard';
 export default Profile;

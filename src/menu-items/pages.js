@@ -28,24 +28,21 @@ const pages = {
       title: <FormattedMessage id="contact-us" />,
       type: 'item',
       icon: icons.IconPhoneCall,
-      url: '/pages/contact-us',
-      target: true
+      url: '/pages/contact-us'
     },
     {
       id: 'faqs',
       title: <FormattedMessage id="faqs" />,
       type: 'item',
       icon: icons.IconQuestionMark,
-      url: '/pages/faqs',
-      target: true
+      url: '/pages/faqs'
     },
     {
       id: 'privacy-policy',
       title: <FormattedMessage id="privacy-policy" />,
       type: 'item',
       icon: icons.IconShieldLock,
-      url: '/pages/privacy-policy',
-      target: true
+      url: '/pages/privacy-policy'
     }
   ]
 };

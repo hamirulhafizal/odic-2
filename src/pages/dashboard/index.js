@@ -8,10 +8,6 @@ import EarningCard from '../../components/dashboard/Default/EarningCard';
 import TotalGrowthBarChart from '../../components/dashboard/Default/TotalGrowthBarChart';
 import { gridSpacing } from '../../store/constant';
 
-
-// hooks
-
-
 // ==============================|| DEFAULT DASHBOARD ||============================== //
 
 const Dashboard = () => {
@@ -20,8 +16,6 @@ const Dashboard = () => {
   useEffect(() => {
     setLoading(false);
   }, []);
-
-
 
   return (
     <Grid container spacing={gridSpacing}>

@@ -1,3 +1,4 @@
+import application from './application';
 import dashboard from './dashboard';
 import pages from './pages';
 

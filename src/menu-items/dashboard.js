@@ -2,12 +2,13 @@
 import { FormattedMessage } from 'react-intl';
 
 // assets
-import { IconDashboard, IconDeviceAnalytics, TablerIcon } from '@tabler/icons';
+import { IconDashboard, IconDeviceAnalytics, IconListCheck } from '@tabler/icons';
 
 // constant
 const icons = {
   IconDashboard,
-  IconDeviceAnalytics
+  IconDeviceAnalytics,
+  IconListCheck
 };
 
 // ==============================|| DASHBOARD MENU ITEMS ||============================== //
@@ -26,11 +27,11 @@ const dashboard = {
       breadcrumbs: false
     },
     {
-      id: 'default',
-      title: <FormattedMessage id="Lisiting" />,
+      id: 'listing',
+      title: <FormattedMessage id="listing" />,
       type: 'item',
-      url: '/listing/create',
-      icon: icons.TablerIcon,
+      url: '/listing/',
+      icon: icons.IconListCheck,
       breadcrumbs: false
     }
   ]
