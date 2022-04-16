@@ -56,7 +56,7 @@ const Profile3 = () => {
               minWidth: 100
             },
             '& a': {
-              minHeight: 'auto',
+              minHeight: 'auto', 
               minWidth: 10,
               py: 1.5,
               px: 1,
