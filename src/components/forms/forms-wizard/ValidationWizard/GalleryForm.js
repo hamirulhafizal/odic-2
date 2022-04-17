@@ -36,7 +36,7 @@ export default function GalleryForm({ paymentData, setPaymentData, handleNext, h
   return (
     <>
       <Typography variant="h5" gutterBottom sx={{ mb: 2 }}>
-        Drop you Property
+        Drop you Image
       </Typography>
       <form onSubmit={formik.handleSubmit}>
         <Grid container spacing={3}>

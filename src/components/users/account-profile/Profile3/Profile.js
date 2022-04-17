@@ -17,6 +17,7 @@ import * as Yup from 'yup';
 
 // hook
 import useScriptRef from 'hooks/useScriptRef';
+import { useDispatch } from 'store';
 
 // ==============================|| PROFILE 3 - PROFILE ||============================== //
 
@@ -30,6 +31,7 @@ const Profile = ({ ...others }) => {
   const theme = useTheme();
   const scriptedRef = useScriptRef();
 
+  const dispatch = useDispatch();
   const [isLoading, setLoading] = useState(false);
 
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
@@ -54,7 +56,7 @@ const Profile = ({ ...others }) => {
 
         setLoading(true);
         /* Then create a new FormData obj */
-        let formData = new FormData();
+        const formData = new FormData();
 
         /* FormData requires name: id */
         formData.append('website', 'question');
