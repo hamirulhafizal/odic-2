@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useReducer } from 'react';
 
 // material-ui
 import { Box, Grid, Stack, Avatar, Button, TextField, Typography, useMediaQuery, FormHelperText } from '@mui/material';
@@ -25,6 +25,7 @@ import { useDispatch } from 'store';
 // yup
 import { object, string, mixed, number } from 'yup';
 import { useSelector } from 'store';
+import accountReducer from 'store/accountReducer';
 
 // ==============================|| PROFILE 3 - PROFILE ||============================== //
 
@@ -41,30 +42,12 @@ const Input = styled('input')({
 // });
 
 const Profile = ({ ...others }) => {
-
-  const { updateProfile } = useAuth();
-
-  const { user } = useSelector((state) => state.account);
+  const { updateProfile, user } = useAuth();
 
   const theme = useTheme();
-  const dispatch = useDispatch();
   const scriptedRef = useScriptRef();
 
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
-
-  const [user1, setUser] = useState();
-
-  console.log('user', user);
-
-  useEffect(() => {
-    if (user1 == null) {
-      if (window.localStorage.getItem('users') !== undefined && window.localStorage.getItem('users') !== null) {
-        const user = window.localStorage.getItem('users');
-        const users = JSON.parse(user);
-        setUser(users);
-      }
-    }
-  }, [user1]);
 
   return (
     <Formik
@@ -73,8 +56,8 @@ const Profile = ({ ...others }) => {
         firstName: user?.firstName || '',
         lastName: user?.lastName || '',
         email: user?.email || '',
-        photo: user?.photo || null,
-        phone: user?.phone || null,
+        phone: user?.phone || '',
+        photo: user?.photo || '',
         submit: null
       }}
       validator={() => ({})}
@@ -84,8 +67,28 @@ const Profile = ({ ...others }) => {
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         const { firstName, lastName, phone, photo, email } = values;
 
+        /* Then create a new FormData obj */
+        let formData = new FormData();
+
+        /* FormData requires name: id */
+        formData.append('website', 'question');
+
+        /* append input field values to formData */
+        for (let value in values) {
+          formData.append(value, values[value]);
+        }
+
+        // /* Can't console.log(formData), must
+        //      use formData.entries() - example:  */
+        // for (let property of formData.entries()) {
+        //   console.log(property[0], property[1]);
+        // }
+
+        /* Now POST your formData: */
+        // formPost(endpoint, formData);
+
         try {
-          await updateProfile(user?.user_name, firstName, lastName, phone, photo, email).then((res) => {
+          await updateProfile(user?.user_name, formData).then((res) => {
             if (scriptedRef.current) {
               setStatus({ success: true, msg: 'success' });
               setSubmitting(false);
@@ -140,10 +143,14 @@ const Profile = ({ ...others }) => {
                             accept="image/*"
                             id="contained-button-file"
                             type="file"
+                            name="photo"
+                            label="Photo"
                             value={setFieldValue.photo}
+                            // value={values.photo}
                             onChange={(event) => {
                               setFieldValue('photo', event.currentTarget.files[0]);
                             }}
+                            onBlur={handleBlur}
                           />
                           <Button variant="contained" component="span">
                             Upload Avatar

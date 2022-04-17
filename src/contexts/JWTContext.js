@@ -30,16 +30,13 @@ const JWT_EXPIRES_TIME = JWT_API.timeout;
 
 const chance = new Chance();
 
-let users = [
-  {
-    username: '5e86809283e28b96d2d38537',
-    email: 'info@codedthemes.com',
-    password: '123456',
-    password2: '123456',
-    first_name: 'JWT User'
-  }
-];
-
+// let users = [
+//   {
+//     user_name: '5e86809283e28b96d2d38537',
+//     email: 'info@codedthemes.com',
+//     password: '123456'
+//   }
+// ];
 // constant
 const initialState = {
   isLoggedIn: false,
@@ -58,20 +55,18 @@ export const JWTProvider = ({ children }) => {
     const init = async () => {
       try {
         const serviceToken = window.localStorage.getItem('access');
-
         if (serviceToken) {
           if (window.localStorage.getItem('users') !== undefined && window.localStorage.getItem('users') !== null) {
             const localUsers = window.localStorage.getItem('users');
-            users = JSON.parse(localUsers);
+            let users = JSON.parse(localUsers);
+            dispatch({
+              type: LOGIN,
+              payload: {
+                isLoggedIn: true,
+                user: users
+              }
+            });
           }
-
-          dispatch({
-            type: LOGIN,
-            payload: {
-              isLoggedIn: true,
-              user: users
-            }
-          });
         } else {
           dispatch({
             type: LOGOUT
@@ -85,8 +80,8 @@ export const JWTProvider = ({ children }) => {
       }
     };
 
-    init();
-  }, []);
+    if (state.user == null) init();
+  }, [state.user]);
 
   const login = async (email, password) => {
     const response = await axiosInstance
@@ -164,7 +159,7 @@ export const JWTProvider = ({ children }) => {
         dispatch({
           payload: {
             isLoggedIn: true,
-            users: users
+            user: users
           }
         });
       }
@@ -173,32 +168,24 @@ export const JWTProvider = ({ children }) => {
     });
   };
 
-  const updateProfile = async (user_name, firstName, lastName, phone, photo, email) => {
-    const response = await axiosInstance
-      .put(`${BACKEND_PATH}/api/v1/profile/${user_name}`, {
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        phone: phone,
-        photo: photo.file
-      })
-      .then((res) => {
-        console.log('res', res);
+  const updateProfile = async (user_name, formData) => {
+    const response = await axiosInstance.patch(`${BACKEND_PATH}/api/v1/profile/${user_name}`, formData).then((res) => {
+      console.log('res', res);
 
-        if (typeof window !== 'undefined') {
-          const users = JSON.stringify(res.data);
-          localStorage.setItem('users', users);
+      if (typeof window !== 'undefined') {
+        const users = JSON.stringify(res.data);
+        localStorage.setItem('users', users);
 
-          dispatch({
-            payload: {
-              isLoggedIn: true,
-              users
-            }
-          });
-        }
+        dispatch({
+          payload: {
+            isLoggedIn: true,
+            user: users
+          }
+        });
+      }
 
-        return res;
-      });
+      return res;
+    });
   };
 
   if (state.isInitialized !== undefined && !state.isInitialized) {

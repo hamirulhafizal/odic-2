@@ -182,7 +182,6 @@ const JWTLogin = ({ loginProp, ...others }) => {
               </Button>
             </AnimateButton>
           </Box>
-          {console.log('status', status)}
         </form>
       )}
     </Formik>
