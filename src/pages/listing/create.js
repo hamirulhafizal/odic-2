@@ -1,25 +1,25 @@
 // material-ui
-// import { useTheme } from '@mui/material/styles';
-import { Grid, Typography } from '@mui/material';
+import { Grid } from '@mui/material';
+import ValidationWizard from 'components/forms/forms-wizard/ValidationWizard';
 
 // project imports
 import AuthFooter from 'components/ui-component/cards/AuthFooter';
+import useConfig from 'hooks/useConfig';
 // import useAuth from 'hooks/useAuth';
+
+// store
+import { gridSpacing } from 'store/constant';
 
 // ===============================|| AUTH3 - LISITING ||=============================== //
 
 const Create = () => {
-  // const theme = useTheme();
-  // const { user } = useAuth();
   return (
-    <Grid container direction="column" justifyContent="flex-end" sx={{ minHeight: '100vh' }}>
-      <Grid item xs={12}>
-        <Grid container justifyContent="center" alignItems="center" sx={{ minHeight: 'calc(100vh - 68px)' }}>
-          <Grid item sx={{ m: { xs: 1, sm: 3 }, mb: 0 }}>
-            <Typography variant="subtitle1">Create You Listing</Typography>
-          </Grid>
-        </Grid>
+    <Grid container spacing={gridSpacing} justifyContent="center">
+      
+      <Grid item xs={12} md={9} lg={7}>
+        <ValidationWizard />
       </Grid>
+
       <Grid item xs={12} sx={{ m: 3, mt: 1 }}>
         <AuthFooter />
       </Grid>

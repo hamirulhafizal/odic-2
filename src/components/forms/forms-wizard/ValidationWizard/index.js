@@ -6,12 +6,13 @@ import { Button, Step, Stepper, StepLabel, Stack, Typography } from '@mui/materi
 // project imports
 import AddressForm from './AddressForm';
 import PaymentForm from './PaymentForm';
+import GalleryForm from './GalleryForm';
 import Review from './Review';
 import MainCard from 'components/ui-component/cards/MainCard';
 import AnimateButton from 'components/ui-component/extended/AnimateButton';
 
 // step options
-const steps = ['Shipping address', 'Payment details', 'Review your order'];
+const steps = ['Fill Up Detail', 'Upload Image', 'Review your Listing'];
 
 const getStepContent = (step, handleNext, handleBack, setErrorIndex, shippingData, setShippingData, paymentData, setPaymentData) => {
   switch (step) {
@@ -21,7 +22,7 @@ const getStepContent = (step, handleNext, handleBack, setErrorIndex, shippingDat
       );
     case 1:
       return (
-        <PaymentForm
+        <GalleryForm
           handleNext={handleNext}
           handleBack={handleBack}
           setErrorIndex={setErrorIndex}
@@ -54,7 +55,7 @@ const ValidationWizard = () => {
   };
 
   return (
-    <MainCard title="Validation">
+    <MainCard title="Create Listing">
       <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
         {steps.map((label, index) => {
           const labelProps = {};
