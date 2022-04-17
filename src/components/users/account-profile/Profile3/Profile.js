@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useReducer } from 'react';
+import { useState } from 'react';
 
 // material-ui
 import { Box, Grid, Stack, Avatar, Button, TextField, Typography, useMediaQuery, FormHelperText, CircularProgress } from '@mui/material';
@@ -8,7 +8,6 @@ import { useTheme, styled } from '@mui/material/styles';
 import useAuth from 'hooks/useAuth';
 import SubCard from 'components/ui-component/cards/SubCard';
 import AnimateButton from 'components/ui-component/extended/AnimateButton';
-import ItemAttachments from 'components/ui-component/third-party/ItemAttachments';
 import { gridSpacing } from 'store/constant';
 import { Form, Formik } from 'formik';
 import { openSnackbar } from 'store/slices/snackbar';
@@ -19,27 +18,11 @@ import * as Yup from 'yup';
 // hook
 import useScriptRef from 'hooks/useScriptRef';
 
-// store
-import { useDispatch } from 'store';
-
-// yup
-import { object, string, mixed, number } from 'yup';
-import { useSelector } from 'store';
-import accountReducer from 'store/accountReducer';
-
 // ==============================|| PROFILE 3 - PROFILE ||============================== //
 
 const Input = styled('input')({
   display: 'none'
 });
-
-// const validationSchema = object().shape({
-//   firstName: string().max(255).required('Name is required'),
-//   lastName: string().max(255).required('Name is required'),
-//   photo: mixed().test(1000, 'File Size is too large', (value) => value?.size <= 2000000),
-//   phone: number().max(255).required('Tel is required'),
-//   email: string().email().required('Email is required')
-// });
 
 const Profile = ({ ...others }) => {
   const { updateProfile, user } = useAuth();

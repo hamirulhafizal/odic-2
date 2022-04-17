@@ -26,5 +26,5 @@ const Create = () => {
     </Grid>
   );
 };
-// Create.Layout = 'authGuard';
+Create.Layout = 'authGuard';
 export default Create;
