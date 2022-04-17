@@ -170,7 +170,7 @@ const SocialProfile = () => {
               ) : (
                 <Avatar
                   alt="User 1"
-                  src={User1}
+                  src={user?.photo}
                   sx={{
                     margin: '-70px 0 0 auto',
                     borderRadius: '16px',
@@ -189,8 +189,8 @@ const SocialProfile = () => {
             <Grid item xs={12} md={9}>
               <Grid container spacing={gridSpacing}>
                 <Grid item xs={12} md={4}>
-                  <Typography variant="h5">{user?.name}</Typography>
-                  <Typography variant="subtitle2">Android Developer</Typography>
+                  <Typography variant="h5">{user?.firstName}</Typography>
+                  <Typography variant="subtitle2">One Dream Legacy</Typography>
                 </Grid>
                 <Grid item xs={12} md={8}>
                   <Grid
@@ -206,11 +206,11 @@ const SocialProfile = () => {
                     <Grid item>
                       <Button variant="outlined">Message</Button>
                     </Grid>
-                    <Grid item>
+                    {/* <Grid item>
                       <Button variant="contained" startIcon={<PersonAddTwoToneIcon />}>
                         Send Request
                       </Button>
-                    </Grid>
+                    </Grid> */}
                   </Grid>
                 </Grid>
               </Grid>

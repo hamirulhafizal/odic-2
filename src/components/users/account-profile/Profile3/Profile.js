@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useReducer } from 'react';
 
 // material-ui
-import { Box, Grid, Stack, Avatar, Button, TextField, Typography, useMediaQuery, FormHelperText } from '@mui/material';
+import { Box, Grid, Stack, Avatar, Button, TextField, Typography, useMediaQuery, FormHelperText, CircularProgress } from '@mui/material';
 import { useTheme, styled } from '@mui/material/styles';
 
 // project imports
@@ -47,6 +47,8 @@ const Profile = ({ ...others }) => {
   const theme = useTheme();
   const scriptedRef = useScriptRef();
 
+  const [isLoading, setLoading] = useState(false);
+
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
@@ -65,8 +67,9 @@ const Profile = ({ ...others }) => {
         photo: Yup.mixed().test(200000, 'File Size is too large', (value) => value?.size <= 2000000)
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-        const { firstName, lastName, phone, photo, email } = values;
+        // const { firstName, lastName, phone, photo, email } = values;
 
+        setLoading(true);
         /* Then create a new FormData obj */
         let formData = new FormData();
 
@@ -78,18 +81,10 @@ const Profile = ({ ...others }) => {
           formData.append(value, values[value]);
         }
 
-        // /* Can't console.log(formData), must
-        //      use formData.entries() - example:  */
-        // for (let property of formData.entries()) {
-        //   console.log(property[0], property[1]);
-        // }
-
-        /* Now POST your formData: */
-        // formPost(endpoint, formData);
-
         try {
           await updateProfile(user?.user_name, formData).then((res) => {
             if (scriptedRef.current) {
+              setLoading(false);
               setStatus({ success: true, msg: 'success' });
               setSubmitting(false);
               dispatch(
@@ -107,6 +102,7 @@ const Profile = ({ ...others }) => {
           });
         } catch (err) {
           if (scriptedRef.current === false) {
+            setLoading(false);
             setStatus({ success: false, msg: 'fail' });
             if (err.password[0] !== null) {
               setErrors({ submit: 'try stronger password' });
@@ -212,7 +208,7 @@ const Profile = ({ ...others }) => {
                       <Stack direction="row">
                         <AnimateButton>
                           <Button type="submit" variant="contained">
-                            Change Details
+                            {isLoading ? <CircularProgress sx={{ color: 'white' }} size={20} /> : 'Change Details'}
                           </Button>
                         </AnimateButton>
                       </Stack>

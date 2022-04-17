@@ -170,8 +170,6 @@ export const JWTProvider = ({ children }) => {
 
   const updateProfile = async (user_name, formData) => {
     const response = await axiosInstance.patch(`${BACKEND_PATH}/api/v1/profile/${user_name}`, formData).then((res) => {
-      console.log('res', res);
-
       if (typeof window !== 'undefined') {
         const users = JSON.stringify(res.data);
         localStorage.setItem('users', users);

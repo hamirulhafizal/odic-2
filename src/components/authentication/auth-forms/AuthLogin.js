@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'Link';
 
@@ -8,6 +8,7 @@ import {
   Box,
   Button,
   Checkbox,
+  CircularProgress,
   FormControl,
   FormControlLabel,
   FormHelperText,
@@ -46,6 +47,7 @@ const JWTLogin = ({ loginProp, ...others }) => {
 
   const [checked, setChecked] = React.useState(true);
   const [showPassword, setShowPassword] = React.useState(false);
+  const [isLoading, setLoading] = React.useState(false);
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -54,6 +56,8 @@ const JWTLogin = ({ loginProp, ...others }) => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+
+  console.log('isLoading', isLoading);
 
   return (
     <Formik
@@ -67,10 +71,12 @@ const JWTLogin = ({ loginProp, ...others }) => {
         password: Yup.string().max(255).required('Password is required')
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
+        setLoading(true);
         try {
           await login(values.email, values.password)
             .then((res) => {
               if (scriptedRef.current) {
+                setLoading(false);
                 setStatus({ success: true, msg: 'success' });
                 setSubmitting(false);
               }
@@ -78,6 +84,7 @@ const JWTLogin = ({ loginProp, ...others }) => {
             })
             .catch((err) => {
               console.log('err', err);
+              setLoading(false);
             });
         } catch (err) {
           console.error(err);
@@ -85,6 +92,7 @@ const JWTLogin = ({ loginProp, ...others }) => {
             setStatus({ success: false, msg: 'fail' });
             setErrors({ submit: err.message });
             setSubmitting(false);
+            setLoading(false);
           }
         }
       }}
@@ -177,7 +185,7 @@ const JWTLogin = ({ loginProp, ...others }) => {
                 variant="contained"
               >
                 <FormHelperText id="standard-weight-helper-text-username-login">
-                  {status && status.success ? `${status.msg}` : 'Sign In'}
+                  {status && status.success ? `${status.msg}` : isLoading ? <CircularProgress size={20} /> : 'Sign In'}
                 </FormHelperText>
               </Button>
             </AnimateButton>
