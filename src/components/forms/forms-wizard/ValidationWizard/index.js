@@ -47,12 +47,28 @@ const ValidationWizard = () => {
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
-    // setErrorIndex(null);
+    setErrorIndex(null);
   };
 
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
+
+  const { firstName, lastName } = shippingData;
+
+  console.log(
+    'shippingData',
+
+    { firstName: firstName, lastName: lastName }
+  );
+
+
+  // useEffect(() => {
+
+
+
+  // }, [])
+
 
   return (
     <MainCard title="Create Listing">
@@ -60,15 +76,15 @@ const ValidationWizard = () => {
         {steps.map((label, index) => {
           const labelProps = {};
 
-          // if (index === errorIndex) {
-          //   labelProps.optional = (
-          //     <Typography variant="caption" color="error">
-          //       Error
-          //     </Typography>
-          //   );
+          if (index === errorIndex) {
+            labelProps.optional = (
+              <Typography variant="caption" color="error">
+                Error
+              </Typography>
+            );
 
-          //   labelProps.error = true;
-          // }
+            labelProps.error = true;
+          }
 
           return (
             <Step key={label}>
@@ -107,6 +123,7 @@ const ValidationWizard = () => {
         ) : (
           <>
             {getStepContent(activeStep, handleNext, handleBack, setErrorIndex, shippingData, setShippingData, paymentData, setPaymentData)}
+
             {activeStep === steps.length - 1 && (
               <Stack direction="row" justifyContent={activeStep !== 0 ? 'space-between' : 'flex-end'}>
                 {activeStep !== 0 && (

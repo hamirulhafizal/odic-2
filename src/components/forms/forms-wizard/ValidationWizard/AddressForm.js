@@ -14,30 +14,50 @@ import FormControlSelect from 'components/ui-component/extended/Form/FormControl
 const type = [
   {
     value: '1',
-    label: 'Sales'
+    label: 'Rent'
   },
   {
     value: '2',
-    label: 'Short Stay'
+    label: 'Sales'
   },
   {
     value: '3',
-    label: 'Rent'
+    label: 'Short Stay'
   }
 ];
 
 const propertyTypes = [
   {
     value: '0',
-    label: 'Rent'
+    label: 'Apartment'
   },
   {
     value: '1',
-    label: 'Sales'
+    label: 'Landed House'
   },
   {
     value: '2',
-    label: 'Short Stay'
+    label: 'Private Room'
+  },
+  {
+    value: '3',
+    label: 'Factory'
+  },
+  {
+    value: '4',
+    label: 'Office'
+  },
+  {
+    value: '5',
+    label: 'Hotel/Resort'
+  },
+  {
+    value: '6',
+    label: 'ShopLot'
+  },
+  {
+    value: '7',
+    label: 'Land'
   }
 ];
 
@@ -89,6 +109,9 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
               fullWidth
             />
           </Grid>
+
+          {/* {console.log('formik.values.category', formik.values.category)} */}
+
           <Grid item xs={12} sm={12}>
             <FormControlSelect
               currencies={propertyTypes}
@@ -130,7 +153,7 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
               autoComplete="family-name"
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          {/* <Grid item xs={12} sm={6}>
             <TextField id="city" name="city" label="City" fullWidth autoComplete="shipping address-level2" />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -141,7 +164,7 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField id="country" name="country" label="Country" fullWidth autoComplete="shipping country" />
-          </Grid>
+          </Grid> */}
           <Grid item xs={12}>
             <FormControlLabel
               control={<Checkbox color="secondary" name="saveAddress" value="yes" />}

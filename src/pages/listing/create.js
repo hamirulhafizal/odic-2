@@ -15,7 +15,6 @@ import { gridSpacing } from 'store/constant';
 const Create = () => {
   return (
     <Grid container spacing={gridSpacing} justifyContent="center">
-      
       <Grid item xs={12} md={9} lg={7}>
         <ValidationWizard />
       </Grid>

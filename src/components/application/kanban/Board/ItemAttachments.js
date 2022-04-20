@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 
 // material-ui
 import { alpha, styled } from '@mui/material/styles';
@@ -25,7 +25,7 @@ const DropZoneStyle = styled('div')(({ theme }) => ({
   '&:hover': { opacity: 0.72 }
 }));
 
-function UploadFile() {
+function UploadFile(setFileValueImg) {
   const [files, setFiles] = useState([]);
 
   const handleRemove = (file) => {
@@ -56,6 +56,14 @@ function UploadFile() {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: handleDrop
   });
+
+  useEffect(() => {
+    if (files !== null) {
+      // setFileValueImg(files);
+      setFileValueImg?.setFileValueImg?.setFileValueImg(files);
+      console.log('setFileValueImg', files);
+    }
+  }, [setFileValueImg, files]);
 
   return (
     <>
@@ -118,9 +126,9 @@ function UploadFile() {
   );
 }
 
-const ItemAttachments = () => (
+const ItemAttachments = (setFileValueImg) => (
   <Box sx={{ display: 'flex' }}>
-    <UploadFile />
+    <UploadFile setFileValueImg={setFileValueImg} />
   </Box>
 );
 

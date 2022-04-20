@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 
 // material-ui
-import { Button, Checkbox, FormControlLabel, Grid, Stack, TextField, Typography } from '@mui/material';
+import { Button, Checkbox, FormControlLabel, Grid, InputLabel, Stack, TextField, Typography } from '@mui/material';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 // project imports
 import AnimateButton from 'components/ui-component/extended/AnimateButton';
@@ -9,6 +10,8 @@ import AnimateButton from 'components/ui-component/extended/AnimateButton';
 // third-party
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import ItemAttachments from 'components/application/kanban/Board/ItemAttachments';
+import { useEffect, useState } from 'react';
 
 const validationSchema = yup.object({
   cardName: yup.string().required('First Name is required'),
@@ -18,6 +21,8 @@ const validationSchema = yup.object({
 // ==============================|| FORM WIZARD - VALIDATION  ||============================== //
 
 export default function GalleryForm({ paymentData, setPaymentData, handleNext, handleBack, setErrorIndex }) {
+  const [fileImg, setFileValueImg] = useState(null);
+
   const formik = useFormik({
     initialValues: {
       cardName: paymentData.cardName,
@@ -33,6 +38,8 @@ export default function GalleryForm({ paymentData, setPaymentData, handleNext, h
     }
   });
 
+  console.log('fileImg-->', fileImg);
+
   return (
     <>
       <Typography variant="h5" gutterBottom sx={{ mb: 2 }}>
@@ -41,7 +48,7 @@ export default function GalleryForm({ paymentData, setPaymentData, handleNext, h
       <form onSubmit={formik.handleSubmit}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={6}>
-            <TextField
+            {/* <TextField
               id="cardName"
               name="cardName"
               value={formik.values.cardName}
@@ -51,8 +58,29 @@ export default function GalleryForm({ paymentData, setPaymentData, handleNext, h
               label="Name on card"
               fullWidth
               autoComplete="cc-name"
-            />
+            /> */}
+
+            {/* <TextField type="file" id="file-upload" fullWidth label="Enter SKU" sx={{ display: 'none' }} />
+            <InputLabel
+              htmlFor="file-upload"
+              sx={{
+                py: 3.75,
+                px: 0,
+                textAlign: 'center',
+                borderRadius: '4px',
+                cursor: 'pointer',
+                mb: 3,
+                '& > svg': {
+                  verticalAlign: 'sub',
+                  mr: 0.5
+                }
+              }}
+            >
+              <CloudUploadIcon /> Drop file here to upload
+            </InputLabel> */}
+            <ItemAttachments setFileValueImg={setFileValueImg} />
           </Grid>
+
           <Grid item xs={12} md={6}>
             <TextField
               id="cardNumber"
@@ -66,18 +94,22 @@ export default function GalleryForm({ paymentData, setPaymentData, handleNext, h
               autoComplete="cc-number"
             />
           </Grid>
+
           <Grid item xs={12} md={6}>
             <TextField id="expDate" label="Expiry date" fullWidth autoComplete="cc-exp" />
           </Grid>
+
           <Grid item xs={12} md={6}>
             <TextField id="cvv" label="CVV" helperText="Last three digits on signature strip" fullWidth autoComplete="cc-csc" />
           </Grid>
+
           <Grid item xs={12}>
             <FormControlLabel
               control={<Checkbox color="secondary" name="saveCard" value="yes" />}
               label="Remember credit card details for next time"
             />
           </Grid>
+
           <Grid item xs={12}>
             <Stack direction="row" justifyContent="space-between">
               <Button onClick={handleBack} sx={{ my: 3, ml: 1 }}>
