@@ -363,7 +363,9 @@ const Listing = () => {
             {/* product add & dialog */}
             <Tooltip title="Add Product">
               <Fab color="primary" size="small" sx={{ boxShadow: 'none', ml: 1, width: 32, height: 32, minHeight: 32 }}>
-                <AddIcon fontSize="small" />
+                <IconButton href="listing/create" aria-label="delete">
+                  <AddIcon fontSize="small" />
+                </IconButton>
               </Fab>
             </Tooltip>
           </Grid>

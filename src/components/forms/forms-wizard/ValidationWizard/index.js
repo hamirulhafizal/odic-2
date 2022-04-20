@@ -47,7 +47,7 @@ const ValidationWizard = () => {
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
-    setErrorIndex(null);
+    // setErrorIndex(null);
   };
 
   const handleBack = () => {
@@ -60,15 +60,15 @@ const ValidationWizard = () => {
         {steps.map((label, index) => {
           const labelProps = {};
 
-          if (index === errorIndex) {
-            labelProps.optional = (
-              <Typography variant="caption" color="error">
-                Error
-              </Typography>
-            );
+          // if (index === errorIndex) {
+          //   labelProps.optional = (
+          //     <Typography variant="caption" color="error">
+          //       Error
+          //     </Typography>
+          //   );
 
-            labelProps.error = true;
-          }
+          //   labelProps.error = true;
+          // }
 
           return (
             <Step key={label}>

@@ -9,6 +9,37 @@ import AnimateButton from 'components/ui-component/extended/AnimateButton';
 // third-party
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import FormControlSelect from 'components/ui-component/extended/Form/FormControlSelect';
+
+const type = [
+  {
+    value: '1',
+    label: 'Sales'
+  },
+  {
+    value: '2',
+    label: 'Short Stay'
+  },
+  {
+    value: '3',
+    label: 'Rent'
+  }
+];
+
+const propertyTypes = [
+  {
+    value: '0',
+    label: 'Rent'
+  },
+  {
+    value: '1',
+    label: 'Sales'
+  },
+  {
+    value: '2',
+    label: 'Short Stay'
+  }
+];
 
 const validationSchema = yup.object({
   firstName: yup.string().required('First Name is required'),
@@ -21,13 +52,18 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
   const formik = useFormik({
     initialValues: {
       firstName: shippingData.firstName,
-      lastName: shippingData.lastName
+      lastName: shippingData.lastName,
+      category: shippingData.category,
+      propertyType: shippingData.propertyType
     },
     validationSchema,
     onSubmit: (values) => {
+      console.log('values', values);
       setShippingData({
         firstName: values.firstName,
-        lastName: values.lastName
+        lastName: values.lastName,
+        category: values.category,
+        propertyType: values.propertyType
       });
       handleNext();
     }
@@ -36,11 +72,37 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
   return (
     <>
       <Typography variant="h5" gutterBottom sx={{ mb: 2 }}>
-        Shipping address
+        Create Listing
       </Typography>
       <form onSubmit={formik.handleSubmit} id="validation-forms">
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={12}>
+            <FormControlSelect
+              currencies={type}
+              idz="category"
+              namez="category"
+              captionLabelz="Category"
+              value={formik.values.category || ''}
+              onChange={formik.handleChange}
+              error={formik.touched.category && Boolean(formik.errors.category)}
+              helperText={formik.touched.category && formik.errors.category}
+              fullWidth
+            />
+          </Grid>
+          <Grid item xs={12} sm={12}>
+            <FormControlSelect
+              currencies={propertyTypes}
+              idz="propertyType"
+              namez="propertyType"
+              captionLabelz="Property Type"
+              value={formik.values.propertyType || ''}
+              onChange={formik.handleChange}
+              error={formik.touched.propertyType && Boolean(formik.errors.propertyType)}
+              helperText={formik.touched.propertyType && formik.errors.propertyType}
+              fullWidth
+            />
+          </Grid>
+          <Grid item xs={12}>
             <TextField
               id="firstName"
               name="firstName"
@@ -53,7 +115,9 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
               autoComplete="given-name"
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12}>
+            {/* <TextField id="address2" name="address2" label="Address line 2" fullWidth autoComplete="shipping address-line2" /> */}
+
             <TextField
               id="lastName"
               name="lastName"
@@ -65,12 +129,6 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
               fullWidth
               autoComplete="family-name"
             />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField id="address1" name="address1" label="Address line 1" fullWidth autoComplete="shipping address-line1" />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField id="address2" name="address2" label="Address line 2" fullWidth autoComplete="shipping address-line2" />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField id="city" name="city" label="City" fullWidth autoComplete="shipping address-level2" />
