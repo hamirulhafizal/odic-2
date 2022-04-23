@@ -13,6 +13,40 @@ export default function componentStyleOverrides(theme, borderRadius, outlinedFil
         }
       }
     },
+
+    // MuiDropzoneSnackbar: {
+    //   styleOverrides: {
+    //     errorAlert: {
+    //       backgroundColor: '#AFA',
+    //       color: '#000'
+    //     },
+    //     successAlert: {
+    //       backgroundColor: '#FAA',
+    //       color: '#000'
+    //     }
+    //   }
+    // },
+
+    overrides: {
+      MuiDropzoneSnackbar: {
+        errorAlert: {
+          backgroundColor: '#AFA',
+          color: '#000'
+        },
+        successAlert: {
+          backgroundColor: '#FAA',
+          color: '#000'
+        }
+      }
+    },
+
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          color: bgColor
+        }
+      }
+    },
     MuiPaper: {
       defaultProps: {
         elevation: 0

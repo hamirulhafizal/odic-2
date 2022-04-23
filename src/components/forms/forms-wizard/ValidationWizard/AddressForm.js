@@ -71,14 +71,13 @@ const validationSchema = yup.object({
 const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex }) => {
   const formik = useFormik({
     initialValues: {
-      firstName: shippingData.firstName,
-      lastName: shippingData.lastName,
-      category: shippingData.category,
-      propertyType: shippingData.propertyType
+      firstName: 'hamirul',
+      lastName: 'hafizal',
+      category: 'Rent',
+      propertyType: 'Office'
     },
     validationSchema,
     onSubmit: (values) => {
-      console.log('values', values);
       setShippingData({
         firstName: values.firstName,
         lastName: values.lastName,

@@ -14,7 +14,7 @@ import AnimateButton from 'components/ui-component/extended/AnimateButton';
 // step options
 const steps = ['Fill Up Detail', 'Upload Image', 'Review your Listing'];
 
-const getStepContent = (step, handleNext, handleBack, setErrorIndex, shippingData, setShippingData, paymentData, setPaymentData) => {
+const getStepContent = (step, handleNext, handleBack, setErrorIndex, shippingData, setShippingData, imageProperty, setPaymentData) => {
   switch (step) {
     case 0:
       return (
@@ -26,12 +26,12 @@ const getStepContent = (step, handleNext, handleBack, setErrorIndex, shippingDat
           handleNext={handleNext}
           handleBack={handleBack}
           setErrorIndex={setErrorIndex}
-          paymentData={paymentData}
+          imageProperty={imageProperty}
           setPaymentData={setPaymentData}
         />
       );
     case 2:
-      return <Review />;
+      return <Review shippingData={shippingData} imageProperty={imageProperty} />;
     default:
       throw new Error('Unknown step');
   }
@@ -42,7 +42,7 @@ const getStepContent = (step, handleNext, handleBack, setErrorIndex, shippingDat
 const ValidationWizard = () => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [shippingData, setShippingData] = React.useState({});
-  const [paymentData, setPaymentData] = React.useState({});
+  const [imageProperty, setPaymentData] = React.useState({});
   const [errorIndex, setErrorIndex] = React.useState(null);
 
   const handleNext = () => {
@@ -54,21 +54,10 @@ const ValidationWizard = () => {
     setActiveStep(activeStep - 1);
   };
 
-  const { firstName, lastName } = shippingData;
+  const { firstName, lastName, category, propertyType } = shippingData;
+  const { fileName, type, size } = imageProperty;
 
-  console.log(
-    'shippingData',
-
-    { firstName: firstName, lastName: lastName }
-  );
-
-
-  // useEffect(() => {
-
-
-
-  // }, [])
-
+  console.log('imageProperty', { fileName, type, size });
 
   return (
     <MainCard title="Create Listing">
@@ -122,7 +111,16 @@ const ValidationWizard = () => {
           </>
         ) : (
           <>
-            {getStepContent(activeStep, handleNext, handleBack, setErrorIndex, shippingData, setShippingData, paymentData, setPaymentData)}
+            {getStepContent(
+              activeStep,
+              handleNext,
+              handleBack,
+              setErrorIndex,
+              shippingData,
+              setShippingData,
+              imageProperty,
+              setPaymentData
+            )}
 
             {activeStep === steps.length - 1 && (
               <Stack direction="row" justifyContent={activeStep !== 0 ? 'space-between' : 'flex-end'}>

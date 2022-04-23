@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 // material-ui
-import { Button, Checkbox, FormControlLabel, Grid, IconButton, InputLabel, Stack, TextField, Typography } from '@mui/material';
+import { Button, Grid, Input, Stack, Typography, CardMedia, Divider, InputLabel, TextField } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 // project imports
@@ -10,157 +10,186 @@ import AnimateButton from 'components/ui-component/extended/AnimateButton';
 // third-party
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import ItemAttachments from 'components/application/kanban/Board/ItemAttachments';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { DropzoneAreaBase, DropzoneDialogBase } from 'material-ui-dropzone';
 import CloseIcon from '@material-ui/icons/Close';
+import { useTheme, styled } from '@mui/material/styles';
 
 const validationSchema = yup.object({
-  cardName: yup.string().required('First Name is required'),
-  cardNumber: yup.string().required('Last Name is required')
+  file: yup.mixed().test(200000, 'File Size is too large', (value) => value?.size <= 2000000)
 });
+
+// styles
+const ImageWrapper = styled('div')(({ theme }) => ({
+  position: 'relative',
+  overflow: 'hidden',
+  borderRadius: '4px',
+  cursor: 'pointer',
+  width: '100%',
+  height: 'auto',
+  objectFit: 'contain',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  background: theme.palette.background.default,
+  '& > svg': {
+    verticalAlign: 'sub',
+    marginRight: 6
+  }
+}));
 
 // ==============================|| FORM WIZARD - VALIDATION  ||============================== //
 
-export default function GalleryForm({ paymentData, setPaymentData, handleNext, handleBack, setErrorIndex }) {
-  const [fileImg, setFileValueImg] = useState(null);
-
-  const [open, setOpen] = useState(false);
-  const [fileObjects, setFileObjects] = useState([]);
-
-  const dialogTitle = () => (
-    <>
-      <span>Upload file</span>
-      <IconButton style={{ right: '12px', top: '8px', position: 'absolute' }} onClick={() => setOpen(false)}>
-        <CloseIcon />
-      </IconButton>
-    </>
-  );
+export default function GalleryForm({ imageProperty, setPaymentData, handleNext, handleBack, setErrorIndex }) {
+  const [avatarPreview, setAvatarPreview] = useState('');
+  const theme = useTheme();
 
   const formik = useFormik({
     initialValues: {
-      cardName: paymentData.cardName,
-      cardNumber: paymentData.cardNumber
+      fileName: imageProperty.fileName,
+      type: imageProperty.type,
+      size: imageProperty.size
     },
     validationSchema,
+
     onSubmit: (values) => {
-      setPaymentData({
-        cardName: values.cardName,
-        cardNumber: values.cardNumber
+      console.log({
+        fileName: values.file.name,
+        type: values.file.type,
+        size: `${values.file.size} bytes`
       });
+
+      setPaymentData({
+        fileName: values.file.name,
+        type: values.file.type,
+        size: `${values.file.size} bytes`
+      });
+
       handleNext();
     }
   });
 
-  useEffect(() => {
-    setFileValueImg(fileObjects);
-  }, [fileObjects, fileImg]);
-
-  console.log('fileImg-->', fileImg);
+  const preViewImage = (e) => {
+    const fileReader = new FileReader();
+    fileReader.onload = () => {
+      if (fileReader.readyState === 2) {
+        formik.setFieldValue('file', e.target.files[0]);
+        setAvatarPreview(fileReader.result);
+      }
+    };
+    fileReader.readAsDataURL(e.target.files[0]);
+  };
 
   return (
     <>
-    
       <form onSubmit={formik.handleSubmit}>
         <Grid container spacing={3}>
-
-            <Typography variant="h5" gutterBottom sx={{ mb: 2 }}>
-        Cover Image
-      </Typography>
           <Grid item xs={12} md={6}>
-            <Button variant="contained" color="primary" onClick={() => setOpen(true)}>
-              Add Image
-            </Button>
-
-            <DropzoneDialogBase
-              dialogTitle={dialogTitle()}
-              acceptedFiles={['image/*']}
-              fileObjects={fileObjects}
-              cancelButtonText={'cancel'}
-              submitButtonText={'submit'}
-              maxFileSize={5000000}
-              open={open}
-              onAdd={(newFileObjs) => {
-                console.log('onAdd', newFileObjs);
-                setFileObjects([].concat(fileObjects, newFileObjs));
-              }}
-              onDelete={(deleteFileObj) => {
-                console.log('onDelete', deleteFileObj);
-              }}
-              onClose={() => setOpen(false)}
-              onSave={() => {
-                console.log('onSave', fileObjects);
-                setOpen(false);
-              }}
-              showPreviews={true}
-              showFileNamesInPreview={true}
-            />
-
-        
-
-            {/* <TextField
-              id="cardName"
-              name="cardName"
-              value={formik.values.cardName}
-              onChange={formik.handleChange}
-              error={formik.touched.cardName && Boolean(formik.errors.cardName)}
-              helperText={formik.touched.cardName && formik.errors.cardName}
-              label="Name on card"
-              fullWidth
-              autoComplete="cc-name"
-            /> */}
-
-            {/* <TextField type="file" id="file-upload" fullWidth label="Enter SKU" sx={{ display: 'none' }} />
-            <InputLabel
-              htmlFor="file-upload"
-              sx={{
-                py: 3.75,
-                px: 0,
-                textAlign: 'center',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                mb: 3,
-                '& > svg': {
-                  verticalAlign: 'sub',
-                  mr: 0.5
-                }
-              }}
-            >
-              <CloudUploadIcon /> Drop file here to upload
-            </InputLabel> 
-            <ItemAttachments setFileValueImg={setFileValueImg} />
-            
-            */}
-          </Grid>
-
-          {/* <Grid item xs={12} md={6}>
-            <TextField
-              id="cardNumber"
-              name="cardNumber"
-              label="Card number"
-              value={formik.values.cardNumber}
-              onChange={formik.handleChange}
-              error={formik.touched.cardNumber && Boolean(formik.errors.cardNumber)}
-              helperText={formik.touched.cardNumber && formik.errors.cardNumber}
-              fullWidth
-              autoComplete="cc-number"
-            />
-          </Grid>
-
-          <Grid item xs={12} md={6}>
-            <TextField id="expDate" label="Expiry date" fullWidth autoComplete="cc-exp" />
-          </Grid>
-
-          <Grid item xs={12} md={6}>
-            <TextField id="cvv" label="CVV" helperText="Last three digits on signature strip" fullWidth autoComplete="cc-csc" />
+            <Typography variant="h5" gutterBottom>
+              Cover Image
+            </Typography>
           </Grid>
 
           <Grid item xs={12}>
-            <FormControlLabel
-              control={<Checkbox color="secondary" name="saveCard" value="yes" />}
-              label="Remember credit card details for next time"
-            />
+            {/* <label style={{ width: '100%' }} htmlFor="contained-button-file">
+               <Grid item xs={12}>
+                  <Stack direction="row">
+                    <Button variant="contained" component="span" startIcon={<CloudUploadIcon />}>
+                      Upload
+                    </Button>
+                  </Stack>
+                </Grid>
+                  <Input
+                  sx={{ display: 'none' }}
+                  accept="image/*"
+                  id="contained-button-file"
+                  multiple
+                  type="file"
+                  name="file"
+                  onChange={(e) => {
+                    preViewImage(e);
+                  }}
+                /> */}
+
+            <div>
+              <TextField
+                accept="image/*"
+                multiple
+                name="file"
+                type="file"
+                id="file-upload"
+                fullWidth
+                label="Enter SKU"
+                sx={{ display: 'none' }}
+                onChange={(e) => {
+                  preViewImage(e);
+                }}
+              />
+
+              <InputLabel
+                htmlFor="file-upload"
+                sx={{
+                  background: theme.palette.background.default,
+                  py: 3.75,
+                  px: 0,
+                  textAlign: 'center',
+                  borderRadius: '4px',
+                  cursor: 'pointer',
+                  mb: 3,
+                  '& > svg': {
+                    verticalAlign: 'sub',
+                    mr: 0.5
+                  }
+                }}
+              >
+                <CloudUploadIcon /> Drop file here to upload
+              </InputLabel>
+            </div>
+            {/* </label> */}
+
+            <ImageWrapper>
+              <CardMedia component="img" image={avatarPreview} title="Product" />
+            </ImageWrapper>
+          </Grid>
+
+          <Divider />
+
+          {/* <Grid item xs={12} md={6}>
+            <Grid item xs={12} md={6}>
+              <Typography variant="h5" gutterBottom>
+                Image Gallery
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Stack direction="column" spacing={2} alignItems="center">
+                <label style={{ width: '100%' }} htmlFor="contained-button-file">
+                  <Grid item xs={12}>
+                    <Stack direction="row">
+                      <Button variant="contained" component="span" startIcon={<CloudUploadIcon />}>
+                        Upload
+                      </Button>
+                    </Stack>
+                  </Grid>
+
+                  <Input
+                    sx={{ display: 'none' }}
+                    accept="image/*"
+                    id="contained-button-file"
+                    multiple
+                    type="file"
+                    name="file"
+                    onChange={(e) => {
+                      preViewImage(e);
+                    }}
+                  />
+                </label>
+
+                <ImageWrapper>
+                  <CardMedia component="img" image={avatarPreview} title="Product" />
+                </ImageWrapper>
+              </Stack>
+            </Grid>
           </Grid> */}
 
           <Grid item xs={12}>
