@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 // material-ui
-import { Button, Checkbox, FormControlLabel, Grid, InputLabel, Stack, TextField, Typography } from '@mui/material';
+import { Button, Checkbox, FormControlLabel, Grid, IconButton, InputLabel, Stack, TextField, Typography } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 // project imports
@@ -13,6 +13,9 @@ import * as yup from 'yup';
 import ItemAttachments from 'components/application/kanban/Board/ItemAttachments';
 import { useEffect, useState } from 'react';
 
+import { DropzoneAreaBase, DropzoneDialogBase } from 'material-ui-dropzone';
+import CloseIcon from '@material-ui/icons/Close';
+
 const validationSchema = yup.object({
   cardName: yup.string().required('First Name is required'),
   cardNumber: yup.string().required('Last Name is required')
@@ -22,6 +25,18 @@ const validationSchema = yup.object({
 
 export default function GalleryForm({ paymentData, setPaymentData, handleNext, handleBack, setErrorIndex }) {
   const [fileImg, setFileValueImg] = useState(null);
+
+  const [open, setOpen] = useState(false);
+  const [fileObjects, setFileObjects] = useState([]);
+
+  const dialogTitle = () => (
+    <>
+      <span>Upload file</span>
+      <IconButton style={{ right: '12px', top: '8px', position: 'absolute' }} onClick={() => setOpen(false)}>
+        <CloseIcon />
+      </IconButton>
+    </>
+  );
 
   const formik = useFormik({
     initialValues: {
@@ -38,16 +53,52 @@ export default function GalleryForm({ paymentData, setPaymentData, handleNext, h
     }
   });
 
+  useEffect(() => {
+    setFileValueImg(fileObjects);
+  }, [fileObjects, fileImg]);
+
   console.log('fileImg-->', fileImg);
 
   return (
     <>
-      <Typography variant="h5" gutterBottom sx={{ mb: 2 }}>
-        Drop you Image
-      </Typography>
+    
       <form onSubmit={formik.handleSubmit}>
         <Grid container spacing={3}>
+
+            <Typography variant="h5" gutterBottom sx={{ mb: 2 }}>
+        Cover Image
+      </Typography>
           <Grid item xs={12} md={6}>
+            <Button variant="contained" color="primary" onClick={() => setOpen(true)}>
+              Add Image
+            </Button>
+
+            <DropzoneDialogBase
+              dialogTitle={dialogTitle()}
+              acceptedFiles={['image/*']}
+              fileObjects={fileObjects}
+              cancelButtonText={'cancel'}
+              submitButtonText={'submit'}
+              maxFileSize={5000000}
+              open={open}
+              onAdd={(newFileObjs) => {
+                console.log('onAdd', newFileObjs);
+                setFileObjects([].concat(fileObjects, newFileObjs));
+              }}
+              onDelete={(deleteFileObj) => {
+                console.log('onDelete', deleteFileObj);
+              }}
+              onClose={() => setOpen(false)}
+              onSave={() => {
+                console.log('onSave', fileObjects);
+                setOpen(false);
+              }}
+              showPreviews={true}
+              showFileNamesInPreview={true}
+            />
+
+        
+
             {/* <TextField
               id="cardName"
               name="cardName"
@@ -77,11 +128,13 @@ export default function GalleryForm({ paymentData, setPaymentData, handleNext, h
               }}
             >
               <CloudUploadIcon /> Drop file here to upload
-            </InputLabel> */}
+            </InputLabel> 
             <ItemAttachments setFileValueImg={setFileValueImg} />
+            
+            */}
           </Grid>
 
-          <Grid item xs={12} md={6}>
+          {/* <Grid item xs={12} md={6}>
             <TextField
               id="cardNumber"
               name="cardNumber"
@@ -108,7 +161,7 @@ export default function GalleryForm({ paymentData, setPaymentData, handleNext, h
               control={<Checkbox color="secondary" name="saveCard" value="yes" />}
               label="Remember credit card details for next time"
             />
-          </Grid>
+          </Grid> */}
 
           <Grid item xs={12}>
             <Stack direction="row" justifyContent="space-between">
