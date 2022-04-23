@@ -57,8 +57,6 @@ const ValidationWizard = () => {
   const { firstName, lastName, category, propertyType } = shippingData;
   const { fileName, type, size } = imageProperty;
 
-  console.log('imageProperty', { fileName, type, size });
-
   return (
     <MainCard title="Create Listing">
       <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>

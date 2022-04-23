@@ -36,6 +36,18 @@ const Profile = ({ ...others }) => {
 
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
 
+  const [avatarPreview, setAvatarPreview] = useState('');
+
+  const preViewImage = (e) => {
+    const fileReader = new FileReader();
+    fileReader.onload = () => {
+      if (fileReader.readyState === 2) {
+        setAvatarPreview(fileReader.result);
+      }
+    };
+    fileReader.readAsDataURL(e.target.files[0]);
+  };
+
   return (
     <Formik
       enableReinitialize={true}
@@ -108,7 +120,7 @@ const Profile = ({ ...others }) => {
                 <SubCard title="Profile Picture" contentSX={{ textAlign: 'center' }}>
                   <Grid container spacing={2}>
                     <Grid item xs={12}>
-                      <Avatar alt={user?.nickname} src={user?.photo || null} sx={{ width: 100, height: 100, margin: '0 auto' }} />
+                      <Avatar alt={user?.nickname} src={avatarPreview || user?.photo} sx={{ width: 100, height: 100, margin: '0 auto' }} />
                     </Grid>
 
                     <Grid item xs={12}>
@@ -128,8 +140,9 @@ const Profile = ({ ...others }) => {
                             label="Photo"
                             value={setFieldValue.photo}
                             // value={values.photo}
-                            onChange={(event) => {
-                              setFieldValue('photo', event.currentTarget.files[0]);
+                            onChange={(e) => {
+                              setFieldValue('photo', e.target.files[0]);
+                              preViewImage(e);
                             }}
                             onBlur={handleBlur}
                           />

@@ -49,7 +49,8 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
     initialValues: {
       fileName: imageProperty.fileName,
       type: imageProperty.type,
-      size: imageProperty.size
+      size: imageProperty.size,
+      avatarPreview: imageProperty.avatarPreview
     },
     validationSchema,
 
@@ -57,7 +58,8 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
       console.log({
         fileName: values.file.name,
         type: values.file.type,
-        size: `${values.file.size} bytes`
+        size: `${values.file.size} bytes`,
+        avatarPreview: values.avatarPreviewz
       });
 
       setPaymentData({
@@ -78,6 +80,7 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
         setAvatarPreview(fileReader.result);
       }
     };
+
     fileReader.readAsDataURL(e.target.files[0]);
   };
 

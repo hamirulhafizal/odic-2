@@ -69,13 +69,13 @@ export default function Review({ shippingData, imageProperty }) {
   const preViewImage = (imageProperty) => {
     const fileReader = new FileReader();
 
-    // fileReader.onload = () => {
-    //   if (fileReader.readyState === 2) {
-    //     setAvatarPreview(fileReader.result);
-    //   }
-    // };
+    fileReader.onload = () => {
+      if (fileReader.readyState === 2) {
+        setAvatarPreview(fileReader.result);
+      }
+    };
 
-    fileReader.readAsText(imageProperty);
+    fileReader.readAsDataURL(imageProperty);
 
     console.log('fileReader', fileReader);
   };
