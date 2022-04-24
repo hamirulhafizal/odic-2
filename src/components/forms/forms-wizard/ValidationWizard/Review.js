@@ -61,12 +61,12 @@ const ImageWrapper = styled('div')(({ theme }) => ({
 export default function Review({ shippingData, imageProperty }) {
   const theme = useTheme();
 
-  const [avatarPreview, setAvatarPreview] = React.useState('');
+  const [avatarPreview, setAvatarPreview] = React.useState();
 
   const { firstName, lastName, category, propertyType } = shippingData;
-  const { fileName, type, size } = imageProperty;
+  const { fileName, type, size, imgE } = imageProperty;
 
-  const preViewImage = (imageProperty) => {
+  const preViewImage = (imgE) => {
     const fileReader = new FileReader();
 
     fileReader.onload = () => {
@@ -75,15 +75,12 @@ export default function Review({ shippingData, imageProperty }) {
       }
     };
 
-    fileReader.readAsDataURL(imageProperty);
-
-    console.log('fileReader', fileReader);
+    fileReader.readAsDataURL(imgE.target.files[0]);
   };
 
   React.useEffect(() => {
-    if (imageProperty !== null) {
-      console.log('imageSRc', typeof imageProperty);
-      preViewImage(imageProperty);
+    if (imgE !== undefined || imgE !== null) {
+      preViewImage(imgE);
     }
   }, []);
 
@@ -101,7 +98,7 @@ export default function Review({ shippingData, imageProperty }) {
         ))} */}
 
         <ImageWrapper>
-          <CardMedia component="img" image={avatarPreview} title="Product" />
+          <CardMedia component="img" image={avatarPreview || ''} title="Product" />
         </ImageWrapper>
 
         <ListItem sx={{ py: 1, px: 0 }}>

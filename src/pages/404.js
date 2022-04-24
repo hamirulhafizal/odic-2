@@ -63,7 +63,7 @@ const CardMediaPurple = styled('img')({
 
 // ==============================|| ERROR PAGE ||============================== //
 
-const Error = () => {
+const Error = ({ id }) => {
   const theme = useTheme();
 
   return (
@@ -87,11 +87,14 @@ const Error = () => {
               <Grid container spacing={gridSpacing}>
                 <Grid item xs={12}>
                   <Typography variant="h1" component="div">
-                    Something is wrong
+                    {id === 'userNotFound' ? 'User Not Found' : 'Something is wrong'}
                   </Typography>
                 </Grid>
                 <Grid item xs={12}>
-                  <Typography variant="body2">The page you are looking was moved, removed, renamed, or might never exist! </Typography>
+                  <Typography variant="body2">
+                    The {id === 'userNotFound' ? 'user not found ' : 'page '} you are looking was moved, removed, renamed, or might never
+                    exist!
+                  </Typography>
                 </Grid>
                 <Grid item xs={12}>
                   <AnimateButton>

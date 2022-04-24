@@ -43,6 +43,7 @@ const ImageWrapper = styled('div')(({ theme }) => ({
 
 export default function GalleryForm({ imageProperty, setPaymentData, handleNext, handleBack, setErrorIndex }) {
   const [avatarPreview, setAvatarPreview] = useState('');
+  const [imgE, setEImg] = useState();
   const theme = useTheme();
 
   const formik = useFormik({
@@ -50,7 +51,7 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
       fileName: imageProperty.fileName,
       type: imageProperty.type,
       size: imageProperty.size,
-      avatarPreview: imageProperty.avatarPreview
+      imgE: imageProperty.imgE
     },
     validationSchema,
 
@@ -58,14 +59,14 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
       console.log({
         fileName: values.file.name,
         type: values.file.type,
-        size: `${values.file.size} bytes`,
-        avatarPreview: values.avatarPreviewz
+        size: `${values.file.size} bytes`
       });
 
       setPaymentData({
         fileName: values.file.name,
         type: values.file.type,
-        size: `${values.file.size} bytes`
+        size: `${values.file.size} bytes`,
+        imgE: imgE
       });
 
       handleNext();
@@ -78,6 +79,7 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
       if (fileReader.readyState === 2) {
         formik.setFieldValue('file', e.target.files[0]);
         setAvatarPreview(fileReader.result);
+        setEImg(e);
       }
     };
 
@@ -95,26 +97,6 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
           </Grid>
 
           <Grid item xs={12}>
-            {/* <label style={{ width: '100%' }} htmlFor="contained-button-file">
-               <Grid item xs={12}>
-                  <Stack direction="row">
-                    <Button variant="contained" component="span" startIcon={<CloudUploadIcon />}>
-                      Upload
-                    </Button>
-                  </Stack>
-                </Grid>
-                  <Input
-                  sx={{ display: 'none' }}
-                  accept="image/*"
-                  id="contained-button-file"
-                  multiple
-                  type="file"
-                  name="file"
-                  onChange={(e) => {
-                    preViewImage(e);
-                  }}
-                /> */}
-
             <div>
               <TextField
                 accept="image/*"

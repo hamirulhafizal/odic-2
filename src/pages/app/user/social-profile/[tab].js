@@ -23,9 +23,7 @@ import { gridSpacing } from 'store/constant';
 
 // assets
 import { IconFriends, IconInbox, IconPhoto, IconUserPlus, IconUsers } from '@tabler/icons';
-import PersonAddTwoToneIcon from '@mui/icons-material/PersonAddTwoTone';
 
-const User1 = '/assets/images/profile/img-user.png';
 const Cover = '/assets/images/profile/img-profile-bg.png';
 
 function TabPanel({ children, value, index, ...other }) {
@@ -206,11 +204,6 @@ const SocialProfile = () => {
                     <Grid item>
                       <Button variant="outlined">Message</Button>
                     </Grid>
-                    {/* <Grid item>
-                      <Button variant="contained" startIcon={<PersonAddTwoToneIcon />}>
-                        Send Request
-                      </Button>
-                    </Grid> */}
                   </Grid>
                 </Grid>
               </Grid>

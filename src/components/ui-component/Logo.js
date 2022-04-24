@@ -2,6 +2,7 @@
 import { useTheme } from '@mui/material/styles';
 
 import { BASE_PATH } from 'config';
+import Image from 'next/image';
 
 /**
  * if you want to use image instead of <svg> uncomment following.
@@ -27,7 +28,8 @@ const Logo = () => {
      // <Image src={`${BASE_PATH}/assets/images/oneDream.png`} alt="Berry" width="100" />
      *
      */
-    <img src={`${BASE_PATH}/assets/images/oneDream.png`} alt="Berry" width="100" />
+
+    <Image src={`${BASE_PATH}/assets/images/oneDream.png`} alt="Berry" width={100} height={100} />
 
     // <svg width="92" height="32" viewBox="0 0 92 32" fill="none" xmlns="http://www.w3.org/2000/svg">
     //   <path
