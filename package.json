@@ -1,12 +1,14 @@
 {
-  "name": "berry-react-material-next-js",
+  "name": "onedreamproperty",
   "version": "3.1.1",
   "private": true,
+  "homepage": "https://onedreamproperty.com.my",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prod": "next export"
   },
   "dependencies": {
     "@auth0/auth0-spa-js": "^1.20.1",

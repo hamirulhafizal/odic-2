@@ -54,6 +54,7 @@ const dotSX = {
 const Transition = forwardRef((props, ref) => <Slide direction="left" ref={ref} {...props} />);
 
 const Status = () => {
+  
   const theme = useTheme();
 
   // toggle write a review dialog
@@ -297,5 +298,7 @@ const Status = () => {
     </SubCard>
   );
 };
+
+Status.displayName = 'Status';
 
 export default Status;

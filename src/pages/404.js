@@ -63,7 +63,7 @@ const CardMediaPurple = styled('img')({
 
 // ==============================|| ERROR PAGE ||============================== //
 
-const Error = ({ id }) => {
+const Error = (id) => {
   const theme = useTheme();
 
   return (

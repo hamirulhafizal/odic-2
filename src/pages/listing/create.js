@@ -4,8 +4,6 @@ import ValidationWizard from 'components/forms/forms-wizard/ValidationWizard';
 
 // project imports
 import AuthFooter from 'components/ui-component/cards/AuthFooter';
-import useConfig from 'hooks/useConfig';
-// import useAuth from 'hooks/useAuth';
 
 // store
 import { gridSpacing } from 'store/constant';
