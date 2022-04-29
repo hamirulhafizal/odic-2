@@ -9,7 +9,6 @@ import { Box, Tab, Tabs } from '@mui/material';
 // project imports
 import Details from 'components/application/customer/OrderDetails/Details';
 import Invoice from 'components/application/customer/OrderDetails/Invoice';
-import Status from 'components/application/customer/OrderDetails/Status';
 import MainCard from 'components/ui-component/cards/MainCard';
 
 // assets
@@ -95,11 +94,6 @@ const OrderDetails = () => {
       {/* tab - invoice */}
       <TabPanel value={value} index={1}>
         <Invoice />
-      </TabPanel>
-
-      {/* tab - status */}
-      <TabPanel value={value} index={2}>
-        <Status />
       </TabPanel>
     </MainCard>
   );

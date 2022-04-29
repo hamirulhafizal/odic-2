@@ -82,7 +82,7 @@ export default function Review({ shippingData, imageProperty }) {
     if (imgE !== undefined || imgE !== null) {
       preViewImage(imgE);
     }
-  }, []);
+  }, [imgE]);
 
   return (
     <>

@@ -96,7 +96,7 @@ const CartDiscount = () => {
           </FormHelperText>
         )}
       </form>
-      <CouponCode open={open} handleClose={handleClose} setCoupon={setCoupon} />
+      {/* <CouponCode open={open} handleClose={handleClose} setCoupon={setCoupon} /> */}
     </Stack>
   );
 };

@@ -263,7 +263,7 @@ const EditItem = ({ item, profiles, userStory, columns, handleDrawerOpen }) => {
                 <Typography variant="subtitle1">Attachments:</Typography>
               </Grid>
               <Grid item xs={12} sm={8}>
-                <ItemAttachments attachments={formik.values.attachments} />
+                {/* <ItemAttachments attachments={formik.values.attachments} /> */}
               </Grid>
             </Grid>
           </Grid>

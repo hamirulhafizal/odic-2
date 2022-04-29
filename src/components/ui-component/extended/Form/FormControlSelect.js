@@ -10,7 +10,7 @@ import { Divider, FormControl, InputAdornment, InputLabel, MenuItem, Select, Tex
 const FormControlSelect = ({
   idz,
   namez,
-  captionLabelz,
+  captionLabel,
 
   value,
   onChange,
@@ -41,7 +41,7 @@ const FormControlSelect = ({
   return (
     <FormControl fullWidth error={errorState}>
       <InputLabel id="demo-simple-select-label">Category</InputLabel>
-      <Select id={idz} value={value || ''} name={namez} label={captionLabelz} onChange={onChange}>
+      <Select id={idz} value={value || ''} name={namez} label={captionLabel} onChange={onChange}>
         {currencies.map((state, index) => (
           <MenuItem key={index} value={state?.label}>
             {state?.label}

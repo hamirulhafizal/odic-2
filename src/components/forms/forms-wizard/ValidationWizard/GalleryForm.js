@@ -17,7 +17,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import { useTheme, styled } from '@mui/material/styles';
 
 const validationSchema = yup.object({
-  file: yup.mixed().test(200000, 'File Size is too large', (value) => value?.size <= 2000000)
+  size: yup.mixed().test(200000, 'File Size is too large', (value) => value?.size <= 2000000)
 });
 
 // styles
@@ -196,7 +196,6 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
 }
 
 GalleryForm.propTypes = {
-  paymentData: PropTypes.object,
   setPaymentData: PropTypes.func,
   handleNext: PropTypes.func,
   handleBack: PropTypes.func,

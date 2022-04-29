@@ -263,7 +263,7 @@ const AddItem = ({ open, handleDrawerOpen, storyId }) => {
                       <Typography variant="subtitle1">Attachments:</Typography>
                     </Grid>
                     <Grid item xs={12} sm={8}>
-                      <ItemAttachments attachments={[]} />
+                      {/* <ItemAttachments attachments={[]} /> */}
                     </Grid>
                   </Grid>
                 </Grid>

@@ -53,7 +53,7 @@ function UploadFile(fileImgUpload) {
         fileImgUpload(files);
       }
     },
-    [setFiles]
+    [setFiles, fileImgUpload, files]
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({

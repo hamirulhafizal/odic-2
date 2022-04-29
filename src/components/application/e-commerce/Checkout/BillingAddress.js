@@ -110,7 +110,7 @@ const BillingAddress = ({ checkout, onBack, billingAddressHandler, address, addA
         </SubCard>
         {shippingAddress}
       </Grid>
-      <AddAddress open={open} handleClose={handleClose} address={select} addAddress={addAddress} editAddress={editAddress} />
+      {/* <AddAddress open={open} handleClose={handleClose} address={select} addAddress={addAddress} editAddress={editAddress} /> */}
     </Grid>
   );
 };

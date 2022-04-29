@@ -75,7 +75,7 @@ const MailDrawer = ({ filter, handleDrawerOpen, handleFilter, openMailSidebar, u
           <CardContent sx={{ height: matchDownSM ? '100vh' : 'auto' }}>
             <Grid container spacing={gridSpacing}>
               <Grid item xs={12}>
-                <ComposeDialog />
+                {/* <ComposeDialog /> */}
               </Grid>
               <Grid item xs={12}>
                 <PerfectScrollbar

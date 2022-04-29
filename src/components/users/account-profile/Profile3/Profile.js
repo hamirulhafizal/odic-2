@@ -50,7 +50,7 @@ const Profile = ({ ...others }) => {
 
   return (
     <Formik
-      enableReinitialize={true}
+      enableReinitialize={Boolean(true)}
       initialValues={{
         firstName: user?.firstName || '',
         lastName: user?.lastName || '',
@@ -74,9 +74,18 @@ const Profile = ({ ...others }) => {
         formData.append('website', 'question');
 
         /* append input field values to formData */
-        for (let value in values) {
+
+        Object.keys(values).forEach((value) => {
           formData.append(value, values[value]);
-        }
+        });
+
+        // Object.keys(values).forEach(function (key) {
+        //   formData.append(value, values[key]);
+        // });
+
+        // for (let value in values) {
+        //   formData.append(value, values[value]);
+        // }
 
         try {
           await updateProfile(user?.user_name, formData).then((res) => {
@@ -131,25 +140,23 @@ const Profile = ({ ...others }) => {
 
                     <Grid item xs={12}>
                       <AnimateButton>
-                        <label htmlFor="contained-button-file">
-                          <Input
-                            accept="image/*"
-                            id="contained-button-file"
-                            type="file"
-                            name="photo"
-                            label="Photo"
-                            value={setFieldValue.photo}
-                            // value={values.photo}
-                            onChange={(e) => {
-                              setFieldValue('photo', e.target.files[0]);
-                              preViewImage(e);
-                            }}
-                            onBlur={handleBlur}
-                          />
-                          <Button variant="contained" component="span">
-                            Upload Avatar
-                          </Button>
-                        </label>
+                        <Input
+                          accept="image/*"
+                          id="photo"
+                          type="file"
+                          name="photo"
+                          label="Photo"
+                          value={setFieldValue.photo}
+                          // value={values.photo}
+                          onChange={(e) => {
+                            setFieldValue('photo', e.target.files[0]);
+                            preViewImage(e);
+                          }}
+                          onBlur={handleBlur}
+                        />
+                        <Button variant="contained" component="span">
+                          Upload Avatar
+                        </Button>
                       </AnimateButton>
                     </Grid>
                   </Grid>

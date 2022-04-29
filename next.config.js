@@ -17,9 +17,11 @@ const nextConfig = withTM({
 });
 
 // module.exports = nextConfig;
-
+/** @type {import('next').NextConfig} */
 module.exports = {
   nextConfig,
+  trailingSlash: true,
+  basePath: process.env.BASE_URL,
   env: {
     basePath: process.env.BASE_URL,
     backEndUrl: process.env.BACKEND_URL

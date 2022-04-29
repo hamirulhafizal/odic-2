@@ -9,7 +9,7 @@ import SecondaryAction from 'components/ui-component/cards/CardSecondaryAction';
 const Modal = () => (
   <MainCard title="Simple Modal" secondary={<SecondaryAction link="https://next.material-ui.com/components/modal/" />}>
     <ServerModal />
-    <SimpleModal />
+    {/* <SimpleModal /> */}
   </MainCard>
 );
 Modal.Layout = 'authGuard';
