@@ -16,11 +16,18 @@ const nextConfig = withTM({
   reactStrictMode: true
 });
 
-// module.exports = nextConfig;
-/** @type {import('next').NextConfig} */
 module.exports = {
-  nextConfig,
   trailingSlash: true,
+  exportPathMap: async function (defaultPathMap, { dev, dir, outDir, distDir, buildId }) {
+    return {
+      '/': { page: '/' }
+    };
+  },
+  images: {
+    loader: 'akamai',
+    path: ''
+  },
+  nextConfig,
   basePath: process.env.BASE_URL,
   env: {
     basePath: process.env.BASE_URL,

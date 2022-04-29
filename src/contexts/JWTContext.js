@@ -118,7 +118,6 @@ export const JWTProvider = ({ children }) => {
       .post(`${BACKEND_PATH}/api/v1/user/register`, {
         email,
         user_name,
-        first_name,
         password
       })
       .then((res) => {

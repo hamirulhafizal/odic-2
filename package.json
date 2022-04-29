@@ -2,10 +2,9 @@
   "name": "onedreamproperty",
   "version": "3.1.1",
   "private": true,
-  "homepage": "https://onedreamproperty.com.my",
   "scripts": {
     "dev": "next dev",
-    "build": "next build && next export",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
