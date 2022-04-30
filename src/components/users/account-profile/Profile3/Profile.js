@@ -73,26 +73,29 @@ const Profile = ({ ...others }) => {
       }}
       validator={() => ({})}
       validationSchema={Yup.object().shape({
-        firstName: Yup.string().max(255),
-        lastName: Yup.string().max(255),
-        photo: Yup.mixed().test(200000, 'File Size is too large', (value) => value?.size <= 2000000)
+        firstName: Yup.string().max(255).required(),
+        lastName: Yup.string().max(255).required()
+        // photo: Yup.mixed().test(200000, 'File Size is too large', (value) => value?.size <= 2000000)
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-        const { firstName, lastName, photo, email } = values;
+        const { firstName, lastName, photo, email, phone } = values;
 
-        if (!values.firstName) setErrors({ firstName: 'Required' });
-        if (!values.lastName) setErrors({ lastName: 'Required' });
-        if (!values.photo) setErrors({ photo: 'Required' });
+        if (!values.firstName) {
+          setErrors({ firstName: 'Required' });
+        } else if (!values.lastName) {
+          setErrors({ lastName: 'Required' });
+        } else if (!values.photo) {
+          setErrors({ photo: 'Required' });
+        }
 
         setLoading(true);
+
         /* Then create a new FormData obj */
         const formData = new FormData();
-
         /* append input field values to formData */
-        // Object.keys(values).forEach((value) => {
-        //   formData.append(value, values[value]);
-        // });
-        formData.append({ firstName, lastName, photo, email });
+        Object.keys(values).forEach((value) => {
+          formData.append(value, values[value]);
+        });
 
         try {
           await updateProfile(user?.user_name, formData).then((res) => {
