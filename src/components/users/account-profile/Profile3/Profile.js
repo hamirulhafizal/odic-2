@@ -69,27 +69,30 @@ const Profile = ({ ...others }) => {
         lastName: user?.lastName || '',
         email: user?.email || '',
         phone: user?.phone || '',
-        photo: user?.photo || '',
-        submit: null
+        photo: user?.photo || ''
       }}
       validator={() => ({})}
       validationSchema={Yup.object().shape({
-        photo: Yup.mixed().test(200000, 'File Size is too large', (value) => value?.size <= 2000000),
         firstName: Yup.string().max(255),
-        lastName: Yup.string().max(255)
+        lastName: Yup.string().max(255),
+        photo: Yup.mixed().test(200000, 'File Size is too large', (value) => value?.size <= 2000000)
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
+        const { firstName, lastName, photo, email } = values;
+
+        if (!values.firstName) setErrors({ firstName: 'Required' });
+        if (!values.lastName) setErrors({ lastName: 'Required' });
+        if (!values.photo) setErrors({ photo: 'Required' });
+
         setLoading(true);
         /* Then create a new FormData obj */
         const formData = new FormData();
 
-        /* FormData requires name: id */
-        formData.append('website', 'question');
-
         /* append input field values to formData */
-        Object.keys(values).forEach((value) => {
-          formData.append(value, values[value]);
-        });
+        // Object.keys(values).forEach((value) => {
+        //   formData.append(value, values[value]);
+        // });
+        formData.append({ firstName, lastName, photo, email });
 
         try {
           await updateProfile(user?.user_name, formData).then((res) => {
@@ -123,9 +126,10 @@ const Profile = ({ ...others }) => {
             setSubmitting(false);
           }
         }
+        setLoading(false);
       }}
     >
-      {({ errors, status, handleBlur, handleChange, handleSubmit, setFieldValue, values }) => (
+      {({ errors, touched, status, handleBlur, handleChange, handleSubmit, setFieldValue, values }) => (
         <>
           <Form noValidate onSubmit={handleSubmit} {...others}>
             <Grid container spacing={gridSpacing}>
@@ -181,6 +185,8 @@ const Profile = ({ ...others }) => {
                         value={values.firstName}
                         onBlur={handleBlur}
                         onChange={handleChange}
+                        error={Boolean(errors.firstName && touched.firstName)}
+                        helperText={errors.firstName && touched.firstName && String(errors.firstName)}
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -194,6 +200,8 @@ const Profile = ({ ...others }) => {
                         value={values.lastName}
                         onBlur={handleBlur}
                         onChange={handleChange}
+                        error={Boolean(errors.lastName && touched.lastName)}
+                        helperText={errors.lastName && touched.lastName && String(errors.lastName)}
                       />
                     </Grid>
 
