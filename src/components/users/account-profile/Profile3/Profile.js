@@ -1,8 +1,20 @@
 import { useState } from 'react';
 
-
 // material-ui
-import { Box, Grid, Stack, Avatar, Button, TextField, Typography, useMediaQuery, FormHelperText, CircularProgress } from '@mui/material';
+import {
+  Box,
+  Grid,
+  Stack,
+  Avatar,
+  Button,
+  TextField,
+  Typography,
+  useMediaQuery,
+  FormHelperText,
+  CircularProgress,
+  FormControl,
+  InputLabel
+} from '@mui/material';
 import { useTheme, styled } from '@mui/material/styles';
 
 // project imports
@@ -62,11 +74,11 @@ const Profile = ({ ...others }) => {
       }}
       validator={() => ({})}
       validationSchema={Yup.object().shape({
-        photo: Yup.mixed().test(200000, 'File Size is too large', (value) => value?.size <= 2000000)
+        photo: Yup.mixed().test(200000, 'File Size is too large', (value) => value?.size <= 2000000),
+        firstName: Yup.string().max(255),
+        lastName: Yup.string().max(255)
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-        // const { firstName, lastName, phone, photo, email } = values;
-
         setLoading(true);
         /* Then create a new FormData obj */
         const formData = new FormData();
@@ -75,18 +87,9 @@ const Profile = ({ ...others }) => {
         formData.append('website', 'question');
 
         /* append input field values to formData */
-
         Object.keys(values).forEach((value) => {
           formData.append(value, values[value]);
         });
-
-        // Object.keys(values).forEach(function (key) {
-        //   formData.append(value, values[key]);
-        // });
-
-        // for (let value in values) {
-        //   formData.append(value, values[value]);
-        // }
 
         try {
           await updateProfile(user?.user_name, formData).then((res) => {
@@ -141,16 +144,14 @@ const Profile = ({ ...others }) => {
 
                     <Grid item xs={12}>
                       <AnimateButton>
-                        <label htmlFor="contained-button-file">
-                          
+                        <InputLabel htmlFor="photo">
                           <Input
                             accept="image/*"
-                            id="contained-button-file"
+                            id="photo"
                             type="file"
                             name="photo"
-                            label="Photo"
+                            label="photo"
                             value={setFieldValue.photo}
-                            // value={values.photo}
                             onChange={(e) => {
                               setFieldValue('photo', e.target.files[0]);
                               preViewImage(e);
@@ -160,7 +161,7 @@ const Profile = ({ ...others }) => {
                           <Button variant="contained" component="span">
                             Upload Avatar
                           </Button>
-                        </label>
+                        </InputLabel>
                       </AnimateButton>
                     </Grid>
                   </Grid>
