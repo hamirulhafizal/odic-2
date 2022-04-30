@@ -132,6 +132,7 @@ const Profile = ({ ...others }) => {
                     <Grid item xs={12}>
                       <AnimateButton>
                         <label htmlFor="contained-button-file">
+                          
                           <Input
                             accept="image/*"
                             id="contained-button-file"
