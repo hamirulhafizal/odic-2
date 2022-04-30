@@ -141,23 +141,26 @@ const Profile = ({ ...others }) => {
 
                     <Grid item xs={12}>
                       <AnimateButton>
-                        <Input
-                          accept="image/*"
-                          id="photo"
-                          type="file"
-                          name="photo"
-                          label="Photo"
-                          value={setFieldValue.photo}
-                          // value={values.photo}
-                          onChange={(e) => {
-                            setFieldValue('photo', e.target.files[0]);
-                            preViewImage(e);
-                          }}
-                          onBlur={handleBlur}
-                        />
-                        <Button variant="contained" component="span">
-                          Upload Avatar
-                        </Button>
+                        <label htmlFor="contained-button-file">
+                          
+                          <Input
+                            accept="image/*"
+                            id="contained-button-file"
+                            type="file"
+                            name="photo"
+                            label="Photo"
+                            value={setFieldValue.photo}
+                            // value={values.photo}
+                            onChange={(e) => {
+                              setFieldValue('photo', e.target.files[0]);
+                              preViewImage(e);
+                            }}
+                            onBlur={handleBlur}
+                          />
+                          <Button variant="contained" component="span">
+                            Upload Avatar
+                          </Button>
+                        </label>
                       </AnimateButton>
                     </Grid>
                   </Grid>
