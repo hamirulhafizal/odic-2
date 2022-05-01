@@ -31,12 +31,9 @@ import * as Yup from 'yup';
 // hook
 import useScriptRef from 'hooks/useScriptRef';
 import { useDispatch } from 'store';
+import UploadUserInput from './UploadUserInput';
 
 // ==============================|| PROFILE 3 - PROFILE ||============================== //
-
-const Input = styled('input')({
-  display: 'none'
-});
 
 const Profile = ({ ...others }) => {
   const { updateProfile, user } = useAuth();
@@ -49,18 +46,6 @@ const Profile = ({ ...others }) => {
 
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
 
-  const [avatarPreview, setAvatarPreview] = useState('');
-
-  const preViewImage = (e) => {
-    const fileReader = new FileReader();
-    fileReader.onload = () => {
-      if (fileReader.readyState === 2) {
-        setAvatarPreview(fileReader.result);
-      }
-    };
-    fileReader.readAsDataURL(e.target.files[0]);
-  };
-
   return (
     <Formik
       enableReinitialize={Boolean(true)}
@@ -68,24 +53,18 @@ const Profile = ({ ...others }) => {
         firstName: user?.firstName || '',
         lastName: user?.lastName || '',
         email: user?.email || '',
-        phone: user?.phone || '',
-        photo: user?.photo || ''
+        phone: user?.phone || ''
       }}
       validator={() => ({})}
       validationSchema={Yup.object().shape({
         firstName: Yup.string().max(255).required(),
         lastName: Yup.string().max(255).required()
-        // photo: Yup.mixed().test(200000, 'File Size is too large', (value) => value?.size <= 2000000)
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-        const { firstName, lastName, photo, email, phone } = values;
-
         if (!values.firstName) {
           setErrors({ firstName: 'Required' });
         } else if (!values.lastName) {
           setErrors({ lastName: 'Required' });
-        } else if (!values.photo) {
-          setErrors({ photo: 'Required' });
         }
 
         setLoading(true);
@@ -132,46 +111,13 @@ const Profile = ({ ...others }) => {
         setLoading(false);
       }}
     >
-      {({ errors, touched, status, handleBlur, handleChange, handleSubmit, setFieldValue, values }) => (
+      {({ errors, touched, status, handleBlur, handleChange, handleSubmit, values }) => (
         <>
           <Form noValidate onSubmit={handleSubmit} {...others}>
             <Grid container spacing={gridSpacing}>
               <Grid item sm={6} md={4}>
                 <SubCard title="Profile Picture" contentSX={{ textAlign: 'center' }}>
-                  <Grid container spacing={2}>
-                    <Grid item xs={12}>
-                      <Avatar alt={user?.nickname} src={avatarPreview || user?.photo} sx={{ width: 100, height: 100, margin: '0 auto' }} />
-                    </Grid>
-
-                    <Grid item xs={12}>
-                      <Typography variant="subtitle2" align="center">
-                        Upload/Change Your Profile Image
-                      </Typography>
-                    </Grid>
-
-                    <Grid item xs={12}>
-                      <AnimateButton>
-                        <InputLabel htmlFor="photo">
-                          <Input
-                            accept="image/*"
-                            id="photo"
-                            type="file"
-                            name="photo"
-                            label="photo"
-                            value={setFieldValue.photo}
-                            onChange={(e) => {
-                              setFieldValue('photo', e.target.files[0]);
-                              preViewImage(e);
-                            }}
-                            onBlur={handleBlur}
-                          />
-                          <Button variant="contained" component="span">
-                            Upload Avatar
-                          </Button>
-                        </InputLabel>
-                      </AnimateButton>
-                    </Grid>
-                  </Grid>
+                  <UploadUserInput />
                 </SubCard>
               </Grid>
               <Grid item sm={6} md={8}>

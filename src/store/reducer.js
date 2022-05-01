@@ -37,7 +37,7 @@ const reducer = combineReducers({
   calendar: calendarReducer,
   mail: mailReducer,
   user: userReducer,
-  menu: menuReducer,
+  menu: menuReducer
   // account: accReducer
 });
 

@@ -80,7 +80,7 @@ const ProfileSection = () => {
     }
 
     prevOpen.current = open;
-  }, [open]);
+  }, [open, user]);
 
   return (
     <>
@@ -155,7 +155,7 @@ const ProfileSection = () => {
                         <Stack direction="row" spacing={0.5} alignItems="center">
                           <Typography variant="h4">Good Morning,</Typography>
                           <Typography component="span" variant="h4" sx={{ wordWrap: 'break-word', fontWeight: 400 }}>
-                            {user ? user.firstName.slice(0,10) + '..cle' : 'OD'}
+                            {user ? user.firstName.slice(0, 10) + '..cle' : 'OD'}
                           </Typography>
                         </Stack>
                         <Typography variant="subtitle2">Project Admin</Typography>

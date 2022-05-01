@@ -28,8 +28,10 @@ import { ConfigProvider } from 'contexts/ConfigContext';
 
 // import { FirebaseProvider as AuthProvider } from '../contexts/FirebaseContext';
 // import { Auth0Provider as AuthProvider } from '../contexts/Auth0Context';
-import { JWTProvider as AuthProvider } from 'contexts/JWTContext';
+// import { JWTProvider as AuthProvider } from 'contexts/JWTContext';
 // import { AWSCognitoProvider as AuthProvider } from 'contexts/AWSCognitoContext';
+
+import { ApiProvider as AuthProvider } from 'contexts/ApiContext';
 
 const Noop = ({ children }) => <> {children} </>;
 

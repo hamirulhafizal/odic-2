@@ -37,43 +37,43 @@ const initialState = {
 };
 
 // ==============================|| JWT CONTEXT & PROVIDER ||============================== //
-const JWTContext = createContext(null);
+const ApiContext = createContext(null);
 
-export const JWTProvider = ({ children }) => {
+export const ApiProvider = ({ children }) => {
   const [state, dispatch] = useReducer(accountReducer, initialState);
   const history = useRouter();
 
   useEffect(() => {
-    const init = async () => {
-      try {
-        const serviceToken = window.localStorage.getItem('access');
-        if (serviceToken) {
-          if (window.localStorage.getItem('users') !== undefined && window.localStorage.getItem('users') !== null) {
-            const localUsers = window.localStorage.getItem('users');
-            let users = JSON.parse(localUsers);
-            dispatch({
-              type: LOGIN,
-              payload: {
-                isLoggedIn: true,
-                user: users
-              }
-            });
-          }
-        } else {
+    if (state.user == null) init();
+  }, [state.user]);
+
+  const init = () => {
+    try {
+      const serviceToken = window.localStorage.getItem('access');
+      if (serviceToken) {
+        if (window.localStorage.getItem('users') !== undefined && window.localStorage.getItem('users') !== null) {
+          const localUsers = window.localStorage.getItem('users');
+          let users = JSON.parse(localUsers);
           dispatch({
-            type: LOGOUT
+            type: LOGIN,
+            payload: {
+              isLoggedIn: true,
+              user: users
+            }
           });
         }
-      } catch (err) {
-        // console.error(err);
+      } else {
         dispatch({
           type: LOGOUT
         });
       }
-    };
-
-    if (state.user == null) init();
-  }, [state.user]);
+    } catch (err) {
+      // console.error(err);
+      dispatch({
+        type: LOGOUT
+      });
+    }
+  };
 
   const login = async (email, password) => {
     const response = await axiosInstance
@@ -154,7 +154,7 @@ export const JWTProvider = ({ children }) => {
           }
         });
 
-        dispatch(getUserData());
+        init();
       }
 
       return res;
@@ -173,10 +173,12 @@ export const JWTProvider = ({ children }) => {
             user: users
           }
         });
-      }
 
+        init();
+      }
       return res;
     });
+    return response;
   };
 
   if (state.isInitialized !== undefined && !state.isInitialized) {
@@ -184,14 +186,14 @@ export const JWTProvider = ({ children }) => {
   }
 
   return (
-    <JWTContext.Provider value={{ ...state, login, logout, register, resetPassword, updateProfile, getProfile }}>
+    <ApiContext.Provider value={{ ...state, login, logout, register, resetPassword, updateProfile, getProfile }}>
       {children}
-    </JWTContext.Provider>
+    </ApiContext.Provider>
   );
 };
 
-JWTProvider.propTypes = {
+ApiProvider.propTypes = {
   children: PropTypes.node
 };
 
-export default JWTContext;
+export default ApiContext;

@@ -1,98 +1,108 @@
-// action - state management
-import { createSlice } from '@reduxjs/toolkit';
-import axiosInstance from 'contexts/axios';
-import { LOGIN, LOGOUT, REGISTER } from './actions';
+// // action - state management
+// import { createSlice } from '@reduxjs/toolkit';
+// import axiosInstance from 'contexts/axios';
+// import { LOGIN, LOGOUT, REGISTER } from '../actions';
 
+// import { BACKEND_PATH } from 'config';
+// import { dispatch } from 'store';
 
-import { BACKEND_PATH } from 'config';
+// // ==============================|| ACCOUNT REDUCER ||============================== //
 
+// const initialState = {
+//   isLoggedIn: false,
+//   isInitialized: false,
+//   user: null
+// };
 
-// ==============================|| ACCOUNT REDUCER ||============================== //
+// const slice = createSlice({
+//   name: 'account',
+//   initialState,
+//   reducers: {
 
-const initialState = {
-  isLoggedIn: false,
-  isInitialized: false,
-  user: null
-};
+//     // PASS PAYLOD KAT SINI
 
-const slice = createSlice({
-  name: 'account',
-  initialState,
-  reducers: {
-    // HAS ERROR
-    hasError(state, action) {
-      state.error = action.payload;
-    }
-  }
-});
+//     // // GET USERS STYLE 1
+//     // getUsersListStyle1Success(state, action) {
+//     //   state.usersS1 = action.payload;
+//     // },
 
-// Reducer
-export default slice.reducer;
+//     // HAS ERROR
+//     hasError(state, action) {
+//       state.error = action.payload;
+//     }
+//   }
+// });
 
-// ----------------------------------------------------------------------
+// // Reducer
+// export default slice.reducer;
 
-export const login = async (email, password) => {
-  const response = await axiosInstance
-    .post(`${BACKEND_PATH}/api/v1/user/login`, {
-      email,
-      password
-    })
-    .then(async (res) => {
-      if (typeof window !== 'undefined') {
-        axiosInstance.defaults.headers['Authorization'] = 'JWT ' + localStorage.getItem('access');
-        localStorage.setItem('access', res?.data?.access);
-        localStorage.setItem('refresh', res?.data?.refresh);
-      }
+// // ----------------------------------------------------------------------
 
-      // await getProfile(res?.data?.user_name);
+// export function login (email, password) {
+//   return async () => {
+//     try {
 
-      dispatch({
-        type: LOGIN,
-        payload: {
-          isLoggedIn: true
-        }
-      });
+//       const response = await axiosInstance.get('/api/user-list/s2/list');
+//       dispatch(slice.actions.getUsersListStyle2Success(response.data.users_s2));
 
-      history.push('/dashboard');
+//     } catch (error){
+//       dispatch(slice.actions.hasError(error))
+//     }
 
-      return res;
-    });
-};
+//   }
+//   const response = await axiosInstance
+//     .post(`${BACKEND_PATH}/api/v1/user/login`, {
+//       email,
+//       password
+//     })
+//     .then(async (res) => {
+//       if (typeof window !== 'undefined') {
+//         axiosInstance.defaults.headers['Authorization'] = 'JWT ' + localStorage.getItem('access');
+//         localStorage.setItem('access', res?.data?.access);
+//         localStorage.setItem('refresh', res?.data?.refresh);
+//       }
 
+//       dispatch({
+//         type: LOGIN,
+//         payload: {
+//           isLoggedIn: true
+//         }
+//       });
 
+//       history.push('/dashboard');
 
-const accountReducer = (state = initialState, action) => {
-  console.log('action', action);
+//       return res;
+//     });
+// };
 
-  switch (action.type) {
-    case REGISTER: {
-      const { user } = action.payload;
-      return {
-        ...state,
-        user
-      };
-    }
-    case LOGIN: {
-      const { user } = action.payload;
-      return {
-        ...state,
-        isLoggedIn: true,
-        isInitialized: true,
-        user
-      };
-    }
-    case LOGOUT: {
-      return {
-        ...state,
-        isInitialized: true,
-        isLoggedIn: false,
-        user: null
-      };
-    }
-    default: {
-      return { ...state };
-    }
-  }
-};
-
-export default accountReducer;
+// const accountReducer = (state = initialState, action) => {
+//   switch (action.type) {
+//     case REGISTER: {
+//       const { user } = action.payload;
+//       return {
+//         ...state,
+//         user
+//       };
+//     }
+//     case LOGIN: {
+//       const { user } = action.payload;
+//       return {
+//         ...state,
+//         isLoggedIn: true,
+//         isInitialized: true,
+//         user
+//       };
+//     }
+//     case LOGOUT: {
+//       return {
+//         ...state,
+//         isInitialized: true,
+//         isLoggedIn: false,
+//         user: null
+//       };
+//     }
+//     default: {
+//       return { ...state };
+//     }
+//   }
+// };

@@ -1,5 +1,8 @@
 // third-party
 import { createSlice } from '@reduxjs/toolkit';
+import { BACKEND_PATH } from 'config';
+import axiosInstance from 'contexts/axios';
+import useAuth from 'hooks/useAuth';
 
 // project imports
 import axios from '../../utils/axios';
@@ -8,6 +11,7 @@ import { dispatch } from '../index';
 // ----------------------------------------------------------------------
 
 const initialState = {
+  userData: null,
   error: null,
   usersS1: [],
   usersS2: [],

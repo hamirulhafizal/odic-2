@@ -97,9 +97,9 @@ export const Auth0Provider = ({ children }) => {
     });
   };
 
-  const resetPassword = () => { };
+  const resetPassword = () => {};
 
-  const updateProfile = () => { };
+  const updateProfile = () => {};
 
   if (state.isInitialized !== undefined && !state.isInitialized) {
     return <Loader />;

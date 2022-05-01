@@ -14,14 +14,15 @@ import { openDrawer } from 'store/slices/menu';
 
 // assets
 import { IconMenu2 } from '@tabler/icons';
+import useAuth from 'hooks/useAuth';
 
 // ==============================|| MAIN NAVBAR / HEADER ||============================== //
 
 const Header = () => {
   const theme = useTheme();
 
-  const dispatch = useDispatch();
   const { drawerOpen } = useSelector((state) => state.menu);
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -38,6 +39,7 @@ const Header = () => {
         <Box component="span" sx={{ display: { xs: 'none', md: 'flex' }, flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
           <LogoSection />
         </Box>
+
         <Avatar
           variant="rounded"
           sx={{
