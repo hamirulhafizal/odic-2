@@ -12,8 +12,6 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useState } from 'react';
 
-import { DropzoneAreaBase, DropzoneDialogBase } from 'material-ui-dropzone';
-import CloseIcon from '@material-ui/icons/Close';
 import { useTheme, styled } from '@mui/material/styles';
 
 const validationSchema = yup.object({
@@ -139,43 +137,6 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
           </Grid>
 
           <Divider />
-
-          {/* <Grid item xs={12} md={6}>
-            <Grid item xs={12} md={6}>
-              <Typography variant="h5" gutterBottom>
-                Image Gallery
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Stack direction="column" spacing={2} alignItems="center">
-                <label style={{ width: '100%' }} htmlFor="contained-button-file">
-                  <Grid item xs={12}>
-                    <Stack direction="row">
-                      <Button variant="contained" component="span" startIcon={<CloudUploadIcon />}>
-                        Upload
-                      </Button>
-                    </Stack>
-                  </Grid>
-
-                  <Input
-                    sx={{ display: 'none' }}
-                    accept="image/*"
-                    id="contained-button-file"
-                    multiple
-                    type="file"
-                    name="file"
-                    onChange={(e) => {
-                      preViewImage(e);
-                    }}
-                  />
-                </label>
-
-                <ImageWrapper>
-                  <CardMedia component="img" image={avatarPreview} title="Product" />
-                </ImageWrapper>
-              </Stack>
-            </Grid>
-          </Grid> */}
 
           <Grid item xs={12}>
             <Stack direction="row" justifyContent="space-between">
