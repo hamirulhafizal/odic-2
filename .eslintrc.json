@@ -9,17 +9,14 @@
     "prettier",
     "plugin:react/jsx-runtime",
     "plugin:jsx-a11y/recommended",
-    "plugin:react-hooks/recommended",
     "plugin:prettier/recommended",
-    "plugin:react/recommended"
+    "plugin:react/recommended",
+    "plugin:@next/next/recommended"
   ],
   "settings": {
     "import/resolver": {
       "node": {
-        "moduleDirectory": [
-          "node_modules",
-          "src/"
-        ]
+        "moduleDirectory": ["node_modules", "src/"]
       }
     }
   },
@@ -32,12 +29,9 @@
     },
     "ecmaVersion": 12
   },
-  "plugins": [
-    "prettier",
-    "react",
-    "react-hooks"
-  ],
+  "plugins": ["prettier", "react"],
   "rules": {
+    "jsx-a11y/no-autofocus": "off",
     "prefer-const": "off",
     "react/display-name": "off",
     "object-shorthand": "off",
@@ -78,10 +72,7 @@
     "react/jsx-filename-extension": [
       1,
       {
-        "extensions": [
-          ".js",
-          ".jsx"
-        ]
+        "extensions": [".js", ".jsx"]
       }
     ]
   }
