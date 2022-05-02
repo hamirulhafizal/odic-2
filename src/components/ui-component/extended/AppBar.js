@@ -27,6 +27,7 @@ import Logo from '../Logo';
 // assets
 import { IconHome2, IconLogin } from '@tabler/icons';
 import MenuIcon from '@mui/icons-material/Menu';
+import LogoSection from 'layout/MainLayout/LogoSection';
 
 function ElevationScroll({ children, window }) {
   const theme = useTheme();
@@ -72,7 +73,7 @@ const AppBar = ({ ...others }) => {
         <Container>
           <Toolbar>
             <Typography component="div" sx={{ flexGrow: 1, textAlign: 'left' }}>
-              <Logo />
+              <LogoSection />
             </Typography>
             <Stack direction="row" sx={{ display: { xs: 'none', sm: 'block' } }} spacing={2}>
               <Button color="inherit" component={Link} href="#" target="_blank">

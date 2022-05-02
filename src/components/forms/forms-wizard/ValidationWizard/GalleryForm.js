@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 // material-ui
-import { Button, Grid, Input, Stack, Typography, CardMedia, Divider, InputLabel, TextField } from '@mui/material';
+import { Button, Grid, Input, Stack, Typography, CardMedia, Divider, InputLabel, TextField, FormHelperText } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 // project imports
@@ -13,9 +13,10 @@ import * as yup from 'yup';
 import { useState } from 'react';
 
 import { useTheme, styled } from '@mui/material/styles';
+import { values } from 'lodash-es';
 
 const validationSchema = yup.object({
-  size: yup.mixed().test(200000, 'File Size is too large', (value) => value?.size <= 2000000)
+  // size: yup.mixed().test(200000, 'File Size is too large', (values) => values?.size <= 2000000)
 });
 
 // styles
@@ -42,40 +43,38 @@ const ImageWrapper = styled('div')(({ theme }) => ({
 export default function GalleryForm({ imageProperty, setPaymentData, handleNext, handleBack, setErrorIndex }) {
   const [avatarPreview, setAvatarPreview] = useState('');
   const [imgE, setEImg] = useState();
+  const [message, setMessage] = useState('');
   const theme = useTheme();
 
   const formik = useFormik({
     initialValues: {
-      fileName: imageProperty.fileName,
-      type: imageProperty.type,
-      size: imageProperty.size,
-      imgE: imageProperty.imgE
+      file: '',
+      size: ''
     },
     validationSchema,
 
     onSubmit: (values) => {
-      console.log({
-        fileName: values.file.name,
-        type: values.file.type,
-        size: `${values.file.size} bytes`
-      });
-
-      setPaymentData({
-        fileName: values.file.name,
-        type: values.file.type,
-        size: `${values.file.size} bytes`,
-        imgE: imgE
-      });
-
-      handleNext();
+      if (values.size >= 2000000) {
+        setMessage('File Size is too large');
+      } else {
+        setPaymentData({
+          imgE: imgE
+        });
+        handleNext();
+      }
     }
   });
 
   const preViewImage = (e) => {
+    if (e.target.files[0].size >= 2000000) {
+      setMessage('File Size is too large');
+    }
+
     const fileReader = new FileReader();
     fileReader.onload = () => {
       if (fileReader.readyState === 2) {
         formik.setFieldValue('file', e.target.files[0]);
+        formik.setFieldValue('size', e.target.files[0].size);
         setAvatarPreview(fileReader.result);
         setEImg(e);
       }
@@ -107,6 +106,7 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
                 sx={{ display: 'none' }}
                 onChange={(e) => {
                   preViewImage(e);
+                  // formik.setFieldValue('file', e.target.files[0]);
                 }}
               />
 
@@ -128,6 +128,7 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
               >
                 <CloudUploadIcon /> Drop file here to upload
               </InputLabel>
+              <FormHelperText error>{message}</FormHelperText>
             </div>
             {/* </label> */}
 

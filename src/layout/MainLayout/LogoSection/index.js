@@ -3,13 +3,13 @@ import Link from 'Link';
 import { Link as MuiLink } from '@mui/material';
 
 // project imports
-import { DASHBOARD_PATH } from 'config';
+import { DASHBOARD_PATH, BASE_PATH } from 'config';
 import Logo from 'components/ui-component/Logo';
 
 // ==============================|| MAIN LOGO ||============================== //
 
 const LogoSection = () => (
-  <MuiLink component={Link} href={DASHBOARD_PATH}>
+  <MuiLink component={Link} href={BASE_PATH}>
     <Logo />
   </MuiLink>
 );
