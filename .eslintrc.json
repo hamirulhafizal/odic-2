@@ -5,13 +5,13 @@
     "es2021": true
   },
   "extends": [
-    "next/core-web-vitals",
     "prettier",
     "plugin:react/jsx-runtime",
     "plugin:jsx-a11y/recommended",
     "plugin:prettier/recommended",
     "plugin:react/recommended",
-    "plugin:@next/next/recommended"
+    "plugin:@next/next/recommended",
+    "next/core-web-vitals"
   ],
   "settings": {
     "import/resolver": {
