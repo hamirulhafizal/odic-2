@@ -8,9 +8,9 @@ import Logo from 'components/ui-component/Logo';
 
 // ==============================|| MAIN LOGO ||============================== //
 
-const LogoSection = () => (
+const LogoSection = ({ htmlFor }) => (
   <MuiLink component={Link} href={BASE_PATH}>
-    <Logo />
+    <Logo htmlFor={htmlFor} />
   </MuiLink>
 );
 

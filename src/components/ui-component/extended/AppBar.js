@@ -76,7 +76,7 @@ const AppBar = ({ ...others }) => {
               <LogoSection />
             </Typography>
             <Stack direction="row" sx={{ display: { xs: 'none', sm: 'block' } }} spacing={2}>
-              <Button color="inherit" component={Link} href="#" target="_blank">
+              <Button color="inherit" component={Link} href="/login" >
                 Login
               </Button>
               <Button component={Link} href="/listing" disableElevation variant="contained" color="secondary">

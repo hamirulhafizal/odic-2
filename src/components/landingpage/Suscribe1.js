@@ -10,6 +10,7 @@ import Link from 'Link';
 import Avatar from 'components/ui-component/extended/Avatar';
 import AnimateButton from 'components/ui-component/extended/AnimateButton';
 import { gridSpacing } from 'store/constant';
+import MailerSubscriber from 'components/maintenance/ComingSoon/ComingSoon1/MailerSubscriber';
 
 // styles
 const HeaderImage = styled('img')(({ theme }) => ({
@@ -29,7 +30,7 @@ const HeaderAnimationImage = styled('img')({
 
 // ==============================|| LANDING - HEADER PAGE ||============================== //
 
-const HeaderPage = () => {
+const Suscribe1 = () => {
   const theme = useTheme();
 
   return (
@@ -40,7 +41,7 @@ const HeaderPage = () => {
         justifyContent="center"
         spacing={gridSpacing}
         sx={{
-          mt: { xs: 10, sm: 6, md: 18.75 },
+          mt: { xs: 5, sm: 3, md: 10 },
           mb: { xs: 2.5, md: 10 }
         }}
       >
@@ -66,14 +67,13 @@ const HeaderPage = () => {
                   variant="h1"
                   color="secondary"
                   sx={{
-                    fontSize: { xs: '2.25rem', sm: '3rem', md: '4rem' },
                     fontWeight: 900,
                     lineHeight: 1.4
                   }}
                 >
-                  The Only Way to <br></br>Find Your
-                  <Box component="span" variant="h2" color="inherit" sx={{ ml: 2, color: 'white' }}>
-                    DREAM HOUSE
+                  Need Help
+                  <Box component="span" variant="h5" color="inherit" sx={{ ml: 2, color: 'white' }}>
+                    From Agent?
                   </Box>
                 </Typography>
               </motion.div>
@@ -94,13 +94,12 @@ const HeaderPage = () => {
                   component="div"
                   color="white"
                   sx={{
-                    fontSize: { xs: '1rem', md: '1.125rem' },
+                    // fontSize: { xs: '1rem', md: '1.125rem' },
                     fontWeight: 400,
                     lineHeight: 1.4
                   }}
                 >
-                  Reduce your burden with our Zero Deposit Guarantee. Zero Deposit replace traditional security deposit. It make renting
-                  faster and more affordable, move into the home you love without putting an expensive 2-3 months cash deposit.
+                  Let Us manage your Property in better way.{' '}
                 </Typography>
               </motion.div>
             </Grid>
@@ -117,11 +116,7 @@ const HeaderPage = () => {
               >
                 <Grid container spacing={2} sx={{ justifyContent: { xs: 'center', md: 'center' } }}>
                   <Grid item>
-                    <AnimateButton>
-                      <Button component={Link} href="/dashboard/" size="large" variant="contained" color="secondary">
-                        View Home List
-                      </Button>
-                    </AnimateButton>
+                    <MailerSubscriber />
                   </Grid>
                 </Grid>
               </motion.div>
@@ -133,4 +128,4 @@ const HeaderPage = () => {
   );
 };
 
-export default HeaderPage;
+export default Suscribe1;

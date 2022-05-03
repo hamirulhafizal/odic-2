@@ -13,7 +13,7 @@ import SubCard from 'components/ui-component/cards/SubCard';
 import colors from '../../scss/_themes-vars.module.scss';
 import theme1 from '../../scss/_theme1.module.scss';
 import theme2 from '../../scss/_theme2.module.scss';
-import theme3 from '../../scss/_theme3.module.scss';
+import theme7 from '../../scss/_theme7.module.scss';
 import theme4 from '../../scss/_theme4.module.scss';
 import theme5 from '../../scss/_theme5.module.scss';
 import theme6 from '../../scss/_theme6.module.scss';
@@ -67,8 +67,8 @@ const PresetColor = () => {
     },
     {
       id: 'theme3',
-      primary: theme.palette.mode === 'dark' ? theme3.darkPrimaryMain : theme3.primaryMain,
-      secondary: theme.palette.mode === 'dark' ? theme3.darkSecondaryMain : theme3.secondaryMain
+      primary: theme.palette.mode === 'dark' ? theme7.darkPrimaryMain : theme7.primaryMain,
+      secondary: theme.palette.mode === 'dark' ? theme7.darkSecondaryMain : theme7.secondaryMain
     },
     {
       id: 'theme4',

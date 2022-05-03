@@ -21,6 +21,7 @@ import theme3 from '../scss/_theme3.module.scss';
 import theme4 from '../scss/_theme4.module.scss';
 import theme5 from '../scss/_theme5.module.scss';
 import theme6 from '../scss/_theme6.module.scss';
+import theme7 from '../scss/_theme7.module.scss';
 
 export default function ThemeCustomization({ children }) {
   const config = useConfig();
@@ -41,7 +42,7 @@ export default function ThemeCustomization({ children }) {
       color = theme2;
       break;
     case 'theme3':
-      color = theme3;
+      color = theme7;
       break;
     case 'theme4':
       color = theme4;

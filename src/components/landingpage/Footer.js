@@ -1,7 +1,7 @@
 import Image from 'next/image';
 // material-ui
 import { useTheme, styled } from '@mui/material/styles';
-import { Container, Grid, Link, Typography } from '@mui/material';
+import { Container, Grid, Link, Typography, Stack } from '@mui/material';
 
 // project imports
 import { gridSpacing } from 'store/constant';
@@ -10,6 +10,7 @@ import { gridSpacing } from 'store/constant';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import InstagramIcon from '@mui/icons-material/Instagram';
+import LogoSection from 'layout/MainLayout/LogoSection';
 
 const logoDark = '/assets/images/logo-white.svg';
 
@@ -17,7 +18,9 @@ const logoDark = '/assets/images/logo-white.svg';
 const FooterWrapper = styled('div')(({ theme }) => ({
   padding: '35px 0',
   color: '#fff',
-  background: theme.palette.secondary.main,
+  // background: theme.palette.secondary.main,
+  background: '#00000057',
+  justifyContent: 'space-between',
   [theme.breakpoints.down('md')]: {
     textAlign: 'center'
   }
@@ -26,7 +29,7 @@ const FooterWrapper = styled('div')(({ theme }) => ({
 const FooterLink = styled(Link)({
   color: '#fff',
   display: 'inline-flex',
-  alignItems: 'center',
+  alignItems: 'flex-start',
   textDecoration: 'none !important',
   opacity: '0.8',
   '& svg': {
@@ -56,35 +59,47 @@ const FooterPage = () => {
       <FooterWrapper>
         <Container>
           <Grid container alignItems="center" spacing={gridSpacing}>
-            <Grid item xs={12} sm={4}>
-              <Image src={logoDark} alt="Berry" width={100} height={34} layout="intrinsic" />
+            <Grid item xs={12} sm={3}>
+              <Stack alignItems="center" direction="row">
+                <LogoSection htmlFor="footer" />
+                <Typography sx={{ ml: 1 }} variant="subtitle1" component="div" color="inherit">
+                  ONE DREAM PROPERTY
+                </Typography>
+              </Stack>
+
+              <Typography variant="subtitle2" component="div" color="inherit">
+                One-stop property platform in Malaysia.<br></br> Find properties for rent, sell and manage.
+              </Typography>
             </Grid>
-            <Grid item xs={12} sm={8}>
-              <Grid
-                container
-                alignItems="center"
-                spacing={2}
-                sx={{ justifyContent: 'flex-end', [theme.breakpoints.down('md')]: { justifyContent: 'center' } }}
-              >
-                <Grid item>
-                  <FooterLink href="https://blog.berrydashboard.io/" target="_blank" underline="hover">
-                    <InstagramIcon />
-                    Blog
-                  </FooterLink>
-                </Grid>
-                <Grid item>
-                  <FooterLink href="https://www.facebook.com/codedthemes" target="_blank" underline="hover">
-                    <FacebookIcon />
-                    Facebook
-                  </FooterLink>
-                </Grid>
-                <Grid item>
-                  <FooterLink href="https://twitter.com/codedthemes" target="_blank" underline="hover">
-                    <TwitterIcon />
-                    Twitter
-                  </FooterLink>
-                </Grid>
-              </Grid>
+            <Grid item xs={12} sm={2}>
+              <Typography variant="subtitle1" component="div" color="inherit">
+                ONE DREAM
+              </Typography>
+              <Typography variant="subtitle2" component="div" color="inherit">
+                Privacy Policy
+              </Typography>
+              <Typography variant="subtitle2" component="div" color="inherit">
+                Term of Use
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={2}>
+              <Typography variant="subtitle1" component="div" color="inherit">
+                SERVICES
+              </Typography>
+              <Typography variant="subtitle2" component="div" color="inherit">
+                Property for Rent
+              </Typography>
+              <Typography variant="subtitle2" component="div" color="inherit">
+                Property for Buy
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={3}>
+              <Typography variant="subtitle1" component="div" color="inherit">
+                GET IN TOUCH WITH US
+              </Typography>
+              <Typography variant="subtitle2" component="div" color="inherit">
+                No 77-02 & 79-02 Jalan Aliff 4,Damansara Aliff Square 81200 Johor Bahru
+              </Typography>
             </Grid>
           </Grid>
         </Container>
@@ -92,7 +107,7 @@ const FooterPage = () => {
       <FooterSubWrapper>
         <Container>
           <Typography variant="subtitle2" component="div" color="inherit">
-            &#169; CodedThemes
+            © 2022 ONE LEGACY REALTY SDN BHD E(1) 2004. All rights reserved
           </Typography>
         </Container>
       </FooterSubWrapper>
