@@ -242,7 +242,6 @@ const Listing = () => {
 
   const matchDownSM = useMediaQuery(theme.breakpoints.down('sm'));
 
-
   const handleMenuClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -351,7 +350,7 @@ const Listing = () => {
               size="small"
             />
           </Grid>
-          <Grid item xs={12} sm={6} sx={{ textAlign:   `${matchDownSM ? 'start' : 'right'}`     }}>
+          <Grid item xs={12} sm={6} sx={{ textAlign: `${matchDownSM ? 'start' : 'right'}` }}>
             {/* <Tooltip title="Copy">
               <IconButton size="large">
                 <FileCopyIcon />

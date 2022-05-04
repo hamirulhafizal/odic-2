@@ -57,15 +57,14 @@ export default function Review({ shippingData, imageProperty }) {
       <Typography variant="h5" gutterBottom sx={{ mb: 2 }}>
         Review Summary
       </Typography>
+
       <List disablePadding>
-        
         {/* {products.map((product) => (
           <ListItem sx={{ py: 1, px: 0 }} key={product.name}>
             <ListItemText primary={product.name} secondary={product.desc} />
             <Typography variant="body2">{product.price}</Typography>
           </ListItem>
         ))} */}
-
         <ImageWrapper>
           <CardMedia component="img" image={avatarPreview || ''} title="Product" />
         </ImageWrapper>

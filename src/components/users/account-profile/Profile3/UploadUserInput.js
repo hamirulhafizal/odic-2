@@ -77,7 +77,7 @@ const UploadUserInput = () => {
                   preViewImage(e);
                 }}
               />
-              <Button color="secondary" sx={{color: 'white'}} variant="contained" component="span">
+              <Button color="secondary" sx={{ color: 'white' }} variant="contained" component="span">
                 Upload Avatar
               </Button>
             </InputLabel>

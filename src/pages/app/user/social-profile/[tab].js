@@ -133,7 +133,6 @@ const SocialProfile = () => {
   return (
     <Grid container spacing={gridSpacing}>
       <Grid item xs={12}>
-
         <MainCard
           contentSX={{
             p: 1.5,
@@ -155,7 +154,6 @@ const SocialProfile = () => {
           ) : (
             <CardMedia component="img" image={Cover} sx={{ borderRadius: `${borderRadius}px`, overflow: 'hidden', mb: 3 }} />
           )}
-          
           <Grid container spacing={gridSpacing}>
             <Grid item xs={12} md={3}>
               {isLoading ? (
@@ -276,7 +274,6 @@ const SocialProfile = () => {
             </Grid>
           </Grid>
         </MainCard>
-
       </Grid>
 
       <Grid item xs={12}>

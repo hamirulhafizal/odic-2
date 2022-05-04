@@ -147,8 +147,8 @@ const MailerSubscriber = ({ ...others }) => {
                   lineHeight: 1.4
                 }}
               >
-                By clicking "Submit", I confirm that I have read and agreed with the Term of use and Privacy Policy of ONE DREAM PROPERTY
-                including collection, use, disclosure, processing, storage and handling of my personal informations.
+                By clicking &quot;Submit&quot;, I confirm that I have read and agreed with the Term of use and Privacy Policy of ONE DREAM
+                PROPERTY including collection, use, disclosure, processing, storage and handling of my personal informations.
               </Typography>
             </Grid>
           </Grid>
@@ -166,7 +166,7 @@ const MailerSubscriber = ({ ...others }) => {
                   sx={{
                     px: 2.75,
                     py: 1.5,
-                    color:'white'
+                    color: 'white'
                   }}
                 >
                   Subscribe
