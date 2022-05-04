@@ -26,12 +26,15 @@ const ImageWrapper = styled('div')(({ theme }) => ({
   borderRadius: '4px',
   cursor: 'pointer',
   width: '100%',
-  height: 'auto',
+  height: '434px',
   objectFit: 'contain',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  background: theme.palette.background.default,
+  // borderRadius: '20px',
+  // border: `1px solid grey`,
+  boxShadow: 'inset 0 0 5px #000000',
+  background: 'grey',
   '& > svg': {
     verticalAlign: 'sub',
     marginRight: 6
@@ -65,7 +68,23 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
     }
   });
 
-  const preViewImage = (e) => {
+  const preViewImageCover = (e) => {
+    if (e.target.files[0].size >= 2000000) {
+      setMessage('File Size is too large');
+    }
+    const fileReader = new FileReader();
+    fileReader.onload = () => {
+      if (fileReader.readyState === 2) {
+        formik.setFieldValue('file', e.target.files[0]);
+        formik.setFieldValue('size', e.target.files[0].size);
+        setAvatarPreview(fileReader.result);
+        setEImg(e);
+      }
+    };
+    fileReader.readAsDataURL(e.target.files[0]);
+  };
+
+  const preViewImageAlbum = (e) => {
     if (e.target.files[0].size >= 2000000) {
       setMessage('File Size is too large');
     }
@@ -83,61 +102,146 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
     fileReader.readAsDataURL(e.target.files[0]);
   };
 
+  const deleteImgPreview = () => {
+    formik.setFieldValue('file', null);
+    formik.setFieldValue('size', null);
+    setAvatarPreview(null);
+    setEImg(null);
+  };
+
   return (
     <>
       <form onSubmit={formik.handleSubmit}>
         <Grid container spacing={3}>
-          <Grid item xs={12} md={6}>
-            <Typography variant="h5" gutterBottom>
-              Cover Image
-            </Typography>
+          <Grid item xs={12} md={12}>
+            <Stack direction="row" justifyContent="space-between">
+              <Typography variant="h5" gutterBottom>
+                Cover Image
+              </Typography>
+              {avatarPreview && (
+                <AnimateButton>
+                  <Button color="error" sx={{ color: 'white' }} variant="contained" onClick={deleteImgPreview}>
+                    Delete
+                  </Button>
+                </AnimateButton>
+              )}
+            </Stack>
           </Grid>
 
           <Grid item xs={12}>
-            <div>
-              <TextField
-                accept="image/*"
-                multiple
-                name="file"
-                type="file"
-                id="file-upload"
-                fullWidth
-                label="Enter SKU"
-                sx={{ display: 'none' }}
-                onChange={(e) => {
-                  preViewImage(e);
-                  // formik.setFieldValue('file', e.target.files[0]);
-                }}
-              />
-
-              <InputLabel
-                htmlFor="file-upload"
-                sx={{
-                  background: theme.palette.background.default,
-                  py: 3.75,
-                  px: 0,
-                  textAlign: 'center',
-                  borderRadius: '4px',
-                  cursor: 'pointer',
-                  mb: 3,
-                  '& > svg': {
-                    verticalAlign: 'sub',
-                    mr: 0.5
-                  }
+            {!avatarPreview ? (
+              <div
+                style={{
+                  // border: `1px solid grey`,
+                  boxShadow: 'inset 0 0 5px #000000',
+                  borderRadius: '5px'
                 }}
               >
-                <CloudUploadIcon /> Drop file here to upload
-              </InputLabel>
-              <FormHelperText error>{message}</FormHelperText>
-            </div>
-            {/* </label> */}
+                <TextField
+                  accept="image/*"
+                  multiple
+                  name="file"
+                  type="file"
+                  id="file-upload"
+                  fullWidth
+                  label="Enter SKU"
+                  sx={{ display: 'none' }}
+                  onChange={(e) => {
+                    preViewImageCover(e);
+                  }}
+                />
 
-            <ImageWrapper>
-              <CardMedia component="img" image={avatarPreview} title="Product" />
-            </ImageWrapper>
+                <InputLabel
+                  htmlFor="file-upload"
+                  sx={{
+                    py: 3.75,
+                    px: 3,
+                    textAlign: 'center',
+                    borderRadius: '4px',
+                    cursor: 'pointer',
+                    '& > svg': {
+                      verticalAlign: 'sub',
+                      mr: 0.5
+                    }
+                  }}
+                >
+                  <CloudUploadIcon /> Drop file here to upload OR Click Here
+                </InputLabel>
+
+                <FormHelperText error>{message}</FormHelperText>
+              </div>
+            ) : (
+              <ImageWrapper>
+                <CardMedia component="img" image={avatarPreview} title="Product" />
+              </ImageWrapper>
+            )}
           </Grid>
 
-          <Divider />
+          <Divider variant="middle" sx={{ width: '100%', p: 3 }} />
+
+          <Grid item xs={12} md={12}>
+            <Stack direction="row" justifyContent="space-between">
+              <Typography variant="h5" gutterBottom>
+                Gallery Image
+              </Typography>
+              {avatarPreview && (
+                <AnimateButton>
+                  <Button color="error" sx={{ color: 'white' }} variant="contained" onClick={deleteImgPreview}>
+                    Delete
+                  </Button>
+                </AnimateButton>
+              )}
+            </Stack>
+          </Grid>
+
+          <Grid item xs={12}>
+            {!avatarPreview ? (
+              <div
+                style={{
+                  // border: `1px solid grey`,
+                  boxShadow: 'inset 0 0 5px #000000',
+                  borderRadius: '5px'
+                }}
+              >
+                <TextField
+                  accept="image/*"
+                  multiple
+                  name="file"
+                  type="file"
+                  id="file-upload"
+                  fullWidth
+                  label="Enter SKU"
+                  sx={{ display: 'none' }}
+                  onChange={(e) => {
+                    preViewImageCover(e);
+                  }}
+                />
+
+                <InputLabel
+                  htmlFor="file-upload"
+                  sx={{
+                    py: 3.75,
+                    px: 3,
+                    textAlign: 'center',
+                    borderRadius: '4px',
+                    cursor: 'pointer',
+                    '& > svg': {
+                      verticalAlign: 'sub',
+                      mr: 0.5
+                    }
+                  }}
+                >
+                  <CloudUploadIcon /> Drop file here to upload OR Click Here
+                </InputLabel>
+
+                <FormHelperText error>{message}</FormHelperText>
+              </div>
+            ) : (
+              <ImageWrapper>
+                <CardMedia component="img" image={avatarPreview} title="Product" />
+              </ImageWrapper>
+            )}
+          </Grid>
 
           <Grid item xs={12}>
             <Stack direction="row" justifyContent="space-between">

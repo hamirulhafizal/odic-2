@@ -10,6 +10,7 @@ import GalleryForm from './GalleryForm';
 import Review from './Review';
 import MainCard from 'components/ui-component/cards/MainCard';
 import AnimateButton from 'components/ui-component/extended/AnimateButton';
+import { Router, useRouter } from 'next/router';
 
 // step options
 const steps = ['Fill Up Detail', 'Upload Image', 'Review your Listing'];
@@ -44,6 +45,7 @@ const ValidationWizard = () => {
   const [shippingData, setShippingData] = React.useState({});
   const [imageProperty, setPaymentData] = React.useState({});
   const [errorIndex, setErrorIndex] = React.useState(null);
+  const router = useRouter();
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -84,14 +86,15 @@ const ValidationWizard = () => {
         {activeStep === steps.length ? (
           <>
             <Typography variant="h5" gutterBottom>
-              Thank you for your order.
+              Thank you for your Submit
             </Typography>
             <Typography variant="subtitle1">
-              Your order number is #2001539. We have emailed your order confirmation, and will send you an update when your order has
-              shipped.
+              Your Lisiting Property is #2001539. We have emailed your appplication confirmation, and will send you an update when your
+              submission has approved.
             </Typography>
+
             <Stack direction="row" justifyContent="flex-end">
-              <AnimateButton>
+              {/* <AnimateButton>
                 <Button
                   variant="contained"
                   color="error"
@@ -99,6 +102,18 @@ const ValidationWizard = () => {
                     setShippingData({});
                     setPaymentData({});
                     setActiveStep(0);
+                  }}
+                  sx={{ my: 3, ml: 1 }}
+                >
+                  Reset
+                </Button>
+              </AnimateButton> */}
+              <AnimateButton>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={() => {
+                    router.push('/listing');
                   }}
                   sx={{ my: 3, ml: 1 }}
                 >
@@ -129,7 +144,7 @@ const ValidationWizard = () => {
                 )}
                 <AnimateButton>
                   <Button variant="contained" onClick={handleNext} sx={{ my: 3, ml: 1 }}>
-                    {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
+                    {activeStep === steps.length - 1 ? 'Submit' : 'Next'}
                   </Button>
                 </AnimateButton>
               </Stack>

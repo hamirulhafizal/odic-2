@@ -22,60 +22,80 @@ const MailerSubscriber = ({ ...others }) => {
   return (
     <Formik
       initialValues={{
+        name: '',
+        phone: '',
         email: '',
         message: '',
         submit: null
       }}
       validationSchema={Yup.object().shape({
-        email: Yup.string().email('Must be a valid email').max(255).required('Email is required')
+        email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
+        phone: Yup.number().required('Phone is required')
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-        try {
-          const options = {
-            headers: {
-              'content-type': 'application/json'
-            }
-          };
-          await axios.post('https://yourapicall', { email: values.email }, options);
-          dispatch(
-            openSnackbar({
-              open: true,
-              message: 'Success! Please check inbox and confirm.',
-              variant: 'alert',
-              alert: {
-                color: 'success'
-              },
-              close: false
-            })
-          );
+        console.log('values', values);
+        // try {
+        //   const options = {
+        //     headers: {
+        //       'content-type': 'application/json'
+        //     }
+        //   };
+        //   await axios.post('https://yourapicall', { email: values.email }, options);
+        //   dispatch(
+        //     openSnackbar({
+        //       open: true,
+        //       message: 'Success! Please check inbox and confirm.',
+        //       variant: 'alert',
+        //       alert: {
+        //         color: 'success'
+        //       },
+        //       close: false
+        //     })
+        //   );
 
-          if (scriptedRef.current) {
-            setStatus({ success: true });
-            setSubmitting(false);
-          }
-        } catch (err) {
-          if (scriptedRef.current) {
-            setStatus({ success: false });
-            setErrors({ submit: err.message });
-            setSubmitting(false);
-          }
-        }
+        //   if (scriptedRef.current) {
+        //     setStatus({ success: true });
+        //     setSubmitting(false);
+        //   }
+        // } catch (err) {
+        //   if (scriptedRef.current) {
+        //     setStatus({ success: false });
+        //     setErrors({ submit: err.message });
+        //     setSubmitting(false);
+        //   }
+        // }
       }}
     >
       {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
         <form noValidate onSubmit={handleSubmit} {...others}>
           <Grid container alignItems="center" spacing={gridSpacing}>
             <Grid item xs={12} md={4}>
-              <FormControl fullWidth error={Boolean(touched.email && errors.email)}>
-                <InputLabel htmlFor="outlined-adornment-email-forgot">Email Address</InputLabel>
+              <FormControl fullWidth error={Boolean(touched.name && errors.name)}>
+                <InputLabel htmlFor="outlined-adornment-email-forgot">Name</InputLabel>
                 <OutlinedInput
                   id="outlined-adornment-email-forgot"
-                  type="email"
-                  defaultValue={values.email}
-                  name="email"
+                  type="text"
+                  defaultValue={values.name}
+                  name="name"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  label="Email Address"
+                  label="Name"
+                />
+              </FormControl>
+            </Grid>
+
+            <Grid item xs={12} md={4}>
+              <FormControl fullWidth error={Boolean(touched.phone && errors.phone)}>
+                <InputLabel htmlFor="outlined-adornment-email-forgot">Contact Number</InputLabel>
+                <OutlinedInput
+                  required
+                  id="outlined-adornment-email-forgot"
+                  type="tel"
+                  defaultValue={values.phone}
+                  name="phone"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  label="Contact Number"
                 />
               </FormControl>
             </Grid>
@@ -84,21 +104,7 @@ const MailerSubscriber = ({ ...others }) => {
               <FormControl fullWidth error={Boolean(touched.email && errors.email)}>
                 <InputLabel htmlFor="outlined-adornment-email-forgot">Email Address</InputLabel>
                 <OutlinedInput
-                  id="outlined-adornment-email-forgot"
-                  type="email"
-                  defaultValue={values.email}
-                  name="email"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  label="Email Address"
-                />
-              </FormControl>
-            </Grid>
-
-            <Grid item xs={12} md={4}>
-              <FormControl fullWidth error={Boolean(touched.email && errors.email)}>
-                <InputLabel htmlFor="outlined-adornment-email-forgot">Email Address</InputLabel>
-                <OutlinedInput
+                  required
                   id="outlined-adornment-email-forgot"
                   type="email"
                   defaultValue={values.email}
@@ -111,21 +117,21 @@ const MailerSubscriber = ({ ...others }) => {
             </Grid>
           </Grid>
 
-          <Grid container alignItems="center" spacing={gridSpacing} sx={{ pt: 2, pb: 2 }}>
+          <Grid container alignItems="center" spacing={gridSpacing} sx={{ pt: 3, pb: 2 }}>
             <Grid item xs>
-              <FormControl fullWidth error={Boolean(touched.email && errors.email)}>
-                <InputLabel htmlFor="outlined-adornment-email-forgot">Email Address</InputLabel>
+              <FormControl fullWidth error={Boolean(touched.message && errors.message)}>
+                <InputLabel htmlFor="outlined-adornment-email-forgot">Message</InputLabel>
                 <OutlinedInput
                   fullWidth
                   multiline
-                  rows={4}
+                  rows={5}
                   id="outlined-adornment-email-forgot"
-                  type="email"
-                  defaultValue={values.email}
-                  name="email"
+                  type="text"
+                  defaultValue={values.message}
+                  name="message"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  label="Email Address"
+                  label="Message"
                   placeholder="Tell us more about your property house (i.e bedroom, location, budget)"
                 />
               </FormControl>
@@ -156,9 +162,11 @@ const MailerSubscriber = ({ ...others }) => {
                   type="submit"
                   variant="contained"
                   size="large"
+                  color="secondary"
                   sx={{
                     px: 2.75,
-                    py: 1.5
+                    py: 1.5,
+                    color:'white'
                   }}
                 >
                   Subscribe
@@ -174,6 +182,15 @@ const MailerSubscriber = ({ ...others }) => {
               </FormHelperText>
             </Box>
           )}
+
+          {touched.phone && errors.phone && (
+            <Box sx={{ mt: 1 }}>
+              <FormHelperText error id="standard-weight-helper-text-email-forgot">
+                {errors.phone}
+              </FormHelperText>
+            </Box>
+          )}
+
           {errors.submit && (
             <Box sx={{ mt: 3 }}>
               <FormHelperText error>{errors.submit}</FormHelperText>

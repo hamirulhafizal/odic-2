@@ -60,8 +60,8 @@ function App({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <title>MOST PROFESSIONAL REAL ESTATE AGENCY</title>
-        <link rel="icon" href="/favicon.svg" />
+        <title>Most Professional Real Estate Agency | One Dream Property</title>
+        <link rel="icon" href="/logo.svg" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <Provider store={store}>

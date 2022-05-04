@@ -5,7 +5,7 @@ import Link from 'Link';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
-import { Box, Button, CardMedia, Grid, Tab, Tabs, Typography } from '@mui/material';
+import { Box, Button, CardMedia, Grid, Stack, Tab, Tabs, Typography, useMediaQuery } from '@mui/material';
 
 // project imports
 import Profile from 'components/users/social-profile/Profile';
@@ -23,6 +23,11 @@ import { gridSpacing } from 'store/constant';
 
 // assets
 import { IconFriends, IconInbox, IconPhoto, IconUserPlus, IconUsers } from '@tabler/icons';
+// assets
+import FacebookIcon from '@mui/icons-material/Facebook';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import PublicTwoToneIcon from '@mui/icons-material/PublicTwoTone';
 
 const Cover = '/assets/images/profile/img-profile-bg.png';
 
@@ -91,6 +96,7 @@ const tabOptions = [
 
 const SocialProfile = () => {
   const theme = useTheme();
+  const matchDownLG = useMediaQuery(theme.breakpoints.down('lg'));
 
   const { user } = useAuth();
   const { borderRadius } = useConfig();
@@ -127,6 +133,7 @@ const SocialProfile = () => {
   return (
     <Grid container spacing={gridSpacing}>
       <Grid item xs={12}>
+
         <MainCard
           contentSX={{
             p: 1.5,
@@ -148,6 +155,7 @@ const SocialProfile = () => {
           ) : (
             <CardMedia component="img" image={Cover} sx={{ borderRadius: `${borderRadius}px`, overflow: 'hidden', mb: 3 }} />
           )}
+          
           <Grid container spacing={gridSpacing}>
             <Grid item xs={12} md={3}>
               {isLoading ? (
@@ -189,7 +197,22 @@ const SocialProfile = () => {
                 <Grid item xs={12} md={4}>
                   <Typography variant="h5">{user?.firstName}</Typography>
                   <Typography variant="subtitle2">One Dream Legacy</Typography>
+                  <Stack sx={{ pt: 1 }} direction="row" justifyContent={matchDownLG ? 'center' : 'start'}>
+                    <Link href="https://codedthemes.com/" target="_blank" underline="hover">
+                      <PublicTwoToneIcon color="secondary" />
+                    </Link>
+                    <Link href="https://www.instagram.com/codedthemes" target="_blank" underline="hover">
+                      <InstagramIcon sx={{ color: theme.palette.orange.dark }} />
+                    </Link>
+                    <Link href="https://www.facebook.com/codedthemes" target="_blank" underline="hover">
+                      <FacebookIcon color="primary" />
+                    </Link>
+                    <Link href="https://in.linkedin.com/company/codedthemes" target="_blank" underline="hover">
+                      <LinkedInIcon sx={{ color: theme.palette.grey[900] }} />
+                    </Link>
+                  </Stack>
                 </Grid>
+
                 <Grid item xs={12} md={8}>
                   <Grid
                     container
@@ -253,7 +276,9 @@ const SocialProfile = () => {
             </Grid>
           </Grid>
         </MainCard>
+
       </Grid>
+
       <Grid item xs={12}>
         <TabPanel value={value} index={0}>
           <Profile />

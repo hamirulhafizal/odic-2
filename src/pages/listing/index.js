@@ -24,8 +24,10 @@ import {
   TextField,
   Toolbar,
   Tooltip,
-  Typography
+  Typography,
+  useMediaQuery
 } from '@mui/material';
+import AddLocationAltOutlinedIcon from '@mui/icons-material/AddLocationAltOutlined';
 
 // third-party
 import { format } from 'date-fns';
@@ -45,6 +47,8 @@ import FileCopyIcon from '@mui/icons-material/FileCopyTwoTone';
 import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/AddTwoTone';
 import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
+import { Button } from '@mui/material';
+import { useRouter } from 'next/router';
 
 const prodImage = '/assets/images/e-commerce';
 
@@ -223,6 +227,7 @@ EnhancedTableHead.propTypes = {
 const Listing = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
@@ -234,6 +239,9 @@ const Listing = () => {
   const { products } = useSelector((state) => state.product);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const matchDownSM = useMediaQuery(theme.breakpoints.down('sm'));
+
 
   const handleMenuClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -343,8 +351,8 @@ const Listing = () => {
               size="small"
             />
           </Grid>
-          <Grid item xs={12} sm={6} sx={{ textAlign: 'right' }}>
-            <Tooltip title="Copy">
+          <Grid item xs={12} sm={6} sx={{ textAlign:   `${matchDownSM ? 'start' : 'right'}`     }}>
+            {/* <Tooltip title="Copy">
               <IconButton size="large">
                 <FileCopyIcon />
               </IconButton>
@@ -358,15 +366,22 @@ const Listing = () => {
               <IconButton size="large">
                 <FilterListIcon />
               </IconButton>
-            </Tooltip>
+            </Tooltip> */}
 
             {/* product add & dialog */}
             <Tooltip title="Add Product">
-              <Fab color="primary" size="small" sx={{ boxShadow: 'none', ml: 1, width: 32, height: 32, minHeight: 32 }}>
-                <IconButton component={Link} href="/listing/create" aria-label="delete">
-                  <AddIcon fontSize="small" />
-                </IconButton>
-              </Fab>
+              <Button
+                onClick={() => {
+                  router.push('/listing/create');
+                }}
+                variant="contained"
+                color="secondary"
+                sx={{ color: 'white' }}
+                size="small"
+                startIcon={<AddLocationAltOutlinedIcon sx={{ color: 'white' }} fontSize="small" />}
+              >
+                Create New List
+              </Button>
             </Tooltip>
           </Grid>
         </Grid>

@@ -20,14 +20,18 @@ import {
   Typography,
   useScrollTrigger
 } from '@mui/material';
+import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
+import AddLocationAltOutlinedIcon from '@mui/icons-material/AddLocationAltOutlined';
 
 // project imports
 import Logo from '../Logo';
 
 // assets
-import { IconHome2, IconLogin } from '@tabler/icons';
+import { IconHome2, IconLogin, IconLogout } from '@tabler/icons';
 import MenuIcon from '@mui/icons-material/Menu';
 import LogoSection from 'layout/MainLayout/LogoSection';
+import useAuth from 'hooks/useAuth';
+import Router, { useRouter } from 'next/router';
 
 function ElevationScroll({ children, window }) {
   const theme = useTheme();
@@ -58,6 +62,8 @@ ElevationScroll.propTypes = {
 
 const AppBar = ({ ...others }) => {
   const [drawerToggle, setDrawerToggle] = React.useState(false);
+  const { user, logout } = useAuth();
+  const router = useRouter();
 
   /** Method called on multiple components with different event types */
   const drawerToggler = (open) => (event) => {
@@ -65,6 +71,22 @@ const AppBar = ({ ...others }) => {
       return;
     }
     setDrawerToggle(open);
+  };
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleLogin = () => {
+    router.push('/login');
+  };
+
+  const handleDashboard = () => {
+    router.push('/dashboard');
   };
 
   return (
@@ -76,35 +98,56 @@ const AppBar = ({ ...others }) => {
               <LogoSection />
             </Typography>
             <Stack direction="row" sx={{ display: { xs: 'none', sm: 'block' } }} spacing={2}>
-              <Button color="inherit" component={Link} href="/login" >
-                Login
+              <Button color="inherit" component={Link} onClick={user ? handleLogout : handleLogin}>
+                {user ? 'Logout' : 'Login'}
               </Button>
-              <Button component={Link} href="/listing" disableElevation variant="contained" color="secondary">
+
+              <Button
+                component={Link}
+                onClick={() => {
+                  router.push('/listing');
+                }}
+                disableElevation
+                variant="contained"
+                color="secondary"
+                sx={{ color: 'white' }}
+              >
                 Post Ads Property
               </Button>
             </Stack>
             <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
-              <IconButton color="inherit" onClick={drawerToggler(true)} size="large">
+              <Button
+                component={Link}
+                onClick={() => {
+                  router.push('/listing');
+                }}
+                disableElevation
+                variant="contained"
+                color="secondary"
+                sx={{ color: 'white' }}
+                size="small"
+                startIcon={<AddLocationAltOutlinedIcon />}
+              >
+                List Ads
+              </Button>
+              <IconButton sx={{ ml: 1 }} color="inherit" onClick={drawerToggler(true)} size="large">
                 <MenuIcon />
               </IconButton>
+
               <Drawer anchor="top" open={drawerToggle} onClose={drawerToggler(false)}>
                 {drawerToggle && (
                   <Box sx={{ width: 'auto' }} role="presentation" onClick={drawerToggler(false)} onKeyDown={drawerToggler(false)}>
                     <List>
-                      <Link style={{ textDecoration: 'none' }} href="/">
-                        <ListItemButton component="a">
-                          <ListItemIcon>
-                            <IconHome2 />
-                          </ListItemIcon>
-                          <ListItemText primary="Home" />
+                      <Link style={{ textDecoration: 'none', display: `${!user && 'none'}` }}>
+                        <ListItemButton component="a" onClick={user ? handleDashboard : ''}>
+                          <ListItemIcon>{user ? <GridViewOutlinedIcon /> : ''}</ListItemIcon>
+                          <ListItemText primary={user ? 'Dashboard' : ''} />
                         </ListItemButton>
                       </Link>
-                      <Link style={{ textDecoration: 'none' }} href="/login">
-                        <ListItemButton component="a">
-                          <ListItemIcon>
-                            <IconLogin />
-                          </ListItemIcon>
-                          <ListItemText primary="Login" />
+                      <Link style={{ textDecoration: 'none' }}>
+                        <ListItemButton component="a" onClick={user ? handleLogout : handleLogin}>
+                          <ListItemIcon>{user ? <IconLogout /> : <IconLogin />}</ListItemIcon>
+                          <ListItemText primary={user ? 'Logout' : 'Login'} />
                         </ListItemButton>
                       </Link>
                     </List>

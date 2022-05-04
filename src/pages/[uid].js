@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 // material-ui
 import { useTheme } from '@mui/material/styles';
-import { Button, CardMedia, Grid, Typography } from '@mui/material';
+import { Box, Button, Card, CardContent, CardMedia, Container, Grid, Stack, Typography, useMediaQuery } from '@mui/material';
+import Link from 'Link';
 
 // project imports
 import useConfig from 'hooks/useConfig';
@@ -14,52 +15,33 @@ import AppBar from 'components/ui-component/extended/AppBar';
 import FooterPage from 'components/landingpage/Footer';
 import Error from './404';
 
+//third party
+import { motion } from 'framer-motion';
+
 // assets
 
 import { BACKEND_PATH } from 'config';
 import axios from 'axios';
 import { styled } from '@mui/system';
+import { IconFriends, IconInbox, IconPhoto, IconUserPlus, IconUsers } from '@tabler/icons';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import PublicTwoToneIcon from '@mui/icons-material/PublicTwoTone';
+import AnimateButton from 'components/ui-component/extended/AnimateButton';
 
 // const User1 = '/assets/images/profile/img-user.png';
 const Cover = '/assets/images/profile/img-profile-bg.png';
 
 const headerBackground = '/assets/images/landing/header-bg.jpg';
-
-// styles
-const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }) => ({
-  ...theme.typography.mainContent,
-  ...(!open && {
-    borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0,
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.shorter
-    })
-  }),
-  ...(open && {
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.shorter
-    }),
-    marginLeft: 0,
-    borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0,
-    width: `calc(100% - ${drawerWidth}px)`,
-    [theme.breakpoints.down('md')]: {
-      marginLeft: '20px'
-    },
-    [theme.breakpoints.down('sm')]: {
-      marginLeft: '10px'
-    }
-  })
-}));
+const images1 = '/assets/images/landing/living-room-with-yellow.png';
+const images2 = '/assets/images/landing/footerBg-1.png';
 
 const HeaderWrapper = styled('div')(({ theme }) => ({
-  backgroundImage: `url(${headerBackground})`,
-  backgroundSize: '100% 600px',
-  backgroundAttachment: 'fixed',
+  backgroundImage: `url(${images1})`,
   backgroundRepeat: 'no-repeat',
   textAlign: 'center',
+  backgroundSize: 'cover',
   [theme.breakpoints.down('md')]: {
     paddingTop: 0
   }
@@ -72,11 +54,11 @@ const AgentProfile = () => {
   const [isLoading, setLoading] = useState(true);
   const [user, setUser] = useState();
   const [error, setError] = useState();
-  // const { user, getProfile } = useAuth();
-  const { borderRadius } = useConfig();
   const router = useRouter();
-  // const { tab } = router.query;
   const { uid } = router.query;
+  const matchDownLG = useMediaQuery(theme.breakpoints.down('lg'));
+
+  // const { user, getProfile } = useAuth();
 
   useEffect(() => {
     setLoading(false);
@@ -85,119 +67,177 @@ const AgentProfile = () => {
       .get(`${BACKEND_PATH}/api/v1/profile/${uid}`)
       .then((res) => {
         setUser(res?.data);
-
         return res;
       })
       .catch((err) => {
         const stringErr = JSON.stringify(err);
         const error = JSON.parse(stringErr);
-
         setError(error);
       });
   }, [uid]);
-
-  console.log('user', user);
 
   return (
     <>
       <HeaderWrapper id="home">
         <AppBar />
-      </HeaderWrapper>
-
-      {error ? (
-        <Error id="userNotFound" />
-      ) : (
-        <Main>
-          <Grid container spacing={gridSpacing}>
+        {error ? (
+          <Error id="userNotFound" />
+        ) : (
+          <Grid
+            container
+            sx={{
+              height: '40em',
+              top: '8em',
+              position: 'relative'
+            }}
+          >
             <Grid item xs={12}>
-              <MainCard
-                contentSX={{
-                  p: 1.5,
-                  [theme.breakpoints.down('lg')]: {
-                    textAlign: 'center'
-                  }
-                }}
-              >
-                {isLoading ? (
-                  <ImagePlaceholder
-                    sx={{
-                      borderRadius: `${borderRadius}px`,
-                      overflow: 'hidden',
-                      mb: 3,
-                      height: { xs: 85, sm: 150, md: 260 }
+              <Grid container sx={{ justifyContent: 'center' }}>
+                <Grid item xs={10}>
+                  <motion.div
+                    initial={{ opacity: 0, translateY: 550 }}
+                    animate={{ opacity: 1, translateY: 0 }}
+                    transition={{
+                      type: 'spring',
+                      stiffness: 150,
+                      damping: 30
                     }}
-                  />
-                ) : (
-                  <CardMedia component="img" image={Cover} sx={{ borderRadius: `${borderRadius}px`, overflow: 'hidden', mb: 3 }} />
-                )}
-
-                <Grid container spacing={gridSpacing}>
-                  <Grid item xs={12} md={3}>
-                    {isLoading ? (
-                      <ImagePlaceholder
-                        sx={{
-                          margin: '-70px 0 0 auto',
-                          borderRadius: '16px',
-                          [theme.breakpoints.down('lg')]: {
-                            margin: '-70px auto 0'
-                          },
-                          [theme.breakpoints.down('md')]: {
-                            margin: '-60px auto 0'
-                          },
-                          width: { xs: 72, sm: 100, md: 140 },
-                          height: { xs: 72, sm: 100, md: 140 }
-                        }}
-                      />
-                    ) : (
-                      <Avatar
-                        alt="User 1"
-                        src={user?.photo}
-                        sx={{
-                          margin: '-70px 0 0 auto',
-                          borderRadius: '16px',
-                          [theme.breakpoints.down('lg')]: {
-                            margin: '-70px auto 0'
-                          },
-                          [theme.breakpoints.down('md')]: {
-                            margin: '-60px auto 0'
-                          },
-                          width: { xs: 72, sm: 100, md: 140 },
-                          height: { xs: 72, sm: 100, md: 140 }
-                        }}
-                      />
-                    )}
-                  </Grid>
-
-                  <Grid item xs={12} md={9}>
-                    <Grid container spacing={gridSpacing}>
-                      <Grid item xs={12} md={4}>
-                        <Typography variant="h5">{user?.firstName}</Typography>
-                        <Typography variant="subtitle2">One Dream Legacy</Typography>
-                      </Grid>
-                      <Grid item xs={12} md={8}>
-                        <Grid
-                          container
-                          spacing={1}
-                          sx={{
-                            justifyContent: 'flex-end',
-                            [theme.breakpoints.down('lg')]: {
-                              justifyContent: 'center'
-                            }
-                          }}
-                        >
-                          <Grid item>
-                            <Button variant="outlined">Message</Button>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                  </Grid>
+                  >
+                    <Card
+                      sx={{
+                        position: 'relative',
+                        // top: '20px',
+                        display: 'flex',
+                        textAlign: 'center',
+                        alignItems: 'center',
+                        flexDirection: 'column',
+                        justifyContent: 'space-around',
+                        backgroundColor: 'rgba(0, 0, 0, 0.51)',
+                        boxShadow: '4px 10px 13px rgba(0, 0, 0, 0.25)',
+                        backdropFilter: 'blur(29px)'
+                      }}
+                    >
+                      <CardContent>
+                        {isLoading ? (
+                          <ImagePlaceholder
+                            sx={{
+                              borderRadius: '16px',
+                              margin: '-70px 0 0 auto',
+                              width: { xs: 72, sm: 100, md: 140 },
+                              height: { xs: 72, sm: 100, md: 140 }
+                            }}
+                          />
+                        ) : (
+                          <>
+                            <Avatar
+                              alt="User 1"
+                              src={user?.photo}
+                              sx={{
+                                borderRadius: '16px',
+                                margin: '5px auto 0',
+                                width: { xs: 72, sm: 100, md: 140 },
+                                height: { xs: 72, sm: 100, md: 140 },
+                                backgroundColor: 'transparent',
+                                borderRadius: '100%'
+                              }}
+                            />
+                            <Stack sx={{ pt: 3 }} direction="column" justifyContent={matchDownLG ? 'center' : 'start'}>
+                              <Typography variant="h1" color="main" sx={{ color: 'white', textTransform: 'capitalize' }}>
+                                {user?.firstName}
+                              </Typography>
+                              <Typography variant="subtitle2" color="main" sx={{ color: 'white' }}>
+                                One Dream Legacy
+                              </Typography>
+                              <Stack
+                                sx={{ pt: 1, justifyContent: 'space-around' }}
+                                justifyContent={matchDownLG ? 'center' : 'start'}
+                                direction="row"
+                              >
+                                <Link href="https://codedthemes.com/" target="_blank" underline="hover">
+                                  <PublicTwoToneIcon color="secondary" />
+                                </Link>
+                                <Link href="https://www.instagram.com/codedthemes" target="_blank" underline="hover">
+                                  <InstagramIcon color="secondary" />
+                                </Link>
+                                <Link href="https://www.facebook.com/codedthemes" target="_blank" underline="hover">
+                                  <FacebookIcon color="secondary" />
+                                </Link>
+                                <Link href="https://in.linkedin.com/company/codedthemes" target="_blank" underline="hover">
+                                  <LinkedInIcon color="secondary" />
+                                </Link>
+                              </Stack>
+                            </Stack>
+                          </>
+                        )}
+                      </CardContent>
+                    </Card>
+                  </motion.div>
                 </Grid>
-              </MainCard>
+              </Grid>
             </Grid>
           </Grid>
-        </Main>
-      )}
+
+          // <Main sx={{ mt: '70px' }}>
+          //   <Grid spacing={gridSpacing} sx={{ justifyContent: 'center' }} container>
+          //     <Grid item xs={12} lg={9}>
+          //       <MainCard
+          //         contentSX={{
+          //           p: 1.5,
+          //           // height: '200px',
+          //           display: 'flex',
+          //           textAlign: 'center',
+          //           alignItems: 'center',
+          //           flexDirection: 'column',
+          //           justifyContent: 'space-around'
+          //         }}
+          //       >
+          //         {isLoading ? (
+          //           <ImagePlaceholder
+          //             sx={{
+          //               margin: '-70px 0 0 auto',
+          //               borderRadius: '16px',
+          //               width: { xs: 72, sm: 100, md: 140 },
+          //               height: { xs: 72, sm: 100, md: 140 }
+          //             }}
+          //           />
+          //         ) : (
+          //           <>
+          //             <Avatar
+          //               alt="User 1"
+          //               src={user?.photo}
+          //               sx={{
+          //                 borderRadius: '16px',
+          //                 margin: '5px auto 0',
+          //                 width: { xs: 72, sm: 100, md: 140 },
+          //                 height: { xs: 72, sm: 100, md: 140 }
+          //               }}
+          //             />
+          //             <Stack sx={{ pt: 3 }} direction="column" justifyContent={matchDownLG ? 'center' : 'start'}>
+          //               <Typography variant="h5">{user?.firstName}</Typography>
+          //               <Typography variant="subtitle2">One Dream Legacy</Typography>
+          //               <Stack sx={{ pt: 1 }} direction="row" justifyContent={matchDownLG ? 'center' : 'start'}>
+          //                 <Link href="https://codedthemes.com/" target="_blank" underline="hover">
+          //                   <PublicTwoToneIcon color="secondary" />
+          //                 </Link>
+          //                 <Link href="https://www.instagram.com/codedthemes" target="_blank" underline="hover">
+          //                   <InstagramIcon sx={{ color: theme.palette.orange.dark }} />
+          //                 </Link>
+          //                 <Link href="https://www.facebook.com/codedthemes" target="_blank" underline="hover">
+          //                   <FacebookIcon color="primary" />
+          //                 </Link>
+          //                 <Link href="https://in.linkedin.com/company/codedthemes" target="_blank" underline="hover">
+          //                   <LinkedInIcon sx={{ color: theme.palette.grey[900] }} />
+          //                 </Link>
+          //               </Stack>
+          //             </Stack>
+          //           </>
+          //         )}
+          //       </MainCard>
+          //     </Grid>
+          //   </Grid>
+          // </Main>
+        )}
+      </HeaderWrapper>
 
       <FooterPage />
     </>

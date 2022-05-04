@@ -96,7 +96,7 @@ const Palette = (navType, presetColor) => {
       },
       text: {
         primary: navType === 'dark' ? colors.darkTextPrimary : colors.grey700,
-        secondary: navType === 'dark' ? colors.darkTextSecondary : colors.grey500,
+        secondary: navType === 'dark' ? colors.darkTextSecondary : colors.darkTextSecondary,
         dark: navType === 'dark' ? colors.darkTextPrimary : colors.grey900,
         hint: colors.grey100
       },

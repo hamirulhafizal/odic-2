@@ -356,7 +356,7 @@ const ProductList = () => {
             {/* product add & dialog */}
             <Tooltip title="Add Product">
               <Fab
-                color="primary"
+                color="secondary"
                 size="small"
                 onClick={handleClickOpenDialog}
                 sx={{ boxShadow: 'none', ml: 1, width: 32, height: 32, minHeight: 32 }}

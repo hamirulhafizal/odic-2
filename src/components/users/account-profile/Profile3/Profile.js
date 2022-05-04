@@ -174,7 +174,7 @@ const Profile = ({ ...others }) => {
                     <Grid item xs={12}>
                       <Stack direction="row">
                         <AnimateButton>
-                          <Button type="submit" variant="contained">
+                          <Button type="submit" variant="contained" color="secondary" sx={{ color: 'white' }}>
                             {isLoading ? <CircularProgress sx={{ color: 'white' }} size={20} /> : 'Change Details'}
                           </Button>
                         </AnimateButton>

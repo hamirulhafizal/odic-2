@@ -148,16 +148,16 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
               autoComplete="family-name"
             />
           </Grid>
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <FormControlLabel
               control={<Checkbox color="secondary" name="saveAddress" value="yes" />}
               label="Use this address for payment details"
             />
-          </Grid>
+          </Grid> */}
           <Grid item xs={12}>
             <Stack direction="row" justifyContent="flex-end">
               <AnimateButton>
-                <Button variant="contained" sx={{ my: 3, ml: 1 }} type="submit" onClick={() => setErrorIndex(0)}>
+                <Button color='secondary' variant="contained" sx={{ my: 3, ml: 1 }} type="submit" onClick={() => setErrorIndex(0)}>
                   Next
                 </Button>
               </AnimateButton>

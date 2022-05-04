@@ -57,7 +57,7 @@ const Typography = (theme, borderRadius, fontFamily) => ({
     color: theme.palette.text.primary
   },
   button: {
-    textTransform: 'capitalize'
+    textTransform: 'capitalize',
   },
   customInput: {
     marginTop: 1,

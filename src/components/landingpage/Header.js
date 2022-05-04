@@ -5,7 +5,7 @@ import { Box, Button, Container, Grid, Typography } from '@mui/material';
 // third party
 import { motion } from 'framer-motion';
 import Link from 'Link';
-// project imports
+
 // project imports
 import Avatar from 'components/ui-component/extended/Avatar';
 import AnimateButton from 'components/ui-component/extended/AnimateButton';
@@ -118,7 +118,14 @@ const HeaderPage = () => {
                 <Grid container spacing={2} sx={{ justifyContent: { xs: 'center', md: 'center' } }}>
                   <Grid item>
                     <AnimateButton>
-                      <Button component={Link} href="/dashboard/" size="large" variant="contained" color="secondary">
+                      <Button
+                        sx={{ color: 'white' }}
+                        component={Link}
+                        href="/dashboard/"
+                        size="large"
+                        variant="contained"
+                        color="secondary"
+                      >
                         View Home List
                       </Button>
                     </AnimateButton>

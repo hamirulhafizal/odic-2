@@ -155,7 +155,7 @@ const ProfileSection = () => {
                         <Stack direction="row" spacing={0.5} alignItems="center">
                           <Typography variant="h4">Good Morning,</Typography>
                           <Typography component="span" variant="h4" sx={{ wordWrap: 'break-word', fontWeight: 400 }}>
-                            {user ? user.firstName.slice(0, 10) + '..cle' : 'OD'}
+                            {user ? user.firstName.slice(0, 10) + '..' : 'OD'}
                           </Typography>
                         </Stack>
                         <Typography variant="subtitle2">Project Admin</Typography>
@@ -183,6 +183,22 @@ const ProfileSection = () => {
                         >
                           <ListItemButton
                             sx={{ borderRadius: `${borderRadius}px` }}
+                            selected={selectedIndex === 1}
+                            onClick={(event) => handleListItemClick(event, 1)}
+                          >
+                            <ListItemIcon>
+                              <IconUser stroke={1.5} size="1.3rem" />
+                            </ListItemIcon>
+                            <ListItemText
+                              primary={
+                                <Link href="/app/user/social-profile/posts">
+                                  <Typography variant="body2">My Profile</Typography>
+                                </Link>
+                              }
+                            />
+                          </ListItemButton>
+                          <ListItemButton
+                            sx={{ borderRadius: `${borderRadius}px` }}
                             selected={selectedIndex === 0}
                             onClick={(event) => handleListItemClick(event, 0)}
                           >
@@ -197,22 +213,7 @@ const ProfileSection = () => {
                               }
                             />
                           </ListItemButton>
-                          <ListItemButton
-                            sx={{ borderRadius: `${borderRadius}px` }}
-                            selected={selectedIndex === 1}
-                            onClick={(event) => handleListItemClick(event, 1)}
-                          >
-                            <ListItemIcon>
-                              <IconUser stroke={1.5} size="1.3rem" />
-                            </ListItemIcon>
-                            <ListItemText
-                              primary={
-                                <Link href="/app/user/social-profile/posts">
-                                  <Typography variant="body2">User Profile</Typography>
-                                </Link>
-                              }
-                            />
-                          </ListItemButton>
+
                           <ListItemButton sx={{ borderRadius: `${borderRadius}px` }} selected={selectedIndex === 4} onClick={handleLogout}>
                             <ListItemIcon>
                               <IconLogout stroke={1.5} size="1.3rem" />

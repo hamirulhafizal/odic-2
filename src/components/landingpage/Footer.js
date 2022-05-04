@@ -1,7 +1,7 @@
 import Image from 'next/image';
 // material-ui
 import { useTheme, styled } from '@mui/material/styles';
-import { Container, Grid, Link, Typography, Stack } from '@mui/material';
+import { Container, Grid, Link, Typography, Stack, useMediaQuery } from '@mui/material';
 
 // project imports
 import { gridSpacing } from 'store/constant';
@@ -43,8 +43,8 @@ const FooterLink = styled(Link)({
 
 const FooterSubWrapper = styled('div')(({ theme }) => ({
   padding: '20px 0',
-  color: '#fff',
-  background: theme.palette.secondary.dark,
+  background: '#00000057',
+  borderTop: `1px solid ${theme.palette.secondary.main}`,
   [theme.breakpoints.down('md')]: {
     textAlign: 'center'
   }
@@ -54,13 +54,15 @@ const FooterSubWrapper = styled('div')(({ theme }) => ({
 
 const FooterPage = () => {
   const theme = useTheme();
+  const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
+
   return (
     <>
       <FooterWrapper>
         <Container>
-          <Grid container alignItems="center" spacing={gridSpacing}>
+          <Grid container alignItems="center" justifyContent={matchDownSM ? 'center' : 'space-between'} spacing={gridSpacing}>
             <Grid item xs={12} sm={3}>
-              <Stack alignItems="center" direction="row">
+              <Stack alignItems="center" justifyContent={matchDownSM ? 'center' : 'flex-start'} direction="row">
                 <LogoSection htmlFor="footer" />
                 <Typography sx={{ ml: 1 }} variant="subtitle1" component="div" color="inherit">
                   ONE DREAM PROPERTY
@@ -106,7 +108,7 @@ const FooterPage = () => {
       </FooterWrapper>
       <FooterSubWrapper>
         <Container>
-          <Typography variant="subtitle2" component="div" color="inherit">
+          <Typography variant="subtitle2" component="div" sx={{ color: 'white' }}>
             © 2022 ONE LEGACY REALTY SDN BHD E(1) 2004. All rights reserved
           </Typography>
         </Container>
