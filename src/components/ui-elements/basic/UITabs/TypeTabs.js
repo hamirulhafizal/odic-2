@@ -7,10 +7,6 @@ import { useTheme } from '@mui/material/styles';
 import { Box, Chip, Tab, Tabs, Typography } from '@mui/material';
 
 // assets
-import PersonOutlineTwoToneIcon from '@mui/icons-material/PersonOutlineTwoTone';
-import PanoramaTwoToneIcon from '@mui/icons-material/PanoramaTwoTone';
-import PeopleAltTwoToneIcon from '@mui/icons-material/PeopleAltTwoTone';
-import RecentActorsTwoToneIcon from '@mui/icons-material/RecentActorsTwoTone';
 import CardProperty from 'components/ui-component/cards/CardProperty';
 import BedroomParentTwoToneIcon from '@mui/icons-material/BedroomParentTwoTone';
 import HomeTwoToneIcon from '@mui/icons-material/HomeTwoTone';
@@ -23,8 +19,7 @@ function TabPanel({ children, value, index, ...other }) {
       {value === index && (
         <Box
           sx={{
-            p: 1,
-           
+            p: 1
           }}
         >
           <Typography>{children}</Typography>

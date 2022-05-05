@@ -95,7 +95,7 @@ const AgentProfile = () => {
           >
             <Grid item xs={12}>
               <Grid container sx={{ justifyContent: 'center' }}>
-                <Grid item xs={10} md={7}  >
+                <Grid item xs={10} md={7}>
                   <motion.div
                     initial={{ opacity: 0, translateY: 550 }}
                     animate={{ opacity: 1, translateY: 0 }}
@@ -153,7 +153,7 @@ const AgentProfile = () => {
                               <Typography variant="h3" color="main" sx={{ color: 'white', textTransform: 'capitalize' }}>
                                 {user?.firstName} {user?.lastName}
                               </Typography>
-                              <Typography variant="subtitle2" color="main" sx={{ color: 'white' , pt: 1 }}>
+                              <Typography variant="subtitle2" color="main" sx={{ color: 'white', pt: 1 }}>
                                 One Dream Legacy
                               </Typography>
                               <Stack
