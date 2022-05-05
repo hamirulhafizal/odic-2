@@ -36,7 +36,7 @@ export default function ThemeCustomization({ children }) {
   let color;
   switch (config.presetColor) {
     case 'theme1':
-      color = theme1;
+      color = theme7;
       break;
     case 'theme2':
       color = theme2;

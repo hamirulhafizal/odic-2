@@ -11,6 +11,7 @@ import PersonOutlineTwoToneIcon from '@mui/icons-material/PersonOutlineTwoTone';
 import PanoramaTwoToneIcon from '@mui/icons-material/PanoramaTwoTone';
 import PeopleAltTwoToneIcon from '@mui/icons-material/PeopleAltTwoTone';
 import RecentActorsTwoToneIcon from '@mui/icons-material/RecentActorsTwoTone';
+import CardProperty from 'components/ui-component/cards/CardProperty';
 
 // tab content customize
 function TabPanel({ children, value, index, ...other }) {
@@ -46,6 +47,7 @@ function a11yProps(index) {
 
 export default function ColorTabs() {
   const theme = useTheme();
+
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -103,8 +105,7 @@ export default function ColorTabs() {
         <Tab component={Link} href="#" icon={<PanoramaTwoToneIcon sx={{ fontSize: '1.3rem' }} />} label="Gallery" {...a11yProps(3)} />
       </Tabs>
       <TabPanel value={value} index={0}>
-        Anim pariah&apos;s cliche reprehended, enid elusion high life accusals terry richardson ad squid. 3 wolf moon official auth, non
-        cuspidate skateboard dolor brunch.
+        <CardProperty />
       </TabPanel>
       <TabPanel value={value} index={1}>
         Anim pariah&apos;s cliche reprehended, enid elusion high life accusals terry richardson ad squid. 3 wolf moon official auth, non

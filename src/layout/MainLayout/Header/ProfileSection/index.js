@@ -8,7 +8,6 @@ import {
   Chip,
   ClickAwayListener,
   Divider,
-  Grid,
   List,
   ListItemButton,
   ListItemIcon,
@@ -31,6 +30,7 @@ import useAuth from 'hooks/useAuth';
 import { IconLogout, IconSettings, IconUser } from '@tabler/icons';
 import useConfig from 'hooks/useConfig';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const User1 = '/assets/images/users/user-round.svg';
 
@@ -43,10 +43,12 @@ const ProfileSection = () => {
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const { logout, user } = useAuth();
   const [open, setOpen] = useState(false);
+  const router = useRouter();
 
   /**
    * anchorRef is used on different components and specifying one type leads to other components throwing an error
    * */
+
   const anchorRef = useRef(null);
   const handleLogout = async () => {
     try {
@@ -81,6 +83,7 @@ const ProfileSection = () => {
 
     prevOpen.current = open;
   }, [open, user]);
+
 
   return (
     <>
@@ -158,7 +161,7 @@ const ProfileSection = () => {
                             {user ? user.firstName.slice(0, 10) + '..' : 'OD'}
                           </Typography>
                         </Stack>
-                        <Typography variant="subtitle2">Project Admin</Typography>
+                        <Typography variant="subtitle2">OD Legacy</Typography>
                       </Stack>
 
                       <Divider sx={{ pb: 1 }} />
@@ -184,7 +187,10 @@ const ProfileSection = () => {
                           <ListItemButton
                             sx={{ borderRadius: `${borderRadius}px` }}
                             selected={selectedIndex === 1}
-                            onClick={(event) => handleListItemClick(event, 1)}
+                            // onClick={(event) => handleListItemClick(event, 1)}
+                            onClick={() => {
+                              router.push(`/${user?.user_name}`);
+                            }}
                           >
                             <ListItemIcon>
                               <IconUser stroke={1.5} size="1.3rem" />
@@ -192,7 +198,7 @@ const ProfileSection = () => {
                             <ListItemText
                               primary={
                                 <Link href="/app/user/social-profile/posts">
-                                  <Typography variant="body2">My Profile</Typography>
+                                  <Typography variant="body2">Live Profile</Typography>
                                 </Link>
                               }
                             />

@@ -9,7 +9,7 @@ import { FixedSizeList } from 'react-window';
 function renderRow({ index, style }) {
   return (
     <ListItemButton style={style} key={index}>
-      <ListItemText primary={`Item ${index + 1}`} />
+      <ListItemText disableGutters primary={`Item ${index + 1}`} />
     </ListItemButton>
   );
 }
@@ -19,7 +19,7 @@ function renderRow({ index, style }) {
 export default function VirtualizedList() {
   return (
     <div>
-      <FixedSizeList height={280} width="auto" itemSize={46} itemCount={200}>
+      <FixedSizeList height={'auto'} width="auto" itemSize={46} itemCount={4}>
         {renderRow}
       </FixedSizeList>
     </div>

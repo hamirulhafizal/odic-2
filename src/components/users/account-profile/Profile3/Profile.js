@@ -1,21 +1,8 @@
 import { useState } from 'react';
 
 // material-ui
-import {
-  Box,
-  Grid,
-  Stack,
-  Avatar,
-  Button,
-  TextField,
-  Typography,
-  useMediaQuery,
-  FormHelperText,
-  CircularProgress,
-  FormControl,
-  InputLabel
-} from '@mui/material';
-import { useTheme, styled } from '@mui/material/styles';
+import { Box, Grid, Stack, Button, TextField, useMediaQuery, FormHelperText, CircularProgress } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 
 // project imports
 import useAuth from 'hooks/useAuth';

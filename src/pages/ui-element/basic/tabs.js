@@ -3,7 +3,7 @@ import { Grid } from '@mui/material';
 
 // project imports
 import SimpleTabs from 'components/ui-elements/basic/UITabs/SimpleTabs';
-import ColorTabs from 'components/ui-elements/basic/UITabs/ColorTabs';
+import ColorTabs from 'components/ui-elements/basic/UITabs/TypeTabs';
 import DisabledTabs from 'components/ui-elements/basic/UITabs/DisabledTabs';
 import IconTabs from 'components/ui-elements/basic/UITabs/IconTabs';
 import VerticalTabs from 'components/ui-elements/basic/UITabs/VerticalTabs';
