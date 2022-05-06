@@ -13,12 +13,14 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import LogoSection from 'layout/MainLayout/LogoSection';
 
 const logoDark = '/assets/images/logo-white.svg';
+const images2 = '/assets/images/landing/footerBg-1.png';
 
 // styles
 const FooterWrapper = styled('div')(({ theme }) => ({
   padding: '35px 0',
   color: '#fff',
-  // background: theme.palette.secondary.main,
+  backgroundImage: `url(${images2})`,
+  backgroundSize: 'cover',
   background: '#00000057',
   justifyContent: 'space-between',
   [theme.breakpoints.down('md')]: {

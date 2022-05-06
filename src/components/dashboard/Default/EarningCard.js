@@ -171,7 +171,7 @@ const EarningCard = ({ isLoading }) => {
                   sx={{
                     fontSize: '1rem',
                     fontWeight: 500,
-                    color: theme.palette.mode === 'dark' ? theme.palette.text.secondary : theme.palette.secondary[200]
+                    color: theme.palette.mode === 'dark' ? theme.palette.text.main : theme.palette.main
                   }}
                 >
                   Total Agent

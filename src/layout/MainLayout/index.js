@@ -99,7 +99,7 @@ const MainLayout = ({ children }) => {
           color="inherit"
           elevation={0}
           sx={{
-            bgcolor: theme.palette.background.default,
+            bgcolor: 'black',
             transition: drawerOpen ? theme.transitions.create('width') : 'none'
           }}
         >

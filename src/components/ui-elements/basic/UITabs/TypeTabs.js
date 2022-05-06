@@ -13,6 +13,18 @@ import HomeTwoToneIcon from '@mui/icons-material/HomeTwoTone';
 import HotelTwoToneIcon from '@mui/icons-material/HotelTwoTone';
 
 // tab content customize
+
+function LinkTab(props) {
+  return (
+    <Tab
+      component="a"
+      onClick={(event) => {
+        event.preventDefault();
+      }}
+      {...props}
+    />
+  );
+}
 function TabPanel({ children, value, index, ...other }) {
   return (
     <div role="tabpanel" hidden={value !== index} id={`simple-tabpanel-${index}`} aria-labelledby={`simple-tab-${index}`} {...other}>
@@ -44,7 +56,7 @@ function a11yProps(index) {
 
 // ================================|| UI TABS - COLOR ||================================ //
 
-export default function TypeTabs() {
+export default function TypeTabs({ username }) {
   const theme = useTheme();
 
   const [value, setValue] = React.useState(0);
@@ -61,7 +73,7 @@ export default function TypeTabs() {
         textColor="secondary"
         indicatorColor="secondary"
         sx={{
-          mb: 5,
+          mb: 6,
           '& a': {
             minHeight: 'auto',
             minWidth: 10,
@@ -83,7 +95,14 @@ export default function TypeTabs() {
           }
         }}
       >
-        <Tab component={Link} href="#" icon={<BedroomParentTwoToneIcon sx={{ fontSize: '1.3rem' }} />} label="Rent" {...a11yProps(0)} />
+        <LinkTab
+          label="Rent"
+          component={Link}
+          href={`/rent`}
+          icon={<BedroomParentTwoToneIcon sx={{ fontSize: '1.3rem' }} />}
+          {...a11yProps(0)}
+        />
+
         <Tab component={Link} href="#" icon={<HomeTwoToneIcon sx={{ fontSize: '1.3rem' }} />} label="Buy" {...a11yProps(1)} />
         <Tab
           component={Link}

@@ -84,7 +84,6 @@ const ProfileSection = () => {
     prevOpen.current = open;
   }, [open, user]);
 
-
   return (
     <>
       <Chip
@@ -195,13 +194,7 @@ const ProfileSection = () => {
                             <ListItemIcon>
                               <IconUser stroke={1.5} size="1.3rem" />
                             </ListItemIcon>
-                            <ListItemText
-                              primary={
-                                <Link href="/app/user/social-profile/posts">
-                                  <Typography variant="body2">Live Profile</Typography>
-                                </Link>
-                              }
-                            />
+                            <ListItemText primary={<Typography variant="body2">Live Profile</Typography>} />
                           </ListItemButton>
                           <ListItemButton
                             sx={{ borderRadius: `${borderRadius}px` }}

@@ -27,11 +27,11 @@ import AddLocationAltOutlinedIcon from '@mui/icons-material/AddLocationAltOutlin
 import Logo from '../Logo';
 
 // assets
-import { IconHome2, IconLogin, IconLogout } from '@tabler/icons';
+import { IconLogin, IconLogout } from '@tabler/icons';
 import MenuIcon from '@mui/icons-material/Menu';
 import LogoSection from 'layout/MainLayout/LogoSection';
 import useAuth from 'hooks/useAuth';
-import Router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 
 function ElevationScroll({ children, window }) {
   const theme = useTheme();
@@ -45,8 +45,10 @@ function ElevationScroll({ children, window }) {
   return React.cloneElement(children, {
     elevation: trigger ? 2 : 0,
     style: {
-      backgroundColor: theme.palette.background.default,
-      borderBottom: trigger ? 'none' : '1px solid',
+      // backgroundColor: theme.palette.background.default,
+      backgroundColor: 'rgba(0, 0, 0, 0.45)',
+      backdropFilter: 'blur(25px)',
+      // borderBottom: trigger ? 'none' : '1px solid',
       borderColor: trigger ? '' : darkBorder,
       color: theme.palette.text.dark
     }
@@ -98,7 +100,7 @@ const AppBar = ({ ...others }) => {
               <LogoSection />
             </Typography>
             <Stack direction="row" sx={{ display: { xs: 'none', sm: 'block' } }} spacing={2}>
-              <Button color="inherit" component={Link} onClick={user ? handleLogout : handleLogin}>
+              <Button sx={{ color: 'white' }} component={Link} onClick={user ? handleLogout : handleLogin}>
                 {user ? 'Logout' : 'Login'}
               </Button>
 
@@ -130,7 +132,7 @@ const AppBar = ({ ...others }) => {
               >
                 List Ads
               </Button>
-              <IconButton sx={{ ml: 1 }} color="inherit" onClick={drawerToggler(true)} size="large">
+              <IconButton sx={{ ml: 1 }} color="secondary" onClick={drawerToggler(true)} size="large">
                 <MenuIcon />
               </IconButton>
 

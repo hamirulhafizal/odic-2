@@ -24,26 +24,25 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import PublicTwoToneIcon from '@mui/icons-material/PublicTwoTone';
-import AnimateButton from 'components/ui-component/extended/AnimateButton';
 import VerifiedIcon from '@mui/icons-material/Verified';
-import CardProperty from 'components/ui-component/cards/CardProperty';
 import TypeTabs from 'components/ui-elements/basic/UITabs/TypeTabs';
 
-// const User1 = '/assets/images/profile/img-user.png';
 const Cover = '/assets/images/profile/img-profile-bg.png';
-
-const headerBackground = '/assets/images/landing/header-bg.jpg';
 const images1 = '/assets/images/landing/living-room-with-yellow.png';
 const images2 = '/assets/images/landing/footerBg-1.png';
 
 const HeaderWrapper = styled('div')(({ theme }) => ({
-  // backgroundImage: `url(${images1})`,
-  // backgroundRepeat: 'no-repeat',
-  // textAlign: 'center',
-  // backgroundSize: 'cover',
+  paddingTop: 30,
   [theme.breakpoints.down('md')]: {
     paddingTop: 0
   }
+}));
+
+const SecondWrapper = styled('div')(({ theme }) => ({
+  backgroundImage: `url(${images2})`,
+  backgroundSize: 'cover',
+  // background: '#00000057',
+  
 }));
 
 // ==============================|| SOCIAL PROFILE ||============================== //
@@ -57,6 +56,7 @@ const AgentProfile = () => {
   const { uid } = router.query;
 
   const matchDownLG = useMediaQuery(theme.breakpoints.down('lg'));
+  const matchDownMD = useMediaQuery(theme.breakpoints.down('md'));
 
   useEffect(() => {
     setLoading(false);
@@ -84,18 +84,28 @@ const AgentProfile = () => {
           <Grid
             container
             sx={{
-              top: '5em',
+              top: { xs: '-0em', sm: '-2em', md: '-3em', lg: '-3em' },
               position: 'relative',
+              width: '101%',
               backgroundImage: `url(${images1})`,
               backgroundRepeat: 'no-repeat',
               textAlign: 'center',
               backgroundSize: 'cover',
-              py: 10
+              pt: 15,
+              pb: 10
             }}
           >
             <Grid item xs={12}>
               <Grid container sx={{ justifyContent: 'center' }}>
-                <Grid item xs={10} md={7}>
+                <Grid
+                  item
+                  xs={10}
+                  md={7}
+                  sx={{
+                    position: 'relative',
+                    top: '10px'
+                  }}
+                >
                   <motion.div
                     initial={{ opacity: 0, translateY: 550 }}
                     animate={{ opacity: 1, translateY: 0 }}
@@ -186,7 +196,7 @@ const AgentProfile = () => {
           </Grid>
         )}
       </HeaderWrapper>
-      <Grid container spacing={3} sx={{ justifyContent: 'center', alignItems: 'center', pt: 15, pb: 10, height: { xs: 'auto' } }}>
+      <Grid container sx={{ justifyContent: 'center', alignItems: 'center', pt: matchDownMD ? 3 : 0, pb: 10, height: { xs: 'auto' } }}>
         <Grid item xs={10} md={8}>
           <motion.div
             initial={{ opacity: 0, translateY: 550 }}
@@ -197,11 +207,13 @@ const AgentProfile = () => {
               damping: 30
             }}
           >
-            <TypeTabs />
+            <TypeTabs username={`${uid}`} />
           </motion.div>
         </Grid>
       </Grid>
-      <FooterPage />
+      <SecondWrapper>
+        <FooterPage />
+      </SecondWrapper>
     </>
   );
 };
