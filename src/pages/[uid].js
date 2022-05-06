@@ -40,9 +40,8 @@ const HeaderWrapper = styled('div')(({ theme }) => ({
 
 const SecondWrapper = styled('div')(({ theme }) => ({
   backgroundImage: `url(${images2})`,
-  backgroundSize: 'cover',
+  backgroundSize: 'cover'
   // background: '#00000057',
-  
 }));
 
 // ==============================|| SOCIAL PROFILE ||============================== //
