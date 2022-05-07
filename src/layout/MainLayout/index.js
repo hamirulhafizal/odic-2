@@ -113,7 +113,7 @@ const MainLayout = ({ children }) => {
         <Main theme={theme} open={drawerOpen}>
           {/* breadcrumb */}
           {container && (
-            <Container maxWidth="lg">
+            <Container sx={{ p: 0 }} maxWidth="lg">
               <Breadcrumbs separator={IconChevronRight} navigation={navigation} icon title rightAlign />
               {children}
             </Container>

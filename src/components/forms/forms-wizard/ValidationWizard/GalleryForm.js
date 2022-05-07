@@ -245,7 +245,7 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
 
           <Grid item xs={12}>
             <Stack direction="row" justifyContent="space-between">
-              <Button onClick={handleBack} sx={{ my: 3, ml: 1 }}>
+              <Button onClick={handleBack} sx={{ my: 3, ml: 1, color: 'black' }}>
                 Back
               </Button>
               <AnimateButton>

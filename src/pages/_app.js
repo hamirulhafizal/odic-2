@@ -59,11 +59,11 @@ function App({ Component, pageProps }) {
 
   return (
     <>
-      <Head>
+      {/* <Head>
         <title>Most Professional Real Estate Agency | One Dream Property</title>
         <link rel="icon" href="/logo.svg" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
+      </Head> */}
       <Provider store={store}>
         <PersistGate loading={null} persistor={persister}>
           <ConfigProvider>

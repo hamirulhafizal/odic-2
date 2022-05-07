@@ -9,7 +9,7 @@ export default function componentStyleOverrides(theme, borderRadius, outlinedFil
       styleOverrides: {
         root: {
           fontWeight: 500,
-          borderRadius: '4px',
+          borderRadius: '4px'
         }
       }
     },
@@ -311,6 +311,13 @@ export default function componentStyleOverrides(theme, borderRadius, outlinedFil
       styleOverrides: {
         root: {
           color: theme.palette.secondary.light
+        }
+      }
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          color: 'white'
         }
       }
     }

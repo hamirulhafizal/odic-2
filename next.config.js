@@ -17,3 +17,13 @@ const nextConfig = withTM({
 });
 
 module.exports = nextConfig;
+
+// module.exports = {
+//   nextConfig,
+//   exportPathMap: async function () {
+//     const paths = {
+//       '/': { page: '/' }
+//     };
+//     return paths; //<--this was missing previously
+//   }
+// };

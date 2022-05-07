@@ -151,7 +151,13 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
           <Grid item xs={12}>
             <Stack direction="row" justifyContent="flex-end">
               <AnimateButton>
-                <Button color="secondary" variant="contained" sx={{ my: 3, ml: 1 }} type="submit" onClick={() => setErrorIndex(0)}>
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  sx={{ my: 3, ml: 1, color: 'white' }}
+                  type="submit"
+                  onClick={() => setErrorIndex(0)}
+                >
                   Next
                 </Button>
               </AnimateButton>

@@ -68,7 +68,7 @@ export default function TypeTabs({ username }) {
     <>
       <Tabs
         value={value}
-        variant="scrollable"
+        // variant="scrollable"
         onChange={handleChange}
         textColor="secondary"
         indicatorColor="secondary"
@@ -94,6 +94,7 @@ export default function TypeTabs({ username }) {
             mr: 1.1
           }
         }}
+        centered
       >
         <LinkTab
           label="Rent"

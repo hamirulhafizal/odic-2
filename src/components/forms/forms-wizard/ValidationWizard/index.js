@@ -117,7 +117,7 @@ const ValidationWizard = () => {
                   }}
                   sx={{ my: 3, ml: 1 }}
                 >
-                  Reset
+                  Listing
                 </Button>
               </AnimateButton>
             </Stack>

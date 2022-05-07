@@ -1,44 +1,56 @@
+import { BASE_PATH } from 'config';
 import { Html, Head, Main, NextScript } from 'next/document';
 
 export default function Document() {
   return (
     <Html>
       <Head>
-        <meta name="theme-color" content="#2296f3" />
-        <meta name="title" content="Berry - React Material Admin Dashboard Template by CodedThemes" />
+        <meta name="title" content="Most Professional Real Estate Agency" />
         <meta
           name="description"
-          content="Start your next React project with Berry admin template. It build with Reactjs, Material-UI, Redux, and Hook for faster web development."
+          content="ONE LEGACY REALTY SDN BHD E(1) 2004 is a registered Real Estate Agents (REA) with Board of Valuers, Appraisers, Estate Agents and Property Managers (BOVAEA). Our agency was incorporated on APRIL 2018 and which is located at Johor Bahru area that’s include our HQ Office at Damansara Aliff Tampoi and our New Branch at Taman Adda Height."
         />
         <meta
           name="keywords"
-          content="react admin template, material-ui react dashboard template, reactjs admin template, reactjs dashboard, react backend template"
+          content="sewa rumah, sewa rumah murah, rent a house, house for rent johor bahru, house for rent mount austin, house for rent skudai, house for rent gelang patah,   house for rent masai,  rumah sewa johor bahru, rumah sewa skudai, rumah sewa masai, iproperty, propertyguru, ibilik, mudah, rumah sewa murah, apartment johor bahru, apartment for rent johor bahru, apartment for rent mount austin, apartment for rent, apartment for rent kuala lumpur, house for rent, hoom, hoomventure, hoom venture sdn bhd, bryce wong, raymond koo, bosskoo, Real Estate Agents (REA), Johor Bahru, property, rumah sewa, rumah lelong, beli rumah,  Rent / Sale , Buy property, Academy , Training Services, Valuation Consultancy Services, Property Investment Consultancy, Property Legal Consultancy, Refinance Consultancy, Find properties for rent, sell and short-stay"
         />
+        <meta property="og:image" content={`${BASE_PATH}assets/images/previewImg.jpeg`} />
+
+        <meta property="og:image:width" content="1440" />
+        <meta property="og:image:height" content="1020" />
+        <meta name="theme-color" content="#2296f3" />
         <meta property="og:locale" content="en_US" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://berrydashboard.io/" />
-        <meta property="og:site_name" content="berrydashboard.io" />
-        <meta property="article:publisher" content="https://www.facebook.com/codedthemes" />
-        <meta property="og:title" content="Berry - React Material Dashboard Template" />
+        <meta property="og:url" content="https://onedreamproperty.com.my" />
+        <meta property="og:site_name" content="onedreamproperty.com.my" />
+        <meta property="article:publisher" content="https://www.facebook.com/OneDreamLegacyJohor" />
+        <meta property="og:title" content="One Dream Legacy - Most Professional Real Estate Agency" />
         <meta
           property="og:description"
-          content="Berry Dashboard is made for the faster web application development built using Material-UI, Reactjs, Redux & Hook API."
+          content="ONE LEGACY REALTY SDN BHD E(1) 2004 is a registered Real Estate Agents (REA) with Board of Valuers, Appraisers, Estate Agents and Property Managers (BOVAEA). Our agency was incorporated on APRIL 2018 and which is located at Johor Bahru area that’s include our HQ Office at Damansara Aliff Tampoi and our New Branch at Taman Adda Height"
         />
-        <meta property="og:image" content="https://berrydashboard.io/og-image/og-facebook.png" />
+
+        <meta property="twitter:url" content="https://onedreamproperty.com.my" />
+        <meta property="twitter:title" content="One Dream Legacy - Most Professional Real Estate Agency" />
         <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content="https://berrydashboard.io" />
-        <meta property="twitter:title" content="Berry - React Material Dashboard Template" />
+        <meta name="twitter:image" content={`${BASE_PATH}assets/images/previewImg.jpeg`} />
+
         <meta
-          property="twitter:description"
-          content="Berry Dashboard is made for the faster web application development built using Material-UI, Reactjs, Redux & Hook API."
+          name="twitter:description"
+          content="ONE LEGACY REALTY SDN BHD E(1) 2004 is a registered Real Estate Agents (REA) with Board of Valuers, Appraisers, Estate Agents and Property Managers (BOVAEA). Our agency was incorporated on APRIL 2018 and which is located at Johor Bahru area that’s include our HQ Office at Damansara Aliff Tampoi and our New Branch at Taman Adda Height"
         />
-        <meta property="twitter:image" content="https://berrydashboard.io/og-image/og-twitter.png" />
-        <meta name="twitter:creator" content="@codedthemes" />
+
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap"
           rel="stylesheet"
         />
+
+        <link rel="canonical" href="https://onedreamproperty.com.my/" />
+        <meta property="og:locale" content="en_US" />
+        <meta property="og:type" content="website" />
+
+        <meta property="article:modified_time" content="2021-12-20T13:35:53+00:00" />
       </Head>
       <body>
         <Main />

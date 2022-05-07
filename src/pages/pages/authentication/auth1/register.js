@@ -91,7 +91,12 @@ const Register = () => {
                 >
                   <Grid item>
                     <Stack justifyContent={matchDownSM ? 'center' : 'flex-start'} textAlign={matchDownSM ? 'center' : 'inherit'}>
-                      <Typography color={theme.palette.secondary.main} gutterBottom variant={matchDownSM ? 'h3' : 'h2'}>
+                      <Typography
+                        color={theme.palette.secondary.main}
+                        sx={{ color: 'white' }}
+                        gutterBottom
+                        variant={matchDownSM ? 'h3' : 'h2'}
+                      >
                         Sign up
                       </Typography>
                       <Typography color="textPrimary" gutterBottom variant="h4">
