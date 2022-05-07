@@ -333,8 +333,8 @@ const Listing = () => {
 
   return (
     <MainCard title="Product List" content={false} contentSX={{ p: 0 }}>
-      <CardContent >
-        <Grid  container justifyContent="space-between" alignItems="center" spacing={2}>
+      <CardContent>
+        <Grid container justifyContent="space-between" alignItems="center" spacing={2}>
           <Grid item xs={12} sm={6}>
             <TextField
               InputProps={{
