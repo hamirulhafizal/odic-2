@@ -8,8 +8,8 @@ import { Divider, FormControl, InputAdornment, InputLabel, MenuItem, Select, Tex
 // ==============================|| FORM CONTROL SELECT ||============================== //
 
 const FormControlSelect = ({
-  idz,
-  namez,
+  id,
+  name,
   captionLabel,
 
   value,
@@ -40,8 +40,8 @@ const FormControlSelect = ({
   const [currency, setCurrency] = useState(val);
   return (
     <FormControl fullWidth error={errorState}>
-      <InputLabel id="demo-simple-select-label">Category</InputLabel>
-      <Select id={idz} value={value || ''} name={namez} label={captionLabel} onChange={onChange}>
+      <InputLabel id="demo-simple-select-label">{captionLabel}</InputLabel>
+      <Select id={id} value={value} name={name} label={captionLabel} onChange={onChange}>
         {currencies.map((state, index) => (
           <MenuItem key={index} value={state?.label}>
             {state?.label}

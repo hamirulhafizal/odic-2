@@ -9,11 +9,17 @@ import Typography from '@mui/material/Typography';
 import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import SkipNextIcon from '@mui/icons-material/SkipNext';
-import { Avatar, Badge, CardActions, Divider, Stack, useMediaQuery } from '@mui/material';
+import { Avatar, Badge, CardActions, Divider, List, ListItem, ListItemText, ListItemIcon, Stack, useMediaQuery } from '@mui/material';
 import useAuth from 'hooks/useAuth';
 import { Button } from '@mui/material';
 import SimpleList from 'components/ui-elements/basic/UIList/SimpleList';
 import VerifiedIcon from '@mui/icons-material/Verified';
+
+import InboxIcon from '@mui/icons-material/Inbox';
+import PoolIcon from '@mui/icons-material/Pool';
+import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
+import StoreMallDirectoryIcon from '@mui/icons-material/StoreMallDirectory';
+import MosqueIcon from '@mui/icons-material/Mosque';
 
 const CardProperty = () => {
   const theme = useTheme();
@@ -92,7 +98,70 @@ const CardProperty = () => {
                 RM 300, 000
               </Typography>
 
-              <SimpleList />
+              <List>
+                <ListItem disablePadding sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap ', py: 1, px: 0 }}>
+                  <ListItemText
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'start',
+
+                      '& .MuiListItemText-primary': {
+                        pr: '10%'
+                      }
+                    }}
+                    primary={
+                      <>
+                        <Stack display="flex" direction="row" alignItems="center">
+                          <ListItemIcon>
+                            <PoolIcon />
+                          </ListItemIcon>
+                          Pool
+                        </Stack>
+                      </>
+                    }
+                    secondary={
+                      <>
+                        <Stack display="flex" direction="row" alignItems="center">
+                          <ListItemIcon>
+                            <LocalGasStationIcon />
+                          </ListItemIcon>
+                          Petrol Station
+                        </Stack>
+                      </>
+                    }
+                  />
+                  <ListItemText
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'start',
+
+                      '& .MuiListItemText-primary': {
+                        pr: '10%'
+                      }
+                    }}
+                    primary={
+                      <>
+                        <Stack display="flex" direction="row" alignItems="center">
+                          <ListItemIcon>
+                            <StoreMallDirectoryIcon />
+                          </ListItemIcon>
+                          Mall
+                        </Stack>
+                      </>
+                    }
+                    secondary={
+                      <>
+                        <Stack display="flex" direction="row" alignItems="center">
+                          <ListItemIcon>
+                            <MosqueIcon />
+                          </ListItemIcon>
+                          Mosque
+                        </Stack>
+                      </>
+                    }
+                  />
+                </ListItem>
+              </List>
             </Stack>
           </CardContent>
 

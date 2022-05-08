@@ -5,6 +5,8 @@ import { Grid, List, ListItem, ListItemText, Typography } from '@mui/material';
 
 // ==============================|| FORM WIZARD - BASIC  ||============================== //
 
+const addresses = ['1 Material-UI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
+
 const products = [
   {
     name: 'Product 1',
@@ -29,7 +31,6 @@ const products = [
   { name: 'Shipping', desc: '', price: 'Free' }
 ];
 
-const addresses = ['1 Material-UI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
 const payments = [
   { name: 'Card type', detail: 'Visa' },
   { name: 'Card holder', detail: 'Mr John Smith' },
@@ -41,7 +42,7 @@ export default function Review() {
   return (
     <>
       <Typography variant="h5" gutterBottom sx={{ mb: 2 }}>
-        Order summary
+        Listing Review
       </Typography>
       <List disablePadding>
         {products.map((product) => (

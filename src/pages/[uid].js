@@ -23,11 +23,14 @@ import { motion } from 'framer-motion';
 import { BACKEND_PATH } from 'config';
 import axios from 'axios';
 import { styled } from '@mui/system';
+
+import YoutubeIcon from '@mui/icons-material/Youtube';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import PublicTwoToneIcon from '@mui/icons-material/PublicTwoTone';
 import VerifiedIcon from '@mui/icons-material/Verified';
+
 import TypeTabs from 'components/ui-elements/basic/UITabs/TypeTabs';
 import { NextSeo, ProductJsonLd, SocialProfileJsonLd } from 'next-seo';
 import { BASE_PATH } from 'config';
@@ -52,8 +55,6 @@ const SecondWrapper = styled('div')(({ theme }) => ({
 // ==============================|| SOCIAL PROFILE ||============================== //
 
 const AgentProfile = ({ userData }) => {
-  console.log('userData', userData);
-
   const theme = useTheme();
   const [isLoading, setLoading] = useState(true);
   const [user, setUser] = useState();
@@ -79,6 +80,8 @@ const AgentProfile = ({ userData }) => {
         setError(error);
       });
   }, [uid]);
+
+  console.log('user', user);
 
   return (
     <>
@@ -150,7 +153,7 @@ const AgentProfile = ({ userData }) => {
                           backdropFilter: 'blur(29px)'
                         }}
                       >
-                        <CardContent>
+                        <CardContent sx={{ width: { xs: '-webkit-fill-available' } }}>
                           {isLoading ? (
                             <ImagePlaceholder
                               sx={{
@@ -188,23 +191,27 @@ const AgentProfile = ({ userData }) => {
                                 <Typography variant="subtitle2" color="main" sx={{ color: 'white', pt: 1 }}>
                                   One Dream Legacy
                                 </Typography>
-                                <Stack
-                                  sx={{ pt: 1, justifyContent: 'space-evenly' }}
-                                  justifyContent={matchDownLG ? 'center' : 'start'}
-                                  direction="row"
-                                >
-                                  <Link href="https://codedthemes.com/" target="_blank" underline="hover">
-                                    <PublicTwoToneIcon color="secondary" />
-                                  </Link>
-                                  <Link href="https://www.instagram.com/codedthemes" target="_blank" underline="hover">
-                                    <InstagramIcon color="secondary" />
-                                  </Link>
-                                  <Link href="https://www.facebook.com/codedthemes" target="_blank" underline="hover">
-                                    <FacebookIcon color="secondary" />
-                                  </Link>
-                                  <Link href="https://in.linkedin.com/company/codedthemes" target="_blank" underline="hover">
-                                    <LinkedInIcon color="secondary" />
-                                  </Link>
+                                <Stack sx={{ pt: 2 }} justifyContent={'center'} direction="row">
+                                  <Stack direction="row" sx={{ width: { xs: '70%', lg: '60%' }, justifyContent: 'space-evenly' }}>
+                                    <Link href="https://codedthemes.com/" target="_blank" underline="hover">
+                                      <PublicTwoToneIcon color="secondary" />
+                                    </Link>
+                                    <Link href={`${user?.instagram}`} target="_blank" underline="hover">
+                                      <InstagramIcon color="secondary" />
+                                    </Link>
+                                    <Link href={`${user?.facebook}`} target="_blank" underline="hover">
+                                      <FacebookIcon color="secondary" />
+                                    </Link>
+                                    <Link href={`${user?.linkedin}`} target="_blank" underline="hover">
+                                      <LinkedInIcon color="secondary" />
+                                    </Link>
+                                    <Link href={`${user?.youtube}`} target="_blank" underline="hover">
+                                      <YoutubeIcon color="secondary" />
+                                    </Link>
+                                    <Link href={`${user?.tiktok}`} target="_blank" underline="hover">
+                                      <LinkedInIcon color="secondary" />
+                                    </Link>
+                                  </Stack>
                                 </Stack>
                               </Stack>
                             </>

@@ -206,7 +206,7 @@ const ProfileSection = () => {
                             </ListItemIcon>
                             <ListItemText
                               primary={
-                                <Link href="/app/user/account-profile/profile">
+                                <Link href="/profile">
                                   <Typography variant="body2">Account Settings</Typography>
                                 </Link>
                               }

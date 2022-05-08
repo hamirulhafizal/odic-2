@@ -13,7 +13,8 @@ import * as yup from 'yup';
 import { useState } from 'react';
 
 import { useTheme, styled } from '@mui/material/styles';
-import { values } from 'lodash-es';
+
+const example = 'assets/images/e-commerce/landscape2.jpeg';
 
 const validationSchema = yup.object({
   // size: yup.mixed().test(200000, 'File Size is too large', (values) => values?.size <= 2000000)
@@ -165,7 +166,7 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
                     }
                   }}
                 >
-                  <CloudUploadIcon /> Drop file here to upload OR Click Here
+                  <CloudUploadIcon /> Click Here Or Drop file here to upload
                 </InputLabel>
 
                 <FormHelperText error>{message}</FormHelperText>
@@ -231,7 +232,7 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
                     }
                   }}
                 >
-                  <CloudUploadIcon /> Drop file here to upload OR Click Here
+                  <CloudUploadIcon /> Click Here Or Drop file here to upload
                 </InputLabel>
 
                 <FormHelperText error>{message}</FormHelperText>

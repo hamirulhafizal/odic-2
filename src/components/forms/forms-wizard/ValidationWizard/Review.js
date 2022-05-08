@@ -31,8 +31,38 @@ export default function Review({ shippingData, imageProperty }) {
 
   const [avatarPreview, setAvatarPreview] = React.useState();
 
-  const { firstName, lastName, category, propertyType } = shippingData;
   const { fileName, type, size, imgE } = imageProperty;
+  const {
+    category,
+    propertyType,
+    propertyTitle,
+    saleType,
+    tenure,
+    furnishing,
+    carpark,
+    amenities,
+    title,
+    description,
+    price,
+    rentalDeposit,
+    phone,
+    location,
+    city,
+    lat,
+    lon,
+    featureImage,
+    photo_1,
+    photo_2,
+    photo_3,
+    photo_4,
+    photo_5,
+    photo_6,
+    photo_7,
+    photo_8,
+    photo_9,
+    photo_10,
+    video
+  } = shippingData;
 
   const preViewImage = (imgE) => {
     const fileReader = new FileReader();
@@ -54,32 +84,35 @@ export default function Review({ shippingData, imageProperty }) {
 
   return (
     <>
-      <Typography variant="h5" gutterBottom sx={{ mb: 2 }}>
-        Review Summary
+      <Typography variant="h3" gutterBottom sx={{ mb: 2 }}>
+        Review Property Details
       </Typography>
 
       <List disablePadding>
-        {/* {products.map((product) => (
-          <ListItem sx={{ py: 1, px: 0 }} key={product.name}>
-            <ListItemText primary={product.name} secondary={product.desc} />
-            <Typography variant="body2">{product.price}</Typography>
-          </ListItem>
-        ))} */}
+        {[shippingData].map((product) => (
+          <>
+            <ListItem sx={{ py: 1, px: 0 }}>
+              <ListItemText primary={'Title'} secondary={title} />
+            </ListItem>
+
+            <ListItem sx={{ py: 1, px: 0 }} key={product.title}>
+              <ListItemText primary={'Description'} sx={{ textTransform: 'capitalize' }} secondary={product.description} />
+              <Typography variant="body2">RM{product.price}</Typography>
+            </ListItem>
+
+            <ListItem sx={{ py: 1, px: 0 }}>
+              <ListItemText primary={'Type'} secondary={propertyType} />
+            </ListItem>
+
+            <ListItem sx={{ py: 1, px: 0 }}>
+              <ListItemText primary={'Category'} secondary={category} />
+            </ListItem>
+          </>
+        ))}
+
         <ImageWrapper>
           <CardMedia component="img" image={avatarPreview || ''} title="Product" />
         </ImageWrapper>
-
-        <ListItem sx={{ py: 1, px: 0 }}>
-          <ListItemText primary={'Title'} secondary={firstName} />
-        </ListItem>
-
-        <ListItem sx={{ py: 1, px: 0 }}>
-          <ListItemText primary={'Type'} secondary={propertyType} />
-        </ListItem>
-
-        <ListItem sx={{ py: 1, px: 0 }}>
-          <ListItemText primary={'Category'} secondary={category} />
-        </ListItem>
       </List>
     </>
   );

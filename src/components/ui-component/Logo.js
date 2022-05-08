@@ -17,8 +17,6 @@ import Image from 'next/image';
 const Logo = ({ htmlFor }) => {
   const theme = useTheme();
 
-  console.log('htmlFor', htmlFor);
-
   return (
     /**
      * if you want to use image instead of svg uncomment following, and comment out <svg> element.
