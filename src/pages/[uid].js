@@ -24,7 +24,7 @@ import { BACKEND_PATH } from 'config';
 import axios from 'axios';
 import { styled } from '@mui/system';
 
-import YoutubeIcon from '@mui/icons-material/Youtube';
+import YouTubeIcon from '@mui/icons-material/YouTube';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
@@ -206,7 +206,7 @@ const AgentProfile = ({ userData }) => {
                                       <LinkedInIcon color="secondary" />
                                     </Link>
                                     <Link href={`${user?.youtube}`} target="_blank" underline="hover">
-                                      <YoutubeIcon color="secondary" />
+                                      <YouTubeIcon color="secondary" />
                                     </Link>
                                     <Link href={`${user?.tiktok}`} target="_blank" underline="hover">
                                       <LinkedInIcon color="secondary" />

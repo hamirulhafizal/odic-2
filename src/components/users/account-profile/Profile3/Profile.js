@@ -25,7 +25,7 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import InstagramIcon from '@mui/icons-material/Instagram';
-import YoutubeIcon from '@mui/icons-material/Youtube';
+import YouTubeIcon from '@mui/icons-material/YouTube';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 // import TiktokIcon from '@mui/icons-material/tiktok';
 
@@ -271,7 +271,7 @@ const Profile = ({ ...others }) => {
                     <Grid item xs={12}>
                       <Grid container alignItems="center" spacing={gridSpacing} sx={{ mb: 1.25 }}>
                         <Grid item>
-                          <YoutubeIcon />
+                          <YouTubeIcon />
                         </Grid>
                         <Grid item xs zeroMinWidth>
                           <TextField
