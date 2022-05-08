@@ -53,8 +53,7 @@ export default function ReviewCard() {
   };
 
   return (
-    <Box sx={{ maxWidth: 400, flexGrow: 1 }}>
-      <Typography variant="h4">Recent reviews</Typography>
+    <Box sx={{ maxWidth: 400, flexGrow: 1, backgroundColor: 'white', p: 1, borderRadius: '10px' }}>
       <MobileStepper
         variant="dots"
         steps={maxSteps}
@@ -88,12 +87,14 @@ export default function ReviewCard() {
           <Avatar src={`${steps[activeStep].avatar}`} />
 
           <Stack sx={{ pl: 2 }} direction="column">
-            <Typography variant="main">{steps[activeStep].label}</Typography>
+            <Typography variant="main" sx={{ fontWeight: 'bold' }}>
+              {steps[activeStep].label}
+            </Typography>
             <Rating name="read-only" sx={{ position: ' relative', left: '-3px' }} value={steps[activeStep].star} readOnly />
           </Stack>
         </Stack>
       </Paper>
-      <Box sx={{ height: 255, maxWidth: 400, width: '100%', py: 2, px: 0 }}>{steps[activeStep].description}</Box>
+      <Box sx={{ height: 150, maxWidth: 400, width: '100%', py: 2, px: 0 }}>{steps[activeStep].description}</Box>
     </Box>
   );
 }

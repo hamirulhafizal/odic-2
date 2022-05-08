@@ -12,7 +12,7 @@ const GuestGuardLayout = ({ children }) => (
     <GuestGuard>
       <>
         {children}
-        <Customization />
+        {/* <Customization /> */}
       </>
     </GuestGuard>
   </NavMotion>

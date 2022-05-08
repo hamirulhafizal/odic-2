@@ -16,10 +16,24 @@ import FadeInWhenVisible from 'components/landingpage/Animation';
 // third party
 
 import { NextSeo } from 'next-seo';
-import { Card, CardActions, CardContent, Container, Grid, Typography, Button, Avatar, Stack, Paper, Box } from '@mui/material';
+import {
+  Card,
+  CardActions,
+  CardContent,
+  Container,
+  Grid,
+  Typography,
+  Button,
+  Avatar,
+  Stack,
+  Paper,
+  Box,
+  useMediaQuery
+} from '@mui/material';
 import { gridSpacing } from 'store/constant';
 import SubCard from 'components/ui-component/cards/SubCard';
 import { useTheme } from '@mui/system';
+import { motion } from 'framer-motion';
 
 // assets
 import FolderTwoToneIcon from '@mui/icons-material/FolderTwoTone';
@@ -38,7 +52,6 @@ const HeaderWrapper = styled('div')(({ theme }) => ({
   overflowX: 'hidden',
   overflowY: 'clip',
 
-  // width: '101%',
   backgroundImage: `url(${images1})`,
   backgroundSize: 'cover',
   backgroundRepeat: 'no-repeat',
@@ -70,14 +83,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 const Landing = () => {
   const theme = useTheme();
-
-  const { user } = useAuth();
-  const avatarIconSx = {
-    ...theme.typography.commonAvatar,
-    cursor: 'initial',
-    width: 72,
-    height: 72
-  };
+  const matchDownLG = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
     <>
@@ -121,111 +127,102 @@ const Landing = () => {
       <Container>
         <Card>
           <CardContent sx={{ py: 5 }}>
-            <Grid container sx={{ justifyContent: 'space-between' }}>
+            <Grid
+              container
+              spacing={gridSpacing}
+              sx={{
+                justifyContent: 'space-between',
+                flexDirection: matchDownLG ? 'column-reverse' : 'row'
+              }}
+            >
               <Grid lg={4} md={4} sm={12} xs={12} item>
-                <ReviewCard />
+                <Box
+                  sx={{
+                    p: 2,
+                    alignItems: 'center',
+                    backgroundColor: '#ededed',
+                    height: ' 100%',
+                    borderRadius: '10px',
+                    backgroundColor: 'rgba(0, 0, 0, 0.45)',
+                    backdropFilter: 'blur(25px)',
+                    boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)'
+                  }}
+                >
+                  <Typography sx={{ ml: 2, py: 2, color: 'white' }} variant="h4">
+                    Recent reviews
+                  </Typography>
+                  <ReviewCard />
+                </Box>
               </Grid>
+
               <Grid lg={7} md={7} sm={12} xs={12} item>
-                <Box sx={{ p: 2, alignItems: 'center', backgroundColor: '#ededed', height: ' 100%', borderRadius: '10px' }}>
-                  <Typography sx={{ ml: 2, py: 2 }} variant="h4">
+                <Box
+                  sx={{
+                    p: 2,
+                    alignItems: 'center',
+                    backgroundColor: '#ededed',
+                    height: ' 100%',
+                    borderRadius: '10px',
+                    backgroundColor: 'rgba(0, 0, 0, 0.45)',
+                    backdropFilter: 'blur(25px)',
+                    boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)'
+                  }}
+                >
+                  <Typography sx={{ ml: 2, py: 2, color: 'white' }} variant="h4">
                     Why join us ?
                   </Typography>
 
                   <Grid container justifyContent="center" spacing={gridSpacing}>
                     <Grid item lg={6} md={6} xs={12} sm={6}>
-                      <FadeInWhenVisible>
-                        <SubCard>
+                      <motion.div>
+                        <SubCard sx={{ borderRadius: 'none' }}>
                           <Grid container alignItems="center" spacing={2}>
-                            <Grid item>
-                              <Avatar
-                                variant="rounded"
-                                sx={{
-                                  ...avatarIconSx,
-                                  bgcolor: theme.palette.mode === 'dark' ? theme.palette.dark[800] : 'primary.light',
-                                  color: theme.palette.primary.main
-                                }}
-                              >
-                                <FolderTwoToneIcon />
-                              </Avatar>
-                            </Grid>
                             <Grid item xs zeroMinWidth>
-                              <Typography variant="h5">Easy Folder Structure</Typography>
+                              <Typography variant="h1">200</Typography>
+                              <Typography variant="h5">Agent</Typography>
                             </Grid>
                           </Grid>
                         </SubCard>
-                      </FadeInWhenVisible>
+                      </motion.div>
                     </Grid>
 
                     <Grid item lg={6} md={6} xs={12} sm={6}>
-                      <FadeInWhenVisible>
+                      <motion.div>
                         <SubCard>
                           <Grid container alignItems="center" spacing={2}>
-                            <Grid item>
-                              <Avatar
-                                variant="rounded"
-                                sx={{
-                                  ...avatarIconSx,
-                                  bgcolor: theme.palette.mode === 'dark' ? theme.palette.dark[900] : 'secondary.light',
-                                  color: theme.palette.secondary.main
-                                }}
-                              >
-                                <CodeTwoToneIcon />
-                              </Avatar>
-                            </Grid>
                             <Grid item xs zeroMinWidth>
-                              <Typography variant="h5">Organized Code Structure</Typography>
+                              <Typography variant="h1">100k</Typography>
+                              <Typography variant="h5">Property</Typography>
                             </Grid>
                           </Grid>
                         </SubCard>
-                      </FadeInWhenVisible>
+                      </motion.div>
                     </Grid>
 
                     <Grid item lg={6} md={6} xs={12} sm={6}>
-                      <FadeInWhenVisible>
+                      <motion.div>
                         <SubCard>
                           <Grid container alignItems="center" spacing={2}>
-                            <Grid item>
-                              <Avatar
-                                variant="rounded"
-                                sx={{
-                                  ...avatarIconSx,
-                                  bgcolor: theme.palette.mode === 'dark' ? theme.palette.dark[800] : 'primary.light',
-                                  color: theme.palette.primary.main
-                                }}
-                              >
-                                <EmojiEmotionsTwoToneIcon />
-                              </Avatar>
-                            </Grid>
                             <Grid item xs zeroMinWidth>
-                              <Typography variant="h5">The Hassle-free Setup Process</Typography>
+                              <Typography variant="h1">240k</Typography>
+                              <Typography variant="h5">Property</Typography>
                             </Grid>
                           </Grid>
                         </SubCard>
-                      </FadeInWhenVisible>
+                      </motion.div>
                     </Grid>
 
                     <Grid item lg={6} md={6} xs={12} sm={6}>
-                      <FadeInWhenVisible>
+                      <motion.div>
                         <SubCard>
                           <Grid container alignItems="center" spacing={2}>
-                            <Grid item>
-                              <Avatar
-                                variant="rounded"
-                                sx={{
-                                  ...avatarIconSx,
-                                  bgcolor: theme.palette.mode === 'dark' ? theme.palette.dark[900] : 'secondary.light',
-                                  color: theme.palette.secondary.main
-                                }}
-                              >
-                                <LockOpenTwoToneIcon />
-                              </Avatar>
-                            </Grid>
                             <Grid item xs zeroMinWidth>
-                              <Typography variant="h5">3 Auth Methods</Typography>
+                              <Typography variant="h1">89k</Typography>
+                              <Typography variant="h5">Property</Typography>
                             </Grid>
                           </Grid>
                         </SubCard>
-                      </FadeInWhenVisible>
+                      </motion.div>
                     </Grid>
                   </Grid>
                 </Box>
@@ -239,7 +236,7 @@ const Landing = () => {
         <Suscribe1 />
         <Footer />
       </SecondWrapper>
-      <Customization />
+      {/* <Customization /> */}
     </>
   );
 };

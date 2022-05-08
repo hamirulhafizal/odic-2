@@ -125,7 +125,7 @@ const MainLayout = ({ children }) => {
             </>
           )}
         </Main>
-        <Customization />
+        {/* <Customization /> */}
       </Box>
     </AuthGuard>
   );
