@@ -7,34 +7,33 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
-import { Avatar, Stack } from '@mui/material';
+import { Avatar, Rating, Stack } from '@mui/material';
 import useAuth from 'hooks/useAuth';
 
 const Avatar1 = 'https://avatars.githubusercontent.com/u/732422?s=116';
 const Avatar2 = 'https://avatars.githubusercontent.com/u/197016?s=116';
-const Avatar3 = 'https://avatars.githubusercontent.com/u/732421?s=116';
+const Avatar3 = 'https://avatars.githubusercontent.com/u/197012?s=116';
 // const images1 = '/assets/images/landing/living-room-with-yellow.png';
 
 const steps = [
   {
-    label: 'Select campaign settings',
-    description: `For each ad campaign that you create, you can control how much
-              you're willing to spend on clicks and conversions, which networks
-              and geographical locations you want your ads to show on, and more.`,
-    avatar: Avatar1
+    label: 'Mohd Taufiq Janudin',
+    description: `"Renting process is easy, managed to find a good room through OD"`,
+    avatar: Avatar1,
+    star: 3
   },
   {
-    label: 'Create an ad group',
-    description: 'An ad group contains one or more ads which target a shared set of keywords.',
-    avatar: Avatar2
+    label: 'Hamirul Hafizal',
+    description:
+      '"Last minute looking for place to move due to house renovation, rent through OD without physical viewing, house is the same as listing, good condition."',
+    avatar: Avatar2,
+    star: 1
   },
   {
-    label: 'Create an ad',
-    description: `Try out different ad text to see what brings in the most customers,
-              and learn how to enhance your ads using features like ad extensions.
-              If you run into any problems with your ads, find out how to tell if
-              they're running and how to resolve approval issues.`,
-    avatar: Avatar3
+    label: 'Wan Mat Noor',
+    description: `"OD helped me to find the perfect property, plus no agent fee and free tenancy agreement!"`,
+    avatar: Avatar3,
+    star: 5
   }
 ];
 
@@ -42,6 +41,7 @@ export default function ReviewCard() {
   const theme = useTheme();
   const { user } = useAuth();
   const [activeStep, setActiveStep] = React.useState(0);
+  const [value, setValue] = React.useState(2);
   const maxSteps = steps.length;
 
   const handleNext = () => {
@@ -54,11 +54,13 @@ export default function ReviewCard() {
 
   return (
     <Box sx={{ maxWidth: 400, flexGrow: 1 }}>
+      <Typography variant="h4">Recent reviews</Typography>
       <MobileStepper
         variant="dots"
         steps={maxSteps}
         position="static"
         activeStep={activeStep}
+        sx={{ px: 0 }}
         nextButton={
           <Button size="small" sx={{ color: 'black' }} onClick={handleNext} disabled={activeStep === maxSteps - 1}>
             Next
@@ -79,21 +81,19 @@ export default function ReviewCard() {
           display: 'flex',
           alignItems: 'center',
           height: 50,
-          pl: 2,
           bgcolor: 'background.default'
         }}
       >
         <Stack direction="row" justifyContent="center" alignItems="center">
           <Avatar src={`${steps[activeStep].avatar}`} />
 
-          <Typography sx={{ pl: 2 }} variant="main">
-            {steps[activeStep].label}
-            {/* {steps[activeStep].label} */}
-            {/* {user?.firstName} */}
-          </Typography>
+          <Stack sx={{ pl: 2 }} direction="column">
+            <Typography variant="main">{steps[activeStep].label}</Typography>
+            <Rating name="read-only" sx={{ position: ' relative', left: '-3px' }} value={steps[activeStep].star} readOnly />
+          </Stack>
         </Stack>
       </Paper>
-      <Box sx={{ height: 255, maxWidth: 400, width: '100%', p: 2 }}>{steps[activeStep].description}</Box>
+      <Box sx={{ height: 255, maxWidth: 400, width: '100%', py: 2, px: 0 }}>{steps[activeStep].description}</Box>
     </Box>
   );
 }
