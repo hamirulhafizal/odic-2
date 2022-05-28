@@ -69,7 +69,7 @@ const ValidationWizard = () => {
 
       setProduct(propertyObj);
     }
-  }, [activeStep]);
+  }, [activeStep, shippingData]);
 
   return (
     <MainCard title="Create Listing">
@@ -106,20 +106,6 @@ const ValidationWizard = () => {
             </Typography>
 
             <Stack direction="row" justifyContent="flex-end">
-              {/* <AnimateButton>
-                <Button
-                  variant="contained"
-                  color="error"
-                  onClick={() => {
-                    setShippingData({});
-                    setPaymentData({});
-                    setActiveStep(0);
-                  }}
-                  sx={{ my: 3, ml: 1 }}
-                >
-                  Reset
-                </Button>
-              </AnimateButton> */}
               <AnimateButton>
                 <Button
                   variant="contained"
