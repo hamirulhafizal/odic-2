@@ -179,7 +179,10 @@ const AgentProfile = ({ userData }) => {
                                     width: { xs: 72, sm: 100, md: 140 },
                                     height: { xs: 72, sm: 100, md: 140 },
                                     backgroundColor: 'transparent',
-                                    borderRadius: '100%'
+                                    borderRadius: '100%',
+                                    borderColor: 'white',
+                                    border: '2px solid white',
+                                    borderRadius: '125px'
                                   }}
                                 />
                               </Badge>

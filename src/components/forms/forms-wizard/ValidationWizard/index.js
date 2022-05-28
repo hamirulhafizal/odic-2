@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 // material-ui
 import { Button, Step, Stepper, StepLabel, Stack, Typography } from '@mui/material';
@@ -11,6 +11,8 @@ import Review from './Review';
 import MainCard from 'components/ui-component/cards/MainCard';
 import AnimateButton from 'components/ui-component/extended/AnimateButton';
 import { Router, useRouter } from 'next/router';
+import axiosInstance from 'contexts/axios';
+import { setProduct } from 'contexts/ApiListing';
 
 // step options
 const steps = ['Fill Up Detail', 'Upload Image', 'Review your Listing'];
@@ -56,8 +58,18 @@ const ValidationWizard = () => {
     setActiveStep(activeStep - 1);
   };
 
-  const { firstName, lastName, category, propertyType } = shippingData;
-  const { fileName, type, size } = imageProperty;
+  // const { category, propertyType, propertyTitle, saleType, rentalDeposit, tenure, slug, ...rest } = shippingData;
+  // const { fileName, type, size } = imageProperty;
+
+  useEffect(() => {
+    if (activeStep == 3) {
+      console.log('shippingData-->', shippingData);
+
+      const propertyObj = { ...shippingData };
+
+      setProduct(propertyObj);
+    }
+  }, [activeStep]);
 
   return (
     <MainCard title="Create Listing">
