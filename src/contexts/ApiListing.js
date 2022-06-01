@@ -12,7 +12,7 @@ import axiosInstance from './axios';
 
 const setProduct = async (propertyObj) => {
   const response = await axiosInstance.post(`${BACKEND_PATH}/api/v1/inventory/`, propertyObj).then(async (res) => {
-    return res;
+    return response;
   });
 };
 

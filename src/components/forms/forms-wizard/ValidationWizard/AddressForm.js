@@ -228,6 +228,16 @@ const initials = {
   city: 'Johor',
   lat: '',
   lon: '',
+  address: '',
+
+  state: 'johor',
+  slug: 'johor',
+  zipcode: '100',
+  bedrooms: 10,
+  bathrooms: '1',
+  floorRange: '1',
+  realtor: 2,
+
   featureImage: '',
   photo_1: '',
   photo_2: '',
@@ -256,21 +266,30 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
     validationSchema,
     onSubmit: (values) => {
       const {
+        slug,
+        title,
+        address,
+        city,
+        state,
+        zipcode,
+        price,
+        bedrooms,
+        bathrooms,
+        floorRange,
+        furnishing,
+        carpark,
+        realtor,
+
         category,
         propertyType,
         propertyTitle,
         saleType,
         tenure,
-        furnishing,
-        carpark,
         amenities,
-        title,
         description,
-        price,
         rentalDeposit,
         phone,
         location,
-        city,
         lat,
         lon,
         featureImage,
@@ -288,21 +307,31 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
       } = values;
 
       setShippingData({
+        slug: slug,
+        title: title,
+        address: address,
+        state: state,
+        zipcode: zipcode,
+        price: price,
+        bedrooms: bedrooms,
+        bathrooms: bathrooms,
+        floorRange: floorRange,
+        furnishing: furnishing,
+        carpark: carpark,
+        city: city,
+        realtor: realtor,
+
         category: category,
         propertyType: propertyType,
         propertyTitle: propertyTitle,
         saleType: saleType,
         tenure: tenure,
-        furnishing: furnishing,
-        carpark: carpark,
         amenities: amenities,
-        title: title,
         description: description,
-        price: price,
         rentalDeposit: rentalDeposit,
         phone: phone,
         location: location,
-        city: city,
+
         lat: lat,
         lon: lon,
         featureImage: featureImage,
@@ -408,6 +437,90 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
           </Grid>
           <Grid item xs={12}>
             <TextField
+              id="address"
+              name="address"
+              label="address*"
+              value={formik.values.address}
+              onChange={formik.handleChange}
+              error={formik.touched.address && Boolean(formik.errors.address)}
+              helperText={formik.touched.address && formik.errors.address}
+              fullWidth
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              id="state"
+              name="state"
+              label="state*"
+              value={formik.values.state}
+              onChange={formik.handleChange}
+              error={formik.touched.state && Boolean(formik.errors.state)}
+              helperText={formik.touched.state && formik.errors.state}
+              fullWidth
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              id="zipcode"
+              name="zipcode"
+              label="zipcode*"
+              value={formik.values.zipcode}
+              onChange={formik.handleChange}
+              error={formik.touched.zipcode && Boolean(formik.errors.zipcode)}
+              helperText={formik.touched.zipcode && formik.errors.zipcode}
+              fullWidth
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              id="bedrooms"
+              name="bedrooms"
+              label="bedrooms*"
+              value={formik.values.bedrooms}
+              onChange={formik.handleChange}
+              error={formik.touched.bedrooms && Boolean(formik.errors.bedrooms)}
+              helperText={formik.touched.bedrooms && formik.errors.bedrooms}
+              fullWidth
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              id="bathrooms"
+              name="bathrooms"
+              label="bathrooms*"
+              value={formik.values.bathrooms}
+              onChange={formik.handleChange}
+              error={formik.touched.bathrooms && Boolean(formik.errors.bathrooms)}
+              helperText={formik.touched.bathrooms && formik.errors.bathrooms}
+              fullWidth
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              id="floorRange"
+              name="floorRange"
+              label="floorRange*"
+              value={formik.values.floorRange}
+              onChange={formik.handleChange}
+              error={formik.touched.floorRange && Boolean(formik.errors.floorRange)}
+              helperText={formik.touched.floorRange && formik.errors.floorRange}
+              fullWidth
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              id="realtor"
+              name="realtor"
+              label="realtor*"
+              value={formik.values.realtor}
+              onChange={formik.handleChange}
+              error={formik.touched.realtor && Boolean(formik.errors.realtor)}
+              helperText={formik.touched.realtor && formik.errors.realtor}
+              fullWidth
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
               id="description"
               name="description"
               label="Description*"
@@ -503,7 +616,6 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
               fullWidth
             />
           </Grid>
-
           <Grid item xs={12}>
             <Stack direction="row" justifyContent="flex-end">
               <AnimateButton>
