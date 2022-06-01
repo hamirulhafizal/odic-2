@@ -211,12 +211,12 @@ const location = [
 ];
 
 const initials = {
-  category: 'Rent',
-  propertyType: 'Apartment',
-  propertyTitle: '120 Jalan Kejayaan',
-  saleType: '',
-  tenure: '',
-  furnishing: 'Fully Furnished',
+  category: 1,
+  propertyType: 1,
+  propertyTitle: 'Freehold',
+  saleType: 'For Sale',
+  tenure: 1,
+  furnishing: 'Freehold',
   carpark: '2',
   amenities: 'Pool',
   title: '120 Jalan Kejayaan',
@@ -228,7 +228,7 @@ const initials = {
   city: 'Johor',
   lat: '',
   lon: '',
-  address: '',
+  address: 'johor',
 
   state: 'johor',
   slug: 'johor',
@@ -238,18 +238,18 @@ const initials = {
   floorRange: '1',
   realtor: 2,
 
-  featureImage: '',
-  photo_1: '',
-  photo_2: '',
-  photo_3: '',
-  photo_4: '',
-  photo_5: '',
-  photo_6: '',
-  photo_7: '',
-  photo_8: '',
-  photo_9: '',
-  photo_10: '',
-  video: ''
+  featureImage: undefined,
+  photo_1: undefined,
+  photo_2: undefined,
+  photo_3: undefined,
+  photo_4: undefined,
+  photo_5: undefined,
+  photo_6: undefined,
+  photo_7: undefined,
+  photo_8: undefined,
+  photo_9: undefined,
+  photo_10: undefined,
+  video: undefined
 };
 
 const validationSchema = yup.object({

@@ -49,6 +49,7 @@ import AddIcon from '@mui/icons-material/AddTwoTone';
 import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
 import { Button } from '@mui/material';
 import { useRouter } from 'next/router';
+import { getAllListing } from 'contexts/ApiListing';
 
 const prodImage = '/assets/images/e-commerce';
 
@@ -256,6 +257,11 @@ const Listing = () => {
 
   React.useEffect(() => {
     dispatch(getProducts());
+
+    getAllListing().then((res) => {
+      console.log('masuk', res);
+    });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

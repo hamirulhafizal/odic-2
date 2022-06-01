@@ -10,10 +10,10 @@ const axiosInstance = axios.create({
   headers: {
     Authorization:
       typeof window !== 'undefined'
-        ? localStorage.getItem('access')
+        ? `Bearer ${localStorage.getItem('access')}`
         : null
         ? 'JWT ' + typeof window !== 'undefined'
-          ? localStorage.getItem('access')
+          ? `Bearer ${localStorage.getItem('access')}`
           : null
         : null,
     'Content-Type': 'application/json',
@@ -22,7 +22,6 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.response.use(
-
   (response) => {
     return response;
   },
