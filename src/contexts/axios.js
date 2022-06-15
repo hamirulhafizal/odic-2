@@ -10,10 +10,10 @@ const axiosInstance = axios.create({
   headers: {
     Authorization:
       typeof window !== 'undefined'
-        ? `Bearer ${localStorage.getItem('access')}`
+        ? 'Bearer ' + localStorage.getItem('access')
         : null
-        ? 'JWT ' + typeof window !== 'undefined'
-          ? `Bearer ${localStorage.getItem('access')}`
+        ? 'Bearer ' + typeof window !== 'undefined'
+          ? 'Bearer ' + localStorage.getItem('access')
           : null
         : null,
     'Content-Type': 'application/json',

@@ -16,6 +16,22 @@ const setProduct = async (propertyObj) => {
   });
 };
 
+const getAllListing = async () => {
+  axiosInstance.defaults.headers['Authorization'] = 'Bearer ' + localStorage.getItem('access');
+  const response = await axiosInstance.get(`${BACKEND_PATH}/api/v1/inventory/`).then((res) => {
+    // if (typeof window !== 'undefined') {
+    //   dispatch({
+    //     payload: {
+    //       isLoggedIn: true,
+    //       user: users
+    //     }
+    //   });
+    // }
+    response;
+    return res;
+  });
+};
+
 // const register = async (email, password, first_name, last_name) => {
 //   // todo: this flow need to be recode as it not verified
 //   const user_name = first_name + last_name;
@@ -52,22 +68,6 @@ const setProduct = async (propertyObj) => {
 // };
 
 // const resetPassword = (email) => console.log(email);
-
-const getAllListing = async () => {
-  axiosInstance.defaults.headers['Authorization'] = 'Bearer' + localStorage.getItem('access');
-  const response = await axiosInstance.get(`${BACKEND_PATH}/api/v1/inventory/`).then((res) => {
-    // if (typeof window !== 'undefined') {
-    //   dispatch({
-    //     payload: {
-    //       isLoggedIn: true,
-    //       user: users
-    //     }
-    //   });
-    // }
-    response;
-    return res;
-  });
-};
 
 // const updateProfile = async (user_name, formData) => {
 //   const response = await axiosInstance.patch(`${BACKEND_PATH}/api/v1/profile/${user_name}`, formData).then((res) => {

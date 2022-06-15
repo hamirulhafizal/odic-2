@@ -307,7 +307,7 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
       } = values;
 
       setShippingData({
-        slug: slug,
+        slug: title,
         title: title,
         address: address,
         state: state,

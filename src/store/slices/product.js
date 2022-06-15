@@ -1,5 +1,6 @@
 // third-party
 import { createSlice } from '@reduxjs/toolkit';
+import { getAllListing } from 'contexts/ApiListing';
 
 // project imports
 import axios from 'utils/axios';
@@ -75,8 +76,9 @@ export default slice.reducer;
 export function getProducts() {
   return async () => {
     try {
-      const response = await axios.get('/api/products/list');
+      const response = getAllListing();
       dispatch(slice.actions.getProductsSuccess(response.data.products));
+      console.log('response', response);
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
