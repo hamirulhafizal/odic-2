@@ -43,7 +43,7 @@ const FormControlSelect = ({
       <InputLabel id="demo-simple-select-label">{captionLabel}</InputLabel>
       <Select id={id} value={value} name={name} label={captionLabel} onChange={onChange}>
         {currencies.map((state, index) => (
-          <MenuItem key={index} value={state?.label}>
+          <MenuItem key={index} value={state?.value}>
             {state?.label}
           </MenuItem>
         ))}

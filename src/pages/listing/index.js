@@ -92,23 +92,37 @@ const headCells = [
     align: 'left'
   },
   {
-    id: 'created',
-    numeric: false,
-    label: 'Created',
-    align: 'left'
-  },
-  {
     id: 'price',
     numeric: true,
     label: 'Price',
     align: 'right'
   },
   {
-    id: 'sale-price',
-    numeric: true,
-    label: 'Sale Price',
-    align: 'right'
+    id: 'location',
+    numeric: false,
+    label: 'Location',
+    align: 'center'
   },
+  {
+    id: 'propertyType',
+    numeric: false,
+    label: 'Property Type',
+    align: 'center'
+  },
+  {
+    id: 'bathrooms',
+    numeric: true,
+    label: 'Bathrooms',
+    align: 'center'
+  },
+
+  {
+    id: 'bedrooms',
+    numeric: true,
+    label: 'Bedrooms',
+    align: 'center'
+  },
+
   {
     id: 'status',
     numeric: true,
@@ -233,7 +247,8 @@ const Listing = () => {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
-  const [page, setPage] = React.useState(0);
+  const [page, setPage] = React.useState(1);
+  const [paging, setPagging] = React.useState(2);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [search, setSearch] = React.useState('');
   const [rows, setRows] = React.useState([]);
@@ -256,14 +271,9 @@ const Listing = () => {
   }, [products]);
 
   React.useEffect(() => {
-    dispatch(getProducts());
-
-    getAllListing().then((res) => {
-      console.log('masuk', res);
-    });
-
+    dispatch(getProducts(paging));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [paging]);
 
   const handleSearch = (event) => {
     const newString = event.target.value;
@@ -334,8 +344,21 @@ const Listing = () => {
     setPage(0);
   };
 
+  const propertyTypeData = (num) => {
+    if (num == 1) return 'Apartment';
+    if (num == 2) return 'Landed House';
+    if (num == 3) return 'Private Room';
+    if (num == 4) return 'Factory';
+    if (num == 5) return 'Office';
+    if (num == 6) return 'Hotel/Resort';
+    if (num == 7) return 'ShopLot';
+    if (num == 8) return 'Land';
+  };
+
   const isSelected = (name) => selected.indexOf(name) !== -1;
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+
+  console.log('products', products);
 
   return (
     <MainCard title="Product List" content={false} contentSX={{ p: 0 }}>
@@ -357,22 +380,6 @@ const Listing = () => {
             />
           </Grid>
           <Grid item xs={12} sm={6} sx={{ textAlign: `${matchDownSM ? 'start' : 'right'}` }}>
-            {/* <Tooltip title="Copy">
-              <IconButton size="large">
-                <FileCopyIcon />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Print">
-              <IconButton size="large">
-                <PrintIcon />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Filter">
-              <IconButton size="large">
-                <FilterListIcon />
-              </IconButton>
-            </Tooltip> */}
-
             {/* product add & dialog */}
             <Tooltip title="Add Product">
               <Button
@@ -406,7 +413,110 @@ const Listing = () => {
             selected={selected}
           />
           <TableBody>
-            {stableSort(rows, getComparator(order, orderBy))
+            {rows.map((row, index) => {
+              if (typeof row === 'number') return null;
+              const isItemSelected = isSelected(row.title);
+              const labelId = `enhanced-table-checkbox-${index}`;
+
+              return (
+                <TableRow hover role="checkbox" aria-checked={isItemSelected} tabIndex={-1} key={index} selected={isItemSelected}>
+                  <TableCell padding="checkbox" sx={{ pl: 3 }} onClick={(event) => handleClick(event, row.title)}>
+                    <Checkbox
+                      color="primary"
+                      checked={isItemSelected}
+                      inputProps={{
+                        'aria-labelledby': labelId
+                      }}
+                    />
+                  </TableCell>
+                  <TableCell
+                    align="center"
+                    component="th"
+                    id={labelId}
+                    scope="row"
+                    onClick={(event) => handleClick(event, row.title)}
+                    sx={{ cursor: 'pointer' }}
+                  >
+                    <Avatar src={row.photo_1 && `${row.photo_1}`} size="md" variant="rounded" />
+                  </TableCell>
+                  <TableCell component="th" id={labelId} scope="row" sx={{ cursor: 'pointer' }}>
+                    <Typography
+                      component={Link}
+                      href={`/app/e-commerce/product-details/${row.id}`}
+                      variant="subtitle1"
+                      sx={{
+                        color: theme.palette.mode === 'dark' ? theme.palette.grey[600] : 'grey.900',
+                        textDecoration: 'none'
+                      }}
+                    >
+                      {row.title}
+                    </Typography>
+                  </TableCell>
+                  {/* <TableCell>{format(new Date(row.created), 'E, MMM d yyyy')}</TableCell> */}
+                  <TableCell align="center">RM {row.price}</TableCell>
+                  <TableCell align="center">{row.location}</TableCell>
+
+                  <TableCell align="center">{propertyTypeData(row.propertyType)}</TableCell>
+                  <TableCell align="center">{row.bathrooms}</TableCell>
+                  <TableCell align="center">{row.bedrooms}</TableCell>
+
+                  <TableCell align="center">
+                    <Chip
+                      size="small"
+                      label={row.status ? 'Active' : 'Active'}
+                      chipcolor={row.status ? 'success' : 'success'}
+                      sx={{ borderRadius: '4px', textTransform: 'capitalize' }}
+                    />
+                  </TableCell>
+                  <TableCell align="center" sx={{ pr: 3 }}>
+                    <IconButton onClick={handleMenuClick} size="large">
+                      <MoreHorizOutlinedIcon
+                        fontSize="small"
+                        aria-controls="menu-popular-card-1"
+                        aria-haspopup="true"
+                        sx={{ color: 'grey.500' }}
+                      />
+                    </IconButton>
+                    <Menu
+                      id="menu-popular-card-1"
+                      anchorEl={anchorEl}
+                      keepMounted
+                      open={Boolean(anchorEl)}
+                      onClose={handleClose}
+                      variant="selectedMenu"
+                      anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'right'
+                      }}
+                      transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right'
+                      }}
+                      sx={{
+                        '& .MuiMenu-paper': {
+                          boxShadow: theme.customShadows.z1
+                        }
+                      }}
+                    >
+                      <MenuItem onClick={handleClose}> Edit</MenuItem>
+                      <MenuItem onClick={handleClose}> Delete</MenuItem>
+                    </Menu>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+
+            {emptyRows > 0 && (
+              <TableRow
+                style={{
+                  height: 53 * emptyRows
+                }}
+              >
+                <TableCell colSpan={6} />
+              </TableRow>
+            )}
+
+            {/* {stableSort(rows, getComparator(order, orderBy))
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row, index) => {
                 if (typeof row === 'number') return null;
@@ -495,6 +605,7 @@ const Listing = () => {
                   </TableRow>
                 );
               })}
+
             {emptyRows > 0 && (
               <TableRow
                 style={{
@@ -503,7 +614,7 @@ const Listing = () => {
               >
                 <TableCell colSpan={6} />
               </TableRow>
-            )}
+            )} */}
           </TableBody>
         </Table>
       </TableContainer>

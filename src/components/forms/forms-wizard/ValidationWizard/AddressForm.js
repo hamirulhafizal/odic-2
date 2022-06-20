@@ -11,68 +11,69 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import FormControlSelect from 'components/ui-component/extended/Form/FormControlSelect';
 import useAuth from 'hooks/useAuth';
+import slugify from 'utils/helper';
 
 const category = [
   {
-    value: 'Rent',
+    value: 1,
     label: 'Rent'
   },
   {
-    value: 'Sales',
+    value: 2,
     label: 'Sales'
   },
   {
-    value: 'Short-Stay',
+    value: 3,
     label: 'Short Stay'
   }
 ];
 
 const propertyTypes = [
   {
-    value: 'Apartment',
+    value: 1,
     label: 'Apartment'
   },
   {
-    value: 'Landed-House',
+    value: 2,
     label: 'Landed House'
   },
   {
-    value: 'Private-Room',
+    value: 3,
     label: 'Private Room'
   },
   {
-    value: 'Factory',
+    value: 4,
     label: 'Factory'
   },
   {
-    value: 'Office',
+    value: 5,
     label: 'Office'
   },
   {
-    value: 'Hotel/Resort',
+    value: 6,
     label: 'Hotel/Resort'
   },
   {
-    value: 'ShopLot',
+    value: 7,
     label: 'ShopLot'
   },
   {
-    value: 'Land',
+    value: 8,
     label: 'Land'
   }
 ];
 
 const furnish = [
   {
-    value: '0',
+    value: 'none',
     label: '-'
   },
   {
-    value: 'UnFurnish',
+    value: 'Freehold',
     label: 'UnFurnish'
   },
   {
-    value: 'Partly-Furnish',
+    value: 'Partial',
     label: 'Partly Furnish'
   },
   {
@@ -307,7 +308,7 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
       } = values;
 
       setShippingData({
-        slug: title,
+        slug: slugify(title),
         title: title,
         address: address,
         state: state,

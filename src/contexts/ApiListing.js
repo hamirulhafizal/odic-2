@@ -9,6 +9,7 @@ import Loader from 'components/ui-component/Loader';
 
 import { BACKEND_PATH } from 'config';
 import axiosInstance from './axios';
+import axios, { Axios } from 'axios';
 
 const setProduct = async (propertyObj) => {
   const response = await axiosInstance.post(`${BACKEND_PATH}/api/v1/inventory/`, propertyObj).then(async (res) => {
@@ -16,20 +17,11 @@ const setProduct = async (propertyObj) => {
   });
 };
 
-const getAllListing = async () => {
-  axiosInstance.defaults.headers['Authorization'] = 'Bearer ' + localStorage.getItem('access');
-  const response = await axiosInstance.get(`${BACKEND_PATH}/api/v1/inventory/`).then((res) => {
-    // if (typeof window !== 'undefined') {
-    //   dispatch({
-    //     payload: {
-    //       isLoggedIn: true,
-    //       user: users
-    //     }
-    //   });
-    // }
-    response;
-    return res;
+const getAllListing = async (paging) => {
+  const respond = await axios.get(`${BACKEND_PATH}/api/v1/inventory/?page=${paging}`).then((res) => {
+    return res.data.results;
   });
+  return respond;
 };
 
 // const register = async (email, password, first_name, last_name) => {

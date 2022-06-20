@@ -73,17 +73,28 @@ export default slice.reducer;
 
 // ----------------------------------------------------------------------
 
-export function getProducts() {
+export function getProducts(paging) {
   return async () => {
     try {
-      const response = getAllListing();
-      dispatch(slice.actions.getProductsSuccess(response.data.products));
-      console.log('response', response);
+      const response = getAllListing(paging).then((res) => {
+        dispatch(slice.actions.getProductsSuccess(res));
+      });
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
   };
 }
+
+// export function getProducts() {
+//   return async () => {
+//     try {
+//       const response = await axios.get('/api/products/list');
+//       dispatch(slice.actions.getProductsSuccess(response.data.products));
+//     } catch (error) {
+//       dispatch(slice.actions.hasError(error));
+//     }
+//   };
+// }
 
 export function filterProducts(filter) {
   return async () => {
