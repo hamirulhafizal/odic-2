@@ -324,8 +324,6 @@ const ProductList = () => {
   const isSelected = (name) => selected.indexOf(name) !== -1;
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
-  console.log('products--->', products)
-
   return (
     <MainCard title="Product List" content={false}>
       <CardContent>
