@@ -59,35 +59,28 @@ const ValidationWizard = () => {
     setActiveStep(activeStep - 1);
   };
 
-  const convertBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-
-      fileReader.onload = () => {
-        resolve(fileReader.result);
-      };
-
-      fileReader.onerror = (error) => {
-        reject(error);
-      };
-    });
-  };
-
   // const { category, propertyType, propertyTitle, saleType, rentalDeposit, tenure, slug, ...rest } = shippingData;
   // const { fileName, type, size } = imageProperty;
 
   useEffect(() => {
     if (activeStep == 3 && imageProperty?.imgE !== null) {
-      console.log('imageProperty?.imgE?-->', imageProperty?.imgE);
+      // console.log('imageProperty-->', imageProperty?.imgE);
 
       const propertyObj = {
         photo_1: imageProperty?.imgE,
         ...shippingData
       };
 
-      console.log('propertyObj-->', propertyObj);
-      setProduct(propertyObj);
+      var form_data = new FormData();
+
+      Object.keys(propertyObj).map(function (key, index) {
+        form_data.append(key, propertyObj[key]);
+        console.log('form_data-->', form_data);
+      });
+
+      console.log('form_data', form_data);
+
+      setProduct(form_data);
     }
   }, [activeStep, shippingData, imageProperty]);
 

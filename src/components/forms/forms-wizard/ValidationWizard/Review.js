@@ -64,7 +64,7 @@ export default function Review({ shippingData, imageProperty }) {
     video
   } = shippingData;
 
-  const preViewImage = (imgE) => {
+  const preViewImage = (imageProperty) => {
     const fileReader = new FileReader();
 
     fileReader.onload = () => {
@@ -73,12 +73,12 @@ export default function Review({ shippingData, imageProperty }) {
       }
     };
 
-    fileReader.readAsDataURL(imgE?.target?.files[0]);
+    // fileReader.readAsDataURL(imageProperty);
   };
 
   React.useEffect(() => {
-    if (imgE !== undefined || imgE !== null) {
-      preViewImage(imgE);
+    if (imageProperty !== undefined || imageProperty !== null) {
+      preViewImage(imageProperty);
     }
   }, [imgE]);
 

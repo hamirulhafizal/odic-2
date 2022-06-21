@@ -248,7 +248,7 @@ const Listing = () => {
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(1);
-  const [paging, setPagging] = React.useState(2);
+  const [paging, setPagging] = React.useState(1);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [search, setSearch] = React.useState('');
   const [rows, setRows] = React.useState([]);

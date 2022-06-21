@@ -239,7 +239,7 @@ const initials = {
   floorRange: '1',
   realtor: 2,
 
-  featureImage: undefined,
+  // featureImage: undefined,
   // photo_1: undefined,
   // photo_2: undefined,
   // photo_3: undefined,
@@ -250,7 +250,7 @@ const initials = {
   // photo_8: undefined,
   // photo_9: undefined,
   // photo_10: undefined,
-  video: undefined
+  // video: undefined
 };
 
 const validationSchema = yup.object({
@@ -293,7 +293,7 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
         location,
         lat,
         lon,
-        featureImage,
+        // featureImage,
         // photo_1,
         // photo_2,
         // photo_3,
@@ -304,7 +304,7 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
         // photo_8,
         // photo_9,
         // photo_10,
-        video
+        // video
       } = values;
 
       setShippingData({
@@ -335,7 +335,7 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
 
         lat: lat,
         lon: lon,
-        featureImage: featureImage,
+        // featureImage: featureImage,
         // photo_1: photo_1,
         // photo_2: photo_2,
         // photo_3: photo_3,
@@ -346,7 +346,7 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
         // photo_8: photo_8,
         // photo_9: photo_9,
         // photo_10: photo_10,
-        video: video
+        // video: video
       });
       handleNext();
     }

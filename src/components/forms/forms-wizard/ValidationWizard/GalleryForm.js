@@ -61,11 +61,8 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
       if (values.size >= 2000000) {
         setMessage('File Size is too large');
       } else {
-        const formData = new FormData();
-        formData.append('photo', imgE);
-
         setPaymentData({
-          imgE: formData
+          imgE: imgE
         });
         handleNext();
       }
@@ -80,6 +77,7 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
 
     fileReader.onload = () => {
       if (fileReader.readyState === 2) {
+        console.log('masul image ', fileReader.result);
         formik.setFieldValue('photo', e.target?.files[0]);
         formik.setFieldValue('size', e.target?.files[0]?.size);
         setAvatarPreview(fileReader.result);
