@@ -73,7 +73,7 @@ export default function Review({ shippingData, imageProperty }) {
       }
     };
 
-    fileReader.readAsDataURL(imgE?.target.files[0]);
+    fileReader.readAsDataURL(imgE?.target?.files[0]);
   };
 
   React.useEffect(() => {

@@ -61,8 +61,11 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
       if (values.size >= 2000000) {
         setMessage('File Size is too large');
       } else {
+        const formData = new FormData();
+        formData.append('photo', imgE);
+
         setPaymentData({
-          imgE: imgE
+          imgE: formData
         });
         handleNext();
       }
@@ -70,16 +73,17 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
   });
 
   const preViewImageCover = (e) => {
-    if (e.target.files[0].size >= 2000000) {
+    if (e.target?.files[0]?.size >= 2000000) {
       setMessage('File Size is too large');
     }
     const fileReader = new FileReader();
+
     fileReader.onload = () => {
       if (fileReader.readyState === 2) {
-        formik.setFieldValue('file', e.target.files[0]);
-        formik.setFieldValue('size', e.target.files[0].size);
+        formik.setFieldValue('photo', e.target?.files[0]);
+        formik.setFieldValue('size', e.target?.files[0]?.size);
         setAvatarPreview(fileReader.result);
-        setEImg(e);
+        setEImg(e.target.files[0]);
       }
     };
     fileReader.readAsDataURL(e.target.files[0]);
@@ -93,10 +97,10 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
     const fileReader = new FileReader();
     fileReader.onload = () => {
       if (fileReader.readyState === 2) {
-        formik.setFieldValue('file', e.target.files[0]);
+        formik.setFieldValue('photo', e.target.files[0]);
         formik.setFieldValue('size', e.target.files[0].size);
         setAvatarPreview(fileReader.result);
-        setEImg(e);
+        setEImg(e.target.files[0]);
       }
     };
 
@@ -104,7 +108,7 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
   };
 
   const deleteImgPreview = () => {
-    formik.setFieldValue('file', null);
+    formik.setFieldValue('photo', null);
     formik.setFieldValue('size', null);
     setAvatarPreview(null);
     setEImg(null);
@@ -141,9 +145,9 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
                 <TextField
                   accept="image/*"
                   multiple
-                  name="file"
+                  name="photo"
                   type="file"
-                  id="file-upload"
+                  id="photo"
                   fullWidth
                   label="Enter SKU"
                   sx={{ display: 'none' }}
@@ -153,7 +157,7 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
                 />
 
                 <InputLabel
-                  htmlFor="file-upload"
+                  htmlFor="photo"
                   sx={{
                     py: 3.75,
                     px: 3,
@@ -234,6 +238,23 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
                 >
                   <CloudUploadIcon /> Click Here Or Drop file here to upload
                 </InputLabel>
+
+                {/* <InputLabel htmlFor="photo">
+                  <Input
+                    accept="image/*"
+                    id="photo"
+                    type="file"
+                    name="photo"
+                    label="photo"
+                    onChange={(e) => {
+                      setFieldImgValue(e.target.files[0]);
+                      preViewImage(e);
+                    }}
+                  />
+                  <Button color="secondary" sx={{ color: 'white' }} variant="contained" component="span">
+                    Upload Avatar
+                  </Button>
+                </InputLabel> */}
 
                 <FormHelperText error>{message}</FormHelperText>
               </div>

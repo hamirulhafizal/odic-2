@@ -13,6 +13,7 @@ import AnimateButton from 'components/ui-component/extended/AnimateButton';
 import { Router, useRouter } from 'next/router';
 import axiosInstance from 'contexts/axios';
 import { setProduct } from 'contexts/ApiListing';
+import slugify from 'utils/helper';
 
 // step options
 const steps = ['Fill Up Detail', 'Upload Image', 'Review your Listing'];
@@ -58,18 +59,37 @@ const ValidationWizard = () => {
     setActiveStep(activeStep - 1);
   };
 
+  const convertBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
+
   // const { category, propertyType, propertyTitle, saleType, rentalDeposit, tenure, slug, ...rest } = shippingData;
   // const { fileName, type, size } = imageProperty;
 
   useEffect(() => {
-    if (activeStep == 3) {
-      console.log('shippingData-->', shippingData);
+    if (activeStep == 3 && imageProperty?.imgE !== null) {
+      console.log('imageProperty?.imgE?-->', imageProperty?.imgE);
 
-      const propertyObj = { ...shippingData };
+      const propertyObj = {
+        photo_1: imageProperty?.imgE,
+        ...shippingData
+      };
 
+      console.log('propertyObj-->', propertyObj);
       setProduct(propertyObj);
     }
-  }, [activeStep, shippingData]);
+  }, [activeStep, shippingData, imageProperty]);
 
   return (
     <MainCard title="Create Listing">
