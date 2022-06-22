@@ -1,6 +1,6 @@
 // third-party
 import { createSlice } from '@reduxjs/toolkit';
-import { getAllListing } from 'contexts/ApiListing';
+import { getAllListing, getListingById } from 'contexts/ApiListing';
 
 // project imports
 import axios from 'utils/axios';
@@ -85,6 +85,18 @@ export function getProducts(paging) {
   };
 }
 
+export function getProduct(id) {
+  return async () => {
+    try {
+      const response = getListingById(id).then((res) => {
+        dispatch(slice.actions.getProductSuccess(res));
+      });
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
+
 // export function getProducts() {
 //   return async () => {
 //     try {
@@ -101,17 +113,6 @@ export function filterProducts(filter) {
     try {
       const response = await axios.post('/api/product/filter', { filter });
       dispatch(slice.actions.filterProductsSuccess(response.data));
-    } catch (error) {
-      dispatch(slice.actions.hasError(error));
-    }
-  };
-}
-
-export function getProduct(id) {
-  return async () => {
-    try {
-      const response = await axios.post('/api/product/details', { id });
-      dispatch(slice.actions.getProductSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }

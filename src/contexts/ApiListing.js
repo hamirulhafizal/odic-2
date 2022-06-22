@@ -24,6 +24,14 @@ const getAllListing = async (paging) => {
   return respond;
 };
 
+const getListingById = async (id) => {
+  const respond = await axios.get(`${BACKEND_PATH}/api/v1/inventory/${id}`).then((res) => {
+    return res.data;
+  });
+
+  return respond;
+};
+
 // const register = async (email, password, first_name, last_name) => {
 //   // todo: this flow need to be recode as it not verified
 //   const user_name = first_name + last_name;
@@ -81,4 +89,4 @@ const getAllListing = async (paging) => {
 //   return response;
 // };
 
-export { setProduct, getAllListing };
+export { setProduct, getAllListing, getListingById };

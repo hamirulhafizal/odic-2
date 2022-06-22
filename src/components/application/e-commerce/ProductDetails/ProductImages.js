@@ -32,23 +32,36 @@ const prodImage = '/assets/images/e-commerce';
 const ProductImages = ({ product }) => {
   const theme = useTheme();
   const { borderRadius } = useConfig();
-  const products = [prod1, prod2, prod3, prod4, prod5, prod6, prod7, prod8];
+  const products = [
+    product?.photo_1,
+    product?.photo_2,
+    product?.photo_3,
+    product?.photo_4,
+    product?.photo_5,
+    product?.photo_6,
+    product?.photo_7,
+    product?.photo_8,
+    product?.photo_9,
+    product?.photo_10
+  ];
 
   const matchDownLG = useMediaQuery(theme.breakpoints.up('lg'));
-  const initialImage = product.image ? `${prodImage}/${product.image}` : prod1;
+  const initialImage = product.image ? product?.photo_1 : product?.photo_1;
 
   const [selected, setSelected] = useState(initialImage);
   const [modal, setModal] = useState(false);
 
   const images = [
-    { source: prod1 },
-    { source: prod2 },
-    { source: prod3 },
-    { source: prod4 },
-    { source: prod5 },
-    { source: prod6 },
-    { source: prod7 },
-    { source: prod8 }
+    { source: product?.photo_1 },
+    { source: product?.photo_2 },
+    { source: product?.photo_3 },
+    { source: product?.photo_4 },
+    { source: product?.photo_5 },
+    { source: product?.photo_6 },
+    { source: product?.photo_7 },
+    { source: product?.photo_8 },
+    { source: product?.photo_9 },
+    { source: product?.photo_10 }
   ];
 
   const lgNo = matchDownLG ? 4 : 3;
@@ -68,7 +81,7 @@ const ProductImages = ({ product }) => {
         <Grid item xs={12}>
           <MainCard content={false} sx={{ m: '0 auto' }}>
             <CardMedia
-              onClick={() => setModal(!modal)}
+              // onClick={() => setModal(!modal)}
               component="img"
               image={selected}
               sx={{ borderRadius: `${borderRadius}px`, overflow: 'hidden', cursor: 'zoom-in' }}

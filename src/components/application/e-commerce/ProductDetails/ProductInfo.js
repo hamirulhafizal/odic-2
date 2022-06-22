@@ -46,7 +46,7 @@ import StarTwoToneIcon from '@mui/icons-material/StarTwoTone';
 import StarBorderTwoToneIcon from '@mui/icons-material/StarBorderTwoTone';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import ShoppingCartTwoToneIcon from '@mui/icons-material/ShoppingCartTwoTone';
+import WhatsappTwoToneIcon from '@mui/icons-material/WhatsappTwoTone';
 
 // product color select
 function getColor(color) {
@@ -177,48 +177,23 @@ const ProductInfo = ({ product }) => {
             <Grid item xs={12}>
               <Chip
                 size="small"
-                label={product.isStock ? 'In Stock' : 'Out of Stock'}
-                chipcolor={product.isStock ? 'success' : 'error'}
+                label={product.isStock ? 'Active' : 'Active'}
+                chipcolor={product.isStock ? 'success' : 'success'}
                 sx={{ borderRadius: '4px', textTransform: 'capitalize' }}
               />
             </Grid>
-            <Grid item xs={12}>
-              <Stack direction="row" alignItems="center" spacing={1}>
-                <Typography variant="h3">{product.name}</Typography>
-                <Chip size="small" label="New" chipcolor="primary" variant="outlined" />
-              </Stack>
-            </Grid>
           </Grid>
-          <Avatar variant="rounded" sx={{ bgcolor: 'grey.200', color: 'grey.800' }}>
-            <FavoriteBorderIcon />
-          </Avatar>
         </Stack>
       </Grid>
       <Grid item xs={12}>
-        <Typography variant="body2">{product.description}</Typography>
+        <Typography variant="h3">{product?.title}</Typography>
       </Grid>
-      <Grid item xs={12}>
-        <Stack direction="row" alignItems="center" spacing={1}>
-          <Rating
-            name="simple-controlled"
-            value={product.rating}
-            icon={<StarTwoToneIcon fontSize="inherit" />}
-            emptyIcon={<StarBorderTwoToneIcon fontSize="inherit" />}
-            precision={0.1}
-            readOnly
-          />
-          <Typography variant="caption">({product.salePrice}+)</Typography>
-        </Stack>
-      </Grid>
+
       <Grid item xs={12}>
         <Stack direction="row" alignItems="center" spacing={1}>
           <Typography variant="h2" color="primary">
-            ${product.offerPrice}
+            RM {product?.price}
           </Typography>
-          <Typography variant="body1" sx={{ textDecoration: 'line-through' }}>
-            ${product.salePrice}
-          </Typography>
-          <Typography variant="caption">(Inclusive of all taxes)</Typography>
         </Stack>
       </Grid>
       <Grid item xs={12}>
@@ -231,7 +206,7 @@ const ProductInfo = ({ product }) => {
               <Grid item xs={12} lg={10}>
                 <Table>
                   <TableBody sx={{ '& .MuiTableCell-root': { borderBottom: 'none' } }}>
-                    <TableRow>
+                    {/* <TableRow>
                       <TableCell>
                         <Typography variant="body2">
                           Colors{' '}
@@ -276,8 +251,8 @@ const ProductInfo = ({ product }) => {
                           </FormHelperText>
                         )}
                       </TableCell>
-                    </TableRow>
-                    <TableRow>
+                    </TableRow> */}
+                    {/* <TableRow>
                       <TableCell>
                         <Stack>
                           <Typography variant="body2">
@@ -317,15 +292,15 @@ const ProductInfo = ({ product }) => {
                           </FormHelperText>
                         )}
                       </TableCell>
-                    </TableRow>
-                    <TableRow>
+                    </TableRow> */}
+                    {/* <TableRow>
                       <TableCell>
                         <Typography variant="body2">Quantity</Typography>
                       </TableCell>
                       <TableCell align="left">
                         <Increment name="quantity" />
                       </TableCell>
-                    </TableRow>
+                    </TableRow> */}
                   </TableBody>
                 </Table>
               </Grid>
@@ -340,16 +315,16 @@ const ProductInfo = ({ product }) => {
                       color="primary"
                       variant="contained"
                       size="large"
-                      startIcon={<ShoppingCartTwoToneIcon />}
+                      startIcon={<WhatsappTwoToneIcon />}
                       onClick={addCart}
                     >
-                      Add to Cart
+                      Whatsapp
                     </Button>
                   </Grid>
                   <Grid item xs={6}>
-                    <Button type="submit" fullWidth color="secondary" variant="contained" size="large">
+                    {/* <Button type="submit" fullWidth color="secondary" variant="contained" size="large">
                       Buy Now
-                    </Button>
+                    </Button> */}
                   </Grid>
                 </Grid>
               </Grid>

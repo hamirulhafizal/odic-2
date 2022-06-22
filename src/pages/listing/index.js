@@ -318,7 +318,7 @@ const Listing = () => {
     setSelected([]);
   };
 
-  const handleClick = (event, name) => {
+  const handleClick = (event, id) => {
     const selectedIndex = selected.indexOf(name);
     let newSelected = [];
 
@@ -420,29 +420,19 @@ const Listing = () => {
 
               return (
                 <TableRow hover role="checkbox" aria-checked={isItemSelected} tabIndex={-1} key={index} selected={isItemSelected}>
-                  <TableCell padding="checkbox" sx={{ pl: 3 }} onClick={(event) => handleClick(event, row.title)}>
-                    <Checkbox
-                      color="primary"
-                      checked={isItemSelected}
-                      inputProps={{
-                        'aria-labelledby': labelId
-                      }}
+                  <TableCell align="center" component="th" id={labelId} scope="row" sx={{ cursor: 'pointer' }}>
+                    <Avatar
+                      component={Link}
+                      href={`/listing/${row.id}`}
+                      src={row.photo_1 && `${row.photo_1}`}
+                      size="md"
+                      variant="rounded"
                     />
-                  </TableCell>
-                  <TableCell
-                    align="center"
-                    component="th"
-                    id={labelId}
-                    scope="row"
-                    onClick={(event) => handleClick(event, row.title)}
-                    sx={{ cursor: 'pointer' }}
-                  >
-                    <Avatar src={row.photo_1 && `${row.photo_1}`} size="md" variant="rounded" />
                   </TableCell>
                   <TableCell component="th" id={labelId} scope="row" sx={{ cursor: 'pointer' }}>
                     <Typography
                       component={Link}
-                      href={`/app/e-commerce/product-details/${row.id}`}
+                      href={`/listing/${row.id}`}
                       variant="subtitle1"
                       sx={{
                         color: theme.palette.mode === 'dark' ? theme.palette.grey[600] : 'grey.900',
