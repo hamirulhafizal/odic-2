@@ -85,7 +85,7 @@ export function getProducts(paging) {
   };
 }
 
-export function getProduct(id) {
+export function getProductById(id) {
   return async () => {
     try {
       const response = getListingById(id).then((res) => {
@@ -96,17 +96,6 @@ export function getProduct(id) {
     }
   };
 }
-
-// export function getProducts() {
-//   return async () => {
-//     try {
-//       const response = await axios.get('/api/products/list');
-//       dispatch(slice.actions.getProductsSuccess(response.data.products));
-//     } catch (error) {
-//       dispatch(slice.actions.hasError(error));
-//     }
-//   };
-// }
 
 export function filterProducts(filter) {
   return async () => {

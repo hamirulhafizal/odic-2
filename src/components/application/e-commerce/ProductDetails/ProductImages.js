@@ -84,7 +84,14 @@ const ProductImages = ({ product }) => {
               // onClick={() => setModal(!modal)}
               component="img"
               image={selected}
-              sx={{ borderRadius: `${borderRadius}px`, overflow: 'hidden', cursor: 'zoom-in' }}
+              sx={{
+                borderRadius: `${borderRadius}px`,
+                overflow: 'hidden',
+                cursor: 'zoom-in',
+                height: ' 434px',
+                objectFit: 'contain',
+                backgroundColor: 'black'
+              }}
             />
           </MainCard>
         </Grid>

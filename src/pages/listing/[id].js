@@ -17,7 +17,7 @@ import FloatingCart from 'components/ui-component/cards/FloatingCart';
 import Chip from 'components/ui-component/extended/Chip';
 import { gridSpacing } from 'store/constant';
 import { useDispatch, useSelector } from 'store';
-import { getProduct } from 'store/slices/product';
+import { getProductById } from 'store/slices/product';
 import { resetCart } from 'store/slices/cart';
 
 function TabPanel({ children, value, index, ...other }) {
@@ -74,7 +74,7 @@ const ProductDetails = () => {
 
   useEffect(() => {
     // getProduct();
-    dispatch(getProduct(String(router.query.id)));
+    dispatch(getProductById(router.query.id));
 
     // clear cart if complete order
     if (cart.checkout.step > 2) {

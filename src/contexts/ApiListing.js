@@ -32,6 +32,27 @@ const getListingById = async (id) => {
   return respond;
 };
 
+const getLisitingAgentById = async (id) => {
+  const respond = await axios.get(`${BACKEND_PATH}/api/v1/inventory/${id}`).then((res) => {
+    return res.data;
+  });
+
+  return respond;
+};
+
+const getProfileAgentById = async (uid) => {
+  await axios
+    .get(`${BACKEND_PATH}/api/v1/profile/${uid}`)
+    .then((res) => {
+      return res;
+    })
+    .catch((err) => {
+      const stringErr = JSON.stringify(err);
+      const error = JSON.parse(stringErr);
+      return error;
+    });
+};
+
 // const register = async (email, password, first_name, last_name) => {
 //   // todo: this flow need to be recode as it not verified
 //   const user_name = first_name + last_name;
@@ -89,4 +110,4 @@ const getListingById = async (id) => {
 //   return response;
 // };
 
-export { setProduct, getAllListing, getListingById };
+export { setProduct, getAllListing, getListingById, getLisitingAgentById, getProfileAgentById };

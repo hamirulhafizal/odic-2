@@ -57,7 +57,7 @@ const SecondWrapper = styled('div')(({ theme }) => ({
 const AgentProfile = ({ userData }) => {
   const theme = useTheme();
   const [isLoading, setLoading] = useState(true);
-  const [user, setUser] = useState();
+  const [agent, setAgent] = useState();
   const [error, setError] = useState();
   const router = useRouter();
   const { uid } = router.query;
@@ -65,13 +65,11 @@ const AgentProfile = ({ userData }) => {
   const matchDownLG = useMediaQuery(theme.breakpoints.down('lg'));
   const matchDownMD = useMediaQuery(theme.breakpoints.down('md'));
 
-  useEffect(() => {
-    setLoading(false);
-
-    axios
+  const getProfileAgentById = async (uid) => {
+    await axios
       .get(`${BACKEND_PATH}/api/v1/profile/${uid}`)
       .then((res) => {
-        setUser(res?.data);
+        setAgent(res?.data);
         return res;
       })
       .catch((err) => {
@@ -79,9 +77,16 @@ const AgentProfile = ({ userData }) => {
         const error = JSON.parse(stringErr);
         setError(error);
       });
+  };
+
+  useEffect(() => {
+    setLoading(false);
+    if (agent == null) {
+      getProfileAgentById(uid);
+    }
   }, [uid]);
 
-  console.log('user', user);
+  console.log('agent', agent);
 
   return (
     <>
@@ -90,12 +95,12 @@ const AgentProfile = ({ userData }) => {
         <meta property="og:url" content={`${BASE_PATH}${uid}`} />
         <meta property="og:type" content="website" />
         <meta property="fb:app_id" content="your fb id" />
-        <meta property="og:title" content={`${user?.firstName} ${user?.lastName}`} />
+        <meta property="og:title" content={`${agent?.firstName} ${agent?.lastName}`} />
         <meta name="twitter:card" content="summary" />
         <meta
           property="og:description"
           style={{ textTransform: 'capitalize' }}
-          content={`Properties For Rent & Sell by ${user?.firstName} ${user?.lastName}`}
+          content={`Properties For Rent & Sell by ${agent?.firstName} ${agent?.lastName}`}
         />
         <meta property="og:image" content={userData?.photo} />
       </Head>
@@ -172,7 +177,7 @@ const AgentProfile = ({ userData }) => {
                               >
                                 <Avatar
                                   alt="User 1"
-                                  src={user?.photo}
+                                  src={agent?.photo}
                                   sx={{
                                     borderRadius: '16px',
                                     margin: '5px auto 0',
@@ -189,7 +194,7 @@ const AgentProfile = ({ userData }) => {
 
                               <Stack sx={{ pt: 3 }} direction="column" justifyContent={matchDownLG ? 'center' : 'start'}>
                                 <Typography variant="h3" color="main" sx={{ color: 'white', textTransform: 'capitalize' }}>
-                                  {user?.firstName} {user?.lastName}
+                                  {agent?.firstName} {agent?.lastName}
                                 </Typography>
                                 <Typography variant="subtitle2" color="main" sx={{ color: 'white', pt: 1 }}>
                                   One Dream Legacy
@@ -199,19 +204,19 @@ const AgentProfile = ({ userData }) => {
                                     <Link href="https://codedthemes.com/" target="_blank" underline="hover">
                                       <PublicTwoToneIcon color="secondary" />
                                     </Link>
-                                    <Link href={`${user?.instagram}`} target="_blank" underline="hover">
+                                    <Link href={`${agent?.instagram}`} target="_blank" underline="hover">
                                       <InstagramIcon color="secondary" />
                                     </Link>
-                                    <Link href={`${user?.facebook}`} target="_blank" underline="hover">
+                                    <Link href={`${agent?.facebook}`} target="_blank" underline="hover">
                                       <FacebookIcon color="secondary" />
                                     </Link>
-                                    <Link href={`${user?.linkedin}`} target="_blank" underline="hover">
+                                    <Link href={`${agent?.linkedin}`} target="_blank" underline="hover">
                                       <LinkedInIcon color="secondary" />
                                     </Link>
-                                    <Link href={`${user?.youtube}`} target="_blank" underline="hover">
+                                    <Link href={`${agent?.youtube}`} target="_blank" underline="hover">
                                       <YouTubeIcon color="secondary" />
                                     </Link>
-                                    <Link href={`${user?.tiktok}`} target="_blank" underline="hover">
+                                    <Link href={`${agent?.tiktok}`} target="_blank" underline="hover">
                                       <LinkedInIcon color="secondary" />
                                     </Link>
                                   </Stack>
