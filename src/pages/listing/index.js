@@ -80,15 +80,15 @@ function stableSort(array, comparator) {
 // table header options
 const headCells = [
   {
-    id: 'id',
+    id: 'title ',
     numeric: true,
-    label: '#',
+    label: 'Title',
     align: 'center'
   },
   {
     id: 'name',
-    numeric: false,
-    label: 'Product Name',
+    numeric: true,
+    label: 'Price',
     align: 'left'
   },
   {
