@@ -237,7 +237,7 @@ const initials = {
   bedrooms: 10,
   bathrooms: '1',
   floorRange: '1',
-  realtor: 2,
+  realtor: 2
 
   // featureImage: undefined,
   // photo_1: undefined,
@@ -292,7 +292,7 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
         phone,
         location,
         lat,
-        lon,
+        lon
         // featureImage,
         // photo_1,
         // photo_2,
@@ -334,7 +334,7 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
         location: location,
 
         lat: lat,
-        lon: lon,
+        lon: lon
         // featureImage: featureImage,
         // photo_1: photo_1,
         // photo_2: photo_2,
