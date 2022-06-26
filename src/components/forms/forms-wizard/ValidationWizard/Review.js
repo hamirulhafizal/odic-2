@@ -80,7 +80,7 @@ export default function Review({ shippingData, imageProperty }) {
     if (imageProperty !== undefined || imageProperty !== null) {
       preViewImage(imageProperty);
     }
-  }, [imgE]);
+  }, [imgE, imageProperty]);
 
   return (
     <>

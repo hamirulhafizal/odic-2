@@ -84,7 +84,7 @@ const AgentProfile = ({ userData }) => {
     if (agent == null) {
       getProfileAgentById(uid);
     }
-  }, [uid]);
+  }, [uid, agent]);
 
   console.log('agent', agent);
 

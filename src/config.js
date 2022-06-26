@@ -29,7 +29,7 @@ export const BASE_PATH = '/';
 
 export const DASHBOARD_PATH = '/dashboard';
 
-export const BACKEND_PATH = 'http://157.230.254.220';
+export const BACKEND_PATH = 'https://onedream.dynamicdigital.guru';
 // export const BACKEND_PATH = 'https://agent-inventory.herokuapp.com';
 
 const config = {

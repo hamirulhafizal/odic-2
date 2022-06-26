@@ -51,7 +51,7 @@ const CardProperty = () => {
           <CardMedia
             sx={{ width: '-webkit-fill-available' }}
             component="img"
-            image={`https://mui.com/static/images/cards/live-from-space.jpg`}
+            image={`https://listing.hoom.my/uploads/6402/feature/27fcd636555d7d67268746db8525f30f.jpeg`}
             alt="Live from space album cover"
           />
 
