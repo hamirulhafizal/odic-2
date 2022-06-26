@@ -238,6 +238,22 @@ const initials = {
   bathrooms: '1',
   floorRange: '1',
   realtor: 2
+<<<<<<< HEAD
+=======
+
+  // featureImage: undefined,
+  // photo_1: undefined,
+  // photo_2: undefined,
+  // photo_3: undefined,
+  // photo_4: undefined,
+  // photo_5: undefined,
+  // photo_6: undefined,
+  // photo_7: undefined,
+  // photo_8: undefined,
+  // photo_9: undefined,
+  // photo_10: undefined,
+  // video: undefined
+>>>>>>> d22e467384b362aad15d7979310a75f1cc41b15a
 };
 
 const validationSchema = yup.object({
@@ -309,6 +325,21 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
         location: location,
         lat: lat,
         lon: lon
+<<<<<<< HEAD
+=======
+        // featureImage: featureImage,
+        // photo_1: photo_1,
+        // photo_2: photo_2,
+        // photo_3: photo_3,
+        // photo_4: photo_4,
+        // photo_5: photo_5,
+        // photo_6: photo_6,
+        // photo_7: photo_7,
+        // photo_8: photo_8,
+        // photo_9: photo_9,
+        // photo_10: photo_10,
+        // video: video
+>>>>>>> d22e467384b362aad15d7979310a75f1cc41b15a
       });
       handleNext();
     }
