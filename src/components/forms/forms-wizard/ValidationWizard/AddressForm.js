@@ -314,6 +314,8 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
     }
   });
 
+  console.log('user', user);
+
   return (
     <>
       <form onSubmit={formik.handleSubmit} id="validation-forms">

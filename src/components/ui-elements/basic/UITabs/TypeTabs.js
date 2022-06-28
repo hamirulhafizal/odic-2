@@ -64,9 +64,6 @@ export default function TypeTabs({ username, agentData }) {
     setValue(newValue);
   };
 
-  console.log('agentData?.inventories', agentData?.inventories);
-  console.log('agentData', agentData);
-
   return (
     <>
       <Tabs

@@ -77,7 +77,6 @@ export function getProducts(user_name) {
   return async () => {
     try {
       const response = getAllListing(user_name).then((res) => {
-        console.log('res===>', res);
         dispatch(slice.actions.getProductsSuccess(res));
       });
       return response;

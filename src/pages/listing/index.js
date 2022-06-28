@@ -270,7 +270,7 @@ const Listing = () => {
   };
 
   React.useEffect(() => {
-    setRows(products);
+    setRows(products['inventories']);
   }, [products]);
 
   React.useEffect(() => {
@@ -359,9 +359,9 @@ const Listing = () => {
   };
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows?.length) : 0;
 
-  console.log('products', products);
+  console.log('products', products['inventories']);
 
   return (
     <MainCard title="Product List" content={false} contentSX={{ p: 0 }}>
@@ -402,7 +402,7 @@ const Listing = () => {
         </Grid>
       </CardContent>
 
-      {products.length == 0 ? (
+      {products?.length == 0 ? (
         'No Item Found'
       ) : (
         <>
@@ -414,12 +414,12 @@ const Listing = () => {
                 orderBy={orderBy}
                 onSelectAllClick={handleSelectAllClick}
                 onRequestSort={handleRequestSort}
-                rowCount={rows.length}
+                rowCount={rows?.length}
                 theme={theme}
                 selected={selected}
               />
               <TableBody>
-                {rows.map((row, index) => {
+                {rows?.map((row, index) => {
                   if (typeof row === 'number') return null;
                   const isItemSelected = isSelected(row.title);
                   const labelId = `enhanced-table-checkbox-${index}`;
@@ -618,7 +618,7 @@ const Listing = () => {
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={rows.length}
+            count={rows?.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

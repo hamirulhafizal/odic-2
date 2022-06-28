@@ -52,9 +52,68 @@ const SecondWrapper = styled('div')(({ theme }) => ({
   // background: '#00000057',
 }));
 
+// export async function getStaticPaths() {
+//   var baseURL = "http://" + process.env.basePath + "data/webfile.content.json";
+//   var myURL = new URL(
+//     "https://virtualfair.starproperty.my/data/webfile.content.json",
+//     baseURL
+//   );
+
+//   const response1 = await fetch(myURL, {
+//     headers: {
+//       "Content-Type": "application/json",
+//       Accept: "application/json",
+//     },
+//   });
+
+//   const responseJson = await response1?.json();
+
+//   return {
+//     paths: responseJson?.map((item) => {
+//       return {
+//         params: {
+//           id: ${item?.locationName},
+//         },
+//       };
+//     }),
+
+//     fallback: false,
+//   };
+// };
+
+// export async function getStaticProps({ params }) {
+//   // fetch single post detail
+
+//   const response = await fetch(
+//     https://jsonplaceholder.typicode.com/posts/${params.id}
+//   );
+//   const post = await response.json();
+//   return {
+//     props: post,
+//   }
+// };
+
 // ==============================|| SOCIAL PROFILE ||============================== //
 
-const AgentProfile = ({ userData }) => {
+export const getServerSideProps = async (context) => {
+  const uids = context.params.uid; // Get ID from slug `/book/1`
+
+  let userData = null;
+
+  await fetch(`${BACKEND_PATH}/api/v1/profile/${uids}`)
+    .then((response) => response.json())
+    .then((json) => {
+      userData = json;
+    });
+
+  return {
+    props: {
+      userData
+    }
+  };
+};
+
+export default function AgentProfile({ userData }) {
   const theme = useTheme();
   const [isLoading, setLoading] = useState(true);
   const [agent, setAgent] = useState();
@@ -86,6 +145,8 @@ const AgentProfile = ({ userData }) => {
     }
   }, [uid, agent]);
 
+  console.log('userData', userData);
+
   return (
     <>
       <Head>
@@ -93,12 +154,12 @@ const AgentProfile = ({ userData }) => {
         <meta property="og:url" content={`${BASE_PATH}${uid}`} />
         <meta property="og:type" content="website" />
         <meta property="fb:app_id" content="your fb id" />
-        <meta property="og:title" content={`${agent?.firstName} ${agent?.lastName}`} />
+        <meta property="og:title" content={`${userData?.firstName} ${userData?.lastName}`} />
         <meta name="twitter:card" content="summary" />
         <meta
           property="og:description"
           style={{ textTransform: 'capitalize' }}
-          content={`Properties For Rent & Sell by ${agent?.firstName} ${agent?.lastName}`}
+          content={`Properties For Rent & Sell by ${userData?.firstName} ${userData?.lastName}`}
         />
         <meta property="og:image" content={userData?.photo} />
       </Head>
@@ -256,24 +317,4 @@ const AgentProfile = ({ userData }) => {
       </SecondWrapper>
     </>
   );
-};
-
-export default AgentProfile;
-
-export const getServerSideProps = async (context) => {
-  const uids = context.params.uid; // Get ID from slug `/book/1`
-
-  let userData = null;
-
-  await fetch(`${BACKEND_PATH}/api/v1/profile/${uids}`)
-    .then((response) => response.json())
-    .then((json) => {
-      userData = json;
-    });
-
-  return {
-    props: {
-      userData
-    }
-  };
-};
+}

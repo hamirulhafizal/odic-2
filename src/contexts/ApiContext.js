@@ -83,7 +83,7 @@ export const ApiProvider = ({ children }) => {
       })
       .then(async (res) => {
         if (typeof window !== 'undefined') {
-          axiosInstance.defaults.headers['Authorization'] = 'JWT ' + localStorage.getItem('access');
+          axiosInstance.defaults.headers['Authorization'] = 'Bearer ' + localStorage.getItem('access');
           localStorage.setItem('access', res?.data?.access);
           localStorage.setItem('refresh', res?.data?.refresh);
         }
@@ -97,7 +97,7 @@ export const ApiProvider = ({ children }) => {
           }
         });
 
-        history.push('/dashboard');
+        history.push('/listing');
 
         return res;
       });
@@ -118,7 +118,7 @@ export const ApiProvider = ({ children }) => {
 
         // login(email, password, user_name);
         // history.push('/login');
-        
+
         return res;
       })
       .catch((err) => {

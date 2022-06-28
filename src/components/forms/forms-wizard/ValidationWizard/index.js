@@ -75,10 +75,7 @@ const ValidationWizard = () => {
 
       Object.keys(propertyObj).map(function (key, index) {
         form_data.append(key, propertyObj[key]);
-        console.log('form_data-->', form_data);
       });
-
-      console.log('form_data', form_data);
 
       setProduct(form_data);
     }

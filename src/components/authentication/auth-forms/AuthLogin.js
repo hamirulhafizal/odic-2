@@ -57,8 +57,6 @@ const JWTLogin = ({ loginProp, ...others }) => {
     event.preventDefault();
   };
 
-  console.log('isLoading', isLoading);
-
   return (
     <Formik
       initialValues={{

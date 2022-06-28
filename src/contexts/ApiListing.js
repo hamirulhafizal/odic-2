@@ -18,8 +18,9 @@ const setProduct = async (propertyObj) => {
 };
 
 const getAllListing = async (user_name) => {
-  const respond = await axios.get(`${BACKEND_PATH}/api/v1/inventory/${user_name}`).then((res) => {
-    return res.data.results;
+  const respond = await axios.get(`${BACKEND_PATH}/api/v1/profile/${user_name}`).then((res) => {
+    console.log('res', res);
+    return res.data;
   });
   return respond;
 };
@@ -33,14 +34,12 @@ const getListingById = async (id) => {
 };
 
 const getLisitingAgentById = async (id) => {
-  const respond = await axios.get(`${BACKEND_PATH}/api/v1/inventory/${id}`).then((res) => {
+  const respond = await axios.get(`${BACKEND_PATH}/api/v1/profile/${id}`).then((res) => {
     return res.data;
   });
 
   return respond;
 };
-
-
 
 const getProfileAgentById = async (uid) => {
   await axios
