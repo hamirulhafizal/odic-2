@@ -52,81 +52,19 @@ const SecondWrapper = styled('div')(({ theme }) => ({
   // background: '#00000057',
 }));
 
-// export async function getStaticPaths() {
-//   var baseURL = "http://" + process.env.basePath + "data/webfile.content.json";
-//   var myURL = new URL(
-//     "https://virtualfair.starproperty.my/data/webfile.content.json",
-//     baseURL
-//   );
-
-//   const response1 = await fetch(myURL, {
-//     headers: {
-//       "Content-Type": "application/json",
-//       Accept: "application/json",
-//     },
-//   });
-
-//   const responseJson = await response1?.json();
-
-//   return {
-//     paths: responseJson?.map((item) => {
-//       return {
-//         params: {
-//           id: ${item?.locationName},
-//         },
-//       };
-//     }),
-
-//     fallback: false,
-//   };
-// };
-
-// export async function getStaticProps({ params }) {
-//   // fetch single post detail
-
-//   const response = await fetch(
-//     https://jsonplaceholder.typicode.com/posts/${params.id}
-//   );
-//   const post = await response.json();
-//   return {
-//     props: post,
-//   }
-// };
-
-// ==============================|| SOCIAL PROFILE ||============================== //
-
-export const getServerSideProps = async (context) => {
-  const uids = context.params.uid; // Get ID from slug `/book/1`
-
-  let userData = null;
-
-  await fetch(`${BACKEND_PATH}/api/v1/profile/${uids}`)
-    .then((response) => response.json())
-    .then((json) => {
-      userData = json;
-    });
-
-  return {
-    props: {
-      userData
-    }
-  };
-};
-
-export default function AgentProfile({ userData }) {
+function AgentProfile({ userData, params }) {
   const theme = useTheme();
   const [isLoading, setLoading] = useState(true);
   const [agent, setAgent] = useState();
   const [error, setError] = useState();
   const router = useRouter();
-  const { uid } = router.query;
 
   const matchDownLG = useMediaQuery(theme.breakpoints.down('lg'));
   const matchDownMD = useMediaQuery(theme.breakpoints.down('md'));
 
-  const getProfileAgentById = async (uid) => {
+  const getProfileAgentById = async (id) => {
     await axios
-      .get(`${BACKEND_PATH}/api/v1/profile/${uid}`)
+      .get(`${BACKEND_PATH}/api/v1/profile/${id}`)
       .then((res) => {
         setAgent(res?.data);
         return res;
@@ -141,9 +79,9 @@ export default function AgentProfile({ userData }) {
   useEffect(() => {
     setLoading(false);
     if (agent == null) {
-      getProfileAgentById(uid);
+      getProfileAgentById(params.uid);
     }
-  }, [uid, agent]);
+  }, [params.uid, agent]);
 
   console.log('userData', userData);
 
@@ -151,17 +89,18 @@ export default function AgentProfile({ userData }) {
     <>
       <Head>
         <title>{`ONE DREAM LEGACY | List all type properties at One Dream Property`}</title>
-        <meta property="og:url" content={`${BASE_PATH}${uid}`} />
+        <meta property="og:image" content={userData?.photo} />
+        <meta property="og:title" content={`${userData?.firstName} ${userData?.lastName}`} />
+
+        <meta property="og:url" content={`${BASE_PATH}${params.uid}`} />
         <meta property="og:type" content="website" />
         <meta property="fb:app_id" content="your fb id" />
-        <meta property="og:title" content={`${userData?.firstName} ${userData?.lastName}`} />
         <meta name="twitter:card" content="summary" />
         <meta
           property="og:description"
           style={{ textTransform: 'capitalize' }}
           content={`Properties For Rent & Sell by ${userData?.firstName} ${userData?.lastName}`}
         />
-        <meta property="og:image" content={userData?.photo} />
       </Head>
 
       <HeaderWrapper id="home">
@@ -304,7 +243,7 @@ export default function AgentProfile({ userData }) {
                     damping: 30
                   }}
                 >
-                  {agent !== undefined && <TypeTabs agentData={agent} username={`${uid}`} />}
+                  {agent !== undefined && <TypeTabs agentData={agent} username={`${params.uid}`} />}
                 </motion.div>
               </Grid>
             </Grid>
@@ -318,3 +257,22 @@ export default function AgentProfile({ userData }) {
     </>
   );
 }
+
+export default AgentProfile;
+
+export const getServerSideProps = async ({ params }) => {
+  let userData = null;
+
+  await fetch(`${BACKEND_PATH}/api/v1/profile/${params.uid}`)
+    .then((response) => response.json())
+    .then((json) => {
+      userData = json;
+    });
+
+  return {
+    props: {
+      userData,
+      params
+    }
+  };
+};
