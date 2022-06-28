@@ -20,12 +20,16 @@ import PoolIcon from '@mui/icons-material/Pool';
 import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
 import StoreMallDirectoryIcon from '@mui/icons-material/StoreMallDirectory';
 import MosqueIcon from '@mui/icons-material/Mosque';
+import { useRouter } from 'next/router';
 
-const CardProperty = () => {
+const CardProperty = ({ itemData, agentData }) => {
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
   const matchDownLG = useMediaQuery(theme.breakpoints.down('lg'));
   const { user } = useAuth();
+  const router = useRouter();
+
+  const { photo, phone, firstName, lastName } = agentData;
 
   return (
     <>
@@ -64,7 +68,7 @@ const CardProperty = () => {
               >
                 <Avatar
                   alt="User 1"
-                  src={user?.photo}
+                  src={user?.photo || photo}
                   sx={{
                     borderRadius: '16px',
                     margin: '5px auto 0',
@@ -79,7 +83,7 @@ const CardProperty = () => {
 
             <Stack direction="column" sx={{ pl: 2, pt: { xs: 3 } }}>
               <Typography variant="h4" color="main" sx={{ textTransform: 'capitalize' }}>
-                {user?.firstName} {user?.lastName}
+                {user?.firstName || firstName} {user?.lastName || lastName}
               </Typography>
               <Typography variant="subtitle2" color="secondary">
                 Posted On 14 April 2022
@@ -92,10 +96,10 @@ const CardProperty = () => {
           <CardContent sx={{ flex: '1 0 auto', p: { xs: 0, md: 2 }, pt: { xs: 2 } }}>
             <Stack direction="column" justifyContent={matchDownLG ? 'center' : 'start'}>
               <Typography variant="h3" color="main" sx={{ textTransform: 'capitalize' }}>
-                ARC Austin Hill Taman Daya Serviced Apartment For Rent
+                {itemData?.title}
               </Typography>
               <Typography variant="h4" color="secondary" sx={{ pt: 2 }}>
-                RM 300, 000
+                RM {itemData?.price}
               </Typography>
 
               <List>
@@ -168,8 +172,16 @@ const CardProperty = () => {
           <Divider sx={{ width: '90%', position: 'relative', left: '2%' }} />
 
           <CardActions sx={{ p: 0, py: 2, pl: 2 }}>
-            <Button size="medium" sx={{ backgroundColor: '#28933F', color: 'white' }}>
-              Whatsapp
+            <Button
+              // onClick={() => {
+              //   router.push(`wa.me/${phone}`);
+              // }}
+              size="medium"
+              sx={{ backgroundColor: '#28933F', color: 'white' }}
+            >
+              <a target="_blank" href={`wa.me/${phone}`} rel="noopener noreferrer">
+                Whatsapp
+              </a>
             </Button>
             <Button size="medium" color="secondary" variant="contained" sx={{ color: 'white' }}>
               Make Offer

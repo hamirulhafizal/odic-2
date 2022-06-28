@@ -86,8 +86,6 @@ const AgentProfile = ({ userData }) => {
     }
   }, [uid, agent]);
 
-  console.log('agent', agent);
-
   return (
     <>
       <Head>
@@ -245,7 +243,7 @@ const AgentProfile = ({ userData }) => {
                     damping: 30
                   }}
                 >
-                  <TypeTabs username={`${uid}`} />
+                  {agent !== undefined && <TypeTabs agentData={agent} username={`${uid}`} />}
                 </motion.div>
               </Grid>
             </Grid>

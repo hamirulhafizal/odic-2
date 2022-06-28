@@ -56,13 +56,16 @@ function a11yProps(index) {
 
 // ================================|| UI TABS - COLOR ||================================ //
 
-export default function TypeTabs({ username }) {
+export default function TypeTabs({ username, agentData }) {
   const theme = useTheme();
 
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  console.log('agentData?.inventories', agentData?.inventories);
+  console.log('agentData', agentData);
 
   return (
     <>
@@ -111,7 +114,7 @@ export default function TypeTabs({ username }) {
           icon={<HotelTwoToneIcon sx={{ fontSize: '1.3rem' }} />}
           label={
             <>
-              Short stay{' '}
+              Sell{' '}
               <Chip
                 label="10"
                 size="small"
@@ -123,11 +126,14 @@ export default function TypeTabs({ username }) {
         />
       </Tabs>
       <TabPanel value={value} index={0}>
-        <CardProperty />
-        <CardProperty />
+        {agentData?.inventories?.map((element, index) => {
+          return <CardProperty agentData={agentData} itemData={element} key={index} />;
+        })}
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <CardProperty />
+        {/* {inventories?.map((item, index) => {
+          <CardProperty avatar={photo} itemData={item} />;
+        })} */}
       </TabPanel>
       <TabPanel value={value} index={2}>
         <CardProperty />
