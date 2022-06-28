@@ -110,16 +110,22 @@ export const ApiProvider = ({ children }) => {
       .post(`${BACKEND_PATH}/api/v1/user/register`, {
         email,
         user_name,
+        first_name,
         password
       })
       .then((res) => {
-        console.log(res);
+        console.log('res->', res);
 
-        login(email, password, user_name);
-
-        history.push('/login');
+        // login(email, password, user_name);
+        // history.push('/login');
+        
         return res;
+      })
+      .catch((err) => {
+        console.log('err-->', err);
+        return err;
       });
+    return response;
   };
 
   const logout = async () => {

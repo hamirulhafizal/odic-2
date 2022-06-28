@@ -73,12 +73,14 @@ export default slice.reducer;
 
 // ----------------------------------------------------------------------
 
-export function getProducts(paging) {
+export function getProducts(user_name) {
   return async () => {
     try {
-      const response = getAllListing(paging).then((res) => {
+      const response = getAllListing(user_name).then((res) => {
+        console.log('res===>', res);
         dispatch(slice.actions.getProductsSuccess(res));
       });
+      return response;
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }

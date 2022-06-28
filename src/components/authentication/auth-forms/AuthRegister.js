@@ -93,27 +93,32 @@ const JWTRegister = ({ ...others }) => {
         })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
-            await register(values.email, values.password, values.firstName, values.lastName).then((res) => {
-              if (scriptedRef.current) {
-                setStatus({ success: true });
-                setSubmitting(false);
-                dispatch(
-                  openSnackbar({
-                    open: true,
-                    message: 'Your registration has been successfully completed.',
-                    variant: 'alert',
-                    alert: {
-                      color: 'success'
-                    },
-                    close: false
-                  })
-                );
+            await register(values.email, values.password, values.firstName, values.lastName)
+              .then((res) => {
+                console.log('res', res);
+                // if (scriptedRef.current) {
+                //   setStatus({ success: true });
+                //   setSubmitting(false);
+                //   dispatch(
+                //     openSnackbar({
+                //       open: true,
+                //       message: 'Your registration has been successfully completed.',
+                //       variant: 'alert',
+                //       alert: {
+                //         color: 'success'
+                //       },
+                //       close: false
+                //     })
+                //   );
 
-                setTimeout(() => {
-                  router.push('/login');
-                }, 1500);
-              }
-            });
+                //   setTimeout(() => {
+                //     router.push('/login');
+                //   }, 1500);
+                // }
+              })
+              .catch((err) => {
+                console.log('err', err);
+              });
           } catch (err) {
             if (scriptedRef.current === false) {
               setStatus({ success: false });

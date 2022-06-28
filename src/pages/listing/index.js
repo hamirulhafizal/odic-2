@@ -50,6 +50,7 @@ import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
 import { Button } from '@mui/material';
 import { useRouter } from 'next/router';
 import { getAllListing } from 'contexts/ApiListing';
+import useAuth from 'hooks/useAuth';
 
 const prodImage = '/assets/images/e-commerce';
 
@@ -254,6 +255,8 @@ const Listing = () => {
   const [rows, setRows] = React.useState([]);
   const { products } = useSelector((state) => state.product);
 
+  const { user } = useAuth();
+
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const matchDownSM = useMediaQuery(theme.breakpoints.down('sm'));
@@ -271,7 +274,7 @@ const Listing = () => {
   }, [products]);
 
   React.useEffect(() => {
-    dispatch(getProducts(paging));
+    dispatch(getProducts(user?.user_name));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [paging]);
 
@@ -399,114 +402,117 @@ const Listing = () => {
         </Grid>
       </CardContent>
 
-      {/* table */}
-      <TableContainer>
-        <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
-          <EnhancedTableHead
-            numSelected={selected.length}
-            order={order}
-            orderBy={orderBy}
-            onSelectAllClick={handleSelectAllClick}
-            onRequestSort={handleRequestSort}
-            rowCount={rows.length}
-            theme={theme}
-            selected={selected}
-          />
-          <TableBody>
-            {rows.map((row, index) => {
-              if (typeof row === 'number') return null;
-              const isItemSelected = isSelected(row.title);
-              const labelId = `enhanced-table-checkbox-${index}`;
+      {products.length == 0 ? (
+        'No Item Found'
+      ) : (
+        <>
+          <TableContainer>
+            <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
+              <EnhancedTableHead
+                numSelected={selected.length}
+                order={order}
+                orderBy={orderBy}
+                onSelectAllClick={handleSelectAllClick}
+                onRequestSort={handleRequestSort}
+                rowCount={rows.length}
+                theme={theme}
+                selected={selected}
+              />
+              <TableBody>
+                {rows.map((row, index) => {
+                  if (typeof row === 'number') return null;
+                  const isItemSelected = isSelected(row.title);
+                  const labelId = `enhanced-table-checkbox-${index}`;
 
-              return (
-                <TableRow hover role="checkbox" aria-checked={isItemSelected} tabIndex={-1} key={index} selected={isItemSelected}>
-                  <TableCell align="center" component="th" id={labelId} scope="row" sx={{ cursor: 'pointer' }}>
-                    <Avatar
-                      component={Link}
-                      href={`/listing/${row.id}`}
-                      src={row.photo_1 && `${row.photo_1}`}
-                      size="md"
-                      variant="rounded"
-                    />
-                  </TableCell>
-                  <TableCell component="th" id={labelId} scope="row" sx={{ cursor: 'pointer' }}>
-                    <Typography
-                      component={Link}
-                      href={`/listing/${row.id}`}
-                      variant="subtitle1"
-                      sx={{
-                        color: theme.palette.mode === 'dark' ? theme.palette.grey[600] : 'grey.900',
-                        textDecoration: 'none'
-                      }}
-                    >
-                      {row.title}
-                    </Typography>
-                  </TableCell>
-                  {/* <TableCell>{format(new Date(row.created), 'E, MMM d yyyy')}</TableCell> */}
-                  <TableCell align="center">RM {row.price}</TableCell>
-                  <TableCell align="center">{row.location}</TableCell>
+                  return (
+                    <TableRow hover role="checkbox" aria-checked={isItemSelected} tabIndex={-1} key={index} selected={isItemSelected}>
+                      <TableCell align="center" component="th" id={labelId} scope="row" sx={{ cursor: 'pointer' }}>
+                        <Avatar
+                          component={Link}
+                          href={`/listing/${row.id}`}
+                          src={row.photo_1 && `${row.photo_1}`}
+                          size="md"
+                          variant="rounded"
+                        />
+                      </TableCell>
+                      <TableCell component="th" id={labelId} scope="row" sx={{ cursor: 'pointer' }}>
+                        <Typography
+                          component={Link}
+                          href={`/listing/${row.id}`}
+                          variant="subtitle1"
+                          sx={{
+                            color: theme.palette.mode === 'dark' ? theme.palette.grey[600] : 'grey.900',
+                            textDecoration: 'none'
+                          }}
+                        >
+                          {row.title}
+                        </Typography>
+                      </TableCell>
+                      {/* <TableCell>{format(new Date(row.created), 'E, MMM d yyyy')}</TableCell> */}
+                      <TableCell align="center">RM {row.price}</TableCell>
+                      <TableCell align="center">{row.location}</TableCell>
 
-                  <TableCell align="center">{propertyTypeData(row.propertyType)}</TableCell>
-                  <TableCell align="center">{row.bathrooms}</TableCell>
-                  <TableCell align="center">{row.bedrooms}</TableCell>
+                      <TableCell align="center">{propertyTypeData(row.propertyType)}</TableCell>
+                      <TableCell align="center">{row.bathrooms}</TableCell>
+                      <TableCell align="center">{row.bedrooms}</TableCell>
 
-                  <TableCell align="center">
-                    <Chip
-                      size="small"
-                      label={row.status ? 'Active' : 'Active'}
-                      chipcolor={row.status ? 'success' : 'success'}
-                      sx={{ borderRadius: '4px', textTransform: 'capitalize' }}
-                    />
-                  </TableCell>
-                  <TableCell align="center" sx={{ pr: 3 }}>
-                    <IconButton onClick={handleMenuClick} size="large">
-                      <MoreHorizOutlinedIcon
-                        fontSize="small"
-                        aria-controls="menu-popular-card-1"
-                        aria-haspopup="true"
-                        sx={{ color: 'grey.500' }}
-                      />
-                    </IconButton>
-                    <Menu
-                      id="menu-popular-card-1"
-                      anchorEl={anchorEl}
-                      keepMounted
-                      open={Boolean(anchorEl)}
-                      onClose={handleClose}
-                      variant="selectedMenu"
-                      anchorOrigin={{
-                        vertical: 'bottom',
-                        horizontal: 'right'
-                      }}
-                      transformOrigin={{
-                        vertical: 'top',
-                        horizontal: 'right'
-                      }}
-                      sx={{
-                        '& .MuiMenu-paper': {
-                          boxShadow: theme.customShadows.z1
-                        }
-                      }}
-                    >
-                      <MenuItem onClick={handleClose}> Edit</MenuItem>
-                      <MenuItem onClick={handleClose}> Delete</MenuItem>
-                    </Menu>
-                  </TableCell>
-                </TableRow>
-              );
-            })}
+                      <TableCell align="center">
+                        <Chip
+                          size="small"
+                          label={row.status ? 'Active' : 'Active'}
+                          chipcolor={row.status ? 'success' : 'success'}
+                          sx={{ borderRadius: '4px', textTransform: 'capitalize' }}
+                        />
+                      </TableCell>
+                      <TableCell align="center" sx={{ pr: 3 }}>
+                        <IconButton onClick={handleMenuClick} size="large">
+                          <MoreHorizOutlinedIcon
+                            fontSize="small"
+                            aria-controls="menu-popular-card-1"
+                            aria-haspopup="true"
+                            sx={{ color: 'grey.500' }}
+                          />
+                        </IconButton>
+                        <Menu
+                          id="menu-popular-card-1"
+                          anchorEl={anchorEl}
+                          keepMounted
+                          open={Boolean(anchorEl)}
+                          onClose={handleClose}
+                          variant="selectedMenu"
+                          anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'right'
+                          }}
+                          transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right'
+                          }}
+                          sx={{
+                            '& .MuiMenu-paper': {
+                              boxShadow: theme.customShadows.z1
+                            }
+                          }}
+                        >
+                          <MenuItem onClick={handleClose}> Edit</MenuItem>
+                          <MenuItem onClick={handleClose}> Delete</MenuItem>
+                        </Menu>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
 
-            {emptyRows > 0 && (
-              <TableRow
-                style={{
-                  height: 53 * emptyRows
-                }}
-              >
-                <TableCell colSpan={6} />
-              </TableRow>
-            )}
+                {emptyRows > 0 && (
+                  <TableRow
+                    style={{
+                      height: 53 * emptyRows
+                    }}
+                  >
+                    <TableCell colSpan={6} />
+                  </TableRow>
+                )}
 
-            {/* {stableSort(rows, getComparator(order, orderBy))
+                {/* {stableSort(rows, getComparator(order, orderBy))
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row, index) => {
                 if (typeof row === 'number') return null;
@@ -605,20 +611,21 @@ const Listing = () => {
                 <TableCell colSpan={6} />
               </TableRow>
             )} */}
-          </TableBody>
-        </Table>
-      </TableContainer>
+              </TableBody>
+            </Table>
+          </TableContainer>
 
-      {/* table pagination */}
-      <TablePagination
-        rowsPerPageOptions={[5, 10, 25]}
-        component="div"
-        count={rows.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={rows.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </>
+      )}
     </MainCard>
   );
 };
