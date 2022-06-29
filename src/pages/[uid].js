@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import { useRouter, withRouter } from 'next/router';
 // material-ui
 import { useTheme } from '@mui/material/styles';
 import { Card, CardContent, Grid, Stack, Typography, useMediaQuery, Badge } from '@mui/material';
@@ -34,6 +34,24 @@ import VerifiedIcon from '@mui/icons-material/Verified';
 import TypeTabs from 'components/ui-elements/basic/UITabs/TypeTabs';
 import { NextSeo, ProductJsonLd, SocialProfileJsonLd } from 'next-seo';
 import { BASE_PATH } from 'config';
+import { Html } from 'next/document';
+
+// export const getServerSideProps = async ({ params }) => {
+//   let userData = null;
+
+//   await fetch(`${BACKEND_PATH}/api/v1/profile/${params.uid}`)
+//     .then((response) => response.json())
+//     .then((json) => {
+//       userData = json;
+//     });
+
+//   return {
+//     props: {
+//       userData,
+//       params
+//     }
+//   };
+// };
 
 const Cover = '/assets/images/profile/img-profile-bg.png';
 const images1 = '/assets/images/landing/living-room-with-yellow.png';
@@ -52,7 +70,7 @@ const SecondWrapper = styled('div')(({ theme }) => ({
   // background: '#00000057',
 }));
 
-function AgentProfile({ userData, params }) {
+function AgentProfile({ userData }) {
   const theme = useTheme();
   const [isLoading, setLoading] = useState(true);
   const [agent, setAgent] = useState();
@@ -78,10 +96,16 @@ function AgentProfile({ userData, params }) {
 
   useEffect(() => {
     setLoading(false);
-    if (agent == null) {
-      getProfileAgentById(params.uid);
+
+    if (userData !== undefined) {
+      if (agent == null) {
+        getProfileAgentById(userData?.user_name);
+      }
     }
-  }, [params.uid, agent]);
+  }, [agent, userData]);
+
+  const title = document.getElementById('titleMeta').content = userData.firstName
+  console.log('title', title);
 
   console.log('userData', userData);
 
@@ -92,7 +116,7 @@ function AgentProfile({ userData, params }) {
         <meta property="og:image" content={userData?.photo} />
         <meta property="og:title" content={`${userData?.firstName} ${userData?.lastName}`} />
 
-        <meta property="og:url" content={`${BASE_PATH}${params.uid}`} />
+        {/* <meta property="og:url" content={`${BASE_PATH}${uid}`} /> */}
         <meta property="og:type" content="website" />
         <meta property="fb:app_id" content="your fb id" />
         <meta name="twitter:card" content="summary" />
@@ -243,7 +267,7 @@ function AgentProfile({ userData, params }) {
                     damping: 30
                   }}
                 >
-                  {agent !== undefined && <TypeTabs agentData={agent} username={`${params.uid}`} />}
+                  {agent !== undefined && <TypeTabs agentData={agent} username={`${userData?.user_name}`} />}
                 </motion.div>
               </Grid>
             </Grid>
@@ -258,21 +282,20 @@ function AgentProfile({ userData, params }) {
   );
 }
 
-export default AgentProfile;
+AgentProfile.getInitialProps = async (context) => {
+  const uids = context.query.uid; // Get ID from slug `/book/1`
 
-export const getServerSideProps = async ({ params }) => {
-  let userData = null;
-
-  await fetch(`${BACKEND_PATH}/api/v1/profile/${params.uid}`)
+  const userData1 = await fetch(`${BACKEND_PATH}/api/v1/profile/${uids}`)
     .then((response) => response.json())
     .then((json) => {
-      userData = json;
+      return json;
     });
 
+  console.log('userData1-->', userData1);
+
   return {
-    props: {
-      userData,
-      params
-    }
+    userData: userData1
   };
 };
+
+export default AgentProfile;
