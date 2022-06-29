@@ -47,6 +47,8 @@ const JWTRegister = ({ ...others }) => {
   const [showPassword, setShowPassword] = React.useState(false);
   const [checked, setChecked] = React.useState(true);
 
+  const [isLoading, setLoading] = React.useState(false);
+
   const [strength, setStrength] = React.useState(0);
   const [level, setLevel] = React.useState();
   const { register } = useAuth();
@@ -92,43 +94,38 @@ const JWTRegister = ({ ...others }) => {
           password: Yup.string().max(255).required('Password is required')
         })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
+          console.log('values', values);
+          setLoading(true);
           try {
-            await register(values.email, values.password, values.firstName, values.lastName)
-              .then((res) => {
-                console.log('res', res);
-                // if (scriptedRef.current) {
-                //   setStatus({ success: true });
-                //   setSubmitting(false);
-                //   dispatch(
-                //     openSnackbar({
-                //       open: true,
-                //       message: 'Your registration has been successfully completed.',
-                //       variant: 'alert',
-                //       alert: {
-                //         color: 'success'
-                //       },
-                //       close: false
-                //     })
-                //   );
+            debugger;
+            await register(values.email, values.password, values.firstName, values.lastName).then((res) => {
+              // console.log('res--->', res);
+              if (scriptedRef.current) {
+                setStatus({ success: true });
+                setSubmitting(false);
+                // dispatch(
+                //   openSnackbar({
+                //     open: true,
+                //     message: 'Your registration has been successfully completed.',
+                //     variant: 'alert',
+                //     alert: {
+                //       color: 'success'
+                //     },
+                //     close: false
+                //   })
+                // );
 
-                //   setTimeout(() => {
-                //     router.push('/login');
-                //   }, 1500);
-                // }
-              })
-              .catch((err) => {
-                console.log('err', err);
-              });
+                // setTimeout(() => {
+                //   router.push('/login');
+                // }, 1500);
+              }
+            });
           } catch (err) {
-            if (scriptedRef.current === false) {
-              setStatus({ success: false });
-              if (err.password[0] !== null) {
-                setErrors({ submit: 'try stronger password' });
-              }
-              if (err.email[0] !== null) {
-                setErrors({ submit: 'email must be unique' });
-              }
+            if (scriptedRef.current) {
+              setStatus({ success: false, msg: 'fail' });
+              setErrors({ submit: err.message });
               setSubmitting(false);
+              setLoading(false);
             }
           }
         }}

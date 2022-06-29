@@ -81,11 +81,15 @@ const JWTLogin = ({ loginProp, ...others }) => {
               router.push(`/dashboard`);
             })
             .catch((err) => {
-              console.log('err', err);
+              const errJson = JSON.stringify(err);
+              const errParse = JSON.parse(errJson);
+
               setLoading(false);
+              if (errParse.status == 401) {
+                setErrors({ submit: 'Email not register yet' });
+              }
             });
         } catch (err) {
-          console.error(err);
           if (scriptedRef.current) {
             setStatus({ success: false, msg: 'fail' });
             setErrors({ submit: err.message });

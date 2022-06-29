@@ -63,9 +63,9 @@ export const ApiProvider = ({ children }) => {
           });
         }
       } else {
-        dispatch({
-          type: LOGOUT
-        });
+        // dispatch({
+        //   type: LOGOUT
+        // });
       }
     } catch (err) {
       // console.error(err);
@@ -106,7 +106,7 @@ export const ApiProvider = ({ children }) => {
   const register = async (email, password, first_name, last_name) => {
     // todo: this flow need to be recode as it not verified
     const user_name = first_name + last_name;
-    const response = await axiosInstance
+    await axiosInstance
       .post(`${BACKEND_PATH}/api/v1/user/register`, {
         email,
         user_name,
@@ -114,18 +114,11 @@ export const ApiProvider = ({ children }) => {
         password
       })
       .then((res) => {
-        console.log('res->', res);
-
         // login(email, password, user_name);
         // history.push('/login');
 
         return res;
-      })
-      .catch((err) => {
-        console.log('err-->', err);
-        return err;
       });
-    return response;
   };
 
   const logout = async () => {
