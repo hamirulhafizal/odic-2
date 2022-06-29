@@ -104,10 +104,10 @@ function AgentProfile({ userData }) {
     }
   }, [agent, userData]);
 
-  const title = document.getElementById('titleMeta').content = userData.firstName
-  console.log('title', title);
+  // const title = (document.getElementById('titleMeta').content = userData.firstName);
+ 1 // console.log('title', title);
 
-  console.log('userData', userData);
+  // console.log('userData', userData);
 
   return (
     <>
