@@ -47,6 +47,8 @@ export const ApiProvider = ({ children }) => {
     if (state.user == null) init();
   }, [state.user]);
 
+  console.log('state', state);
+
   const init = () => {
     try {
       const serviceToken = window.localStorage.getItem('access');
@@ -63,9 +65,9 @@ export const ApiProvider = ({ children }) => {
           });
         }
       } else {
-        // dispatch({
-        //   type: LOGOUT
-        // });
+        dispatch({
+          type: LOGOUT
+        });
       }
     } catch (err) {
       // console.error(err);
@@ -104,7 +106,7 @@ export const ApiProvider = ({ children }) => {
   };
 
   const register = async (email, password, first_name, last_name) => {
-    // todo: this flow need to be recode as it not verified
+    // todo: this flow need to be recode as it not verified\
     const user_name = first_name + last_name;
     await axiosInstance
       .post(`${BACKEND_PATH}/api/v1/user/register`, {
@@ -114,11 +116,21 @@ export const ApiProvider = ({ children }) => {
         password
       })
       .then((res) => {
+        debugger;
+
+        console.log('res->', res);
+
         // login(email, password, user_name);
         // history.push('/login');
 
         return res;
+      })
+      .catch((err) => {
+        console.log('err-->', err);
+        history.push('/register');
+        return err;
       });
+    return response;
   };
 
   const logout = async () => {

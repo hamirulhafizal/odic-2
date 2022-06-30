@@ -97,7 +97,6 @@ const JWTRegister = ({ ...others }) => {
           console.log('values', values);
           setLoading(true);
           try {
-            debugger;
             await register(values.email, values.password, values.firstName, values.lastName).then((res) => {
               // console.log('res--->', res);
               if (scriptedRef.current) {

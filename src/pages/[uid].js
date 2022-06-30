@@ -32,9 +32,9 @@ import PublicTwoToneIcon from '@mui/icons-material/PublicTwoTone';
 import VerifiedIcon from '@mui/icons-material/Verified';
 
 import TypeTabs from 'components/ui-elements/basic/UITabs/TypeTabs';
-import { NextSeo, ProductJsonLd, SocialProfileJsonLd } from 'next-seo';
-import { BASE_PATH } from 'config';
-import { Html } from 'next/document';
+// import { NextSeo, ProductJsonLd, SocialProfileJsonLd } from 'next-seo';
+// import { BASE_PATH } from 'config';
+// import { Html } from 'next/document';
 
 // export const getServerSideProps = async ({ params }) => {
 //   let userData = null;
@@ -70,7 +70,7 @@ const SecondWrapper = styled('div')(({ theme }) => ({
   // background: '#00000057',
 }));
 
-function AgentProfile({ userData }) {
+function AgentProfile() {
   const theme = useTheme();
   const [isLoading, setLoading] = useState(true);
   const [agent, setAgent] = useState();
@@ -97,15 +97,15 @@ function AgentProfile({ userData }) {
   useEffect(() => {
     setLoading(false);
 
-    if (userData !== undefined) {
-      if (agent == null) {
-        getProfileAgentById(userData?.user_name);
-      }
-    }
-  }, [agent, userData]);
+    // if (userData !== undefined) {
+    //   if (agent == null) {
+    //     getProfileAgentById(userData?.user_name);
+    //   }
+    // }
+  }, [agent]);
 
   // const title = (document.getElementById('titleMeta').content = userData.firstName);
- 1 // console.log('title', title);
+  // console.log('title', title);
 
   // console.log('userData', userData);
 
@@ -282,20 +282,20 @@ function AgentProfile({ userData }) {
   );
 }
 
-AgentProfile.getInitialProps = async (context) => {
-  const uids = context.query.uid; // Get ID from slug `/book/1`
+// AgentProfile.getInitialProps = async (context) => {
+//   const uids = context.query.uid; // Get ID from slug `/book/1`
 
-  const userData1 = await fetch(`${BACKEND_PATH}/api/v1/profile/${uids}`)
-    .then((response) => response.json())
-    .then((json) => {
-      return json;
-    });
+//   const userData1 = await fetch(`${BACKEND_PATH}/api/v1/profile/${uids}`)
+//     .then((response) => response.json())
+//     .then((json) => {
+//       return json;
+//     });
 
-  console.log('userData1-->', userData1);
+//   console.log('userData1-->', userData1);
 
-  return {
-    userData: userData1
-  };
-};
+//   return {
+//     userData: userData1
+//   };
+// };
 
 export default AgentProfile;
