@@ -14,6 +14,7 @@ import { Router, useRouter } from 'next/router';
 import axiosInstance from 'contexts/axios';
 import { setProduct } from 'contexts/ApiListing';
 import slugify from 'utils/helper';
+import useAuth from 'hooks/useAuth';
 
 // step options
 const steps = ['Fill Up Detail', 'Upload Image', 'Review your Listing'];
@@ -50,6 +51,8 @@ const ValidationWizard = () => {
   const [errorIndex, setErrorIndex] = React.useState(null);
   const router = useRouter();
 
+  const { user } = useAuth();
+
   const handleNext = () => {
     setActiveStep(activeStep + 1);
     setErrorIndex(null);
@@ -68,6 +71,8 @@ const ValidationWizard = () => {
 
       const propertyObj = {
         photo_1: imageProperty?.imgE,
+        realtor: user?.user,
+
         ...shippingData
       };
 
@@ -77,7 +82,23 @@ const ValidationWizard = () => {
         form_data.append(key, propertyObj[key]);
       });
 
-      setProduct(form_data);
+      setProduct(form_data)
+        .then((res) => {
+          const resJson1 = JSON.stringify(res);
+          const resParse1 = JSON.parse(resJson1);
+          console.log('resParse-->', resParse1?.status);
+
+          setError('400');
+
+          return res;
+        })
+        .catch((err) => {
+          const resJson = JSON.stringify(err);
+          const resParse = JSON.parse(resJson);
+          console.log('resParse-->', resParse);
+          console.log('err---?', err);
+          return err;
+        });
     }
   }, [activeStep, shippingData, imageProperty]);
 

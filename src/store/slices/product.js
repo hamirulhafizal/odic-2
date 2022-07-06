@@ -92,8 +92,10 @@ export function getProductById(id) {
       const response = getListingById(id).then((res) => {
         dispatch(slice.actions.getProductSuccess(res));
       });
+      return response;
     } catch (error) {
       dispatch(slice.actions.hasError(error));
+      return error;
     }
   };
 }

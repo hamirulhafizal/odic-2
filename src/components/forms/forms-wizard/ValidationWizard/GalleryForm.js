@@ -77,7 +77,6 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
 
     fileReader.onload = () => {
       if (fileReader.readyState === 2) {
-        console.log('masul image ', fileReader.result);
         formik.setFieldValue('photo', e.target?.files[0]);
         formik.setFieldValue('size', e.target?.files[0]?.size);
         setAvatarPreview(fileReader.result);

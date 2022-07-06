@@ -12,6 +12,11 @@ import * as yup from 'yup';
 import FormControlSelect from 'components/ui-component/extended/Form/FormControlSelect';
 import useAuth from 'hooks/useAuth';
 import slugify from 'utils/helper';
+import { getProductById } from 'store/slices/product';
+import { ArrowBackIosTwoTone } from '@material-ui/icons';
+import axios from 'axios';
+
+import { BACKEND_PATH } from 'config';
 
 const category = [
   {
@@ -115,7 +120,7 @@ const carPark = [
 
 const rentalDeposit = [
   {
-    value: '0',
+    value: 'Zero Deposit',
     label: 'Zero Deposit'
   },
   {
@@ -211,35 +216,6 @@ const location = [
   }
 ];
 
-const initials = {
-  category: 1,
-  propertyType: 1,
-  propertyTitle: 'Freehold',
-  saleType: 'For Sale',
-  tenure: 1,
-  furnishing: 'Freehold',
-  carpark: '2',
-  amenities: 'Pool',
-  title: '120 Jalan Kejayaan',
-  description: 'good for investment',
-  price: '40000',
-  rentalDeposit: '1.5 Month',
-  phone: '',
-  location: 'Johor',
-  city: 'Johor',
-  lat: '',
-  lon: '',
-  address: 'johor',
-
-  state: 'johor',
-  slug: 'johor',
-  zipcode: '100',
-  bedrooms: 10,
-  bathrooms: '1',
-  floorRange: '1',
-  realtor: 2
-};
-
 const validationSchema = yup.object({
   // firstName: yup.string().required('First Name is required'),
   // lastName: yup.string().required('Last Name is required')
@@ -249,10 +225,43 @@ const validationSchema = yup.object({
 
 const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex }) => {
   const { user } = useAuth();
+
+  const initials = {
+    category: 1,
+    propertyType: 1,
+    propertyTitle: 'Freehold',
+    saleType: 'For Sale',
+    tenure: 1,
+    furnishing: 'Freehold',
+    carpark: '2',
+    amenities: 'Pool',
+    title: '120 Jalan Kejayaan',
+    description: 'good for investment',
+    price: '40000',
+    rentalDeposit: '1.5 Month',
+    phone: '60184644305',
+    location: 'Johor',
+    city: 'Johor',
+    lat: '',
+    lon: '',
+    address: 'johor',
+
+    state: 'johor',
+    slug: 'johor',
+    zipcode: '100',
+    bedrooms: 10,
+    bathrooms: '1',
+    floorRange: '1'
+    // realtor: user?.user
+  };
+
   const formik = useFormik({
     initialValues: initials,
     validationSchema,
-    onSubmit: (values) => {
+
+    onSubmit: async (values) => {
+      // setErrors('title');
+
       const {
         slug,
         title,
@@ -266,7 +275,7 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
         floorRange,
         furnishing,
         carpark,
-        realtor,
+        // realtor,
 
         category,
         propertyType,
@@ -282,6 +291,25 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
         lon
       } = values;
 
+      if (title != undefined) {
+        const slugTitle = slugify(title);
+
+        const getListingById = (slugTitle) => {
+          const respond = fetch(`${BACKEND_PATH}/api/v1/inventory/${slugTitle}`);
+          // .then((res) => {
+          //   return res.data;
+          // });
+
+          console.log('respond status', respond.status);
+
+          return respond;
+        };
+
+        const CheckLisitmg = getListingById(slugTitle);
+
+        console.log('CheckLisitmg-->', CheckLisitmg);
+      }
+
       setShippingData({
         slug: slugify(title),
         title: title,
@@ -295,7 +323,7 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
         furnishing: furnishing,
         carpark: carpark,
         city: city,
-        realtor: realtor,
+        // realtor: realtor,
 
         category: category,
         propertyType: propertyType,
@@ -310,11 +338,10 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
         lat: lat,
         lon: lon
       });
+
       handleNext();
     }
   });
-
-  console.log('user', user);
 
   return (
     <>
@@ -472,7 +499,7 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
               fullWidth
             />
           </Grid>
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <TextField
               id="realtor"
               name="realtor"
@@ -483,7 +510,7 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
               helperText={formik.touched.realtor && formik.errors.realtor}
               fullWidth
             />
-          </Grid>
+          </Grid> */}
           <Grid item xs={12}>
             <TextField
               id="description"
@@ -532,6 +559,7 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
               name="phone"
               label="phone*"
               type="tel"
+              required
               placeholder="6014644305"
               value={user?.phone || formik.values.phone}
               onChange={formik.handleChange}

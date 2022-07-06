@@ -7,12 +7,12 @@ import { useTheme } from '@mui/material/styles';
 import {
   CardContent,
   Checkbox,
-  Fab,
   Grid,
   IconButton,
   InputAdornment,
   Menu,
   MenuItem,
+  Stack,
   Table,
   TableBody,
   TableCell,
@@ -270,7 +270,7 @@ const Listing = () => {
   };
 
   React.useEffect(() => {
-    setRows(products['inventories']);
+    setRows(products.inventories);
   }, [products]);
 
   React.useEffect(() => {
@@ -289,7 +289,7 @@ const Listing = () => {
         const properties = ['name', 'description', 'rating', 'salePrice', 'offerPrice', 'gender'];
         let containsQuery = false;
 
-        properties.forEach((property) => {
+        properties?.forEach((property) => {
           if (row[property].toString().toLowerCase().includes(newString.toString().toLowerCase())) {
             containsQuery = true;
           }
@@ -361,14 +361,14 @@ const Listing = () => {
   const isSelected = (name) => selected.indexOf(name) !== -1;
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows?.length) : 0;
 
-  console.log('products', products['inventories']);
+  console.log('products', products?.inventories?.length);
 
   return (
     <MainCard title="Product List" content={false} contentSX={{ p: 0 }}>
       <CardContent>
         <Grid container justifyContent="space-between" alignItems="center" spacing={2}>
           <Grid item xs={12} sm={6}>
-            <TextField
+            {/* <TextField
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -376,34 +376,53 @@ const Listing = () => {
                   </InputAdornment>
                 )
               }}
-              onChange={handleSearch}
               placeholder="Search Product"
               value={search}
               size="small"
-            />
+            /> */}
           </Grid>
-          <Grid item xs={12} sm={6} sx={{ textAlign: `${matchDownSM ? 'start' : 'right'}` }}>
-            {/* product add & dialog */}
-            <Tooltip title="Add Product">
-              <Button
-                onClick={() => {
-                  router.push('/listing/create');
-                }}
-                variant="contained"
-                color="secondary"
-                sx={{ color: 'white' }}
-                size="small"
-                startIcon={<AddLocationAltOutlinedIcon sx={{ color: 'white' }} fontSize="small" />}
-              >
-                Create New List
-              </Button>
-            </Tooltip>
-          </Grid>
+          {products?.inventories?.length != 0 && (
+            <Grid item xs={12} sm={6} sx={{ textAlign: `${matchDownSM ? 'start' : 'right'}` }}>
+              {/* product add & dialog */}
+              <Tooltip title="Add Product">
+                <Button
+                  onClick={() => {
+                    router.push('/listing/create');
+                  }}
+                  variant="contained"
+                  color="secondary"
+                  sx={{ color: 'white' }}
+                  size="small"
+                  startIcon={<AddLocationAltOutlinedIcon sx={{ color: 'white' }} fontSize="small" />}
+                >
+                  Create New List
+                </Button>
+              </Tooltip>
+            </Grid>
+          )}
         </Grid>
       </CardContent>
 
-      {products?.length == 0 ? (
-        'No Item Found'
+      {products?.inventories?.length == 0 ? (
+        <>
+          <Stack sx={{ p: 2, alignItems: 'center' }}>
+            <Typography variant="h4" sx={{ pb: 2, textAlign: 'center' }}>
+              No Item Found
+            </Typography>
+            <Button
+              onClick={() => {
+                router.push('/listing/create');
+              }}
+              variant="contained"
+              color="secondary"
+              sx={{ color: 'white' }}
+              size="small"
+              startIcon={<AddLocationAltOutlinedIcon sx={{ color: 'white' }} fontSize="small" />}
+            >
+              Create New List
+            </Button>
+          </Stack>
+        </>
       ) : (
         <>
           <TableContainer>

@@ -4,7 +4,7 @@ import { useTheme, styled } from '@mui/material/styles';
 import { Button, Card, CardContent, CardMedia, Grid, Typography } from '@mui/material';
 
 // project imports
-import { DASHBOARD_PATH } from 'config';
+import { LISTING_PATH } from 'config';
 import AnimateButton from 'components/ui-component/extended/AnimateButton';
 import { gridSpacing } from 'store/constant';
 
@@ -95,7 +95,7 @@ const Error = () => {
                 </Grid>
                 <Grid item xs={12}>
                   <AnimateButton>
-                    <Button variant="contained" size="large" component={Link} href={DASHBOARD_PATH}>
+                    <Button variant="contained" size="large" component={Link} href={LISTING_PATH}>
                       <HomeTwoToneIcon sx={{ fontSize: '1.3rem', mr: 0.75 }} /> Home
                     </Button>
                   </AnimateButton>

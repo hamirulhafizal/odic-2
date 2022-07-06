@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 
 // project imports
 import useAuth from 'hooks/useAuth';
-import { DASHBOARD_PATH } from 'config';
+import { LISTING_PATH } from 'config';
 import { useEffect } from 'react';
 
 // ==============================|| GUEST GUARD ||============================== //
@@ -19,7 +19,7 @@ const GuestGuard = ({ children }) => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      router.push(DASHBOARD_PATH);
+      router.push(LISTING_PATH);
     }
     // eslint-disable-next-line
   }, [isLoggedIn]);

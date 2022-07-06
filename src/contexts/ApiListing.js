@@ -12,14 +12,21 @@ import axiosInstance from './axios';
 import axios, { Axios } from 'axios';
 
 const setProduct = async (propertyObj) => {
-  const response = await axiosInstance.post(`${BACKEND_PATH}/api/v1/inventory/`, propertyObj).then(async (res) => {
-    return response;
-  });
+  const response = await axiosInstance
+    .post(`${BACKEND_PATH}/api/v1/inventory/`, propertyObj)
+    .then(async (res) => {
+      return res;
+    })
+    .catch((err) => {
+      const resJson = JSON.stringify(err);
+      const resParse1 = JSON.parse(resJson);
+      return err;
+    });
+  return response;
 };
 
 const getAllListing = async (user_name) => {
   const respond = await axios.get(`${BACKEND_PATH}/api/v1/profile/${user_name}`).then((res) => {
-    console.log('res', res);
     return res.data;
   });
   return respond;
@@ -42,6 +49,19 @@ const getLisitingAgentById = async (id) => {
 };
 
 const getProfileAgentById = async (uid) => {
+  await axios
+    .get(`${BACKEND_PATH}/api/v1/profile/${uid}`)
+    .then((res) => {
+      return res;
+    })
+    .catch((err) => {
+      const stringErr = JSON.stringify(err);
+      const error = JSON.parse(stringErr);
+      return error;
+    });
+};
+
+const getListingBySlug = async (slug) => {
   await axios
     .get(`${BACKEND_PATH}/api/v1/profile/${uid}`)
     .then((res) => {
@@ -111,4 +131,4 @@ const getProfileAgentById = async (uid) => {
 //   return response;
 // };
 
-export { setProduct, getAllListing, getListingById, getLisitingAgentById, getProfileAgentById };
+export { setProduct, getAllListing, getListingById, getLisitingAgentById, getProfileAgentById, getListingBySlug };

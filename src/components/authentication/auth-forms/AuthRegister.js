@@ -50,6 +50,8 @@ const JWTRegister = ({ ...others }) => {
   const [isLoading, setLoading] = React.useState(false);
 
   const [strength, setStrength] = React.useState(0);
+  const [msgErr, setMsgErr] = React.useState('');
+
   const [level, setLevel] = React.useState();
   const { register } = useAuth();
 
@@ -93,45 +95,42 @@ const JWTRegister = ({ ...others }) => {
           email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
           password: Yup.string().max(255).required('Password is required')
         })}
-        onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-          console.log('values', values);
+        onSubmit={(values, { setErrors, setStatus, setSubmitting }) => {
           setLoading(true);
-          try {
-            debugger;
-            await register(values.email, values.password, values.firstName, values.lastName).then((res) => {
-              // console.log('res--->', res);
-              if (scriptedRef.current) {
-                setStatus({ success: true });
-                setSubmitting(false);
-                // dispatch(
-                //   openSnackbar({
-                //     open: true,
-                //     message: 'Your registration has been successfully completed.',
-                //     variant: 'alert',
-                //     alert: {
-                //       color: 'success'
-                //     },
-                //     close: false
-                //   })
-                // );
 
-                // setTimeout(() => {
-                //   router.push('/login');
-                // }, 1500);
-              }
-            });
-          } catch (err) {
-            if (scriptedRef.current) {
-              setStatus({ success: false, msg: 'fail' });
-              setErrors({ submit: err.message });
+          register(values.email, values.password, values.firstName, values.lastName).then((res) => {
+            if (res?.email && res?.email[0] == 'Email is already in use.') {
+              setErrors({ submit: 'Email is already in use.' });
               setSubmitting(false);
               setLoading(false);
             }
-          }
+
+            if (res?.user_name && res?.user_name[0] == 'Username is already in use.') {
+              setErrors({ submit: 'First Name dan Last Name is already in use.' });
+              setSubmitting(false);
+              setLoading(false);
+            }
+
+            if (res.status == 200) {
+              setStatus({ success: true });
+              setSubmitting(false);
+              dispatch(
+                openSnackbar({
+                  open: true,
+                  message: 'Your registration has been successfully completed.',
+                  variant: 'alert',
+                  alert: {
+                    color: 'success'
+                  },
+                  close: false
+                })
+              );
+            }
+          });
         }}
       >
         {({ errors, status, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
-          <form noValidate onSubmit={handleSubmit} {...others}>
+          <form onSubmit={handleSubmit} {...others}>
             <Grid container spacing={matchDownSM ? 0 : 2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -253,6 +252,12 @@ const JWTRegister = ({ ...others }) => {
                 <FormHelperText error>{errors.submit}</FormHelperText>
               </Box>
             )}
+
+            {/* {msgErr && (
+              <Box sx={{ mt: 3 }}>
+                <FormHelperText error>{msgErr}</FormHelperText>
+              </Box>
+            )} */}
 
             <Box sx={{ mt: 2 }}>
               <AnimateButton>

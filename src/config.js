@@ -28,6 +28,7 @@ export const AWS_API = {
 export const BASE_PATH = '/';
 
 export const DASHBOARD_PATH = '/dashboard';
+export const LISTING_PATH = '/listing';
 
 export const BACKEND_PATH = 'https://onedream.dynamicdigital.guru';
 // export const BACKEND_PATH = 'https://agent-inventory.herokuapp.com';

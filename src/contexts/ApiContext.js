@@ -3,12 +3,6 @@
 import PropTypes from 'prop-types';
 import { createContext, useEffect, useReducer } from 'react';
 
-// third-party
-import { Chance } from 'chance';
-import jwtDecode from 'jwt-decode';
-import jwt from 'jsonwebtoken';
-import { JWT_API } from 'config';
-
 // reducer - state management
 import { LOGIN, LOGOUT } from 'store/actions';
 import accountReducer from 'store/accountReducer';
@@ -24,11 +18,6 @@ import axiosInstance from './axios';
 import { useRouter } from 'next/router';
 import user from 'store/slices/user';
 
-// constant
-const JWT_SECRET = JWT_API.secret;
-const JWT_EXPIRES_TIME = JWT_API.timeout;
-
-const chance = new Chance();
 
 const initialState = {
   isLoggedIn: false,
@@ -63,12 +52,11 @@ export const ApiProvider = ({ children }) => {
           });
         }
       } else {
-        // dispatch({
-        //   type: LOGOUT
-        // });
+        dispatch({
+          type: LOGOUT
+        });
       }
     } catch (err) {
-      // console.error(err);
       dispatch({
         type: LOGOUT
       });
@@ -97,16 +85,19 @@ export const ApiProvider = ({ children }) => {
           }
         });
 
-        history.push('/listing');
+        // history.push('/listing');
 
         return res;
       });
+
+    return response;
   };
 
   const register = async (email, password, first_name, last_name) => {
     // todo: this flow need to be recode as it not verified
     const user_name = first_name + last_name;
-    await axiosInstance
+
+    const respond = await axios
       .post(`${BACKEND_PATH}/api/v1/user/register`, {
         email,
         user_name,
@@ -114,11 +105,14 @@ export const ApiProvider = ({ children }) => {
         password
       })
       .then((res) => {
-        // login(email, password, user_name);
-        // history.push('/login');
-
+        login(email, password, user_name);
         return res;
+      })
+      .catch((err) => {
+        return err;
       });
+
+    return respond;
   };
 
   const logout = async () => {
