@@ -83,7 +83,7 @@ export const JWTProvider = ({ children }) => {
       })
       .then(async (res) => {
         if (typeof window !== 'undefined') {
-          axiosInstance.defaults.headers['Authorization'] = 'JWT ' + localStorage.getItem('access');
+          axiosInstance.defaults.headers['Authorization'] = 'Bearer ' + localStorage.getItem('access');
           localStorage.setItem('access', res?.data?.access);
           localStorage.setItem('refresh', res?.data?.refresh);
         }
@@ -115,9 +115,8 @@ export const JWTProvider = ({ children }) => {
       .then((res) => {
         console.log(res);
 
-        login(email, password, user_name);
+        login(email, password);
 
-        history.push('/login');
         return res;
       });
   };

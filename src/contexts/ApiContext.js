@@ -18,7 +18,6 @@ import axiosInstance from './axios';
 import { useRouter } from 'next/router';
 import user from 'store/slices/user';
 
-
 const initialState = {
   isLoggedIn: false,
   isInitialized: false,
@@ -35,6 +34,8 @@ export const ApiProvider = ({ children }) => {
   useEffect(() => {
     if (state.user == null) init();
   }, [state.user]);
+
+  console.log('state', state);
 
   const init = () => {
     try {
@@ -94,7 +95,7 @@ export const ApiProvider = ({ children }) => {
   };
 
   const register = async (email, password, first_name, last_name) => {
-    // todo: this flow need to be recode as it not verified
+    // todo: this flow need to be recode as it not verified\
     const user_name = first_name + last_name;
 
     const respond = await axios
@@ -105,14 +106,21 @@ export const ApiProvider = ({ children }) => {
         password
       })
       .then((res) => {
-        login(email, password, user_name);
+        debugger;
+
+        console.log('res->', res);
+
+        // login(email, password, user_name);
+        // history.push('/login');
+
         return res;
       })
       .catch((err) => {
+        console.log('err-->', err);
+        history.push('/register');
         return err;
       });
-
-    return respond;
+    return response;
   };
 
   const logout = async () => {
