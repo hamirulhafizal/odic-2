@@ -17,6 +17,7 @@ import { ArrowBackIosTwoTone } from '@material-ui/icons';
 import axios from 'axios';
 
 import { BACKEND_PATH } from 'config';
+import { useState } from 'react';
 
 const category = [
   {
@@ -219,12 +220,103 @@ const location = [
 const validationSchema = yup.object({
   // firstName: yup.string().required('First Name is required'),
   // lastName: yup.string().required('Last Name is required')
+  // title: yup
+  //   .string()
+  //   .min(8, 'Must be at least 8 characters')
+  //   .max(20, 'Must be less  than 20 characters')
+  //   .required('Email is required')
+  //   .test(
+  //     'Unique Title',
+  //     'Title already in use' // <- key, message
+  //   )
+  // function (value) {
+  //   return new Promise((resolve, reject) => {
+  //     axios
+  //       .get(`${BACKEND_PATH}/api/v1/inventory/${slugTitle}`)
+  //       .then((res) => {
+  //         console.log('r---->es', res?.status);
+  //         if (res?.status == 200) {
+  //           setError(' title already esixt');
+  //           formik.setSubmitting(false);
+  //           formik.setErrors('Error');
+  //         }
+  //         resolve(true);
+  //       })
+  //       .catch((error) => {
+  //         console.log('r---->error', error);
+  //         if (error.response.data.content === 'The email has already been taken.') {
+  //           resolve(false);
+  //         }
+  //       });
+  //   });
+  // }
+  // )
 });
+
+const validate = (values) => {
+  const slugTitle = slugify(values?.title);
+  let errors = {};
+  getListingById(slugTitle).then((res) => {
+    console.log('res', res);
+
+    if (res?.status == 200) {
+      // setError('exisit title');
+      return (errors.title = 'Email address already in use');
+    }
+
+    if (res?.status !== 200) {
+      return (errors.title = 'Email address already');
+    }
+  });
+
+  // console.log('values', values);
+  // let errors = {};
+  // if (alreadyInUseEmail.includes(values.title)) {
+  //   errors.email = 'Email address already in use';
+  // }
+
+  console.log('errors', errors);
+};
+
+// const getListingById = (slugTitle) => {
+//   return new Promise((resolve, reject) => {
+//     axios
+//       .get(`${BACKEND_PATH}/api/v1/inventory/${slugTitle}`)
+//       .then((res) => {
+//         console.log('r---->es', res);
+//         // resolve(true);
+//         return res;
+//       })
+//       .catch((error) => {
+//         if (error.response.data.content === 'The email has already been taken.') {
+//           // resolve(false);
+//           return error;
+//         }
+//       });
+//   });
+// };
+
+const getListingById = (slugTitle) => {
+  return axios
+    .get(`${BACKEND_PATH}/api/v1/inventory/${slugTitle}`)
+    .then((res) => {
+      // resolve(true);
+      return res;
+    })
+    .catch((error) => {
+      if (error.response.data.content === 'The email has already been taken.') {
+        // resolve(false);
+        return error;
+      }
+    });
+};
 
 // ==============================|| FORM WIZARD - VALIDATION  ||============================== //
 
 const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex }) => {
   const { user } = useAuth();
+
+  const [isError, setError] = useState('');
 
   const initials = {
     category: 1,
@@ -258,6 +350,7 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
   const formik = useFormik({
     initialValues: initials,
     validationSchema,
+    validate,
 
     onSubmit: async (values) => {
       // setErrors('title');
@@ -291,24 +384,19 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
         lon
       } = values;
 
-      if (title != undefined) {
-        const slugTitle = slugify(title);
+      // if (title != undefined) {
+      //   const slugTitle = slugify(title);
+      //   const CheckLisitmg = getListingById(slugTitle).then((res) => {
+      //     if (res?.status == 200) {
+      //       setError('exisit title');
+      //     }
 
-        const getListingById = (slugTitle) => {
-          const respond = fetch(`${BACKEND_PATH}/api/v1/inventory/${slugTitle}`);
-          // .then((res) => {
-          //   return res.data;
-          // });
-
-          console.log('respond status', respond.status);
-
-          return respond;
-        };
-
-        const CheckLisitmg = getListingById(slugTitle);
-
-        console.log('CheckLisitmg-->', CheckLisitmg);
-      }
+      //     if (res?.status !== 200) {
+      //       setError('ok');
+      //     }
+      //     return res;
+      //   });
+      // }
 
       setShippingData({
         slug: slugify(title),
@@ -339,7 +427,13 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
         lon: lon
       });
 
-      handleNext();
+      // if (isError == 'exisit title') {
+      //   // formik.setSubmitting(false);
+      // }
+
+      // if (isError == 'ok') {
+      //   handleNext();
+      // }
     }
   });
 
@@ -422,8 +516,8 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
               label="Title*"
               value={formik.values.title}
               onChange={formik.handleChange}
-              error={formik.touched.title && Boolean(formik.errors.title)}
-              helperText={formik.touched.title && formik.errors.title}
+              error={(formik.touched.title && Boolean(formik.errors.title)) || (isError == 'exisit title' && isError)}
+              helperText={(formik.touched.title && formik.errors.title) || (isError == 'exisit title' && isError)}
               fullWidth
             />
           </Grid>
@@ -621,6 +715,8 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
                 >
                   Next
                 </Button>
+
+                {isError == 'exisit title' && isError}
               </AnimateButton>
             </Stack>
           </Grid>

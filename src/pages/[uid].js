@@ -70,7 +70,7 @@ const SecondWrapper = styled('div')(({ theme }) => ({
   // background: '#00000057',
 }));
 
-function AgentProfile() {
+function AgentProfile({ userData }) {
   const theme = useTheme();
   const [isLoading, setLoading] = useState(true);
   const [agent, setAgent] = useState();
@@ -97,11 +97,11 @@ function AgentProfile() {
   useEffect(() => {
     setLoading(false);
 
-    // if (userData !== undefined) {
-    //   if (agent == null) {
-    //     getProfileAgentById(userData?.user_name);
-    //   }
-    // }
+    if (userData !== undefined) {
+      if (agent == null) {
+        getProfileAgentById(userData?.user_name);
+      }
+    }
   }, [agent]);
 
   // const title = (document.getElementById('titleMeta').content = userData.firstName);
@@ -113,7 +113,7 @@ function AgentProfile() {
     <>
       <Head>
         <title>{`ONE DREAM LEGACY | List all type properties at One Dream Property`}</title>
-        <meta property="og:image" content={userData?.photo} />
+        <meta property="og:image" content={userData?.photo || Cover} />
         <meta property="og:title" content={`${userData?.firstName} ${userData?.lastName}`} />
 
         {/* <meta property="og:url" content={`${BASE_PATH}${uid}`} /> */}
@@ -282,20 +282,20 @@ function AgentProfile() {
   );
 }
 
-// AgentProfile.getInitialProps = async (context) => {
-//   const uids = context.query.uid; // Get ID from slug `/book/1`
+AgentProfile.getInitialProps = async (context) => {
+  const uids = context.query.uid; // Get ID from slug `/book/1`
 
-//   const userData1 = await fetch(`${BACKEND_PATH}/api/v1/profile/${uids}`)
-//     .then((response) => response.json())
-//     .then((json) => {
-//       return json;
-//     });
+  const userData1 = await fetch(`${BACKEND_PATH}/api/v1/profile/${uids}`)
+    .then((response) => response.json())
+    .then((json) => {
+      return json;
+    });
 
-//   console.log('userData1-->', userData1);
+  console.log('userData1-->', userData1);
 
-//   return {
-//     userData: userData1
-//   };
-// };
+  return {
+    userData: userData1
+  };
+};
 
 export default AgentProfile;

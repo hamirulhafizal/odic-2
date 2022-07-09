@@ -35,8 +35,6 @@ export const ApiProvider = ({ children }) => {
     if (state.user == null) init();
   }, [state.user]);
 
-  console.log('state', state);
-
   const init = () => {
     try {
       const serviceToken = window.localStorage.getItem('access');
