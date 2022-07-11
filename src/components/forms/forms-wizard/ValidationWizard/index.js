@@ -100,7 +100,7 @@ const ValidationWizard = () => {
           return err;
         });
     }
-  }, [activeStep, shippingData, imageProperty]);
+  }, [activeStep, shippingData, imageProperty, user]);
 
   return (
     <MainCard title="Create Listing">

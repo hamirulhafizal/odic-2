@@ -279,7 +279,7 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
     zipcode: '100',
     bedrooms: 10,
     bathrooms: '1',
-    floorRange: '1',
+    floorRange: '1'
     // realtor: user?.user
   };
 

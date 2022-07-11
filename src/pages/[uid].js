@@ -102,7 +102,7 @@ function AgentProfile({ userData }) {
         getProfileAgentById(userData?.user_name);
       }
     }
-  }, [agent]);
+  }, [agent, userData]);
 
   // const title = (document.getElementById('titleMeta').content = userData.firstName);
   // console.log('title', title);
