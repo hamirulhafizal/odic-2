@@ -12,12 +12,9 @@ import * as yup from 'yup';
 import FormControlSelect from 'components/ui-component/extended/Form/FormControlSelect';
 import useAuth from 'hooks/useAuth';
 import slugify from 'utils/helper';
-import { getProductById } from 'store/slices/product';
-import { ArrowBackIosTwoTone } from '@material-ui/icons';
 import axios from 'axios';
 
 import { BACKEND_PATH } from 'config';
-import { useState } from 'react';
 
 const category = [
   {
@@ -217,106 +214,45 @@ const location = [
   }
 ];
 
-const validationSchema = yup.object({
-  // firstName: yup.string().required('First Name is required'),
-  // lastName: yup.string().required('Last Name is required')
-  // title: yup
-  //   .string()
-  //   .min(8, 'Must be at least 8 characters')
-  //   .max(20, 'Must be less  than 20 characters')
-  //   .required('Email is required')
-  //   .test(
-  //     'Unique Title',
-  //     'Title already in use' // <- key, message
-  //   )
-  // function (value) {
-  //   return new Promise((resolve, reject) => {
-  //     axios
-  //       .get(`${BACKEND_PATH}/api/v1/inventory/${slugTitle}`)
-  //       .then((res) => {
-  //         console.log('r---->es', res?.status);
-  //         if (res?.status == 200) {
-  //           setError(' title already esixt');
-  //           formik.setSubmitting(false);
-  //           formik.setErrors('Error');
-  //         }
-  //         resolve(true);
-  //       })
-  //       .catch((error) => {
-  //         console.log('r---->error', error);
-  //         if (error.response.data.content === 'The email has already been taken.') {
-  //           resolve(false);
-  //         }
-  //       });
-  //   });
-  // }
-  // )
-});
-
-const validate = (values) => {
-  const slugTitle = slugify(values?.title);
-  let errors = {};
-  getListingById(slugTitle).then((res) => {
-    console.log('res', res);
-
-    if (res?.status == 200) {
-      // setError('exisit title');
-      return (errors.title = 'Email address already in use');
-    }
-
-    if (res?.status !== 200) {
-      return (errors.title = 'Email address already');
-    }
+const check = (value) => {
+  const slugTitle = slugify(value);
+  return new Promise((resolve, reject) => {
+    axios
+      .get(`${BACKEND_PATH}/api/v1/inventory/${slugTitle}`)
+      .then((res) => {
+        if (res?.status == 200) {
+          resolve(false);
+        }
+      })
+      .catch((error) => {
+        const resJson1 = JSON.stringify(error);
+        const resParse1 = JSON.parse(resJson1);
+        resolve(true);
+      });
   });
-
-  // console.log('values', values);
-  // let errors = {};
-  // if (alreadyInUseEmail.includes(values.title)) {
-  //   errors.email = 'Email address already in use';
-  // }
-
-  console.log('errors', errors);
 };
 
-// const getListingById = (slugTitle) => {
-//   return new Promise((resolve, reject) => {
-//     axios
-//       .get(`${BACKEND_PATH}/api/v1/inventory/${slugTitle}`)
-//       .then((res) => {
-//         console.log('r---->es', res);
-//         // resolve(true);
-//         return res;
-//       })
-//       .catch((error) => {
-//         if (error.response.data.content === 'The email has already been taken.') {
-//           // resolve(false);
-//           return error;
-//         }
-//       });
-//   });
-// };
+const validationSchema = yup.object({
+  title: yup
+    .string()
+    .min(8, 'Must be at least 8 characters')
+    .max(20, 'Must be less  than 20 characters')
+    .required('Title is required')
+    .test(
+      'title',
+      'Title already in usea', // <- key, message
+      async (value) => {
+        const res = await check(value);
 
-const getListingById = (slugTitle) => {
-  return axios
-    .get(`${BACKEND_PATH}/api/v1/inventory/${slugTitle}`)
-    .then((res) => {
-      // resolve(true);
-      return res;
-    })
-    .catch((error) => {
-      if (error.response.data.content === 'The email has already been taken.') {
-        // resolve(false);
-        return error;
+        return res;
       }
-    });
-};
+    )
+});
 
 // ==============================|| FORM WIZARD - VALIDATION  ||============================== //
 
 const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex }) => {
   const { user } = useAuth();
-
-  const [isError, setError] = useState('');
 
   const initials = {
     category: 1,
@@ -330,7 +266,7 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
     title: '120 Jalan Kejayaan',
     description: 'good for investment',
     price: '40000',
-    rentalDeposit: '1.5 Month',
+    rentalDeposit: '1.5-Month',
     phone: '60184644305',
     location: 'Johor',
     city: 'Johor',
@@ -343,18 +279,15 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
     zipcode: '100',
     bedrooms: 10,
     bathrooms: '1',
-    floorRange: '1'
+    floorRange: '1',
     // realtor: user?.user
   };
 
   const formik = useFormik({
     initialValues: initials,
     validationSchema,
-    validate,
 
     onSubmit: async (values) => {
-      // setErrors('title');
-
       const {
         slug,
         title,
@@ -383,20 +316,6 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
         lat,
         lon
       } = values;
-
-      // if (title != undefined) {
-      //   const slugTitle = slugify(title);
-      //   const CheckLisitmg = getListingById(slugTitle).then((res) => {
-      //     if (res?.status == 200) {
-      //       setError('exisit title');
-      //     }
-
-      //     if (res?.status !== 200) {
-      //       setError('ok');
-      //     }
-      //     return res;
-      //   });
-      // }
 
       setShippingData({
         slug: slugify(title),
@@ -427,13 +346,7 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
         lon: lon
       });
 
-      // if (isError == 'exisit title') {
-      //   // formik.setSubmitting(false);
-      // }
-
-      // if (isError == 'ok') {
-      //   handleNext();
-      // }
+      handleNext();
     }
   });
 
@@ -516,8 +429,8 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
               label="Title*"
               value={formik.values.title}
               onChange={formik.handleChange}
-              error={(formik.touched.title && Boolean(formik.errors.title)) || (isError == 'exisit title' && isError)}
-              helperText={(formik.touched.title && formik.errors.title) || (isError == 'exisit title' && isError)}
+              error={formik.touched.title && Boolean(formik.errors.title)}
+              helperText={formik.touched.title && formik.errors.title}
               fullWidth
             />
           </Grid>
@@ -715,8 +628,6 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
                 >
                   Next
                 </Button>
-
-                {isError == 'exisit title' && isError}
               </AnimateButton>
             </Stack>
           </Grid>

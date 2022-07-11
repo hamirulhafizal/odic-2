@@ -15,9 +15,12 @@ const setProduct = async (propertyObj) => {
   const response = await axiosInstance
     .post(`${BACKEND_PATH}/api/v1/inventory/`, propertyObj)
     .then(async (res) => {
+      console.log('res--asd>', res);
       return res;
     })
     .catch((err) => {
+      console.log('err-->', err);
+
       const resJson = JSON.stringify(err);
       const resParse1 = JSON.parse(resJson);
       return err;
@@ -73,62 +76,5 @@ const getListingBySlug = async (slug) => {
       return error;
     });
 };
-
-// const register = async (email, password, first_name, last_name) => {
-//   // todo: this flow need to be recode as it not verified
-//   const user_name = first_name + last_name;
-//   const response = await axiosInstance
-//     .post(`${BACKEND_PATH}/api/v1/user/register`, {
-//       email,
-//       user_name,
-//       password
-//     })
-//     .then((res) => {
-//       console.log(res);
-
-//       login(email, password, user_name);
-
-//       history.push('/login');
-//       return res;
-//     });
-// };
-
-// const logout = async () => {
-//   // const response = await axiosInstance.post(`${BACKEND_PATH}/api/v1/user/logout`)
-//   // .then((res) => {
-//   //   history.push('/login');
-//   //   return res;
-//   // });
-
-//   // let off = response.data;
-
-//   dispatch({ type: LOGOUT });
-
-//   window.localStorage.removeItem('access');
-//   window.localStorage.removeItem('refresh');
-//   window.localStorage.removeItem('users');
-// };
-
-// const resetPassword = (email) => console.log(email);
-
-// const updateProfile = async (user_name, formData) => {
-//   const response = await axiosInstance.patch(`${BACKEND_PATH}/api/v1/profile/${user_name}`, formData).then((res) => {
-//     if (typeof window !== 'undefined') {
-//       const users = JSON.stringify(res.data);
-//       localStorage.setItem('users', users);
-
-//       dispatch({
-//         payload: {
-//           isLoggedIn: true,
-//           user: users
-//         }
-//       });
-
-//       init();
-//     }
-//     return res;
-//   });
-//   return response;
-// };
 
 export { setProduct, getAllListing, getListingById, getLisitingAgentById, getProfileAgentById, getListingBySlug };

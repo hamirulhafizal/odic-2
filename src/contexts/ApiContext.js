@@ -140,7 +140,7 @@ export const ApiProvider = ({ children }) => {
   const resetPassword = (email) => console.log(email);
 
   const getProfile = async (user_name) => {
-    axiosInstance.defaults.headers['Authorization'] = 'JWT ' + localStorage.getItem('access');
+    axiosInstance.defaults.headers['Authorization'] = 'Bearer ' + localStorage.getItem('access');
     const response = await axiosInstance.get(`${BACKEND_PATH}/api/v1/profile/${user_name}`).then((res) => {
       if (typeof window !== 'undefined') {
         const users = JSON.stringify(res.data);

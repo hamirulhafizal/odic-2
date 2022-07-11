@@ -41,15 +41,9 @@ import { getProducts } from 'store/slices/product';
 
 // assets
 import DeleteIcon from '@mui/icons-material/Delete';
-import FilterListIcon from '@mui/icons-material/FilterListTwoTone';
-import PrintIcon from '@mui/icons-material/PrintTwoTone';
-import FileCopyIcon from '@mui/icons-material/FileCopyTwoTone';
-import SearchIcon from '@mui/icons-material/Search';
-import AddIcon from '@mui/icons-material/AddTwoTone';
 import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
 import { Button } from '@mui/material';
 import { useRouter } from 'next/router';
-import { getAllListing } from 'contexts/ApiListing';
 import useAuth from 'hooks/useAuth';
 
 const prodImage = '/assets/images/e-commerce';
@@ -361,8 +355,6 @@ const Listing = () => {
   const isSelected = (name) => selected.indexOf(name) !== -1;
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows?.length) : 0;
 
-  console.log('products', products?.inventories?.length);
-
   return (
     <MainCard title="Product List" content={false} contentSX={{ p: 0 }}>
       <CardContent>
@@ -448,8 +440,8 @@ const Listing = () => {
                       <TableCell align="center" component="th" id={labelId} scope="row" sx={{ cursor: 'pointer' }}>
                         <Avatar
                           component={Link}
-                          href={`/listing/${row.id}`}
-                          src={row.photo_1 && `${row.photo_1}`}
+                          href={`/listing/${row?.id}`}
+                          src={row?.photo_1 && `${row?.photo_1}`}
                           size="md"
                           variant="rounded"
                         />
@@ -464,22 +456,22 @@ const Listing = () => {
                             textDecoration: 'none'
                           }}
                         >
-                          {row.title}
+                          {row?.title}
                         </Typography>
                       </TableCell>
                       {/* <TableCell>{format(new Date(row.created), 'E, MMM d yyyy')}</TableCell> */}
-                      <TableCell align="center">RM {row.price}</TableCell>
-                      <TableCell align="center">{row.location}</TableCell>
+                      <TableCell align="center">RM {row?.price}</TableCell>
+                      <TableCell align="center">{row?.location}</TableCell>
 
-                      <TableCell align="center">{propertyTypeData(row.propertyType)}</TableCell>
-                      <TableCell align="center">{row.bathrooms}</TableCell>
-                      <TableCell align="center">{row.bedrooms}</TableCell>
+                      <TableCell align="center">{propertyTypeData(row?.propertyType)}</TableCell>
+                      <TableCell align="center">{row?.bathrooms}</TableCell>
+                      <TableCell align="center">{row?.bedrooms}</TableCell>
 
                       <TableCell align="center">
                         <Chip
                           size="small"
-                          label={row.status ? 'Active' : 'Active'}
-                          chipcolor={row.status ? 'success' : 'success'}
+                          label={row?.status ? 'Active' : 'Active'}
+                          chipcolor={row?.status ? 'success' : 'success'}
                           sx={{ borderRadius: '4px', textTransform: 'capitalize' }}
                         />
                       </TableCell>

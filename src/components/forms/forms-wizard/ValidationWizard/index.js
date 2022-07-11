@@ -86,9 +86,9 @@ const ValidationWizard = () => {
         .then((res) => {
           const resJson1 = JSON.stringify(res);
           const resParse1 = JSON.parse(resJson1);
-          console.log('resParse-->', resParse1?.status);
+          console.log('res-->', res);
 
-          setError('400');
+          // setError('400');
 
           return res;
         })
