@@ -11,18 +11,13 @@ import { BACKEND_PATH } from 'config';
 import axiosInstance from './axios';
 import axios, { Axios } from 'axios';
 
-const setProduct = async (propertyObj) => {
+const setProduct = async (form_data) => {
   const response = await axiosInstance
-    .post(`${BACKEND_PATH}/api/v1/inventory/`, propertyObj)
+    .post(`${BACKEND_PATH}/api/v1/inventory/`, form_data)
     .then(async (res) => {
-      console.log('res--asd>', res);
       return res;
     })
     .catch((err) => {
-      console.log('err-->', err);
-
-      const resJson = JSON.stringify(err);
-      const resParse1 = JSON.parse(resJson);
       return err;
     });
   return response;
@@ -76,5 +71,7 @@ const getListingBySlug = async (slug) => {
       return error;
     });
 };
+
+
 
 export { setProduct, getAllListing, getListingById, getLisitingAgentById, getProfileAgentById, getListingBySlug };

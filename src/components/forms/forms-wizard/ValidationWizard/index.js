@@ -49,6 +49,7 @@ const ValidationWizard = () => {
   const [shippingData, setShippingData] = React.useState({});
   const [imageProperty, setPaymentData] = React.useState({});
   const [errorIndex, setErrorIndex] = React.useState(null);
+
   const router = useRouter();
 
   const { user } = useAuth();
@@ -66,11 +67,11 @@ const ValidationWizard = () => {
   // const { fileName, type, size } = imageProperty;
 
   useEffect(() => {
-    if (activeStep == 3 && imageProperty?.imgE !== null) {
-      // console.log('imageProperty-->', imageProperty?.imgE);
+    if (activeStep == 3 && imageProperty?.imgE != null) {
+      const photo_1 = imageProperty?.imgE;
 
       const propertyObj = {
-        photo_1: imageProperty?.imgE,
+        photo_1: photo_1,
         realtor: user?.user,
 
         ...shippingData
@@ -86,17 +87,15 @@ const ValidationWizard = () => {
         .then((res) => {
           const resJson1 = JSON.stringify(res);
           const resParse1 = JSON.parse(resJson1);
-          console.log('res-->', res);
-
+          // console.log('res-->', res);
           // setError('400');
-
           return res;
         })
         .catch((err) => {
           const resJson = JSON.stringify(err);
           const resParse = JSON.parse(resJson);
-          console.log('resParse-->', resParse);
-          console.log('err---?', err);
+          // console.log('resParse-->', resParse);
+          // console.log('err---?', err);
           return err;
         });
     }

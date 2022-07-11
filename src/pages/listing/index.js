@@ -75,22 +75,22 @@ function stableSort(array, comparator) {
 // table header options
 const headCells = [
   {
-    id: 'title ',
-    numeric: true,
-    label: 'Title',
+    id: 'Img ',
+    numeric: false,
+    label: 'Image Cover',
     align: 'center'
   },
   {
-    id: 'name',
-    numeric: true,
-    label: 'Price',
-    align: 'left'
+    id: 'title',
+    numeric: false,
+    label: 'Title',
+    align: 'center'
   },
   {
     id: 'price',
     numeric: true,
     label: 'Price',
-    align: 'right'
+    align: 'center'
   },
   {
     id: 'location',
@@ -432,11 +432,20 @@ const Listing = () => {
               <TableBody>
                 {rows?.map((row, index) => {
                   if (typeof row === 'number') return null;
-                  const isItemSelected = isSelected(row.title);
+                  const isItemSelected = isSelected(index);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow hover role="checkbox" aria-checked={isItemSelected} tabIndex={-1} key={index} selected={isItemSelected}>
+                      <TableCell padding="checkbox" sx={{ pl: 3 }} onClick={(event) => handleClick(event, row.name)}>
+                        <Checkbox
+                          color="primary"
+                          checked={isItemSelected}
+                          inputProps={{
+                            'aria-labelledby': labelId
+                          }}
+                        />
+                      </TableCell>
                       <TableCell align="center" component="th" id={labelId} scope="row" sx={{ cursor: 'pointer' }}>
                         <Avatar
                           component={Link}
@@ -449,7 +458,7 @@ const Listing = () => {
                       <TableCell component="th" id={labelId} scope="row" sx={{ cursor: 'pointer' }}>
                         <Typography
                           component={Link}
-                          href={`/listing/${row.id}`}
+                          href={`/listing/${row?.id}`}
                           variant="subtitle1"
                           sx={{
                             color: theme.palette.mode === 'dark' ? theme.palette.grey[600] : 'grey.900',
