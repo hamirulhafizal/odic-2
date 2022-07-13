@@ -251,8 +251,9 @@ const validationSchema = yup.object({
 
 // ==============================|| FORM WIZARD - VALIDATION  ||============================== //
 
-const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex }) => {
+const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex, editData }) => {
   const { user } = useAuth();
+
 
   const initials = {
     category: 1,
@@ -263,7 +264,7 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
     furnishing: 'Freehold',
     carpark: '2',
     amenities: 'Pool',
-    title: '120 Jalan Kejayaan',
+    title: editData?.title || '120 Jalan Kejayaan',
     description: 'good for investment',
     price: '40000',
     rentalDeposit: '1.5-Month',
@@ -284,8 +285,10 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
   };
 
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: initials,
     validationSchema,
+    // enableReinitialize={true}
 
     onSubmit: async (values) => {
       const {
@@ -363,7 +366,7 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
               id="category"
               name="category"
               captionLabel="Category"
-              value={formik.values.category}
+              value={formik.values.category || editData?.category}
               onChange={formik.handleChange}
               error={formik.touched.category && Boolean(formik.errors.category)}
               helperText={formik.touched.category && formik.errors.category}
@@ -376,7 +379,7 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
               id="propertyType"
               name="propertyType"
               captionLabel="Property Type"
-              value={formik.values.propertyType}
+              value={formik.values.propertyType || editData?.propertyType}
               onChange={formik.handleChange}
               error={formik.touched.propertyType && Boolean(formik.errors.propertyType)}
               helperText={formik.touched.propertyType && formik.errors.propertyType}
@@ -389,7 +392,7 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
               id="furnishing"
               name="furnishing"
               captionLabel="Furnishing"
-              value={formik.values.furnishing}
+              value={formik.values.furnishing || editData?.furnishing}
               onChange={formik.handleChange}
               error={formik.touched.furnishing && Boolean(formik.errors.furnishing)}
               helperText={formik.touched.furnishing && formik.errors.furnishing}
@@ -403,7 +406,7 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex 
               name="carpark"
               captionLabel="Car Park*"
               type="number"
-              value={formik.values.carpark}
+              value={formik.values.carpark || editData?.carpark}
               onChange={formik.handleChange}
               error={formik.touched.carpark && Boolean(formik.errors.carpark)}
               helperText={formik.touched.carpark && formik.errors.carpark}

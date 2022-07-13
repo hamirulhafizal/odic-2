@@ -19,11 +19,27 @@ import useAuth from 'hooks/useAuth';
 // step options
 const steps = ['Fill Up Detail', 'Upload Image', 'Review your Listing'];
 
-const getStepContent = (step, handleNext, handleBack, setErrorIndex, shippingData, setShippingData, imageProperty, setPaymentData) => {
+const getStepContent = (
+  step,
+  handleNext,
+  handleBack,
+  setErrorIndex,
+  shippingData,
+  setShippingData,
+  imageProperty,
+  setPaymentData,
+  editData
+) => {
   switch (step) {
     case 0:
       return (
-        <AddressForm handleNext={handleNext} setErrorIndex={setErrorIndex} shippingData={shippingData} setShippingData={setShippingData} />
+        <AddressForm
+          editData={editData}
+          handleNext={handleNext}
+          setErrorIndex={setErrorIndex}
+          shippingData={shippingData}
+          setShippingData={setShippingData}
+        />
       );
     case 1:
       return (
@@ -44,11 +60,12 @@ const getStepContent = (step, handleNext, handleBack, setErrorIndex, shippingDat
 
 // ==============================|| FORMS WIZARD - BASIC ||============================== //
 
-const ValidationWizard = () => {
+const ValidationWizard = ({ updateProperty, formFor }) => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [shippingData, setShippingData] = React.useState({});
   const [imageProperty, setPaymentData] = React.useState({});
   const [errorIndex, setErrorIndex] = React.useState(null);
+  const [editData, setEditData] = React.useState(null);
 
   const router = useRouter();
 
@@ -62,9 +79,6 @@ const ValidationWizard = () => {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
-
-  // const { category, propertyType, propertyTitle, saleType, rentalDeposit, tenure, slug, ...rest } = shippingData;
-  // const { fileName, type, size } = imageProperty;
 
   useEffect(() => {
     if (activeStep == 3 && imageProperty?.imgE != null) {
@@ -99,10 +113,17 @@ const ValidationWizard = () => {
           return err;
         });
     }
-  }, [activeStep, shippingData, imageProperty, user]);
+
+    if (updateProperty != undefined) {
+      setEditData(updateProperty);
+    }
+    if (updateProperty == undefined) {
+      setEditData();
+    }
+  }, [activeStep, shippingData, imageProperty, user, updateProperty]);
 
   return (
-    <MainCard title="Create Listing">
+    <MainCard title={formFor == 'createListing' ? 'Create Listing' : formFor == 'UpdateListing' ? 'Update Listing' : null}>
       <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
         {steps.map((label, index) => {
           const labelProps = {};
@@ -160,7 +181,8 @@ const ValidationWizard = () => {
               shippingData,
               setShippingData,
               imageProperty,
-              setPaymentData
+              setPaymentData,
+              editData
             )}
 
             {activeStep === steps.length - 1 && (

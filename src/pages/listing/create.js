@@ -14,7 +14,7 @@ const Create = () => {
   return (
     <Grid container spacing={gridSpacing} justifyContent="center">
       <Grid item xs={12} md={9} lg={7}>
-        <ValidationWizard />
+        <ValidationWizard formFor="createListing" updateProperty={undefined} />
       </Grid>
 
       <Grid item xs={12} sx={{ m: 3, mt: 1 }}>
