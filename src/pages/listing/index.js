@@ -264,7 +264,6 @@ const Listing = () => {
   const [open, setOpen] = React.useState(false);
 
   const handleDialog = (index) => {
-
     setProductEditId(index);
     setOpen(true);
   };
@@ -374,7 +373,6 @@ const Listing = () => {
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows?.length) : 0;
-
 
   return (
     <>

@@ -254,7 +254,6 @@ const validationSchema = yup.object({
 const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex, editData }) => {
   const { user } = useAuth();
 
-
   const initials = {
     category: 1,
     propertyType: 1,
