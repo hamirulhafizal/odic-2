@@ -34,7 +34,7 @@ export const BACKEND_PATH = 'https://onedream.dynamicdigital.guru';
 // export const BACKEND_PATH = 'http://127.0.0.1:8000';
 
 const config = {
-  fontFamily: `'Roboto', sans-serif`,
+  fontFamily: `Roboto, sans-serif`,
   borderRadius: 8,
   outlinedFilled: true,
   navType: 'light', // light, dark
