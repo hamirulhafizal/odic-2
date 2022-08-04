@@ -47,7 +47,7 @@ const getLisitingAgentById = async (id) => {
 };
 
 const getProfileAgentById = async (uid) => {
-  await axios
+  return await axios
     .get(`${BACKEND_PATH}/api/v1/profile/${uid}`)
     .then((res) => {
       return res;
@@ -72,6 +72,39 @@ const getListingBySlug = async (slug) => {
     });
 };
 
+const updateListingById = async (id, form_data) => {
+  await axiosInstance
+    .put(`${BACKEND_PATH}/api/v1/inventory/${id}`, form_data)
+    .then((res) => {
+      return res;
+    })
+    .catch((err) => {
+      const stringErr = JSON.stringify(err);
+      const error = JSON.parse(stringErr);
+      return error;
+    });
+};
 
+const deleteListingById = async (id) => {
+  await axiosInstance
+    .delete(`${BACKEND_PATH}/api/v1/inventory/${id}`)
+    .then((res) => {
+      return res;
+    })
+    .catch((err) => {
+      const stringErr = JSON.stringify(err);
+      const error = JSON.parse(stringErr);
+      return error;
+    });
+};
 
-export { setProduct, getAllListing, getListingById, getLisitingAgentById, getProfileAgentById, getListingBySlug };
+export {
+  setProduct,
+  getAllListing,
+  getListingById,
+  getLisitingAgentById,
+  getProfileAgentById,
+  getListingBySlug,
+  updateListingById,
+  deleteListingById
+};

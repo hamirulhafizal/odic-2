@@ -84,7 +84,7 @@ export const ApiProvider = ({ children }) => {
           }
         });
 
-        // history.push('/listing');
+        history.push('/listing');
 
         return res;
       });
@@ -104,12 +104,10 @@ export const ApiProvider = ({ children }) => {
         password
       })
       .then((res) => {
-        debugger;
-
         console.log('res->', res);
 
-        // login(email, password, user_name);
-        // history.push('/login');
+        login(email, password, user_name);
+        history.push('/login');
 
         return res;
       })
@@ -118,7 +116,7 @@ export const ApiProvider = ({ children }) => {
         history.push('/register');
         return err;
       });
-    return response;
+    return respond;
   };
 
   const logout = async () => {

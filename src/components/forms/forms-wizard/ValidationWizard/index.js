@@ -12,9 +12,10 @@ import MainCard from 'components/ui-component/cards/MainCard';
 import AnimateButton from 'components/ui-component/extended/AnimateButton';
 import { Router, useRouter } from 'next/router';
 import axiosInstance from 'contexts/axios';
-import { setProduct } from 'contexts/ApiListing';
+import { setProduct, updateListingById } from 'contexts/ApiListing';
 import slugify from 'utils/helper';
 import useAuth from 'hooks/useAuth';
+import Link from 'Link';
 
 // step options
 const steps = ['Fill Up Detail', 'Upload Image', 'Review your Listing'];
@@ -67,6 +68,8 @@ const ValidationWizard = ({ updateProperty, formFor }) => {
   const [errorIndex, setErrorIndex] = React.useState(null);
   const [editData, setEditData] = React.useState(null);
 
+  const [lisitngId, setLisitngId] = React.useState(null);
+
   const router = useRouter();
 
   const { user } = useAuth();
@@ -82,12 +85,21 @@ const ValidationWizard = ({ updateProperty, formFor }) => {
 
   useEffect(() => {
     if (activeStep == 3 && imageProperty?.imgE != null) {
-      const photo_1 = imageProperty?.imgE;
+      const featureImage = imageProperty?.imgE;
+      const photo_1 = imageProperty?.imgEAlbum[0];
+      const photo_2 = imageProperty?.imgEAlbum[1];
+      const photo_3 = imageProperty?.imgEAlbum[2];
+      const photo_4 = imageProperty?.imgEAlbum[3];
+      const photo_5 = imageProperty?.imgEAlbum[4];
 
       const propertyObj = {
-        photo_1: photo_1,
-        realtor: user?.user,
-
+        featureImage: featureImage,
+        photo_1: photo_1 ? photo_1 : '',
+        photo_2: photo_2 ? photo_2 : '',
+        photo_3: photo_3 ? photo_3 : '',
+        photo_4: photo_4 ? photo_4 : '',
+        photo_5: photo_5 ? photo_5 : '',
+        realtor: user?.inventories[0]?.realtor,
         ...shippingData
       };
 
@@ -97,21 +109,27 @@ const ValidationWizard = ({ updateProperty, formFor }) => {
         form_data.append(key, propertyObj[key]);
       });
 
-      setProduct(form_data)
-        .then((res) => {
-          const resJson1 = JSON.stringify(res);
-          const resParse1 = JSON.parse(resJson1);
-          // console.log('res-->', res);
-          // setError('400');
-          return res;
-        })
-        .catch((err) => {
-          const resJson = JSON.stringify(err);
-          const resParse = JSON.parse(resJson);
-          // console.log('resParse-->', resParse);
-          // console.log('err---?', err);
-          return err;
-        });
+      if (formFor == 'UpdateListing') {
+        updateListingById(updateProperty?.id, form_data).then((res) => {});
+      }
+
+      if (formFor == 'createListing') {
+        setProduct(form_data)
+          .then((res) => {
+            const resJson1 = JSON.stringify(res);
+            const resParse1 = JSON.parse(resJson1);
+            setLisitngId(res?.data?.id);
+            // setError('400');
+            return res;
+          })
+          .catch((err) => {
+            const resJson = JSON.stringify(err);
+            const resParse = JSON.parse(resJson);
+            // console.log('resParse-->', resParse);
+            // console.log('err---?', err);
+            return err;
+          });
+      }
     }
 
     if (updateProperty != undefined) {
@@ -120,7 +138,7 @@ const ValidationWizard = ({ updateProperty, formFor }) => {
     if (updateProperty == undefined) {
       setEditData();
     }
-  }, [activeStep, shippingData, imageProperty, user, updateProperty]);
+  }, [activeStep, shippingData, imageProperty, user, updateProperty, editData, formFor]);
 
   return (
     <MainCard title={formFor == 'createListing' ? 'Create Listing' : formFor == 'UpdateListing' ? 'Update Listing' : null}>
@@ -151,10 +169,38 @@ const ValidationWizard = ({ updateProperty, formFor }) => {
             <Typography variant="h5" gutterBottom>
               Thank you for your Submit
             </Typography>
-            <Typography variant="subtitle1">
-              Your Lisiting Property is #2001539. We have emailed your appplication confirmation, and will send you an update when your
-              submission has approved.
-            </Typography>
+            <Typography variant="subtitle1">Your Lisiting Property is Live. Share to your waiting clients using this </Typography>
+
+            {/* <Link href={`/listing/${lisitngId}`}>link</Link> */}
+
+            {/* <Button
+              variant="text"
+              sx={{ color: 'black' }}
+              onClick={() => {
+                router.push(`/listing/${lisitngId}`);
+              }}
+            >
+              link
+            </Button> */}
+
+            <Link
+              href={`/listing/${lisitngId}`}
+              underline="hover"
+              color="default"
+              // onClick={() => {
+              //   router.push(`/listing/${lisitngId}`);
+              // }}
+              sx={{
+                overflow: 'hidden',
+                display: 'block',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+                ':hover': { color: 'primary.main' },
+                cursor: 'pointer'
+              }}
+            >
+              LINK
+            </Link>
 
             <Stack direction="row" justifyContent="flex-end">
               <AnimateButton>

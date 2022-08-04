@@ -31,7 +31,7 @@ export const DASHBOARD_PATH = '/dashboard';
 export const LISTING_PATH = '/listing';
 
 export const BACKEND_PATH = 'https://onedream.dynamicdigital.guru';
-// export const BACKEND_PATH = 'https://agent-inventory.herokuapp.com';
+// export const BACKEND_PATH = 'http://127.0.0.1:8000';
 
 const config = {
   fontFamily: `'Roboto', sans-serif`,

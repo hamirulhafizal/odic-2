@@ -107,7 +107,7 @@ function AgentProfile({ userData }) {
   // const title = (document.getElementById('titleMeta').content = userData.firstName);
   // console.log('title', title);
 
-  // console.log('userData', userData);
+  console.log('userData', userData);
 
   return (
     <>
@@ -291,6 +291,7 @@ AgentProfile.getInitialProps = async (context) => {
       return json;
     });
 
+  console.log('uids-->', uids);
   console.log('userData1-->', userData1);
 
   return {

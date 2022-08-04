@@ -119,14 +119,7 @@ const HeaderPage = () => {
                 <Grid container spacing={2} sx={{ justifyContent: { xs: 'center', md: 'center' } }}>
                   <Grid item>
                     <AnimateButton>
-                      <Button
-                        sx={{ color: 'white' }}
-                        component={Link}
-                        href="/dashboard/"
-                        size="large"
-                        variant="contained"
-                        color="secondary"
-                      >
+                      <Button sx={{ color: 'white' }} component={Link} href="/listing/" size="large" variant="contained" color="secondary">
                         View Home List
                       </Button>
                     </AnimateButton>

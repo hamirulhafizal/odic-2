@@ -20,6 +20,10 @@ import PoolIcon from '@mui/icons-material/Pool';
 import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
 import StoreMallDirectoryIcon from '@mui/icons-material/StoreMallDirectory';
 import MosqueIcon from '@mui/icons-material/Mosque';
+import LocalParkingIcon from '@mui/icons-material/LocalParking';
+import SingleBedRoundedIcon from '@mui/icons-material/SingleBedRounded';
+import ShowerRoundedIcon from '@mui/icons-material/ShowerRounded';
+
 import { useRouter } from 'next/router';
 
 const CardProperty = ({ itemData, agentData }) => {
@@ -29,20 +33,19 @@ const CardProperty = ({ itemData, agentData }) => {
   const { user } = useAuth();
   const router = useRouter();
 
-  const { photo, phone, firstName, lastName } = agentData;
+  const { photo, phone, firstName, lastName, user_name } = agentData;
+
+  console.log('itemData', itemData);
 
   return (
     <>
       <Card
         sx={{
           display: 'flex',
-
           left: '235px',
           top: '2109px',
-
           flexWrap: 'wrap',
           flexDirection: matchDownSM ? 'column' : 'row',
-
           background: '#FFFFFF',
           boxShadow: '0px 0px 6px 4px rgba(0, 0, 0, 0.15)',
           borderRadius: '10pX',
@@ -53,9 +56,18 @@ const CardProperty = ({ itemData, agentData }) => {
       >
         <Box sx={{ width: { xs: '-webkit-fill-available', md: '40%' } }}>
           <CardMedia
-            sx={{ width: '-webkit-fill-available' }}
+            onClick={() => {
+              router.push(`/listing/${itemData?.id}`);
+            }}
+            sx={{
+              cursor: 'pointer',
+              width: '100%',
+              height: '50VH',
+              objectFit: 'contain',
+              background: 'grey'
+            }}
             component="img"
-            image={`https://listing.hoom.my/uploads/6402/feature/27fcd636555d7d67268746db8525f30f.jpeg`}
+            image={itemData?.photo_1 != null ? itemData?.photo_1 : `/assets/images/noImg.webp`}
             alt="Live from space album cover"
           />
 
@@ -67,6 +79,9 @@ const CardProperty = ({ itemData, agentData }) => {
                 badgeContent={<VerifiedIcon sx={{ fontSize: '1.5em' }} color="secondary" />}
               >
                 <Avatar
+                  onClick={() => {
+                    router.push(`/${user_name}`);
+                  }}
                   alt="User 1"
                   src={user?.photo || photo}
                   sx={{
@@ -75,14 +90,22 @@ const CardProperty = ({ itemData, agentData }) => {
                     width: '50px',
                     height: '50px',
                     backgroundColor: 'transparent',
-                    borderRadius: '100%'
+                    borderRadius: '100%',
+                    cursor: 'pointer'
                   }}
                 />
               </Badge>
             </Stack>
 
             <Stack direction="column" sx={{ pl: 2, pt: { xs: 3 } }}>
-              <Typography variant="h4" color="main" sx={{ textTransform: 'capitalize' }}>
+              <Typography
+                onClick={() => {
+                  router.push(`/${user_name}`);
+                }}
+                variant="h4"
+                color="main"
+                sx={{ textTransform: 'capitalize', cursor: 'pointer' }}
+              >
                 {user?.firstName || firstName} {user?.lastName || lastName}
               </Typography>
               <Typography variant="subtitle2" color="secondary">
@@ -95,11 +118,21 @@ const CardProperty = ({ itemData, agentData }) => {
         <Box sx={{ width: { xs: '-webkit-fill-available', md: '60%' }, pl: { md: 2 } }}>
           <CardContent sx={{ flex: '1 0 auto', p: { xs: 0, md: 2 }, pt: { xs: 2 } }}>
             <Stack direction="column" justifyContent={matchDownLG ? 'center' : 'start'}>
-              <Typography variant="h3" color="main" sx={{ textTransform: 'capitalize' }}>
+              <Typography
+                onClick={() => {
+                  router.push(`/listing/${itemData?.id}`);
+                }}
+                variant="h3"
+                color="main"
+                sx={{ textTransform: 'capitalize', cursor: 'pointer' }}
+              >
                 {itemData?.title}
               </Typography>
+              <Typography variant="h5" color="main" sx={{ textTransform: 'capitalize' }}>
+                {itemData?.description}
+              </Typography>
               <Typography variant="h4" color="secondary" sx={{ pt: 2 }}>
-                RM {itemData?.price}
+                RM {itemData?.price} / month
               </Typography>
 
               <List>
@@ -117,9 +150,9 @@ const CardProperty = ({ itemData, agentData }) => {
                       <>
                         <Stack display="flex" direction="row" alignItems="center">
                           <ListItemIcon>
-                            <PoolIcon />
+                            <ShowerRoundedIcon />
                           </ListItemIcon>
-                          Pool
+                          {itemData?.bathrooms} bathrooms
                         </Stack>
                       </>
                     }
@@ -127,14 +160,14 @@ const CardProperty = ({ itemData, agentData }) => {
                       <>
                         <Stack display="flex" direction="row" alignItems="center">
                           <ListItemIcon>
-                            <LocalGasStationIcon />
+                            <LocalParkingIcon />
+                            {itemData?.carpark} Car Park
                           </ListItemIcon>
-                          Petrol Station
                         </Stack>
                       </>
                     }
                   />
-                  <ListItemText
+                  {/* <ListItemText
                     sx={{
                       display: 'flex',
                       justifyContent: 'start',
@@ -147,23 +180,13 @@ const CardProperty = ({ itemData, agentData }) => {
                       <>
                         <Stack display="flex" direction="row" alignItems="center">
                           <ListItemIcon>
-                            <StoreMallDirectoryIcon />
+                            <SingleBedRoundedIcon />
                           </ListItemIcon>
-                          Mall
+                          {itemData?.bedrooms} bedrooms
                         </Stack>
                       </>
                     }
-                    secondary={
-                      <>
-                        <Stack display="flex" direction="row" alignItems="center">
-                          <ListItemIcon>
-                            <MosqueIcon />
-                          </ListItemIcon>
-                          Mosque
-                        </Stack>
-                      </>
-                    }
-                  />
+                  /> */}
                 </ListItem>
               </List>
             </Stack>
@@ -171,21 +194,15 @@ const CardProperty = ({ itemData, agentData }) => {
 
           <Divider sx={{ width: '90%', position: 'relative', left: '2%' }} />
 
-          <CardActions sx={{ p: 0, py: 2, pl: 2 }}>
-            <Button
-              // onClick={() => {
-              //   router.push(`wa.me/${phone}`);
-              // }}
-              size="medium"
-              sx={{ backgroundColor: '#28933F', color: 'white' }}
-            >
-              <a target="_blank" href={`wa.me/${phone}`} rel="noopener noreferrer">
+          <CardActions sx={{ p: 0, py: 2, pl: matchDownSM ? 0 : 2 }}>
+            <Button variant="contained" size="medium" sx={{ backgroundColor: '#28933F', color: 'white' }}>
+              <a target="_blank" href={`https://wasap.my/${phone}/${itemData.title}`} rel="noopener noreferrer">
                 Whatsapp
               </a>
             </Button>
-            <Button size="medium" color="secondary" variant="contained" sx={{ color: 'white' }}>
+            {/* <Button size="medium" color="secondary" variant="contained" sx={{ color: 'white' }}>
               Make Offer
-            </Button>
+            </Button> */}
           </CardActions>
         </Box>
       </Card>

@@ -13,6 +13,7 @@ import * as yup from 'yup';
 import { useState } from 'react';
 
 import { useTheme, styled } from '@mui/material/styles';
+import { Box } from '@mui/material';
 
 const example = 'assets/images/e-commerce/landscape2.jpeg';
 
@@ -46,8 +47,12 @@ const ImageWrapper = styled('div')(({ theme }) => ({
 
 export default function GalleryForm({ imageProperty, setPaymentData, handleNext, handleBack, setErrorIndex }) {
   const [avatarPreview, setAvatarPreview] = useState('');
+  const [avatarPreviewAlbum, setAvatarPreviewAlbum] = useState(null);
+
   const [imgE, setEImg] = useState();
+  const [imgEAlbum, setEImgAlbum] = useState();
   const [message, setMessage] = useState('');
+  const [messageAlbum, setMessageAlbum] = useState('');
   const theme = useTheme();
 
   const formik = useFormik({
@@ -62,7 +67,8 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
         setMessage('File Size is too large');
       } else {
         setPaymentData({
-          imgE: imgE
+          imgE: imgE,
+          imgEAlbum: imgEAlbum
         });
         handleNext();
       }
@@ -87,27 +93,64 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
   };
 
   const preViewImageAlbum = (e) => {
-    if (e.target.files[0].size >= 2000000) {
-      setMessage('File Size is too large');
-    }
+    // if (e.target.files[0].size >= 2000000) {
+    //   setMessageAlbum('File Size is too large');
+    // }
 
-    const fileReader = new FileReader();
-    fileReader.onload = () => {
-      if (fileReader.readyState === 2) {
-        formik.setFieldValue('photo', e.target.files[0]);
-        formik.setFieldValue('size', e.target.files[0].size);
-        setAvatarPreview(fileReader.result);
-        setEImg(e.target.files[0]);
+    // const fileReader = new FileReader();
+    // fileReader.onload = () => {
+    //   if (fileReader.readyState > 1) {
+    //     // formik.setFieldValue('photo', e.target?.files);
+    //     // formik.setFieldValue('size', e.target?.files.size);
+    //     setAvatarPreviewAlbum(fileReader.result);
+    //     console.log('e.target.files', e.target.files);
+
+    //     setEImgAlbum(e.target.files);
+    //   }
+    // };
+
+    // fileReader?.readAsDataURL(e.target.files);
+
+    if (window.File && window.FileReader && window.FileList && window.Blob) {
+      const files = e.target.files;
+
+      console.log('files', files);
+
+      setEImgAlbum(files);
+
+      const output = document.querySelector('#result');
+      output.innerHTML = '';
+      for (let i = 0; i < files.length; i++) {
+        if (!files[i].type.match('image')) continue;
+        const picReader = new FileReader();
+        picReader.addEventListener('load', function (event) {
+          const picFile = event.target;
+
+          console.log('picFile', picFile);
+
+          const div = document.createElement('div');
+          div.innerHTML = ` <img style="width: 40vw;height: auto;"  src="${picFile.result}" title="${picFile.name}" /> `;
+
+          output.appendChild(div);
+        });
+        picReader.readAsDataURL(files[i]);
       }
-    };
-
-    fileReader.readAsDataURL(e.target.files[0]);
+    } else {
+      alert('Your browser does not support File API');
+    }
   };
 
   const deleteImgPreview = () => {
     formik.setFieldValue('photo', null);
     formik.setFieldValue('size', null);
     setAvatarPreview(null);
+    setEImg(null);
+  };
+
+  const deleteImgPreviewAlbum = () => {
+    formik.setFieldValue('photo', null);
+    formik.setFieldValue('size', null);
+    setAvatarPreviewAlbum(null);
     setEImg(null);
   };
 
@@ -140,8 +183,10 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
                 }}
               >
                 <TextField
-                  accept="image/*"
-                  multiple
+                  // multiple
+                  inputProps={{
+                    accept: 'image/jpeg, image/png, image/jpg'
+                  }}
                   name="photo"
                   type="file"
                   id="photo"
@@ -186,9 +231,9 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
               <Typography variant="h5" gutterBottom>
                 Gallery Image
               </Typography>
-              {avatarPreview && (
+              {avatarPreviewAlbum && (
                 <AnimateButton>
-                  <Button color="error" sx={{ color: 'white' }} variant="contained" onClick={deleteImgPreview}>
+                  <Button color="error" sx={{ color: 'white' }} variant="contained" onClick={deleteImgPreviewAlbum}>
                     Delete
                   </Button>
                 </AnimateButton>
@@ -197,29 +242,57 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
           </Grid>
 
           <Grid item xs={12}>
-            {!avatarPreview ? (
-              <div
-                style={{
-                  // border: `1px solid grey`,
-                  boxShadow: 'inset 0 0 5px #000000',
-                  borderRadius: '5px'
+            <Box sx={{ pb: '5%' }}>
+              <input
+                onChange={(e) => {
+                  preViewImageAlbum(e);
                 }}
-              >
-                <TextField
-                  accept="image/*"
-                  multiple
+                id="files"
+                type="file"
+                multiple="multiple"
+                accept="image/jpeg, image/png, image/jpg"
+              />
+            </Box>
+
+            <div
+              style={{
+                // border: `1px solid grey`,
+                boxShadow: 'inset 0 0 5px #000000',
+                borderRadius: '5px'
+              }}
+            >
+              {/* <TextField
+                  accept="image/jpeg, image/png, image/jpg"
+                  inputProps={{ multiple: true }}
                   name="file"
                   type="file"
-                  id="file-upload"
+                  id="files"
                   fullWidth
                   label="Enter SKU"
                   sx={{ display: 'none' }}
                   onChange={(e) => {
-                    preViewImageCover(e);
+                    preViewImageAlbum(e);
                   }}
-                />
+                /> */}
 
-                <InputLabel
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'space-around',
+                  flexWrap: 'wrap',
+                  padding: '5%'
+                }}
+              >
+                <output id="result" />
+              </Box>
+
+              {/* {avatarPreviewAlbum && (
+                <ImageWrapper>
+                 
+                </ImageWrapper>
+              )} */}
+
+              {/* <InputLabel
                   htmlFor="file-upload"
                   sx={{
                     py: 3.75,
@@ -233,10 +306,10 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
                     }
                   }}
                 >
-                  <CloudUploadIcon /> Click Here Or Drop file here to upload
-                </InputLabel>
+                  <CloudUploadIcon /> Click Here Or Drop file here to uploads
+                </InputLabel> */}
 
-                {/* <InputLabel htmlFor="photo">
+              {/* <InputLabel htmlFor="photo">
                   <Input
                     accept="image/*"
                     id="photo"
@@ -253,13 +326,8 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
                   </Button>
                 </InputLabel> */}
 
-                <FormHelperText error>{message}</FormHelperText>
-              </div>
-            ) : (
-              <ImageWrapper>
-                <CardMedia component="img" image={avatarPreview} title="Product" />
-              </ImageWrapper>
-            )}
+              <FormHelperText error>{messageAlbum}</FormHelperText>
+            </div>
           </Grid>
 
           <Grid item xs={12}>

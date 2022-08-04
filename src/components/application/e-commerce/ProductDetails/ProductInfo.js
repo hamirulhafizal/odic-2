@@ -24,7 +24,11 @@ import {
   TableCell,
   TableRow,
   Tooltip,
-  Typography
+  Typography,
+  ListItem,
+  List,
+  ListItemText,
+  ListItemIcon
 } from '@mui/material';
 
 // third-party
@@ -47,6 +51,12 @@ import StarBorderTwoToneIcon from '@mui/icons-material/StarBorderTwoTone';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import WhatsappTwoToneIcon from '@mui/icons-material/WhatsappTwoTone';
+import PoolIcon from '@mui/icons-material/Pool';
+import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
+import StoreMallDirectoryIcon from '@mui/icons-material/StoreMallDirectory';
+import MosqueIcon from '@mui/icons-material/Mosque';
+import { getProfileAgentById } from 'contexts/ApiListing';
+import { useEffect, useState } from 'react';
 
 // product color select
 function getColor(color) {
@@ -117,7 +127,19 @@ const ProductInfo = ({ product }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
+  const [agentData, setAgentData] = useState();
+
   const cart = useSelector((state) => state.cart);
+
+  const agetData = (user_name) => {
+    getProfileAgentById(user_name).then((res) => {
+      setAgentData(res?.data);
+    });
+  };
+
+  useEffect(() => {
+    agetData(product?.user_name);
+  }, [product?.user_name]);
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -204,9 +226,73 @@ const ProductInfo = ({ product }) => {
           <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
             <Grid container spacing={2}>
               <Grid item xs={12} lg={10}>
-                <Table>
+                <List>
+                  <ListItem disablePadding sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap ', py: 1, px: 0 }}>
+                    <ListItemText
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'start',
+
+                        '& .MuiListItemText-primary': {
+                          pr: '10%'
+                        }
+                      }}
+                      primary={
+                        <>
+                          <Stack display="flex" direction="row" alignItems="center">
+                            <ListItemIcon>
+                              <PoolIcon />
+                            </ListItemIcon>
+                            Pool
+                          </Stack>
+                        </>
+                      }
+                      secondary={
+                        <>
+                          <Stack display="flex" direction="row" alignItems="center">
+                            <ListItemIcon>
+                              <LocalGasStationIcon />
+                            </ListItemIcon>
+                            Petrol
+                          </Stack>
+                        </>
+                      }
+                    />
+                    <ListItemText
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'start',
+
+                        '& .MuiListItemText-primary': {
+                          pr: '10%'
+                        }
+                      }}
+                      primary={
+                        <>
+                          <Stack display="flex" direction="row" alignItems="center">
+                            <ListItemIcon>
+                              <StoreMallDirectoryIcon />
+                            </ListItemIcon>
+                            Mall
+                          </Stack>
+                        </>
+                      }
+                      secondary={
+                        <>
+                          <Stack display="flex" direction="row" alignItems="center">
+                            <ListItemIcon>
+                              <MosqueIcon />
+                            </ListItemIcon>
+                            Mosque
+                          </Stack>
+                        </>
+                      }
+                    />
+                  </ListItem>
+                </List>
+                {/* <Table>
                   <TableBody sx={{ '& .MuiTableCell-root': { borderBottom: 'none' } }}>
-                    {/* <TableRow>
+                    <TableRow>
                       <TableCell>
                         <Typography variant="body2">
                           Colors{' '}
@@ -251,8 +337,8 @@ const ProductInfo = ({ product }) => {
                           </FormHelperText>
                         )}
                       </TableCell>
-                    </TableRow> */}
-                    {/* <TableRow>
+                    </TableRow>
+                    <TableRow>
                       <TableCell>
                         <Stack>
                           <Typography variant="body2">
@@ -292,17 +378,17 @@ const ProductInfo = ({ product }) => {
                           </FormHelperText>
                         )}
                       </TableCell>
-                    </TableRow> */}
-                    {/* <TableRow>
+                    </TableRow>
+                    <TableRow>
                       <TableCell>
                         <Typography variant="body2">Quantity</Typography>
                       </TableCell>
                       <TableCell align="left">
                         <Increment name="quantity" />
                       </TableCell>
-                    </TableRow> */}
+                    </TableRow>
                   </TableBody>
-                </Table>
+                </Table> */}
               </Grid>
               <Grid item xs={12}>
                 <Divider />
@@ -310,7 +396,7 @@ const ProductInfo = ({ product }) => {
               <Grid item xs={12}>
                 <Grid container spacing={1}>
                   <Grid item xs={6}>
-                    <Button
+                    {/* <Button
                       fullWidth
                       color="primary"
                       variant="contained"
@@ -319,6 +405,16 @@ const ProductInfo = ({ product }) => {
                       onClick={addCart}
                     >
                       Whatsapp
+                    </Button> */}
+                    <Button
+                      startIcon={<WhatsappTwoToneIcon />}
+                      variant="contained"
+                      size="medium"
+                      sx={{ backgroundColor: '#28933F', color: 'white' }}
+                    >
+                      <a target="_blank" href={`https://wasap.my/${agentData?.phone}/${product.title}`} rel="noopener noreferrer">
+                        Whatsapp
+                      </a>
                     </Button>
                   </Grid>
                   <Grid item xs={6}>

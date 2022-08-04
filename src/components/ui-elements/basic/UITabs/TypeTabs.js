@@ -104,7 +104,7 @@ export default function TypeTabs({ username, agentData }) {
           {...a11yProps(0)}
         />
 
-        <Tab component={Link} href="#" icon={<HomeTwoToneIcon sx={{ fontSize: '1.3rem' }} />} label="Buy" {...a11yProps(1)} />
+        {/* <Tab component={Link} href="#" icon={<HomeTwoToneIcon sx={{ fontSize: '1.3rem' }} />} label="Buy" {...a11yProps(1)} />
         <Tab
           component={Link}
           href="#"
@@ -120,7 +120,7 @@ export default function TypeTabs({ username, agentData }) {
             </>
           }
           {...a11yProps(2)}
-        />
+        /> */}
       </Tabs>
       <TabPanel value={value} index={0}>
         {agentData?.inventories?.map((element, index) => {

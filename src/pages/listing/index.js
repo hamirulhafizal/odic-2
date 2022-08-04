@@ -50,6 +50,8 @@ import ListingUpdate from './ListingUpdate';
 
 import VisibilityTwoToneIcon from '@mui/icons-material/VisibilityTwoTone';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
+import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
+import { deleteListingById } from 'contexts/ApiListing';
 
 const prodImage = '/assets/images/e-commerce';
 
@@ -79,12 +81,6 @@ function stableSort(array, comparator) {
 
 // table header options
 const headCells = [
-  {
-    id: 'Img ',
-    numeric: false,
-    label: 'Image Cover',
-    align: 'center'
-  },
   {
     id: 'title',
     numeric: false,
@@ -176,7 +172,7 @@ function EnhancedTableHead({ onSelectAllClick, order, orderBy, numSelected, rowC
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox" sx={{ pl: 3 }}>
+        {/* <TableCell padding="checkbox" sx={{ pl: 3 }}>
           <Checkbox
             color="primary"
             indeterminate={numSelected > 0 && numSelected < rowCount}
@@ -186,7 +182,7 @@ function EnhancedTableHead({ onSelectAllClick, order, orderBy, numSelected, rowC
               'aria-label': 'select all desserts'
             }}
           />
-        </TableCell>
+        </TableCell> */}
         {numSelected > 0 && (
           <TableCell padding="none" colSpan={7}>
             <EnhancedTableToolbar numSelected={selected.length} />
@@ -239,6 +235,14 @@ EnhancedTableHead.propTypes = {
 
 // ==============================|| PRODUCT LIST ||============================== //
 
+const handleDelete = (index) => {
+  deleteListingById(index).then((res) => {
+    console.log('res', res);
+    const deleteRow = document.getElementById(`row-${index}`);
+    deleteRow?.remove();
+  });
+};
+
 const Listing = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
@@ -267,6 +271,7 @@ const Listing = () => {
     setProductEditId(index);
     setOpen(true);
   };
+
   const handleCloseDialog = () => {
     setProductEditId();
     setOpen(false);
@@ -374,13 +379,16 @@ const Listing = () => {
   const isSelected = (name) => selected.indexOf(name) !== -1;
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows?.length) : 0;
 
+  console.log('products', products);
+
   return (
     <>
       <MainCard title="Product List" content={false} contentSX={{ p: 0 }}>
-        <CardContent>
-          <Grid container justifyContent="space-between" alignItems="center" spacing={2}>
-            <Grid item xs={12} sm={6}>
-              {/* <TextField
+        {products?.inventories?.length != 0 && (
+          <CardContent>
+            <Grid container justifyContent="space-between" alignItems="center" spacing={2}>
+              <Grid item xs={12} sm={6}>
+                {/* <TextField
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -392,8 +400,8 @@ const Listing = () => {
               value={search}
               size="small"
             /> */}
-            </Grid>
-            {products?.inventories?.length != 0 && (
+              </Grid>
+
               <Grid item xs={12} sm={6} sx={{ textAlign: `${matchDownSM ? 'start' : 'right'}` }}>
                 {/* product add & dialog */}
                 <Tooltip title="Add Product">
@@ -411,9 +419,9 @@ const Listing = () => {
                   </Button>
                 </Tooltip>
               </Grid>
-            )}
-          </Grid>
-        </CardContent>
+            </Grid>
+          </CardContent>
+        )}
 
         {products?.inventories?.length == 0 ? (
           <>
@@ -456,8 +464,16 @@ const Listing = () => {
                     const labelId = `enhanced-table-checkbox-${index}`;
 
                     return (
-                      <TableRow hover role="checkbox" aria-checked={isItemSelected} tabIndex={-1} key={index} selected={isItemSelected}>
-                        <TableCell padding="checkbox" sx={{ pl: 3 }} onClick={(event) => handleClick(event, row.name)}>
+                      <TableRow
+                        id={`row-${row?.id}`}
+                        hover
+                        role="checkbox"
+                        aria-checked={isItemSelected}
+                        tabIndex={-1}
+                        key={index}
+                        selected={isItemSelected}
+                      >
+                        {/* <TableCell padding="checkbox" sx={{ pl: 3 }} onClick={(event) => handleClick(event, row.name)}>
                           <Checkbox
                             color="primary"
                             checked={isItemSelected}
@@ -465,7 +481,7 @@ const Listing = () => {
                               'aria-labelledby': labelId
                             }}
                           />
-                        </TableCell>
+                        </TableCell> */}
                         <TableCell align="center" component="th" id={labelId} scope="row" sx={{ cursor: 'pointer' }}>
                           <Avatar
                             component={Link}
@@ -505,7 +521,13 @@ const Listing = () => {
                           />
                         </TableCell>
                         <TableCell align="center" sx={{ pr: 3 }}>
-                          <IconButton color="primary" size="large">
+                          <IconButton
+                            onClick={() => {
+                              router.push(`listing/${row?.id}`);
+                            }}
+                            color="primary"
+                            size="large"
+                          >
                             <VisibilityTwoToneIcon sx={{ fontSize: '1.3rem' }} />
                           </IconButton>
                           <IconButton
@@ -516,6 +538,15 @@ const Listing = () => {
                             size="large"
                           >
                             <EditTwoToneIcon sx={{ fontSize: '1.3rem' }} />
+                          </IconButton>
+                          <IconButton
+                            color="secondary"
+                            onClick={() => {
+                              handleDelete(row?.id);
+                            }}
+                            size="large"
+                          >
+                            <DeleteTwoToneIcon sx={{ fontSize: '1.3rem' }} />
                           </IconButton>
                         </TableCell>
                       </TableRow>

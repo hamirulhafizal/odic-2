@@ -34,7 +34,7 @@ const RelatedProducts = ({ id }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  let noItems = 5;
+  let noItems = 3;
   noItems = matchDownSM ? 1 : noItems;
   noItems = matchDownMD ? 2 : noItems;
   noItems = matchDownLG ? 3 : noItems;

@@ -19,14 +19,6 @@ const dashboard = {
   type: 'group',
   children: [
     {
-      id: 'default',
-      title: <FormattedMessage id="default" />,
-      type: 'item',
-      url: '/dashboard/',
-      icon: icons.IconDashboard,
-      breadcrumbs: false
-    },
-    {
       id: 'listing',
       title: <FormattedMessage id="listing" />,
       type: 'item',

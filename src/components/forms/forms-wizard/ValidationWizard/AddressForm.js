@@ -15,20 +15,21 @@ import slugify from 'utils/helper';
 import axios from 'axios';
 
 import { BACKEND_PATH } from 'config';
+import { boolean } from 'yup/lib/locale';
 
 const category = [
   {
     value: 1,
     label: 'Rent'
-  },
-  {
-    value: 2,
-    label: 'Sales'
-  },
-  {
-    value: 3,
-    label: 'Short Stay'
   }
+  // {
+  //   value: 2,
+  //   label: 'Sales'
+  // },
+  // {
+  //   value: 3,
+  //   label: 'Short Stay'
+  // }
 ];
 
 const propertyTypes = [
@@ -214,80 +215,88 @@ const location = [
   }
 ];
 
-const check = (value) => {
-  const slugTitle = slugify(value);
-  return new Promise((resolve, reject) => {
-    axios
-      .get(`${BACKEND_PATH}/api/v1/inventory/${slugTitle}`)
-      .then((res) => {
-        if (res?.status == 200) {
-          resolve(false);
-        }
-      })
-      .catch((error) => {
-        const resJson1 = JSON.stringify(error);
-        const resParse1 = JSON.parse(resJson1);
-        resolve(true);
-      });
-  });
-};
-
-const validationSchema = yup.object({
-  title: yup
-    .string()
-    .min(8, 'Must be at least 8 characters')
-    .max(20, 'Must be less  than 20 characters')
-    .required('Title is required')
-    .test(
-      'title',
-      'Title already in usea', // <- key, message
-      async (value) => {
-        const res = await check(value);
-
-        return res;
-      }
-    )
-});
-
 // ==============================|| FORM WIZARD - VALIDATION  ||============================== //
 
 const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex, editData }) => {
   const { user } = useAuth();
 
   const initials = {
-    category: 1,
-    propertyType: 1,
-    propertyTitle: 'Freehold',
-    saleType: 'For Sale',
-    tenure: 1,
-    furnishing: 'Freehold',
-    carpark: '2',
-    amenities: 'Pool',
+    category: editData?.category || 1,
+    propertyType: editData?.propertyType || 1,
+    propertyTitle: editData?.propertyTitle || 'Freehold',
+    saleType: editData?.saleType || 'For Sale',
+    tenure: editData?.tenure || 1,
+    furnishing: editData?.furnishing || 'Freehold',
+    carpark: editData?.carpark || '2',
+    amenities: editData?.amenities || 'Pool',
     title: editData?.title || '120 Jalan Kejayaan',
-    description: 'good for investment',
-    price: '40000',
-    rentalDeposit: '1.5-Month',
-    phone: '60184644305',
-    location: 'Johor',
-    city: 'Johor',
-    lat: '',
-    lon: '',
-    address: 'johor',
+    description: editData?.description || 'good for investment',
+    price: editData?.price || '40000',
+    rentalDeposit: editData?.rentalDeposit || '1.5-Month',
+    phone: editData?.phone || '60184644305',
+    location: editData?.location || 'Johor',
+    city: editData?.city || 'Johor',
+    lat: editData?.lat || '',
+    lon: editData?.lon || '',
+    address: editData?.address || 'johor',
 
-    state: 'johor',
-    slug: 'johor',
-    zipcode: '100',
-    bedrooms: 10,
-    bathrooms: '1',
-    floorRange: '1'
+    state: editData?.state || 'johor',
+    slug: editData?.slug || 'johor',
+    zipcode: editData?.zipcode || '100',
+    bedrooms: editData?.bedrooms || 10,
+    bathrooms: editData?.bathrooms || '1',
+    floorRange: editData?.floorRange || '1'
     // realtor: user?.user
   };
+
+  const check = (value) => {
+    const slugTitle = slugify(value);
+    return new Promise((resolve, reject) => {
+      axios
+        .get(`${BACKEND_PATH}/api/v1/inventory/${slugTitle}`)
+        .then((res) => {
+          if (res?.status == 200) {
+            resolve(false);
+          }
+        })
+        .catch((error) => {
+          const resJson1 = JSON.stringify(error);
+          const resParse1 = JSON.parse(resJson1);
+          resolve(true);
+        });
+    });
+  };
+
+  const newListing = yup.object({
+    title: yup
+      .string()
+      .min(8, 'Must be at least 8 characters')
+      .max(20, 'Must be less  than 20 characters')
+      .required('Title is required')
+      .test(
+        'title',
+        'Title already in usea', // <- key, message
+        async (value) => {
+          if (editData != null || editData != undefined) {
+            return false;
+          } else {
+            const res = await check(value);
+
+            return res;
+          }
+        }
+      )
+  });
+
+  const updateLisitng = yup.object({
+    title: yup.string().min(8, 'Must be at least 8 characters').max(20, 'Must be less  than 20 characters').required('Title is required')
+  });
 
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: initials,
-    validationSchema,
-    // enableReinitialize={true}
+
+    validationSchema: Boolean(editData) ? updateLisitng : newListing,
 
     onSubmit: async (values) => {
       const {
@@ -303,7 +312,6 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
         floorRange,
         furnishing,
         carpark,
-        // realtor,
 
         category,
         propertyType,
@@ -332,7 +340,6 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
         furnishing: furnishing,
         carpark: carpark,
         city: city,
-        // realtor: realtor,
 
         category: category,
         propertyType: propertyType,

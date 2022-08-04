@@ -19,6 +19,23 @@ import { gridSpacing } from 'store/constant';
 import { useDispatch, useSelector } from 'store';
 import { getProductById } from 'store/slices/product';
 import { resetCart } from 'store/slices/cart';
+import AppBar from 'components/ui-component/extended/AppBar';
+import { styled, useTheme } from '@mui/material/styles';
+const headerBackground = '/assets/images/landing/header-bg.jpg';
+
+// import MainLayout from 'layout/MainLayout';
+
+const HeaderWrapper = styled('div')(({ theme }) => ({
+  backgroundImage: `url(${headerBackground})`,
+  backgroundSize: '100% 600px',
+  backgroundAttachment: 'fixed',
+  backgroundRepeat: 'no-repeat',
+  textAlign: 'center',
+  paddingTop: 30,
+  [theme.breakpoints.down('md')]: {
+    paddingTop: 0
+  }
+}));
 
 function TabPanel({ children, value, index, ...other }) {
   return (
@@ -84,60 +101,75 @@ const ProductDetails = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  console.log('product', product);
+
   return (
-    <Grid container alignItems="center" justifyContent="center" spacing={gridSpacing}>
-      <Grid item xs={12} lg={10}>
-        <MainCard>
-          {product && (
-            <Grid container spacing={gridSpacing}>
-              <Grid item xs={12} md={6}>
-                <ProductImages product={product} />
+    // <MainLayout>
+    <>
+      <AppBar />
+      <Grid
+        sx={{
+          paddingTop: 12
+        }}
+        container
+        alignItems="center"
+        justifyContent="center"
+        spacing={gridSpacing}
+      >
+        <Grid item xs={12} lg={10}>
+          <MainCard>
+            {product && (
+              <Grid container spacing={gridSpacing}>
+                <Grid item xs={12} md={6}>
+                  <ProductImages product={product} />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <ProductInfo product={product} />
+                </Grid>
+                <Grid item xs={12}>
+                  <Tabs
+                    value={value}
+                    indicatorColor="primary"
+                    onChange={handleChange}
+                    sx={{}}
+                    aria-label="product description tabs example"
+                    variant="scrollable"
+                  >
+                    <Tab component={Link} href="#" label="Description" {...a11yProps(0)} />
+                    {/* <Tab
+                      component={Link}
+                      href="#"
+                      label={
+                        <Stack direction="row" alignItems="center">
+                          Reviews <Chip label={String(product.salePrice)} size="small" chipcolor="secondary" sx={{ ml: 1.5 }} />
+                        </Stack>
+                      }
+                      {...a11yProps(1)}
+                    /> */}
+                  </Tabs>
+                  <TabPanel value={value} index={0}>
+                    <ProductDescription />
+                  </TabPanel>
+                  {/* <TabPanel value={value} index={1}>
+                    <ProductReview product={product} />
+                  </TabPanel> */}
+                </Grid>
               </Grid>
-              <Grid item xs={12} md={6}>
-                <ProductInfo product={product} />
-              </Grid>
-              <Grid item xs={12}>
-                <Tabs
-                  value={value}
-                  indicatorColor="primary"
-                  onChange={handleChange}
-                  sx={{}}
-                  aria-label="product description tabs example"
-                  variant="scrollable"
-                >
-                  <Tab component={Link} href="#" label="Description" {...a11yProps(0)} />
-                  <Tab
-                    component={Link}
-                    href="#"
-                    label={
-                      <Stack direction="row" alignItems="center">
-                        Reviews <Chip label={String(product.salePrice)} size="small" chipcolor="secondary" sx={{ ml: 1.5 }} />
-                      </Stack>
-                    }
-                    {...a11yProps(1)}
-                  />
-                </Tabs>
-                <TabPanel value={value} index={0}>
-                  <ProductDescription />
-                </TabPanel>
-                <TabPanel value={value} index={1}>
-                  <ProductReview product={product} />
-                </TabPanel>
-              </Grid>
-            </Grid>
-          )}
-        </MainCard>
+            )}
+          </MainCard>
+        </Grid>
+        {/* <Grid item xs={12} lg={10} sx={{ mt: 3 }}>
+          <Typography variant="h2">Related Products</Typography>
+        </Grid>
+        <Grid item xs={11} lg={10}>
+          <RelatedProducts id={router.query.id.toString()} />
+        </Grid>
+        <FloatingCart /> */}
       </Grid>
-      <Grid item xs={12} lg={10} sx={{ mt: 3 }}>
-        <Typography variant="h2">Related Products</Typography>
-      </Grid>
-      <Grid item xs={11} lg={10}>
-        <RelatedProducts id={router.query.id.toString()} />
-      </Grid>
-      <FloatingCart />
-    </Grid>
+    </>
+
+    //  </MainLayout>
   );
 };
-ProductDetails.Layout = 'authGuard';
 
 export default ProductDetails;
