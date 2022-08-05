@@ -67,7 +67,7 @@ function getColor(color) {
 const sizeOptions = [8, 10, 12, 14, 16, 18, 20];
 
 const validationSchema = yup.object({
-  color: yup.string().required('Color selection is required'),
+  color: yup.string().required('Colors selection is required'),
   size: yup.number().required('Size selection is required.')
 });
 
