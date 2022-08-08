@@ -73,7 +73,7 @@ const getListingBySlug = async (slug) => {
 };
 
 const updateListingById = async (id, form_data) => {
-  await axiosInstance
+  const response = await axiosInstance
     .put(`${BACKEND_PATH}/api/v1/inventory/${id}`, form_data)
     .then((res) => {
       return res;
@@ -83,6 +83,7 @@ const updateListingById = async (id, form_data) => {
       const error = JSON.parse(stringErr);
       return error;
     });
+  return response;
 };
 
 const deleteListingById = async (id) => {

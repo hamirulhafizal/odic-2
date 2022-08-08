@@ -65,6 +65,8 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
     onSubmit: (values) => {
       if (values.size >= 2000000) {
         setMessage('File Size is too large');
+      } else if (imgEAlbum == null || imgE == null) {
+        setErrorIndex(1);
       } else {
         setPaymentData({
           imgE: imgE,
@@ -76,64 +78,57 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
   });
 
   const preViewImageCover = (e) => {
-    if (e.target?.files[0]?.size >= 2000000) {
+    setMessage('');
+    if (e.target?.files[0]?.size >= 2097152) {
       setMessage('File Size is too large');
-    }
-    const fileReader = new FileReader();
+    } else {
+      const fileReader = new FileReader();
 
-    fileReader.onload = () => {
-      if (fileReader.readyState === 2) {
-        formik.setFieldValue('photo', e.target?.files[0]);
-        formik.setFieldValue('size', e.target?.files[0]?.size);
-        setAvatarPreview(fileReader.result);
-        setEImg(e.target.files[0]);
-      }
-    };
-    fileReader.readAsDataURL(e.target.files[0]);
+      fileReader.onload = () => {
+        if (fileReader.readyState === 2) {
+          formik.setFieldValue('photo', e.target?.files[0]);
+          formik.setFieldValue('size', e.target?.files[0]?.size);
+
+          setAvatarPreview(fileReader.result);
+          setEImg(e.target.files[0]);
+        }
+      };
+      fileReader.readAsDataURL(e.target.files[0]);
+    }
   };
 
   const preViewImageAlbum = (e) => {
-    // if (e.target.files[0].size >= 2000000) {
-    //   setMessageAlbum('File Size is too large');
-    // }
-
-    // const fileReader = new FileReader();
-    // fileReader.onload = () => {
-    //   if (fileReader.readyState > 1) {
-    //     // formik.setFieldValue('photo', e.target?.files);
-    //     // formik.setFieldValue('size', e.target?.files.size);
-    //     setAvatarPreviewAlbum(fileReader.result);
-    //     console.log('e.target.files', e.target.files);
-
-    //     setEImgAlbum(e.target.files);
-    //   }
-    // };
-
-    // fileReader?.readAsDataURL(e.target.files);
-
     if (window.File && window.FileReader && window.FileList && window.Blob) {
+      // let files = e.target.files;
+
+      let numOfFiles = 0;
+      // let output1 = rowOfPhotos;
+
       const files = e.target.files;
+      if (numOfFiles + files.length > 4) {
+        alert('You can only upload at most 4 files!');
+        setEImgAlbum(null);
 
-      console.log('files', files);
+        return;
+      } else {
+        setEImgAlbum(files);
+        const output = document.querySelector('#result');
+        output.innerHTML = '';
+        for (let i = 0; i < files.length; i++) {
+          if (!files[i].type.match('image')) continue;
+          const picReader = new FileReader();
+          picReader.addEventListener('load', function (event) {
+            const picFile = event.target;
 
-      setEImgAlbum(files);
+            console.log('picFile', picFile);
 
-      const output = document.querySelector('#result');
-      output.innerHTML = '';
-      for (let i = 0; i < files.length; i++) {
-        if (!files[i].type.match('image')) continue;
-        const picReader = new FileReader();
-        picReader.addEventListener('load', function (event) {
-          const picFile = event.target;
+            const div = document.createElement('div');
+            div.innerHTML = ` <img style="width: 40vw;height: auto;"  src="${picFile.result}" title="${picFile.name}" /> `;
 
-          console.log('picFile', picFile);
-
-          const div = document.createElement('div');
-          div.innerHTML = ` <img style="width: 40vw;height: auto;"  src="${picFile.result}" title="${picFile.name}" /> `;
-
-          output.appendChild(div);
-        });
-        picReader.readAsDataURL(files[i]);
+            output.appendChild(div);
+          });
+          picReader.readAsDataURL(files[i]);
+        }
       }
     } else {
       alert('Your browser does not support File API');
@@ -143,21 +138,21 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
   const deleteImgPreview = () => {
     formik.setFieldValue('photo', null);
     formik.setFieldValue('size', null);
+
     setAvatarPreview(null);
     setEImg(null);
   };
 
   const deleteImgPreviewAlbum = () => {
-    formik.setFieldValue('photo', null);
-    formik.setFieldValue('size', null);
-    setAvatarPreviewAlbum(null);
-    setEImg(null);
+    const photoInputalbum = document.getElementById('files');
+    photoInputalbum.value = null;
+    setEImgAlbum(null);
   };
 
   return (
     <>
       <form onSubmit={formik.handleSubmit}>
-        <Grid container spacing={3}>
+        <Grid container spacing={2}>
           <Grid item xs={12} md={12}>
             <Stack direction="row" justifyContent="space-between">
               <Typography variant="h5" gutterBottom>
@@ -174,6 +169,10 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
           </Grid>
 
           <Grid item xs={12}>
+            <FormHelperText sx={{ pb: 1 }} error>
+              {message}
+            </FormHelperText>
+
             {!avatarPreview ? (
               <div
                 style={{
@@ -214,8 +213,6 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
                 >
                   <CloudUploadIcon /> Click Here Or Drop file here to upload
                 </InputLabel>
-
-                <FormHelperText error>{message}</FormHelperText>
               </div>
             ) : (
               <ImageWrapper>
@@ -231,7 +228,7 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
               <Typography variant="h5" gutterBottom>
                 Gallery Image
               </Typography>
-              {avatarPreviewAlbum && (
+              {imgEAlbum && (
                 <AnimateButton>
                   <Button color="error" sx={{ color: 'white' }} variant="contained" onClick={deleteImgPreviewAlbum}>
                     Delete
@@ -277,7 +274,7 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
 
               <Box
                 sx={{
-                  display: 'flex',
+                  display: imgEAlbum ? 'flex' : 'none',
                   justifyContent: 'space-around',
                   flexWrap: 'wrap',
                   padding: '5%'

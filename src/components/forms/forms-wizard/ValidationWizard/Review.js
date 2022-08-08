@@ -4,6 +4,7 @@ import * as React from 'react';
 import { CardMedia, Grid, List, ListItem, ListItemText, Typography } from '@mui/material';
 import { styled } from '@mui/system';
 import { useTheme } from '@mui/styles';
+import { Box } from '@mui/material';
 
 // ==============================|| FORM WIZARD - VALIDATION  ||============================== //
 
@@ -26,7 +27,7 @@ const ImageWrapper = styled('div')(({ theme }) => ({
   }
 }));
 
-export default function Review({ shippingData, imageProperty }) {
+export default function Review({ shippingData, imageProperty, previewData }) {
   const theme = useTheme();
 
   const [avatarPreview, setAvatarPreview] = React.useState();
@@ -62,25 +63,21 @@ export default function Review({ shippingData, imageProperty }) {
     photo_9,
     photo_10,
     video
-  } = shippingData;
+  } = previewData;
 
-  const preViewImage = (imageProperty) => {
-    const fileReader = new FileReader();
-
-    fileReader.onload = () => {
-      if (fileReader.readyState === 2) {
-        setAvatarPreview(fileReader.result);
-      }
-    };
-
-    // fileReader.readAsDataURL(imageProperty);
+  const preViewImage = (item) => {
+    if (item != undefined) {
+      var src = URL?.createObjectURL(item);
+      setAvatarPreview(src);
+    }
   };
 
   React.useEffect(() => {
-    if (imageProperty !== undefined || imageProperty !== null) {
-      preViewImage(imageProperty);
+    if (imageProperty !== undefined || imageProperty !== null || featureImage !== null) {
+      preViewImage(previewData?.featureImage);
     }
-  }, [imgE, imageProperty]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [imgE, imageProperty, previewData]);
 
   return (
     <>
@@ -89,8 +86,8 @@ export default function Review({ shippingData, imageProperty }) {
       </Typography>
 
       <List disablePadding>
-        {[shippingData].map((product) => (
-          <>
+        {[shippingData].map((product, key) => (
+          <Box key={key}>
             <ListItem sx={{ py: 1, px: 0 }}>
               <ListItemText primary={'Title'} secondary={title} />
             </ListItem>
@@ -107,7 +104,7 @@ export default function Review({ shippingData, imageProperty }) {
             <ListItem sx={{ py: 1, px: 0 }}>
               <ListItemText primary={'Category'} secondary={category} />
             </ListItem>
-          </>
+          </Box>
         ))}
 
         <ImageWrapper>

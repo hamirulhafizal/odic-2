@@ -378,6 +378,17 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
               helperText={formik.touched.category && formik.errors.category}
               fullWidth
             />
+            {/* <TextField
+              id="category"
+              name="category"
+              label="category*"
+              value={formik.values.category || editData?.category}
+              onChange={formik.handleChange}
+              onChange={formik.handleChange}
+              error={formik.touched.category && Boolean(formik.errors.category)}
+              helperText={formik.touched.category && formik.errors.category}
+              fullWidth
+            /> */}
           </Grid>
           <Grid item xs={12} sm={12}>
             <FormControlSelect
@@ -599,6 +610,20 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
           </Grid>
           <Grid item xs={12}>
             <TextField
+              id="map"
+              name="map"
+              label="Map*"
+              type="text"
+              placeholder="Adress"
+              value={formik.values.map}
+              onChange={formik.handleChange}
+              error={formik.touched.map && Boolean(formik.errors.map)}
+              helperText={formik.touched.map && formik.errors.map}
+              fullWidth
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
               id="city"
               name="city"
               label="City*"
@@ -611,6 +636,7 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
               fullWidth
             />
           </Grid>
+
           <Grid item xs={12}>
             <TextField
               id="video"

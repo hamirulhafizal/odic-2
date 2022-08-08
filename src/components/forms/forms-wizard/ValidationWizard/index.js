@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 // material-ui
-import { Button, Step, Stepper, StepLabel, Stack, Typography } from '@mui/material';
+import { Button, Step, Stepper, StepLabel, Stack, Typography, FormHelperText } from '@mui/material';
 
 // project imports
 import AddressForm from './AddressForm';
@@ -16,6 +16,7 @@ import { setProduct, updateListingById } from 'contexts/ApiListing';
 import slugify from 'utils/helper';
 import useAuth from 'hooks/useAuth';
 import Link from 'Link';
+import { CircularProgress } from '@mui/material';
 
 // step options
 const steps = ['Fill Up Detail', 'Upload Image', 'Review your Listing'];
@@ -29,7 +30,8 @@ const getStepContent = (
   setShippingData,
   imageProperty,
   setPaymentData,
-  editData
+  editData,
+  previewData
 ) => {
   switch (step) {
     case 0:
@@ -53,7 +55,7 @@ const getStepContent = (
         />
       );
     case 2:
-      return <Review shippingData={shippingData} imageProperty={imageProperty} />;
+      return <Review shippingData={shippingData} imageProperty={imageProperty} previewData={previewData} />;
     default:
       throw new Error('Unknown step');
   }
@@ -65,26 +67,37 @@ const ValidationWizard = ({ updateProperty, formFor }) => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [shippingData, setShippingData] = React.useState({});
   const [imageProperty, setPaymentData] = React.useState({});
+  const [previewData, setPreviewData] = React.useState();
   const [errorIndex, setErrorIndex] = React.useState(null);
   const [editData, setEditData] = React.useState(null);
+  const [isApi, setApi] = React.useState(false);
 
   const [lisitngId, setLisitngId] = React.useState(null);
+
+  const [isLoading, setLoading] = React.useState(false);
+
+  const [errorMessage, setErrorMessage] = React.useState('');
 
   const router = useRouter();
 
   const { user } = useAuth();
 
   const handleNext = () => {
-    setActiveStep(activeStep + 1);
     setErrorIndex(null);
+    setActiveStep(activeStep + 1);
   };
 
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
 
+  const handleSubmit = () => {
+    setApi(true);
+    setLoading(true);
+  };
+
   useEffect(() => {
-    if (activeStep == 3 && imageProperty?.imgE != null) {
+    if (activeStep == 1 && imageProperty?.imgE != null && imageProperty?.imgEAlbum != null && previewData == null) {
       const featureImage = imageProperty?.imgE;
       const photo_1 = imageProperty?.imgEAlbum[0];
       const photo_2 = imageProperty?.imgEAlbum[1];
@@ -102,43 +115,67 @@ const ValidationWizard = ({ updateProperty, formFor }) => {
         realtor: user?.inventories[0]?.realtor,
         ...shippingData
       };
+      setPreviewData(propertyObj);
+    }
 
+    if (Boolean(isApi) == true && previewData != null && Boolean(isLoading) == true && activeStep == 2 && lisitngId == null) {
       var form_data = new FormData();
 
-      Object.keys(propertyObj).map(function (key, index) {
-        form_data.append(key, propertyObj[key]);
+      Object.keys(previewData).map(function (key, index) {
+        form_data.append(key, previewData[key]);
       });
 
-      if (formFor == 'UpdateListing') {
-        updateListingById(updateProperty?.id, form_data).then((res) => {});
+      if (formFor == 'createListing') {
+        setProduct(form_data).then((res) => {
+          const resJson1 = JSON.stringify(res);
+          const resParse1 = JSON.parse(resJson1);
+
+          if (res.status == 201 || res.status == 200) {
+            setLisitngId(res?.data?.id);
+            setLoading(false);
+            setApi(false);
+            handleNext();
+          }
+
+          if (resParse1.status == 400) {
+            setErrorIndex(2);
+            setLoading(false);
+            setErrorMessage('something error');
+          }
+        });
       }
 
-      if (formFor == 'createListing') {
-        setProduct(form_data)
-          .then((res) => {
-            const resJson1 = JSON.stringify(res);
-            const resParse1 = JSON.parse(resJson1);
+      if (formFor == 'UpdateListing') {
+        updateListingById(updateProperty?.id, form_data).then((res) => {
+          console.log('res update', res);
+          if (res?.status == 200) {
             setLisitngId(res?.data?.id);
-            // setError('400');
-            return res;
-          })
-          .catch((err) => {
-            const resJson = JSON.stringify(err);
-            const resParse = JSON.parse(resJson);
-            // console.log('resParse-->', resParse);
-            // console.log('err---?', err);
-            return err;
-          });
+            setLoading(false);
+            setApi(false);
+            handleNext();
+          } else {
+            const resJson1 = JSON?.stringify(res);
+            const resParse1 = JSON?.parse(resJson1);
+
+            if (resParse1?.status == 400) {
+              setErrorIndex(2);
+              setLoading(false);
+              setErrorMessage('something error');
+            }
+          }
+        });
       }
     }
 
     if (updateProperty != undefined) {
       setEditData(updateProperty);
     }
+
     if (updateProperty == undefined) {
       setEditData();
     }
-  }, [activeStep, shippingData, imageProperty, user, updateProperty, editData, formFor]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeStep, shippingData, imageProperty, user, updateProperty, editData, formFor, previewData, handleNext, handleBack]);
 
   return (
     <MainCard title={formFor == 'createListing' ? 'Create Listing' : formFor == 'UpdateListing' ? 'Update Listing' : null}>
@@ -228,7 +265,8 @@ const ValidationWizard = ({ updateProperty, formFor }) => {
               setShippingData,
               imageProperty,
               setPaymentData,
-              editData
+              editData,
+              previewData
             )}
 
             {activeStep === steps.length - 1 && (
@@ -239,9 +277,23 @@ const ValidationWizard = ({ updateProperty, formFor }) => {
                   </Button>
                 )}
                 <AnimateButton>
-                  <Button variant="contained" onClick={handleNext} sx={{ my: 3, ml: 1 }}>
-                    {activeStep === steps.length - 1 ? 'Submit' : 'Next'}
+                  <Button
+                    variant="contained"
+                    onClick={() => {
+                      activeStep === steps?.length - 1 ? handleSubmit() : handleNext();
+                    }}
+                    sx={{ my: 3, ml: 1 }}
+                  >
+                    {activeStep === steps?.length - 1 ? 'Submit' : 'Next'}
+                    {Boolean(isLoading) == true ? (
+                      <CircularProgress sx={{ color: 'white', position: 'relative', left: '10%' }} size={20} />
+                    ) : (
+                      ''
+                    )}
                   </Button>
+                  <FormHelperText sx={{ pb: 1 }} error>
+                    {errorMessage}
+                  </FormHelperText>
                 </AnimateButton>
               </Stack>
             )}
