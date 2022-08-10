@@ -217,7 +217,7 @@ const location = [
 
 // ==============================|| FORM WIZARD - VALIDATION  ||============================== //
 
-const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex, editData }) => {
+const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex, editData, formFor }) => {
   const { user } = useAuth();
 
   const initials = {

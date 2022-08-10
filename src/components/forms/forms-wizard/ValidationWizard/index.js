@@ -17,6 +17,8 @@ import slugify from 'utils/helper';
 import useAuth from 'hooks/useAuth';
 import Link from 'Link';
 import { CircularProgress } from '@mui/material';
+import { dispatch } from 'store';
+import { openSnackbar } from 'store/slices/snackbar';
 
 // step options
 const steps = ['Fill Up Detail', 'Upload Image', 'Review your Listing'];
@@ -31,7 +33,8 @@ const getStepContent = (
   imageProperty,
   setPaymentData,
   editData,
-  previewData
+  previewData,
+  formFor
 ) => {
   switch (step) {
     case 0:
@@ -42,20 +45,23 @@ const getStepContent = (
           setErrorIndex={setErrorIndex}
           shippingData={shippingData}
           setShippingData={setShippingData}
+          formFor={formFor}
         />
       );
     case 1:
       return (
         <GalleryForm
+          editData={editData}
           handleNext={handleNext}
           handleBack={handleBack}
           setErrorIndex={setErrorIndex}
           imageProperty={imageProperty}
           setPaymentData={setPaymentData}
+          formFor={formFor}
         />
       );
     case 2:
-      return <Review shippingData={shippingData} imageProperty={imageProperty} previewData={previewData} />;
+      return <Review shippingData={shippingData} imageProperty={imageProperty} previewData={previewData} formFor={formFor} />;
     default:
       throw new Error('Unknown step');
   }
@@ -135,6 +141,18 @@ const ValidationWizard = ({ updateProperty, formFor }) => {
             setLoading(false);
             setApi(false);
             handleNext();
+
+            dispatch(
+              openSnackbar({
+                open: true,
+                message: 'Your list has been successfully Created.',
+                variant: 'alert',
+                alert: {
+                  color: 'success'
+                },
+                close: false
+              })
+            );
           }
 
           if (resParse1.status == 400) {
@@ -153,6 +171,17 @@ const ValidationWizard = ({ updateProperty, formFor }) => {
             setLoading(false);
             setApi(false);
             handleNext();
+            dispatch(
+              openSnackbar({
+                open: true,
+                message: 'Your list has been successfully Updated.',
+                variant: 'alert',
+                alert: {
+                  color: 'success'
+                },
+                close: false
+              })
+            );
           } else {
             const resJson1 = JSON?.stringify(res);
             const resParse1 = JSON?.parse(resJson1);
@@ -266,7 +295,8 @@ const ValidationWizard = ({ updateProperty, formFor }) => {
               imageProperty,
               setPaymentData,
               editData,
-              previewData
+              previewData,
+              formFor
             )}
 
             {activeStep === steps.length - 1 && (

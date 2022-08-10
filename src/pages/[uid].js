@@ -106,9 +106,6 @@ function AgentProfile({ userData }) {
 
   // const title = (document.getElementById('titleMeta').content = userData.firstName);
   // console.log('title', title);
-
-  console.log('userData', userData);
-
   return (
     <>
       <Head>
@@ -222,25 +219,38 @@ function AgentProfile({ userData }) {
                                   One Dream Legacy
                                 </Typography>
                                 <Stack sx={{ pt: 2 }} justifyContent={'center'} direction="row">
+
+
                                   <Stack direction="row" sx={{ width: { xs: '70%', lg: '60%' }, justifyContent: 'space-evenly' }}>
                                     <Link href="https://codedthemes.com/" target="_blank" underline="hover">
                                       <PublicTwoToneIcon color="secondary" />
                                     </Link>
-                                    <Link href={`${agent?.instagram}`} target="_blank" underline="hover">
-                                      <InstagramIcon color="secondary" />
-                                    </Link>
-                                    <Link href={`${agent?.facebook}`} target="_blank" underline="hover">
-                                      <FacebookIcon color="secondary" />
-                                    </Link>
-                                    <Link href={`${agent?.linkedin}`} target="_blank" underline="hover">
-                                      <LinkedInIcon color="secondary" />
-                                    </Link>
-                                    <Link href={`${agent?.youtube}`} target="_blank" underline="hover">
-                                      <YouTubeIcon color="secondary" />
-                                    </Link>
-                                    <Link href={`${agent?.tiktok}`} target="_blank" underline="hover">
-                                      <LinkedInIcon color="secondary" />
-                                    </Link>
+
+                                    {agent?.instagram && (
+                                      <Link href={`${agent?.instagram}`} target="_blank" underline="hover">
+                                        <InstagramIcon color="secondary" />
+                                      </Link>
+                                    )}
+                                    {agent?.facebook && (
+                                      <Link href={`${agent?.facebook}`} target="_blank" underline="hover">
+                                        <FacebookIcon color="secondary" />
+                                      </Link>
+                                    )}
+                                    {agent?.linkedin && (
+                                      <Link href={`${agent?.linkedin}`} target="_blank" underline="hover">
+                                        <LinkedInIcon color="secondary" />
+                                      </Link>
+                                    )}
+                                    {agent?.youtube && (
+                                      <Link href={`${agent?.youtube}`} target="_blank" underline="hover">
+                                        <YouTubeIcon color="secondary" />
+                                      </Link>
+                                    )}
+                                    {agent?.tiktok && (
+                                      <Link href={`${agent?.tiktok}`} target="_blank" underline="hover">
+                                        <LinkedInIcon color="secondary" />
+                                      </Link>
+                                    )}
                                   </Stack>
                                 </Stack>
                               </Stack>

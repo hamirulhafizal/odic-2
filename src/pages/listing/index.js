@@ -52,6 +52,8 @@ import VisibilityTwoToneIcon from '@mui/icons-material/VisibilityTwoTone';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import { deleteListingById } from 'contexts/ApiListing';
+import { dispatch } from 'store';
+import { openSnackbar } from 'store/slices/snackbar';
 
 const prodImage = '/assets/images/e-commerce';
 
@@ -81,6 +83,12 @@ function stableSort(array, comparator) {
 
 // table header options
 const headCells = [
+  {
+    id: 'cover',
+    numeric: false,
+    label: 'Cover Photo',
+    align: 'center'
+  },
   {
     id: 'title',
     numeric: false,
@@ -237,9 +245,20 @@ EnhancedTableHead.propTypes = {
 
 const handleDelete = (index) => {
   deleteListingById(index).then((res) => {
-    console.log('res', res);
     const deleteRow = document.getElementById(`row-${index}`);
     deleteRow?.remove();
+
+    dispatch(
+      openSnackbar({
+        open: true,
+        message: 'Your list has been successfully Deleted.',
+        variant: 'alert',
+        alert: {
+          color: 'error'
+        },
+        close: false
+      })
+    );
   });
 };
 
