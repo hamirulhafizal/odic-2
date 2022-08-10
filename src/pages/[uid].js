@@ -219,8 +219,6 @@ function AgentProfile({ userData }) {
                                   One Dream Legacy
                                 </Typography>
                                 <Stack sx={{ pt: 2 }} justifyContent={'center'} direction="row">
-
-
                                   <Stack direction="row" sx={{ width: { xs: '70%', lg: '60%' }, justifyContent: 'space-evenly' }}>
                                     <Link href="https://codedthemes.com/" target="_blank" underline="hover">
                                       <PublicTwoToneIcon color="secondary" />
