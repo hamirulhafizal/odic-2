@@ -20,7 +20,7 @@ import useConfig from '../../../../hooks/useConfig';
 const ProductImages = ({ product }) => {
   const theme = useTheme();
   const { borderRadius } = useConfig();
-  const products = [product?.photo_2, product?.photo_3, product?.photo_4, product?.photo_5, product?.photo_1];
+  const products = [product?.featureImage, product?.photo_2, product?.photo_3, product?.photo_4, product?.photo_5, product?.photo_1];
 
   const matchDownLG = useMediaQuery(theme.breakpoints.up('lg'));
   const initialImage = product.image ? product?.photo_1 : product?.photo_1;
@@ -54,7 +54,7 @@ const ProductImages = ({ product }) => {
                 borderRadius: `${borderRadius}px`,
                 overflow: 'hidden',
                 cursor: 'zoom-in',
-                height: ' 434px',
+                height: ' 350px',
                 objectFit: 'contain',
                 backgroundColor: 'black'
               }}

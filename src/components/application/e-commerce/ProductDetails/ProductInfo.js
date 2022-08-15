@@ -28,7 +28,9 @@ import {
   ListItem,
   List,
   ListItemText,
-  ListItemIcon
+  ListItemIcon,
+  TableContainer,
+  Badge
 } from '@mui/material';
 
 // third-party
@@ -57,6 +59,9 @@ import StoreMallDirectoryIcon from '@mui/icons-material/StoreMallDirectory';
 import MosqueIcon from '@mui/icons-material/Mosque';
 import { getProfileAgentById } from 'contexts/ApiListing';
 import { useEffect, useState } from 'react';
+import VerifiedIcon from '@mui/icons-material/Verified';
+
+import moment from 'moment';
 
 // product color select
 function getColor(color) {
@@ -100,6 +105,23 @@ Colors.propTypes = {
   checked: PropTypes.bool,
   colorsData: PropTypes.array
 };
+
+function createData(key, value) {
+  return { key, value };
+}
+
+const rowsGeneral = [
+  createData('Type', 'Hooded Neck, Paint Clothes'),
+  createData('Sleeve', 'Full'),
+  createData('Fit', 'Regular'),
+  createData('Fabric', 'Hosiery, Smooth, Silk'),
+  createData('Style', 'CV-TS9865'),
+  createData('Ideal For', 'All'),
+  createData('Size', 'Free'),
+  createData('Pattern', 'Printed'),
+  createData('Reversible', 'No'),
+  createData('Secondary Color', 'Black, Brown')
+];
 
 const Increment = (props) => {
   const [field, , helpers] = useField(props);
@@ -191,6 +213,8 @@ const ProductInfo = ({ product }) => {
     );
   };
 
+  console.log('agentData', agentData);
+
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
@@ -217,6 +241,49 @@ const ProductInfo = ({ product }) => {
             RM {product?.price}
           </Typography>
         </Stack>
+        <Stack direction="row" alignItems="center">
+          <Stack direction="column" sx={{ pt: 2 }}>
+            <Badge
+              overlap="circular"
+              anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+              badgeContent={<VerifiedIcon sx={{ fontSize: '1.5em' }} color="secondary" />}
+            >
+              <Avatar
+                onClick={() => {
+                  router.push(`/${user_name}`);
+                }}
+                alt="User 1"
+                src={agentData?.photo}
+                sx={{
+                  borderRadius: '16px',
+                  margin: '5px auto 0',
+                  width: '50px',
+                  height: '50px',
+                  backgroundColor: 'transparent',
+                  borderRadius: '100%',
+                  cursor: 'pointer'
+                }}
+              />
+            </Badge>
+          </Stack>
+
+          <Stack direction="column" sx={{ pl: 2, pt: { xs: 3 } }}>
+            <Typography
+              onClick={() => {
+                router.push(`/${user_name}`);
+              }}
+              variant="h4"
+              color="main"
+              sx={{ textTransform: 'capitalize', cursor: 'pointer' }}
+            >
+              {agentData?.firstName} {agentData?.lastName}
+            </Typography>
+            <Typography variant="subtitle2" color="secondary">
+              {/* {product?.inventory_date} */}
+              {moment(product?.inventory_date).format('DD MMM YYYY')}
+            </Typography>
+          </Stack>
+        </Stack>
       </Grid>
       <Grid item xs={12}>
         <Divider />
@@ -226,7 +293,7 @@ const ProductInfo = ({ product }) => {
           <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
             <Grid container spacing={2}>
               <Grid item xs={12} lg={10}>
-                <List>
+                {/* <List>
                   <ListItem disablePadding sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap ', py: 1, px: 0 }}>
                     <ListItemText
                       sx={{
@@ -258,6 +325,7 @@ const ProductInfo = ({ product }) => {
                         </>
                       }
                     />
+
                     <ListItemText
                       sx={{
                         display: 'flex',
@@ -289,7 +357,23 @@ const ProductInfo = ({ product }) => {
                       }
                     />
                   </ListItem>
-                </List>
+                </List> */}
+
+                <TableContainer>
+                  <Table sx={{ maxWidth: 380 }} size="small" aria-label="simple table">
+                    <TableBody>
+                      {/* {[product]?.map((row, key) => ( */}
+                      <TableRow sx={{ '& td, & th': { border: 0 } }}>
+                        {/* <TableCell component="th" scope="row">
+                            <Typography variant="caption" sx={{ fontWeight: 500 }}>
+                              {row?.propertyTitle}
+                            </Typography>
+                          </TableCell> */}
+                        <TableCell>{product?.propertyTitle}</TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </TableContainer>
                 {/* <Table>
                   <TableBody sx={{ '& .MuiTableCell-root': { borderBottom: 'none' } }}>
                     <TableRow>

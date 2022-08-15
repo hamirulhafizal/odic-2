@@ -57,7 +57,8 @@ const Profile = ({ ...others }) => {
         instagram: user?.instagram || '',
         youtube: user?.youtube || '',
         linkedin: user?.linkedin || '',
-        tiktok: user?.tiktok || ''
+        tiktok: user?.tiktok || '',
+        twitter: user?.twitter || ''
       }}
       validator={() => ({})}
       validationSchema={Yup.object().shape({
@@ -206,13 +207,13 @@ const Profile = ({ ...others }) => {
                             onChange={handleChange}
                           />
                         </Grid>
-                        <Grid item>
+                        {/* <Grid item>
                           <AnimateButton>
                             <Button variant="contained" size="small" color="secondary">
                               Connect
                             </Button>
                           </AnimateButton>
-                        </Grid>
+                        </Grid> */}
                       </Grid>
                     </Grid>
 
@@ -233,13 +234,13 @@ const Profile = ({ ...others }) => {
                             onChange={handleChange}
                           />
                         </Grid>
-                        <Grid item>
+                        {/* <Grid item>
                           <AnimateButton>
                             <Button variant="contained" size="small" color="secondary">
                               Connect
                             </Button>
                           </AnimateButton>
-                        </Grid>
+                        </Grid> */}
                       </Grid>
                     </Grid>
                     <Grid item xs={12}>
@@ -259,13 +260,13 @@ const Profile = ({ ...others }) => {
                             onChange={handleChange}
                           />
                         </Grid>
-                        <Grid item>
+                        {/* <Grid item>
                           <AnimateButton>
                             <Button variant="contained" size="small" color="secondary">
                               Connect
                             </Button>
                           </AnimateButton>
-                        </Grid>
+                        </Grid> */}
                       </Grid>
                     </Grid>
                     <Grid item xs={12}>
@@ -285,13 +286,13 @@ const Profile = ({ ...others }) => {
                             onChange={handleChange}
                           />
                         </Grid>
-                        <Grid item>
+                        {/* <Grid item>
                           <AnimateButton>
                             <Button variant="contained" size="small" color="secondary">
                               Connect
                             </Button>
                           </AnimateButton>
-                        </Grid>
+                        </Grid> */}
                       </Grid>
                     </Grid>
                     <Grid item xs={12}>
@@ -311,16 +312,16 @@ const Profile = ({ ...others }) => {
                             onChange={handleChange}
                           />
                         </Grid>
-                        <Grid item>
+                        {/* <Grid item>
                           <AnimateButton>
                             <Button variant="contained" size="small" color="secondary">
                               Connect
                             </Button>
                           </AnimateButton>
-                        </Grid>
+                        </Grid> */}
                       </Grid>
                     </Grid>
-                    <Grid item xs={12}>
+                    {/* <Grid item xs={12}>
                       <Grid container alignItems="center" spacing={gridSpacing} sx={{ mb: 1.25 }}>
                         <Grid item>
                           <TwitterIcon />
@@ -345,8 +346,8 @@ const Profile = ({ ...others }) => {
                           </AnimateButton>
                         </Grid>
                       </Grid>
-                    </Grid>
-                    <Grid item xs={12}>
+                    </Grid> */}
+                    {/* <Grid item xs={12}>
                       <Grid container alignItems="center" spacing={gridSpacing} sx={{ mb: 1.25 }}>
                         <Grid item>
                           <TwitterIcon />
@@ -371,7 +372,7 @@ const Profile = ({ ...others }) => {
                           </AnimateButton>
                         </Grid>
                       </Grid>
-                    </Grid>
+                    </Grid> */}
 
                     <Grid item xs={12}>
                       <Stack direction="row">

@@ -25,6 +25,7 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import MainCard from 'components/ui-component/cards/MainCard';
 import Transitions from 'components/ui-component/extended/Transitions';
 import useAuth from 'hooks/useAuth';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 
 // assets
 import { IconLogout, IconSettings, IconUser } from '@tabler/icons';
@@ -155,7 +156,7 @@ const ProfileSection = () => {
                     <Box sx={{ p: 2, pb: 0 }}>
                       <Stack>
                         <Stack direction="row" spacing={0.5} alignItems="center">
-                          <Typography variant="h4">Good Morning,</Typography>
+                          <Typography variant="h4">Good Day,</Typography>
                           <Typography component="span" variant="h4" sx={{ wordWrap: 'break-word', fontWeight: 400 }}>
                             {user ? user.firstName.slice(0, 10) + '..' : 'OD'}
                           </Typography>
@@ -184,17 +185,17 @@ const ProfileSection = () => {
                           }}
                         >
                           <ListItemButton
-                            sx={{ borderRadius: `${borderRadius}px` }}
+                            sx={{ borderRadius: `${borderRadius}px`, backgroundColor: 'red', color: 'white' }}
                             selected={selectedIndex === 1}
                             // onClick={(event) => handleListItemClick(event, 1)}
                             onClick={() => {
                               router.push(`/${user?.user_name}`);
                             }}
                           >
-                            <ListItemIcon>
-                              <IconUser stroke={1.5} size="1.3rem" />
+                            <ListItemIcon sx={{ color: 'white', fontWeight: 'bolder' }}>
+                              <AccountCircleOutlinedIcon stroke={1.5} size="1.3rem" />
                             </ListItemIcon>
-                            <ListItemText primary={<Typography variant="body2">Live Profile</Typography>} />
+                            <ListItemText primary={<Typography sx={{ fontWeight: 'bolder' }}>Live Profile</Typography>} />
                           </ListItemButton>
                           <ListItemButton
                             sx={{ borderRadius: `${borderRadius}px` }}

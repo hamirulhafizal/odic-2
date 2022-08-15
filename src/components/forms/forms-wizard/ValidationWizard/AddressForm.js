@@ -69,11 +69,7 @@ const propertyTypes = [
 
 const furnish = [
   {
-    value: 'none',
-    label: '-'
-  },
-  {
-    value: 'Freehold',
+    value: 'None',
     label: 'UnFurnish'
   },
   {
@@ -81,7 +77,7 @@ const furnish = [
     label: 'Partly Furnish'
   },
   {
-    value: 'Fully-Furnished',
+    value: 'Freehold',
     label: 'Fully Furnished'
   }
 ];
@@ -271,7 +267,7 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
     title: yup
       .string()
       .min(8, 'Must be at least 8 characters')
-      .max(20, 'Must be less  than 20 characters')
+      .max(100, 'Must be less  than 20 characters')
       .required('Title is required')
       .test(
         'title',
@@ -289,7 +285,7 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
   });
 
   const updateLisitng = yup.object({
-    title: yup.string().min(8, 'Must be at least 8 characters').max(20, 'Must be less  than 20 characters').required('Title is required')
+    title: yup.string().min(8, 'Must be at least 10 characters').max(100, 'Must be less  than 100 characters').required('Title is required')
   });
 
   const formik = useFormik({

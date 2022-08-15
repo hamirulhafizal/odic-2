@@ -320,6 +320,16 @@ export default function componentStyleOverrides(theme, borderRadius, outlinedFil
           color: 'white'
         }
       }
+    },
+
+    MuiBadge: {
+      styleOverrides: {
+        root: {},
+        badge: {
+          backgroundColor: 'white',
+          padding: ' 0px'
+        }
+      }
     }
   };
 }

@@ -59,6 +59,7 @@ const images2 = '/assets/images/landing/footerBg-1.png';
 
 const HeaderWrapper = styled('div')(({ theme }) => ({
   paddingTop: 30,
+  overflowX: 'hidden',
   [theme.breakpoints.down('md')]: {
     paddingTop: 0
   }
@@ -244,11 +245,11 @@ function AgentProfile({ userData }) {
                                         <YouTubeIcon color="secondary" />
                                       </Link>
                                     )}
-                                    {agent?.tiktok && (
+                                    {/* {agent?.tiktok && (
                                       <Link href={`${agent?.tiktok}`} target="_blank" underline="hover">
                                         <LinkedInIcon color="secondary" />
                                       </Link>
-                                    )}
+                                    )} */}
                                   </Stack>
                                 </Stack>
                               </Stack>

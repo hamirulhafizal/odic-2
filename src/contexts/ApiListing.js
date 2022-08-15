@@ -86,6 +86,21 @@ const updateListingById = async (id, form_data) => {
   return response;
 };
 
+const deletePhotoListingById = async (id, photo_id) => {
+  const response = await axiosInstance
+    .patch(`${BACKEND_PATH}/api/v1/inventory/${id}`, photo_id)
+    .then((res) => {
+      v;
+      return res;
+    })
+    .catch((err) => {
+      const stringErr = JSON.stringify(err);
+      const error = JSON.parse(stringErr);
+      return error;
+    });
+  return response;
+};
+
 const deleteListingById = async (id) => {
   await axiosInstance
     .delete(`${BACKEND_PATH}/api/v1/inventory/${id}`)
@@ -107,5 +122,6 @@ export {
   getProfileAgentById,
   getListingBySlug,
   updateListingById,
+  deletePhotoListingById,
   deleteListingById
 };

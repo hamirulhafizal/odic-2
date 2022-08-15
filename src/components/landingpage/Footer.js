@@ -64,7 +64,7 @@ const FooterPage = () => {
         <Container>
           <Grid container alignItems="center" justifyContent={matchDownSM ? 'center' : 'space-between'} spacing={gridSpacing}>
             <Grid item xs={12} sm={3}>
-              <Stack alignItems="center" justifyContent={matchDownSM ? 'center' : 'flex-start'} direction="row">
+              <Stack alignItems="center" justifyContent={matchDownSM ? 'center' : 'flex-start'} direction={matchDownSM ? 'column' : 'row'}>
                 <LogoSection htmlFor="footer" />
                 <Typography sx={{ ml: 1 }} variant="subtitle1" component="div" color="inherit">
                   ONE DREAM PROPERTY

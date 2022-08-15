@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useReducer } from 'react';
 
 // material-ui
-import { Avatar, Button, Grid, InputLabel, Typography } from '@mui/material';
+import { Avatar, Button, FormHelperText, Grid, InputLabel, Typography, Stack } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import useAuth from 'hooks/useAuth';
 import AnimateButton from 'components/ui-component/extended/AnimateButton';
@@ -14,6 +14,7 @@ const Input = styled('input')({
 const UploadUserInput = () => {
   const { updateProfile, user } = useAuth();
   const [photo, setFieldImgValue] = useState(undefined);
+  const [message, setMessage] = useState('');
   const [avatarPreview, setAvatarPreview] = useState('');
   const [state, dispatch] = useReducer(accountReducer);
 
@@ -30,9 +31,16 @@ const UploadUserInput = () => {
 
   useEffect(() => {
     async function putDataProfile() {
-      const formData = new FormData();
-      formData.append('photo', photo);
-      const response = await updateProfile(user?.user_name, formData).then((res) => {});
+      console.log('photo', photo);
+
+      if (photo.size >= 2000000) {
+        setMessage('File Size is too large');
+      } else {
+        setMessage('');
+        const formData = new FormData();
+        formData.append('photo', photo);
+        const response = await updateProfile(user?.user_name, formData).then((res) => {});
+      }
     }
     if (photo !== undefined) {
       putDataProfile();
@@ -58,9 +66,14 @@ const UploadUserInput = () => {
         </Grid>
 
         <Grid item xs={12}>
-          <Typography variant="subtitle2" align="center">
-            Upload/Change Your Profile Image
-          </Typography>
+          <Stack directiom="column">
+            <Typography variant="subtitle2" align="center">
+              Upload/Change Your Profile Image
+            </Typography>
+            <FormHelperText sx={{ textAlign: 'center' }} error>
+              {message}
+            </FormHelperText>
+          </Stack>
         </Grid>
 
         <Grid item xs={12}>

@@ -23,6 +23,7 @@ import MosqueIcon from '@mui/icons-material/Mosque';
 import LocalParkingIcon from '@mui/icons-material/LocalParking';
 import SingleBedRoundedIcon from '@mui/icons-material/SingleBedRounded';
 import ShowerRoundedIcon from '@mui/icons-material/ShowerRounded';
+import moment from 'moment';
 
 import { useRouter } from 'next/router';
 
@@ -34,8 +35,6 @@ const CardProperty = ({ itemData, agentData }) => {
   const router = useRouter();
 
   const { photo, phone, firstName, lastName, user_name } = agentData;
-
-  console.log('itemData', itemData);
 
   return (
     <>
@@ -109,7 +108,7 @@ const CardProperty = ({ itemData, agentData }) => {
                 {user?.firstName || firstName} {user?.lastName || lastName}
               </Typography>
               <Typography variant="subtitle2" color="secondary">
-                Posted On 14 April 2022
+                {moment(itemData?.inventory_date).format('DD MMM YYYY')}
               </Typography>
             </Stack>
           </Stack>

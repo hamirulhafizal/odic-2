@@ -87,8 +87,8 @@ const AppBar = ({ ...others }) => {
     router.push('/login');
   };
 
-  const handleDashboard = () => {
-    router.push('/dashboard');
+  const handleListing = () => {
+    router.push('/listing');
   };
 
   return (
@@ -113,12 +113,13 @@ const AppBar = ({ ...others }) => {
                 variant="contained"
                 color="secondary"
                 sx={{ color: 'white' }}
+                startIcon={<AddLocationAltOutlinedIcon />}
               >
                 Post Ads Property
               </Button>
             </Stack>
             <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
-              <Button
+              {/* <Button
                 component={Link}
                 onClick={() => {
                   router.push('/listing');
@@ -131,7 +132,7 @@ const AppBar = ({ ...others }) => {
                 startIcon={<AddLocationAltOutlinedIcon />}
               >
                 List Ads
-              </Button>
+              </Button> */}
               <IconButton sx={{ ml: 1 }} color="secondary" onClick={drawerToggler(true)} size="large">
                 <MenuIcon />
               </IconButton>
@@ -141,9 +142,9 @@ const AppBar = ({ ...others }) => {
                   <Box sx={{ width: 'auto' }} role="presentation" onClick={drawerToggler(false)} onKeyDown={drawerToggler(false)}>
                     <List>
                       <Link style={{ textDecoration: 'none', display: `${!user && 'none'}` }}>
-                        <ListItemButton component="a" onClick={user ? handleDashboard : ''}>
+                        <ListItemButton component="a" onClick={user ? handleListing : ''}>
                           <ListItemIcon>{user ? <GridViewOutlinedIcon /> : ''}</ListItemIcon>
-                          <ListItemText primary={user ? 'Dashboard' : ''} />
+                          <ListItemText primary={user ? 'Listing' : ''} />
                         </ListItemButton>
                       </Link>
                       <Link style={{ textDecoration: 'none' }}>

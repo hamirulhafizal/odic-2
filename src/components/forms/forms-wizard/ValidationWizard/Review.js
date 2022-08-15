@@ -27,12 +27,13 @@ const ImageWrapper = styled('div')(({ theme }) => ({
   }
 }));
 
-export default function Review({ shippingData, imageProperty, previewData }) {
+export default function Review({ shippingData, imageProperty, previewData, editData }) {
   const theme = useTheme();
 
   const [avatarPreview, setAvatarPreview] = React.useState();
 
   const { fileName, type, size, imgE } = imageProperty;
+
   const {
     category,
     propertyType,
@@ -63,21 +64,26 @@ export default function Review({ shippingData, imageProperty, previewData }) {
     photo_9,
     photo_10,
     video
-  } = previewData;
+  } = editData != null ? editData : previewData;
 
   const preViewImage = (item) => {
-    if (item != undefined) {
+    if (item != undefined && typeof item !== 'string') {
       var src = URL?.createObjectURL(item);
       setAvatarPreview(src);
+    } else {
+      setAvatarPreview(item);
     }
   };
 
   React.useEffect(() => {
-    if (imageProperty !== undefined || imageProperty !== null || featureImage !== null) {
-      preViewImage(previewData?.featureImage);
+    if (imageProperty !== undefined || imageProperty !== null || featureImage !== null || editData?.previewData !== null) {
+      preViewImage(previewData?.featureImage ? previewData?.featureImage : featureImage);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [imgE, imageProperty, previewData]);
+  }, [imgE, imageProperty, previewData, editData]);
+
+  // console.log('editData--->', editData);
+  console.log('previewData--->', previewData);
 
   return (
     <>
@@ -89,21 +95,25 @@ export default function Review({ shippingData, imageProperty, previewData }) {
         {[shippingData].map((product, key) => (
           <Box key={key}>
             <ListItem sx={{ py: 1, px: 0 }}>
-              <ListItemText primary={'Title'} secondary={title} />
+              <ListItemText primary={'Title'} secondary={previewData?.title} />
             </ListItem>
 
-            <ListItem sx={{ py: 1, px: 0 }} key={product.title}>
-              <ListItemText primary={'Description'} sx={{ textTransform: 'capitalize' }} secondary={product.description} />
-              <Typography variant="body2">RM{product.price}</Typography>
+            <ListItem sx={{ py: 1, px: 0, flexWrap: 'wrap' }} key={product.title}>
+              <ListItemText primary={'Description'} sx={{ textTransform: 'capitalize' }} secondary={product?.description} />
+              <Typography variant="body2">RM {product.price}/month</Typography>
             </ListItem>
 
-            <ListItem sx={{ py: 1, px: 0 }}>
+            {/* <ListItem sx={{ py: 1, px: 0 }}>
+              <ListItemText primary={'Price'} secondary={product?.price} />
+            </ListItem> */}
+
+            {/* <ListItem sx={{ py: 1, px: 0 }}>
               <ListItemText primary={'Type'} secondary={propertyType} />
             </ListItem>
 
             <ListItem sx={{ py: 1, px: 0 }}>
               <ListItemText primary={'Category'} secondary={category} />
-            </ListItem>
+            </ListItem> */}
           </Box>
         ))}
 

@@ -45,7 +45,7 @@ const ImageWrapper = styled('div')(({ theme }) => ({
 
 // ==============================|| FORM WIZARD - VALIDATION  ||============================== //
 
-export default function GalleryForm({ imageProperty, setPaymentData, handleNext, handleBack, setErrorIndex, formFor, editData }) {
+export default function GalleryForm({ imageProperty, setPaymentData, handleNext, handleBack, setErrorIndex }) {
   const [avatarPreview, setAvatarPreview] = useState('');
   const [avatarPreviewAlbum, setAvatarPreviewAlbum] = useState(null);
 
@@ -66,29 +66,12 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
       if (values.size >= 2000000) {
         setMessage('File Size is too large');
       } else {
-        if (formFor == 'CreateListing' && imgE !== undefined && imgEAlbum !== undefined) {
-          console.log('imgE---->', imgE, imgEAlbum);
+        setPaymentData({
+          imgE: imgE,
+          imgEAlbum: imgEAlbum
+        });
 
-          setPaymentData({
-            imgE: imgE,
-            imgEAlbum: imgEAlbum
-          });
-
-          handleNext();
-        } else if (formFor == 'UpdateListing' && (imgE !== null || imgEAlbum !== null)) {
-          console.log('masuk UpdateListing---->');
-
-          setPaymentData({
-            imgE: imgE,
-            imgEAlbum: imgEAlbum
-          });
-
-          handleNext();
-        } else {
-          console.log('masuk error---->');
-
-          setErrorIndex(1);
-        }
+        handleNext();
       }
     }
   });
@@ -113,6 +96,8 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
   const preViewImageAlbum = (e) => {
     if (window.File && window.FileReader && window.FileList && window.Blob) {
       const files = e.target.files;
+
+      console.log('files', files);
 
       setEImgAlbum(files);
 
@@ -151,15 +136,6 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
     setAvatarPreviewAlbum(null);
     setEImg(null);
   };
-
-  useEffect(() => {
-    if (formFor == 'UpdateListing') {
-      setEImg(editData?.featureImage);
-      setEImgAlbum(editData);
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <>

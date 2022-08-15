@@ -61,7 +61,9 @@ const getStepContent = (
         />
       );
     case 2:
-      return <Review shippingData={shippingData} imageProperty={imageProperty} previewData={previewData} formFor={formFor} />;
+      return (
+        <Review editData={editData} shippingData={shippingData} imageProperty={imageProperty} previewData={previewData} formFor={formFor} />
+      );
     default:
       throw new Error('Unknown step');
   }
@@ -112,7 +114,7 @@ const ValidationWizard = ({ updateProperty, formFor }) => {
       const photo_5 = imageProperty?.imgEAlbum[4];
 
       const propertyObj = {
-        featureImage: featureImage,
+        featureImage: featureImage ? featureImage : '',
         photo_1: photo_1 ? photo_1 : '',
         photo_2: photo_2 ? photo_2 : '',
         photo_3: photo_3 ? photo_3 : '',
@@ -121,17 +123,38 @@ const ValidationWizard = ({ updateProperty, formFor }) => {
         realtor: user?.inventories[0]?.realtor,
         ...shippingData
       };
-      setPreviewData(propertyObj);
+
+      if (formFor == 'UpdateListing') {
+        const clean = (obj) => {
+          if (editData?.featureImage == featureImage) {
+            console.log('masul features', featureImage);
+            delete propertyObj['featureImage'];
+          }
+
+          for (var propName in obj) {
+            if (obj[propName] === null || obj[propName] === undefined || obj[propName] === '') {
+              delete obj[propName];
+            }
+          }
+          return obj;
+        };
+
+        clean(propertyObj);
+
+        setPreviewData(propertyObj);
+      } else {
+        setPreviewData(propertyObj);
+      }
     }
 
-    if (Boolean(isApi) == true && previewData != null && Boolean(isLoading) == true && activeStep == 2 && lisitngId == null) {
+    if (Boolean(isApi) == true && Boolean(isLoading) == true && activeStep == 2) {
       var form_data = new FormData();
 
       Object.keys(previewData).map(function (key, index) {
         form_data.append(key, previewData[key]);
       });
 
-      if (formFor == 'createListing') {
+      if (formFor == 'CreateListing' && lisitngId == null) {
         setProduct(form_data).then((res) => {
           const resJson1 = JSON.stringify(res);
           const resParse1 = JSON.parse(resJson1);
@@ -163,7 +186,10 @@ const ValidationWizard = ({ updateProperty, formFor }) => {
         });
       }
 
-      if (formFor == 'UpdateListing') {
+      if (formFor == 'UpdateListing' && updateProperty !== null) {
+        console.log('masuk 2');
+        console.log('form_data 2', form_data);
+
         updateListingById(updateProperty?.id, form_data).then((res) => {
           console.log('res update', res);
           if (res?.status == 200) {
@@ -203,12 +229,18 @@ const ValidationWizard = ({ updateProperty, formFor }) => {
     if (updateProperty == undefined) {
       setEditData();
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeStep, shippingData, imageProperty, user, updateProperty, editData, formFor, previewData, handleNext, handleBack]);
 
+  // console.log('lisitngId', lisitngId);
+  // console.log('updateProperty', updateProperty);
+  console.log('previewData----->', previewData);
+  // console.log('formFor', formFor);
+
   return (
-    <MainCard title={formFor == 'createListing' ? 'Create Listing' : formFor == 'UpdateListing' ? 'Update Listing' : null}>
-      <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
+    <MainCard title={formFor == 'CreateListing' ? 'Cover Image' : formFor == 'UpdateListing' ? 'Update Listing' : null}>
+      <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5, overflow: 'scroll' }}>
         {steps.map((label, index) => {
           const labelProps = {};
 
@@ -268,20 +300,22 @@ const ValidationWizard = ({ updateProperty, formFor }) => {
               LINK
             </Link>
 
-            <Stack direction="row" justifyContent="flex-end">
-              <AnimateButton>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  onClick={() => {
-                    router.push('/listing');
-                  }}
-                  sx={{ my: 3, ml: 1 }}
-                >
-                  Listing
-                </Button>
-              </AnimateButton>
-            </Stack>
+            {formFor == 'CreateListing' && (
+              <Stack direction="row" justifyContent="flex-end">
+                <AnimateButton>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={() => {
+                      router.push('/listing');
+                    }}
+                    sx={{ my: 3, ml: 1 }}
+                  >
+                    Listing
+                  </Button>
+                </AnimateButton>
+              </Stack>
+            )}
           </>
         ) : (
           <>

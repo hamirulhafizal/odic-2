@@ -398,8 +398,6 @@ const Listing = () => {
   const isSelected = (name) => selected.indexOf(name) !== -1;
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows?.length) : 0;
 
-  console.log('products', products);
-
   return (
     <>
       <MainCard title="Product List" content={false} contentSX={{ p: 0 }}>
@@ -505,7 +503,7 @@ const Listing = () => {
                           <Avatar
                             component={Link}
                             href={`/listing/${row?.id}`}
-                            src={row?.photo_1 && `${row?.photo_1}`}
+                            src={row?.photo_1 && `${row?.featureImage}`}
                             size="md"
                             variant="rounded"
                           />
@@ -572,7 +570,7 @@ const Listing = () => {
                     );
                   })}
 
-                  {emptyRows > 0 && (
+                  {/* {emptyRows > 0 && (
                     <TableRow
                       style={{
                         height: 53 * emptyRows
@@ -580,7 +578,7 @@ const Listing = () => {
                     >
                       <TableCell colSpan={6} />
                     </TableRow>
-                  )}
+                  )} */}
 
                   {/* {stableSort(rows, getComparator(order, orderBy))
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -685,7 +683,7 @@ const Listing = () => {
               </Table>
             </TableContainer>
 
-            <TablePagination
+            {/* <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
               count={rows?.length}
@@ -693,7 +691,7 @@ const Listing = () => {
               page={page}
               onPageChange={handleChangePage}
               onRowsPerPageChange={handleChangeRowsPerPage}
-            />
+            /> */}
           </>
         )}
       </MainCard>

@@ -46,17 +46,14 @@ const ListingUpdate = ({ open, handleCloseDialog, productId }) => {
   };
 
   useEffect(() => {
-    if (productId != null) {
+    if (productId != null && productData == null) {
       getProductId(productId);
     }
 
     if (!open) {
       setProductData();
     }
-  }, [productId, open]);
-
-  console.log('open', open);
-  console.log('productData', productData);
+  }, [productId, open, productData]);
 
   return (
     <Dialog
@@ -75,46 +72,6 @@ const ListingUpdate = ({ open, handleCloseDialog, productId }) => {
           {/* <DialogTitle>Update Property</DialogTitle> */}
           <DialogContent>
             <ValidationWizard formFor="UpdateListing" updateProperty={productData} />
-            {/* <Grid container spacing={gridSpacing} sx={{ my: 0 }}>
-              <Grid item xs={12}>
-                <TextField id="outlined-basic-review-product" fullWidth label="Product " defaultValue="Apple Watch Series 4" />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField id="outlined-basic-review-author" fullWidth label="Author" defaultValue={productData?.title} />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  id="outlined-basic-review"
-                  fullWidth
-                  multiline
-                  rows={4}
-                  label="Text of review"
-                  defaultValue="If you're coming from a Series 3, the choice is more difficult. The Series 4 is undoubtedly the better device. And if you care about fall detection, the ECG app, or a larger screen then upgrading makes sense. But I think most people will remain satisfied with their Series 3s."
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <Typography align="left" variant="body2">
-                  Rating
-                </Typography>
-                <Rating
-                  name="simple-controlled"
-                  value={value}
-                  precision={0.5}
-                  onChange={(event, newValue) => {
-                    setValue(newValue);
-                  }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField id="standard-select-currency" select label="Status" value={currency} fullWidth onChange={handleSelectChange}>
-                  {reviewState.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
-                </TextField>
-              </Grid>
-            </Grid> */}
           </DialogContent>
           <DialogActions>
             <AnimateButton>
