@@ -120,7 +120,7 @@ const ValidationWizard = ({ updateProperty, formFor }) => {
         photo_3: photo_3 ? photo_3 : '',
         photo_4: photo_4 ? photo_4 : '',
         photo_5: photo_5 ? photo_5 : '',
-        realtor: user?.inventories[0]?.realtor,
+        realtor: user?.inventories[0]?.realtor !== undefined ? user?.inventories[0]?.realtor : user?.user,
         ...shippingData
       };
 
@@ -235,7 +235,7 @@ const ValidationWizard = ({ updateProperty, formFor }) => {
 
   // console.log('lisitngId', lisitngId);
   // console.log('updateProperty', updateProperty);
-  console.log('previewData----->', previewData);
+  // console.log('user----->', user);
   // console.log('formFor', formFor);
 
   return (

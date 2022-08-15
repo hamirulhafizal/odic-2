@@ -31,7 +31,7 @@ const UploadUserInput = () => {
 
   useEffect(() => {
     async function putDataProfile() {
-      console.log('photo', photo);
+      // console.log('photo', photo);
 
       if (photo.size >= 2000000) {
         setMessage('File Size is too large');

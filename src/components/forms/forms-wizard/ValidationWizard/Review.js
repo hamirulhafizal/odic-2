@@ -83,7 +83,7 @@ export default function Review({ shippingData, imageProperty, previewData, editD
   }, [imgE, imageProperty, previewData, editData]);
 
   // console.log('editData--->', editData);
-  console.log('previewData--->', previewData);
+  // console.log('previewData--->', previewData);
 
   return (
     <>
