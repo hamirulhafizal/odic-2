@@ -15,6 +15,9 @@ import FadeInWhenVisible from 'components/landingpage/Animation';
 
 // third party
 
+import { BASE_PATH } from 'config';
+import Head from 'next/head';
+
 import { NextSeo } from 'next-seo';
 import {
   Card,
@@ -46,6 +49,7 @@ import CallSplitTwoToneIcon from '@mui/icons-material/CallSplitTwoTone';
 import TextFieldsIcon from '@mui/icons-material/TextFields';
 import DesignServicesIcon from '@mui/icons-material/DesignServices';
 import AnimateButton from 'components/ui-component/extended/AnimateButton';
+import Seo from 'components/SEO/Seo';
 const images1 = '/assets/images/landing/living-room-with-yellow.png';
 const images2 = '/assets/images/landing/footerBg-1.png';
 const images3 = '/assets/images/landing/ladningbg1.png';
@@ -91,38 +95,8 @@ const Landing = () => {
 
   return (
     <>
-      {/* <NextSeo
-      title="Using More of Config"
-      description="This example uses more of the available config options."
-      canonical="https://www.canonical.ie/"
-      openGraph={{
-        url: 'https://www.url.ie/a',
-        title: 'One Dream Property',
-        description: 'Legacy',
-        images: [
-          {
-            url: `${images1}`,
-            width: 800,
-            height: 600,
-            alt: 'Og Image Alt',
-            type: 'image/jpeg'
-          },
-          {
-            url: `${images1}`,
-            width: 900,
-            height: 800,
-            alt: 'Og Image Alt Second',
-            type: 'image/jpeg'
-          }
-        ],
-        site_name: 'SiteName'
-      }}
-      twitter={{
-        handle: '@handle',
-        site: '@site',
-        cardType: 'summary_large_image'
-      }}
-    /> */}
+      <Seo title={'the most powerful'} />
+
       <HeaderWrapper id="home">
         <AppBar />
         <Header />

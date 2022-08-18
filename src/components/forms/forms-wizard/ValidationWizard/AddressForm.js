@@ -14,8 +14,10 @@ import useAuth from 'hooks/useAuth';
 import slugify from 'utils/helper';
 import axios from 'axios';
 
-import { BACKEND_PATH } from 'config';
+import { BACKEND_PATH, GOOLE_API_MAP } from 'config';
 import { boolean } from 'yup/lib/locale';
+import { withScriptjs } from 'react-google-maps';
+import Map from 'components/application/map/Map';
 
 const category = [
   {
@@ -211,6 +213,8 @@ const location = [
   }
 ];
 
+const MapLoader = withScriptjs(Map);
+
 // ==============================|| FORM WIZARD - VALIDATION  ||============================== //
 
 const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex, editData, formFor }) => {
@@ -227,7 +231,7 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
     amenities: editData?.amenities || 'Pool',
     title: editData?.title || '120 Jalan Kejayaan',
     description: editData?.description || 'good for investment',
-    price: editData?.price || '40000',
+    price: editData?.price || '400',
     rentalDeposit: editData?.rentalDeposit || '1.5-Month',
     phone: editData?.phone || '60184644305',
     location: editData?.location || 'Johor',
@@ -454,7 +458,8 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
             <TextField
               id="address"
               name="address"
-              label="address*"
+              label="Address"
+              required
               value={formik.values.address}
               onChange={formik.handleChange}
               error={formik.touched.address && Boolean(formik.errors.address)}
@@ -466,7 +471,8 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
             <TextField
               id="state"
               name="state"
-              label="state*"
+              label="State"
+              required
               value={formik.values.state}
               onChange={formik.handleChange}
               error={formik.touched.state && Boolean(formik.errors.state)}
@@ -478,7 +484,8 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
             <TextField
               id="zipcode"
               name="zipcode"
-              label="zipcode*"
+              label="Postcode"
+              required
               value={formik.values.zipcode}
               onChange={formik.handleChange}
               error={formik.touched.zipcode && Boolean(formik.errors.zipcode)}
@@ -490,7 +497,8 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
             <TextField
               id="bedrooms"
               name="bedrooms"
-              label="bedrooms*"
+              label="Bedrooms"
+              required
               value={formik.values.bedrooms}
               onChange={formik.handleChange}
               error={formik.touched.bedrooms && Boolean(formik.errors.bedrooms)}
@@ -502,7 +510,8 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
             <TextField
               id="bathrooms"
               name="bathrooms"
-              label="bathrooms*"
+              label="Bathrooms"
+              required
               value={formik.values.bathrooms}
               onChange={formik.handleChange}
               error={formik.touched.bathrooms && Boolean(formik.errors.bathrooms)}
@@ -514,7 +523,8 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
             <TextField
               id="floorRange"
               name="floorRange"
-              label="floorRange*"
+              label="Floor Range"
+              required
               value={formik.values.floorRange}
               onChange={formik.handleChange}
               error={formik.touched.floorRange && Boolean(formik.errors.floorRange)}
@@ -538,9 +548,9 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
             <TextField
               id="description"
               name="description"
-              label="Description*"
+              label="Description"
               multiline
-              rows={4}
+              rows={5}
               value={formik.values.description}
               onChange={formik.handleChange}
               error={formik.touched.description && Boolean(formik.errors.description)}
@@ -552,8 +562,9 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
             <TextField
               id="price"
               name="price"
-              label="Price*"
+              label="Price/Month"
               type="number"
+              required
               placeholder="RM/Month"
               value={formik.values.price}
               onChange={formik.handleChange}
@@ -568,7 +579,8 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
               type="number"
               id="rentalDeposit"
               name="rentalDeposit"
-              captionLabel="Rental Deposit*"
+              captionLabel="Rental Deposit"
+              required
               value={formik.values.rentalDeposit}
               onChange={formik.handleChange}
               error={formik.touched.rentalDeposit && Boolean(formik.errors.rentalDeposit)}
@@ -580,7 +592,7 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
             <TextField
               id="phone"
               name="phone"
-              label="phone*"
+              label="Phone"
               type="tel"
               required
               placeholder="6014644305"
@@ -605,6 +617,10 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
             />
           </Grid>
           <Grid item xs={12}>
+            {/* <MapLoader
+              googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${GOOLE_API_MAP}&libraries=places`}
+              loadingElement={<div style={{ height: `100%` }} />}
+            /> */}
             <TextField
               id="map"
               name="map"

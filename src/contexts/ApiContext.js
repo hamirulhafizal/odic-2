@@ -107,6 +107,7 @@ export const ApiProvider = ({ children }) => {
         console.log('res->', res);
 
         login(email, password, user_name);
+        updateProfile(user_name, { firstName: first_name, lastName: last_name });
         history.push('/login');
 
         return res;

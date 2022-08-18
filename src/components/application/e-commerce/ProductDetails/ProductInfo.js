@@ -250,7 +250,7 @@ const ProductInfo = ({ product }) => {
             >
               <Avatar
                 onClick={() => {
-                  router.push(`/${user_name}`);
+                  router.push(`/${agentData?.user_name}`);
                 }}
                 alt="User 1"
                 src={agentData?.photo}
@@ -270,7 +270,7 @@ const ProductInfo = ({ product }) => {
           <Stack direction="column" sx={{ pl: 2, pt: { xs: 3 } }}>
             <Typography
               onClick={() => {
-                router.push(`/${user_name}`);
+                router.push(`/${agentData?.user_name}`);
               }}
               variant="h4"
               color="main"

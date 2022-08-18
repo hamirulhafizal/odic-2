@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
-import Head from 'next/head';
 
 // third-party
 import { PersistGate } from 'redux-persist/integration/react';
@@ -33,6 +32,8 @@ import { ConfigProvider } from 'contexts/ConfigContext';
 
 import { ApiProvider as AuthProvider } from 'contexts/ApiContext';
 
+import Seo from 'components/SEO/Seo';
+
 const Noop = ({ children }) => <> {children} </>;
 
 Noop.propTypes = {
@@ -58,12 +59,7 @@ function App({ Component, pageProps }) {
   }
 
   return (
-    <>
-      {/* <Head>
-        <title>Most Professional Real Estate Agency | One Dream Property</title>
-        <link rel="icon" href="/logo.svg" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head> */}
+    <div>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persister}>
           <ConfigProvider>
@@ -84,7 +80,7 @@ function App({ Component, pageProps }) {
           </ConfigProvider>
         </PersistGate>
       </Provider>
-    </>
+    </div>
   );
 }
 

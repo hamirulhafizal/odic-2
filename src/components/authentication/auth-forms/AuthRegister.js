@@ -131,7 +131,7 @@ const JWTRegister = ({ ...others }) => {
       >
         {({ errors, status, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
           <form onSubmit={handleSubmit} {...others}>
-            <Grid container spacing={matchDownSM ? 0 : 2}>
+            <Grid container spacing={matchDownSM ? 1 : 2}>
               <Grid item xs={12} sm={6}>
                 <TextField
                   fullWidth
@@ -142,6 +142,7 @@ const JWTRegister = ({ ...others }) => {
                   value={values.firstName}
                   onBlur={handleBlur}
                   onChange={handleChange}
+                  inputProps={{ style: { textTransform: 'capitalize' } }}
                   sx={{ ...theme.typography.customInput }}
                 />
               </Grid>
@@ -155,6 +156,7 @@ const JWTRegister = ({ ...others }) => {
                   value={values.lastName}
                   onBlur={handleBlur}
                   onChange={handleChange}
+                  inputProps={{ style: { textTransform: 'capitalize' } }}
                   sx={{ ...theme.typography.customInput }}
                 />
               </Grid>
