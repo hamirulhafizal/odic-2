@@ -49,7 +49,6 @@ import CallSplitTwoToneIcon from '@mui/icons-material/CallSplitTwoTone';
 import TextFieldsIcon from '@mui/icons-material/TextFields';
 import DesignServicesIcon from '@mui/icons-material/DesignServices';
 import AnimateButton from 'components/ui-component/extended/AnimateButton';
-import Seo from 'components/SEO/Seo';
 const images1 = '/assets/images/landing/living-room-with-yellow.png';
 const images2 = '/assets/images/landing/footerBg-1.png';
 const images3 = '/assets/images/landing/ladningbg1.png';
@@ -95,8 +94,6 @@ const Landing = () => {
 
   return (
     <>
-      <Seo title={'the most powerful'} />
-
       <HeaderWrapper id="home">
         <AppBar />
         <Header />
@@ -149,11 +146,11 @@ const Landing = () => {
                     </Typography>
                   </Stack>
 
-                  <AnimateButton>
+                  {/* <AnimateButton>
                     <Button sx={{ color: 'white' }} component={Link} href="/dashboard/" size="large" variant="contained" color="secondary">
                       Read More
                     </Button>
-                  </AnimateButton>
+                  </AnimateButton> */}
                 </motion.div>
               </Grid>
             </Grid>
@@ -182,6 +179,7 @@ const Landing = () => {
                     borderRadius: '10px',
                     backgroundColor: 'rgba(0, 0, 0, 0.45)',
                     backdropFilter: 'blur(25px)',
+                    WebkitBackdropFilter: 'blur(25px)',
                     boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)'
                   }}
                 >
@@ -212,6 +210,7 @@ const Landing = () => {
                     borderRadius: '10px',
                     backgroundColor: 'rgba(0, 0, 0, 0.45)',
                     backdropFilter: 'blur(25px)',
+                    WebkitBackdropFilter: 'blur(25px)',
                     boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)'
                   }}
                 >
@@ -328,11 +327,11 @@ const Landing = () => {
                     </Typography>
                   </Stack>
 
-                  <AnimateButton>
+                  {/* <AnimateButton>
                     <Button sx={{ color: 'white' }} component={Link} href="/dashboard/" size="large" variant="contained" color="secondary">
                       Join Agent
                     </Button>
-                  </AnimateButton>
+                  </AnimateButton> */}
                 </motion.div>
               </Grid>
             </Grid>

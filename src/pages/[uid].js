@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter, withRouter } from 'next/router';
 // material-ui
 import { useTheme } from '@mui/material/styles';
-import { Card, CardContent, Grid, Stack, Typography, useMediaQuery, Badge } from '@mui/material';
+import { Card, CardContent, Grid, Stack, Typography, useMediaQuery, Badge, TextareaAutosize } from '@mui/material';
 import Link from 'Link';
 // import { Html, Head, Main, NextScript } from 'next/document';
 
@@ -80,6 +80,7 @@ function AgentProfile({ userData }) {
 
   const matchDownLG = useMediaQuery(theme.breakpoints.down('lg'));
   const matchDownMD = useMediaQuery(theme.breakpoints.down('md'));
+  const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
 
   const getProfileAgentById = async (id) => {
     await axios
@@ -106,7 +107,7 @@ function AgentProfile({ userData }) {
   }, [agent, userData]);
 
   // const title = (document.getElementById('titleMeta').content = userData.firstName);
-  // console.log('title', title);
+
   return (
     <>
       <Head>
@@ -175,7 +176,8 @@ function AgentProfile({ userData }) {
                           justifyContent: 'space-around',
                           backgroundColor: 'rgba(0, 0, 0, 0.51)',
                           boxShadow: '4px 10px 13px rgba(0, 0, 0, 0.25)',
-                          backdropFilter: 'blur(29px)'
+                          backdropFilter: 'blur(29px)',
+                          WebkitBackdropFilter: 'blur(29px)'
                         }}
                       >
                         <CardContent sx={{ width: { xs: '-webkit-fill-available' } }}>
@@ -216,9 +218,44 @@ function AgentProfile({ userData }) {
                                 <Typography variant="h3" color="main" sx={{ color: 'white', textTransform: 'capitalize' }}>
                                   {agent?.firstName} {agent?.lastName}
                                 </Typography>
-                                <Typography variant="subtitle2" color="main" sx={{ color: 'white', pt: 1 }}>
-                                  One Dream Legacy
+
+                                {/* <Typography variant="subtitle2" color="main" sx={{ color: 'white', pt: 1 }}>
+                                  {agent?.description}
+                                </Typography> */}
+
+                                <TextareaAutosize
+                                  variant="subtitle2"
+                                  color="main"
+                                  type="text"
+                                  className="textArea"
+                                  value={agent?.description}
+                                  disableUnderline
+                                  readOnly
+                                  disabled
+                                  style={{
+                                    color: 'white',
+                                    backgroundColor: 'transparent',
+                                    pt: 1,
+                                    borderRadius: '8px',
+                                    width: '-webkit-fill-available',
+                                    borderColor: 'transparent',
+                                    padding: matchDownSM ? '5%' : '2%',
+                                    fontFamily: 'inherit',
+                                    textAlign: 'center',
+                                    cursor: 'default',
+                                    opacity: 1,
+                                    resize: 'none'
+
+                                    // '& textarea:disabled': {
+                                    //   color: 'red'
+                                    // }
+                                  }}
+                                />
+
+                                <Typography variant="caption" sx={{ color: 'white' }}>
+                                  {userData['inventories']?.length} listing
                                 </Typography>
+
                                 <Stack sx={{ pt: 2 }} justifyContent={'center'} direction="row">
                                   <Stack direction="row" sx={{ width: { xs: '70%', lg: '60%' }, justifyContent: 'space-evenly' }}>
                                     <Link href="https://codedthemes.com/" target="_blank" underline="hover">

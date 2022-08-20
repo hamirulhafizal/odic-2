@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import Link from 'Link';
 
 // material-ui
-import { Box, Grid, Stack, Tab, Tabs, Typography } from '@mui/material';
+import { Box, Grid, Stack, Tab, Tabs, Typography, useMediaQuery } from '@mui/material';
 
 // project imports
 import ProductImages from 'components/application/e-commerce/ProductDetails/ProductImages';
@@ -69,6 +69,9 @@ const ProductDetails = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
 
+  const theme = useTheme();
+  const matchDownSM = useMediaQuery(theme.breakpoints.down('sm'));
+
   // product description tabs
   const [value, setValue] = useState(0);
 
@@ -86,6 +89,7 @@ const ProductDetails = () => {
         router.push(`/app/e-commerce/product-details/${productState.product.id}`);
       }
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [productState]);
 
@@ -107,17 +111,18 @@ const ProductDetails = () => {
       <AppBar />
       <Grid
         sx={{
-          paddingTop: 12
+          pt: 12,
+          pb: 5
         }}
         container
         alignItems="center"
         justifyContent="center"
         spacing={gridSpacing}
       >
-        <Grid item xs={12} lg={10}>
+        <Grid item xs={11} lg={10}>
           <MainCard>
             {product && (
-              <Grid container spacing={gridSpacing}>
+              <Grid container spacing={matchDownSM ? 1 : 5}>
                 <Grid item xs={12} md={6}>
                   <ProductImages product={product} />
                 </Grid>
@@ -133,7 +138,7 @@ const ProductDetails = () => {
                     aria-label="product description tabs example"
                     variant="scrollable"
                   >
-                    <Tab component={Link} href="#" label="Description" {...a11yProps(0)} />
+                    <Tab component={Link} href="#" label="Property Detail" {...a11yProps(0)} />
                     {/* <Tab
                       component={Link}
                       href="#"
@@ -146,7 +151,7 @@ const ProductDetails = () => {
                     /> */}
                   </Tabs>
                   <TabPanel value={value} index={0}>
-                    <ProductDescription />
+                    <ProductDescription product={product} />
                   </TabPanel>
                   {/* <TabPanel value={value} index={1}>
                     <ProductReview product={product} />

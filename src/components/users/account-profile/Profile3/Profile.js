@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 // material-ui
-import { Box, Grid, Stack, Button, TextField, useMediaQuery, FormHelperText, CircularProgress } from '@mui/material';
+import { Box, Grid, Stack, Button, TextField, useMediaQuery, FormHelperText, CircularProgress, TextareaAutosize } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 
 // project imports
@@ -52,7 +52,7 @@ const Profile = ({ ...others }) => {
         phone: user?.phone || '',
         description:
           user?.description ||
-          `Nama saya ${user?.firstName} ${user?.lastName}. Saya merupakan agent Sah aktif One Dream Property. Saya sudah bantu lebih 500 orang pembeli dan pelabur hartanah. Ingin saya bantu anda? Hubungi saya untuk bimbingan.`,
+          `Nama saya ${user?.firstName} ${user?.lastName}. Saya merupakan agent Sah aktif One Dream Property. Saya sudah bantu lebih 500 orang pembeli dan pelabur hartanah. <br/> Ingin saya bantu anda? Hubungi saya untuk bimbingan.`,
         facebook: user?.facebook || '',
         instagram: user?.instagram || '',
         youtube: user?.youtube || '',
@@ -64,6 +64,7 @@ const Profile = ({ ...others }) => {
       validationSchema={Yup.object().shape({
         firstName: Yup.string().max(255).required(),
         lastName: Yup.string().max(255).required()
+        // description: Yup.string().max(250)
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         if (!values.firstName) {
@@ -177,9 +178,8 @@ const Profile = ({ ...others }) => {
                       <TextField fullWidth disabled type="email" value={values.email} name="email" id="filled-disabled" label="Email" />
                     </Grid>
                     <Grid item xs={12}>
-                      <TextField
+                      <TextareaAutosize
                         rows={6}
-                        multiline
                         fullWidth
                         id="outlined-basic4"
                         label="Bio"
@@ -188,6 +188,14 @@ const Profile = ({ ...others }) => {
                         value={values.description}
                         onBlur={handleBlur}
                         onChange={handleChange}
+                        style={{
+                          borderRadius: '8px',
+                          width: '-webkit-fill-available',
+                          borderRadius: ' 8px',
+                          borderColor: '#afafaf',
+                          padding: matchDownSM ? '5%' : '2%',
+                          fontFamily: 'inherit'
+                        }}
                       />
                     </Grid>
                     <Grid item xs={12}>

@@ -60,6 +60,7 @@ import MosqueIcon from '@mui/icons-material/Mosque';
 import { getProfileAgentById } from 'contexts/ApiListing';
 import { useEffect, useState } from 'react';
 import VerifiedIcon from '@mui/icons-material/Verified';
+import YouTubeIcon from '@mui/icons-material/YouTube';
 
 import moment from 'moment';
 
@@ -213,8 +214,6 @@ const ProductInfo = ({ product }) => {
     );
   };
 
-  console.log('agentData', agentData);
-
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
@@ -238,7 +237,7 @@ const ProductInfo = ({ product }) => {
       <Grid item xs={12}>
         <Stack direction="row" alignItems="center" spacing={1}>
           <Typography variant="h2" color="primary">
-            RM {product?.price}
+            RM {product?.price} / month
           </Typography>
         </Stack>
         <Stack direction="row" alignItems="center">
@@ -280,7 +279,7 @@ const ProductInfo = ({ product }) => {
             </Typography>
             <Typography variant="subtitle2" color="secondary">
               {/* {product?.inventory_date} */}
-              {moment(product?.inventory_date).format('DD MMM YYYY')}
+              Posted on {moment(product?.inventory_date).format('DD MMM YYYY')}
             </Typography>
           </Stack>
         </Stack>
@@ -362,14 +361,21 @@ const ProductInfo = ({ product }) => {
                 <TableContainer>
                   <Table sx={{ maxWidth: 380 }} size="small" aria-label="simple table">
                     <TableBody>
-                      {/* {[product]?.map((row, key) => ( */}
-                      <TableRow sx={{ '& td, & th': { border: 0 } }}>
-                        {/* <TableCell component="th" scope="row">
-                            <Typography variant="caption" sx={{ fontWeight: 500 }}>
-                              {row?.propertyTitle}
-                            </Typography>
-                          </TableCell> */}
-                        <TableCell>{product?.propertyTitle}</TableCell>
+                      <TableRow sx={{ '& td, & th': { border: 0, textTransform: 'capitalize' } }}>
+                        <TableCell>
+                          <b>Deposit </b> {product?.rentalDeposit.replace('-', ' ')}
+                        </TableCell>
+                        <TableCell>
+                          <b>State </b> {product?.state}
+                        </TableCell>
+                      </TableRow>
+                      <TableRow sx={{ '& td, & th': { border: 0, textTransform: 'capitalize' } }}>
+                        <TableCell>
+                          <b>Bedrooms </b> {product?.bedrooms}
+                        </TableCell>
+                        <TableCell>
+                          <b>Bathrooms </b> {parseInt(product?.bathrooms)}
+                        </TableCell>
                       </TableRow>
                     </TableBody>
                   </Table>
@@ -479,29 +485,39 @@ const ProductInfo = ({ product }) => {
               </Grid>
               <Grid item xs={12}>
                 <Grid container spacing={1}>
-                  <Grid item xs={6}>
-                    {/* <Button
-                      fullWidth
-                      color="primary"
-                      variant="contained"
-                      size="large"
-                      startIcon={<WhatsappTwoToneIcon />}
-                      onClick={addCart}
+                  <Grid item xs={12}>
+                    <Stack
+                      direction="row"
+                      sx={{
+                        justifyContent: 'start'
+                      }}
                     >
-                      Whatsapp
-                    </Button> */}
-                    <Button
-                      startIcon={<WhatsappTwoToneIcon />}
-                      variant="contained"
-                      size="medium"
-                      sx={{ backgroundColor: '#28933F', color: 'white' }}
-                    >
-                      <a target="_blank" href={`https://wasap.my/${agentData?.phone}/${product.title}`} rel="noopener noreferrer">
-                        Whatsapp
-                      </a>
-                    </Button>
+                      {product?.video !== null && (
+                        <Button
+                          sx={{ position: 'relative', right: '2%' }}
+                          variant="contained"
+                          size="medium"
+                          startIcon={<YouTubeIcon />}
+                          // onClick={addCart}
+                        >
+                          <a target="_blank" href={product?.video} rel="noopener noreferrer">
+                            Youtube
+                          </a>
+                        </Button>
+                      )}
+                      <Button
+                        startIcon={<WhatsappTwoToneIcon />}
+                        variant="contained"
+                        size="medium"
+                        sx={{ backgroundColor: '#28933F', color: 'white' }}
+                      >
+                        <a target="_blank" href={`https://wasap.my/${agentData?.phone}/${product.title}`} rel="noopener noreferrer">
+                          Whatsapp
+                        </a>
+                      </Button>
+                    </Stack>
                   </Grid>
-                  <Grid item xs={6}>
+                  <Grid item xs={12}>
                     {/* <Button type="submit" fullWidth color="secondary" variant="contained" size="large">
                       Buy Now
                     </Button> */}

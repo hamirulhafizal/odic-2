@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 // material-ui
-import { CardMedia, Grid, List, ListItem, ListItemText, Typography } from '@mui/material';
+import { CardMedia, Grid, List, ListItem, ListItemText, TextareaAutosize, Typography } from '@mui/material';
 import { styled } from '@mui/system';
 import { useTheme } from '@mui/styles';
 import { Box } from '@mui/material';
@@ -99,8 +99,29 @@ export default function Review({ shippingData, imageProperty, previewData, editD
             </ListItem>
 
             <ListItem sx={{ py: 1, px: 0, flexWrap: 'wrap' }} key={product.title}>
-              <ListItemText primary={'Description'} sx={{ textTransform: 'capitalize' }} secondary={product?.description} />
-              <Typography variant="body2">RM {product.price}/month</Typography>
+              <ListItemText primary={'Price'} secondary={`  RM ${product.price} / month`} />
+            </ListItem>
+
+            <ListItem sx={{ py: 1, px: 0, flexWrap: 'wrap' }} key={product.title}>
+              <ListItemText primary={'Description'} />
+
+              <TextareaAutosize
+                InputProps={{ readOnly: true, disableUnderline: true }}
+                label="Description"
+                disableUnderline
+                readOnly
+                disabled
+                value={product?.description}
+                aria-label="empty textarea"
+                style={{
+                  width: '100%',
+                  cursor: 'default',
+                  border: '0px',
+                  fontFamily: 'inherit',
+                  resize: 'none',
+                  backgroundColor: 'transparent'
+                }}
+              />
             </ListItem>
 
             {/* <ListItem sx={{ py: 1, px: 0 }}>
@@ -116,6 +137,10 @@ export default function Review({ shippingData, imageProperty, previewData, editD
             </ListItem> */}
           </Box>
         ))}
+
+        <ListItem sx={{ py: 1, px: 0, flexWrap: 'wrap' }}>
+          <ListItemText primary={'Cover Image'} />
+        </ListItem>
 
         <ImageWrapper>
           <CardMedia component="img" image={avatarPreview || ''} title="Product" />

@@ -32,8 +32,6 @@ import { ConfigProvider } from 'contexts/ConfigContext';
 
 import { ApiProvider as AuthProvider } from 'contexts/ApiContext';
 
-import Seo from 'components/SEO/Seo';
-
 const Noop = ({ children }) => <> {children} </>;
 
 Noop.propTypes = {

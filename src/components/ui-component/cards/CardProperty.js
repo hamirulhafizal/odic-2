@@ -23,7 +23,11 @@ import MosqueIcon from '@mui/icons-material/Mosque';
 import LocalParkingIcon from '@mui/icons-material/LocalParking';
 import SingleBedRoundedIcon from '@mui/icons-material/SingleBedRounded';
 import ShowerRoundedIcon from '@mui/icons-material/ShowerRounded';
+import LocationCityIcon from '@mui/icons-material/LocationCity';
+import BedIcon from '@mui/icons-material/Bed';
 import moment from 'moment';
+import ShowerOutlinedIcon from '@mui/icons-material/ShowerOutlined';
+import QuestionAnswerOutlinedIcon from '@mui/icons-material/QuestionAnswerOutlined';
 
 import { useRouter } from 'next/router';
 
@@ -53,7 +57,14 @@ const CardProperty = ({ itemData, agentData }) => {
           mb: 4
         }}
       >
-        <Box sx={{ width: { xs: '-webkit-fill-available', md: '40%' } }}>
+        <Box
+          sx={{
+            width: {
+              xs: '-webkit-fill-available',
+              md: '40%'
+            }
+          }}
+        >
           <CardMedia
             onClick={() => {
               router.push(`/listing/${itemData?.id}`);
@@ -61,15 +72,14 @@ const CardProperty = ({ itemData, agentData }) => {
             sx={{
               cursor: 'pointer',
               width: '100%',
-              height: '50VH',
-              objectFit: 'contain',
-              background: 'grey'
+              height: '40VH',
+              objectFit: 'cover',
+              backgroundColor: 'black',
+              borderRadius: '8px'
             }}
             component="img"
-            image={itemData?.photo_1 != null ? itemData?.photo_1 : `/assets/images/noImg.webp`}
-            alt="Live from space album cover"
+            image={itemData?.featureImage != null ? itemData?.featureImage : `/assets/images/noImg.webp`}
           />
-
           <Stack direction="row" alignItems="center">
             <Stack direction="column" sx={{ pt: 2 }}>
               <Badge
@@ -108,7 +118,7 @@ const CardProperty = ({ itemData, agentData }) => {
                 {user?.firstName || firstName} {user?.lastName || lastName}
               </Typography>
               <Typography variant="subtitle2" color="secondary">
-                {moment(itemData?.inventory_date).format('DD MMM YYYY')}
+                Posted on {moment(itemData?.inventory_date).format('DD MMM YYYY')}
               </Typography>
             </Stack>
           </Stack>
@@ -127,11 +137,15 @@ const CardProperty = ({ itemData, agentData }) => {
               >
                 {itemData?.title}
               </Typography>
-              <Typography variant="h5" color="main" sx={{ textTransform: 'capitalize' }}>
+              <Typography noWrap variant="h5" color="main" sx={{ textTransform: 'capitalize' }}>
                 {itemData?.description}
               </Typography>
               <Typography variant="h4" color="secondary" sx={{ pt: 2 }}>
                 RM {itemData?.price} / month
+              </Typography>
+
+              <Typography variant="h5" color="primary" sx={{ pt: 2, color: 'black' }}>
+                {itemData?.city}
               </Typography>
 
               <List>
@@ -149,9 +163,9 @@ const CardProperty = ({ itemData, agentData }) => {
                       <>
                         <Stack display="flex" direction="row" alignItems="center">
                           <ListItemIcon>
-                            <ShowerRoundedIcon />
+                            <ShowerOutlinedIcon />
                           </ListItemIcon>
-                          {itemData?.bathrooms} bathrooms
+                          {parseInt(itemData?.bathrooms)} Bathroom
                         </Stack>
                       </>
                     }
@@ -160,13 +174,13 @@ const CardProperty = ({ itemData, agentData }) => {
                         <Stack display="flex" direction="row" alignItems="center">
                           <ListItemIcon>
                             <LocalParkingIcon />
-                            {itemData?.carpark} Car Park
+                            {itemData?.carpark} Park
                           </ListItemIcon>
                         </Stack>
                       </>
                     }
                   />
-                  {/* <ListItemText
+                  <ListItemText
                     sx={{
                       display: 'flex',
                       justifyContent: 'start',
@@ -179,13 +193,23 @@ const CardProperty = ({ itemData, agentData }) => {
                       <>
                         <Stack display="flex" direction="row" alignItems="center">
                           <ListItemIcon>
-                            <SingleBedRoundedIcon />
+                            <BedIcon />
                           </ListItemIcon>
-                          {itemData?.bedrooms} bedrooms
+                          {itemData?.bedrooms} Bedroom
                         </Stack>
                       </>
                     }
-                  /> */}
+                    secondary={
+                      <>
+                        <Stack display="flex" direction="row" alignItems="center">
+                          <ListItemIcon sx={{ alignItems: 'center' }}>
+                            <QuestionAnswerOutlinedIcon />
+                            {itemData?.rentalDeposit.replaceAll('-', ' ')}
+                          </ListItemIcon>
+                        </Stack>
+                      </>
+                    }
+                  />
                 </ListItem>
               </List>
             </Stack>

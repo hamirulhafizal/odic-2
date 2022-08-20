@@ -59,6 +59,16 @@ const getProfileAgentById = async (uid) => {
     });
 };
 
+const getAllProfileAgent = async () => {
+  try {
+    const res = await axios.get(`${BACKEND_PATH}/api/v1/profile/`);
+    return res;
+  } catch (err) {
+    const stringErr = JSON.stringify(err);
+    const error = JSON.parse(stringErr);
+    return error;
+  }
+};
 const getListingBySlug = async (slug) => {
   await axios
     .get(`${BACKEND_PATH}/api/v1/profile/${uid}`)
@@ -123,5 +133,6 @@ export {
   getListingBySlug,
   updateListingById,
   deletePhotoListingById,
-  deleteListingById
+  deleteListingById,
+  getAllProfileAgent
 };

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 // material-ui
-import { Button, Checkbox, FormControlLabel, Grid, Stack, Typography, TextField } from '@mui/material';
+import { Button, Checkbox, FormControlLabel, Grid, Stack, Typography, TextField, TextareaAutosize, useMediaQuery } from '@mui/material';
 
 // project imports
 import AnimateButton from 'components/ui-component/extended/AnimateButton';
@@ -18,6 +18,7 @@ import { BACKEND_PATH, GOOLE_API_MAP } from 'config';
 import { boolean } from 'yup/lib/locale';
 import { withScriptjs } from 'react-google-maps';
 import Map from 'components/application/map/Map';
+import { useTheme } from '@mui/styles';
 
 const category = [
   {
@@ -219,31 +220,35 @@ const MapLoader = withScriptjs(Map);
 
 const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex, editData, formFor }) => {
   const { user } = useAuth();
+  const theme = useTheme();
+
+  const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
 
   const initials = {
     category: editData?.category || 1,
     propertyType: editData?.propertyType || 1,
-    propertyTitle: editData?.propertyTitle || 'Freehold',
-    saleType: editData?.saleType || 'For Sale',
+    propertyTitle: editData?.propertyTitle || '',
+    saleType: editData?.saleType || '',
     tenure: editData?.tenure || 1,
-    furnishing: editData?.furnishing || 'Freehold',
-    carpark: editData?.carpark || '2',
-    amenities: editData?.amenities || 'Pool',
-    title: editData?.title || '120 Jalan Kejayaan',
-    description: editData?.description || 'good for investment',
-    price: editData?.price || '400',
-    rentalDeposit: editData?.rentalDeposit || '1.5-Month',
-    phone: editData?.phone || '60184644305',
-    location: editData?.location || 'Johor',
-    city: editData?.city || 'Johor',
+    furnishing: editData?.furnishing || '',
+    carpark: editData?.carpark || '',
+    amenities: editData?.amenities || '',
+    title: editData?.title || '',
+    description: editData?.description || '',
+    price: editData?.price || '',
+    rentalDeposit: editData?.rentalDeposit || '',
+    phone: editData?.phone || '',
+    location: editData?.location || '',
+    city: editData?.city || '',
     lat: editData?.lat || '',
     lon: editData?.lon || '',
-    address: editData?.address || 'johor',
+    address: editData?.address || '',
+    video: editData?.video || '',
 
-    state: editData?.state || 'johor',
-    slug: editData?.slug || 'johor',
-    zipcode: editData?.zipcode || '100',
-    bedrooms: editData?.bedrooms || 10,
+    state: editData?.state || '',
+    slug: editData?.slug || '',
+    zipcode: editData?.zipcode || '',
+    bedrooms: editData?.bedrooms || 1,
     bathrooms: editData?.bathrooms || '1',
     floorRange: editData?.floorRange || '1'
     // realtor: user?.user
@@ -312,7 +317,7 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
         floorRange,
         furnishing,
         carpark,
-
+        video,
         category,
         propertyType,
         propertyTitle,
@@ -341,6 +346,7 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
         carpark: carpark,
         city: city,
 
+        video: video,
         category: category,
         propertyType: propertyType,
         propertyTitle: propertyTitle,
@@ -545,7 +551,26 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
             />
           </Grid> */}
           <Grid item xs={12}>
-            <TextField
+            <TextareaAutosize
+              id="description"
+              name="description"
+              label="Description"
+              placeholder="Description"
+              minRows={5}
+              value={formik.values.description}
+              onChange={formik.handleChange}
+              error={formik.touched.description && Boolean(formik.errors.description)}
+              helperText={formik.touched.description && formik.errors.description}
+              aria-label="empty textarea"
+              style={{
+                borderRadius: '8px',
+                width: '-webkit-fill-available',
+                borderColor: '#afafaf',
+                padding: matchDownSM ? '3%' : '2%',
+                fontFamily: 'inherit'
+              }}
+            />
+            {/* <TextField
               id="description"
               name="description"
               label="Description"
@@ -556,7 +581,7 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
               error={formik.touched.description && Boolean(formik.errors.description)}
               helperText={formik.touched.description && formik.errors.description}
               fullWidth
-            />
+            /> */}
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -656,10 +681,10 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
               label="Video*"
               type="text"
               placeholder="Youtube Link"
-              value={formik.values.city}
+              value={formik.values.video}
               onChange={formik.handleChange}
-              error={formik.touched.city && Boolean(formik.errors.city)}
-              helperText={formik.touched.city && formik.errors.city}
+              error={formik.touched.video && Boolean(formik.errors.video)}
+              helperText={formik.touched.video && formik.errors.video}
               fullWidth
             />
           </Grid>

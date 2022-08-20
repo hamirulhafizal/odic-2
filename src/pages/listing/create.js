@@ -17,7 +17,7 @@ const Create = () => {
         <ValidationWizard formFor="CreateListing" updateProperty={undefined} />
       </Grid>
 
-      <Grid item xs={12} sx={{ m: 3, mt: 1 }}>
+      <Grid item xs={12} sx={{ mt: 1 }}>
         <AuthFooter />
       </Grid>
     </Grid>

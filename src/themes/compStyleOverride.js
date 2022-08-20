@@ -317,7 +317,10 @@ export default function componentStyleOverrides(theme, borderRadius, outlinedFil
     MuiButton: {
       styleOverrides: {
         root: {
-          color: 'white'
+          color: 'white',
+          '&:hover': {
+            backgroundColor: theme.palette.secondary.dark
+          }
         }
       }
     },
@@ -330,6 +333,15 @@ export default function componentStyleOverrides(theme, borderRadius, outlinedFil
           padding: ' 0px'
         }
       }
+    },
+    textArea: {
+      styleOverrides: {
+        root: { color: 'red' }
+      }
     }
+
+    // '&:after': {
+    //   color: 'red'
+    // }
   };
 }

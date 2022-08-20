@@ -400,7 +400,7 @@ const Listing = () => {
 
   return (
     <>
-      <MainCard title="Product List" content={false} contentSX={{ p: 0 }}>
+      <MainCard title="Property List" content={false} contentSX={{ p: 0 }}>
         {products?.inventories?.length != 0 && (
           <CardContent>
             <Grid container justifyContent="space-between" alignItems="center" spacing={2}>
@@ -512,7 +512,7 @@ const Listing = () => {
                           <Typography
                             component={Link}
                             href={`/listing/${row?.id}`}
-                            variant="subtitle1"
+                            variant="span"
                             sx={{
                               color: theme.palette.mode === 'dark' ? theme.palette.grey[600] : 'grey.900',
                               textDecoration: 'none'
@@ -526,7 +526,7 @@ const Listing = () => {
                         <TableCell align="center">{row?.location}</TableCell>
 
                         <TableCell align="center">{propertyTypeData(row?.propertyType)}</TableCell>
-                        <TableCell align="center">{row?.bathrooms}</TableCell>
+                        <TableCell align="center">{parseInt(row?.bathrooms)}</TableCell>
                         <TableCell align="center">{row?.bedrooms}</TableCell>
 
                         <TableCell align="center">

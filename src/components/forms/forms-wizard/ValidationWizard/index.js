@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 // material-ui
-import { Button, Step, Stepper, StepLabel, Stack, Typography, FormHelperText } from '@mui/material';
+import { Button, Step, Stepper, StepLabel, Stack, Typography, FormHelperText, useMediaQuery } from '@mui/material';
 
 // project imports
 import AddressForm from './AddressForm';
@@ -19,6 +19,8 @@ import Link from 'Link';
 import { CircularProgress } from '@mui/material';
 import { dispatch } from 'store';
 import { openSnackbar } from 'store/slices/snackbar';
+import { useTheme } from '@mui/material/styles';
+import { getProducts } from 'store/slices/product';
 
 // step options
 const steps = ['Fill Up Detail', 'Upload Image', 'Review your Listing'];
@@ -79,6 +81,10 @@ const ValidationWizard = ({ updateProperty, formFor }) => {
   const [errorIndex, setErrorIndex] = React.useState(null);
   const [editData, setEditData] = React.useState(null);
   const [isApi, setApi] = React.useState(false);
+
+  const theme = useTheme();
+
+  const matchDownSM = useMediaQuery(theme.breakpoints.down('sm'));
 
   const [lisitngId, setLisitngId] = React.useState(null);
 
@@ -176,6 +182,7 @@ const ValidationWizard = ({ updateProperty, formFor }) => {
                 close: false
               })
             );
+            dispatch(getProducts(res?.data?.user_name));
           }
 
           if (resParse1.status == 400) {
@@ -208,6 +215,7 @@ const ValidationWizard = ({ updateProperty, formFor }) => {
                 close: false
               })
             );
+            dispatch(getProducts(res?.data?.user_name));
           } else {
             const resJson1 = JSON?.stringify(res);
             const resParse1 = JSON?.parse(resJson1);
@@ -240,7 +248,7 @@ const ValidationWizard = ({ updateProperty, formFor }) => {
 
   return (
     <MainCard title={formFor == 'CreateListing' ? 'Cover Image' : formFor == 'UpdateListing' ? 'Update Listing' : null}>
-      <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5, overflow: 'scroll' }}>
+      <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5, overflow: matchDownSM ? 'scroll' : 'unset' }}>
         {steps.map((label, index) => {
           const labelProps = {};
 

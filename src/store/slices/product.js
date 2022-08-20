@@ -1,6 +1,6 @@
 // third-party
 import { createSlice } from '@reduxjs/toolkit';
-import { getAllListing, getListingById } from 'contexts/ApiListing';
+import { getAllListing, getListingById, updateListingById } from 'contexts/ApiListing';
 
 // project imports
 import axios from 'utils/axios';
@@ -29,6 +29,11 @@ const slice = createSlice({
     // GET PRODUCTS
     getProductsSuccess(state, action) {
       state.products = action.payload;
+    },
+
+    // EDIT ADDRESS
+    editProductSuccess(state, action) {
+      state.addresses = action.payload;
     },
 
     // FILTER PRODUCTS
@@ -91,6 +96,20 @@ export function getProductById(id) {
     try {
       const response = getListingById(id).then((res) => {
         dispatch(slice.actions.getProductSuccess(res));
+      });
+      return response;
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+      return error;
+    }
+  };
+}
+
+export function editProductById(id, formData) {
+  return async () => {
+    try {
+      const response = updateListingById(id, formData).then((res) => {
+        dispatch(slice.actions.editProductSuccess(res));
       });
       return response;
     } catch (error) {

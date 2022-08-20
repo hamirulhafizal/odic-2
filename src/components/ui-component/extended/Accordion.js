@@ -10,10 +10,20 @@ import MuiAccordionSummary from '@mui/material/AccordionSummary';
 
 // assets
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Specification from 'components/application/e-commerce/ProductDetails/Specification';
 
 // ==============================|| ACCORDION ||============================== //
 
-const Accordion = ({ data, defaultExpandedId = null, expandIcon, square, toggle }) => {
+const Accordion = ({ defaultExpandedId = null, expandIcon, square, toggle, product }) => {
+  const data = [
+    {
+      id: 'basic1',
+      defaultExpand: false,
+      title: 'Specification',
+      content: <Specification product={product} />
+    }
+  ];
+
   const theme = useTheme();
 
   const [expanded, setExpanded] = useState(null);
@@ -43,7 +53,7 @@ const Accordion = ({ data, defaultExpandedId = null, expandIcon, square, toggle 
             >
               {item.title}
             </MuiAccordionSummary>
-            <MuiAccordionDetails>{item.content}</MuiAccordionDetails>
+            <MuiAccordionDetails sx={{ p: 0 }}>{item.content}</MuiAccordionDetails>
           </MuiAccordion>
         ))}
     </Box>

@@ -48,6 +48,7 @@ function ElevationScroll({ children, window }) {
       // backgroundColor: theme.palette.background.default,
       backgroundColor: 'rgba(0, 0, 0, 0.45)',
       backdropFilter: 'blur(25px)',
+      WebkitBackdropFilter: 'blur(25px)',
       // borderBottom: trigger ? 'none' : '1px solid',
       borderColor: trigger ? '' : darkBorder,
       color: theme.palette.text.dark
