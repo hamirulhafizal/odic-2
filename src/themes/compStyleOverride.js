@@ -333,15 +333,6 @@ export default function componentStyleOverrides(theme, borderRadius, outlinedFil
           padding: ' 0px'
         }
       }
-    },
-    textArea: {
-      styleOverrides: {
-        root: { color: 'red' }
-      }
     }
-
-    // '&:after': {
-    //   color: 'red'
-    // }
   };
 }

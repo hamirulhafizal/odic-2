@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
 // material-ui
-import { useTheme } from '@mui/material/styles';
+import { useTheme, styled } from '@mui/material/styles';
 import {
   Avatar,
   Box,
@@ -15,7 +15,8 @@ import {
   Paper,
   Popper,
   Stack,
-  Typography
+  Typography,
+  Badge
 } from '@mui/material';
 
 // third-party
@@ -34,6 +35,33 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 const User1 = '/assets/images/users/user-round.svg';
+
+const StyledBadge = styled(Badge)(({ theme }) => ({
+  '& .MuiBadge-badge': {
+    boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
+    '&::after': {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      borderRadius: '50%',
+      animation: 'ripple 1.2s infinite ease-in-out',
+      border: '1px solid currentColor',
+      content: '""'
+    }
+  },
+  '@keyframes ripple': {
+    '0%': {
+      transform: 'scale(.8)',
+      opacity: 1
+    },
+    '100%': {
+      transform: 'scale(2.4)',
+      opacity: 0
+    }
+  }
+}));
 
 // ==============================|| PROFILE MENU ||============================== //
 
@@ -93,6 +121,7 @@ const ProfileSection = () => {
           alignItems: 'center',
           borderRadius: '27px',
           transition: 'all .2s ease-in-out',
+          pl: '10px',
           borderColor: theme.palette.mode === 'dark' ? theme.palette.dark.main : theme.palette.primary.light,
           backgroundColor: theme.palette.mode === 'dark' ? theme.palette.dark.main : theme.palette.primary.light,
           '&[aria-controls="menu-list-grow"], &:hover': {
@@ -108,18 +137,29 @@ const ProfileSection = () => {
           }
         }}
         icon={
-          <Avatar
-            src={user?.photo}
+          <StyledBadge
+            overlap="circular"
             sx={{
-              ...theme.typography.mediumAvatar,
-              margin: '8px 0 8px 8px !important',
-              cursor: 'pointer'
+              '& .MuiBadge-badge': {
+                backgroundColor: user?.phone ? '#44b700' : 'red',
+                color: user?.phone ? '#44b700' : 'red'
+              }
             }}
-            ref={anchorRef}
-            aria-controls={open ? 'menu-list-grow' : undefined}
-            aria-haspopup="true"
-            color="inherit"
-          />
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+            variant="dot"
+          >
+            <Avatar
+              src={user?.photo}
+              sx={{
+                ...theme.typography.mediumAvatar,
+                cursor: 'pointer'
+              }}
+              ref={anchorRef}
+              aria-controls={open ? 'menu-list-grow' : undefined}
+              aria-haspopup="true"
+              color="inherit"
+            />
+          </StyledBadge>
         }
         label={<IconSettings stroke={1.5} size="1.5rem" color={theme.palette.primary.main} />}
         variant="outlined"
@@ -185,31 +225,59 @@ const ProfileSection = () => {
                           }}
                         >
                           <ListItemButton
-                            sx={{ borderRadius: `${borderRadius}px`, backgroundColor: 'red', color: 'white' }}
+                            sx={{
+                              borderRadius: `${borderRadius}px`,
+
+                              backgroundColor: user?.phone ? '#44b700' : '',
+                              color: user?.phone ? '#44b700' : ''
+                            }}
                             selected={selectedIndex === 1}
                             // onClick={(event) => handleListItemClick(event, 1)}
                             onClick={() => {
                               router.push(`/${user?.user_name}`);
                             }}
                           >
-                            <ListItemIcon sx={{ color: 'white', fontWeight: 'bolder' }}>
+                            <ListItemIcon
+                              sx={{
+                                color: user?.phone ? 'white' : ''
+                              }}
+                            >
                               <AccountCircleOutlinedIcon stroke={1.5} size="1.3rem" />
                             </ListItemIcon>
-                            <ListItemText primary={<Typography sx={{ fontWeight: 'bolder' }}>Live Profile</Typography>} />
+                            <ListItemText
+                              primary={
+                                <Typography
+                                  sx={{
+                                    color: user?.phone ? 'white' : ''
+                                  }}
+                                >
+                                  Live Profile
+                                </Typography>
+                              }
+                            />
                           </ListItemButton>
                           <ListItemButton
-                            sx={{ borderRadius: `${borderRadius}px` }}
+                            sx={{
+                              borderRadius: `${borderRadius}px`,
+                              backgroundColor: user?.phone == null ? 'red' : ''
+                            }}
                             selected={selectedIndex === 0}
-                            onClick={(event) => handleListItemClick(event, 0)}
+                            onClick={() => {
+                              router.push(`/profile`);
+                            }}
                           >
-                            <ListItemIcon>
+                            <ListItemIcon sx={{ color: user?.phone == null ? 'white' : '' }}>
                               <IconSettings stroke={1.5} size="1.3rem" />
                             </ListItemIcon>
                             <ListItemText
                               primary={
-                                <Link href="/profile">
-                                  <Typography variant="body2">Account Settings</Typography>
-                                </Link>
+                                <Typography
+                                  sx={{
+                                    color: user?.phone == null ? 'white' : ''
+                                  }}
+                                >
+                                  Account Settings
+                                </Typography>
                               }
                             />
                           </ListItemButton>
@@ -218,7 +286,7 @@ const ProfileSection = () => {
                             <ListItemIcon>
                               <IconLogout stroke={1.5} size="1.3rem" />
                             </ListItemIcon>
-                            <ListItemText primary={<Typography variant="body2">Logout</Typography>} />
+                            <ListItemText primary={<Typography>Logout</Typography>} />
                           </ListItemButton>
                         </List>
                       </Box>

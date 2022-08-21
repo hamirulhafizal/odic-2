@@ -63,8 +63,8 @@ const Profile = ({ ...others }) => {
       validator={() => ({})}
       validationSchema={Yup.object().shape({
         firstName: Yup.string().max(255).required(),
-        lastName: Yup.string().max(255).required()
-        // description: Yup.string().max(250)
+        lastName: Yup.string().max(255).required(),
+        phone: Yup.number().min(15).required()
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         if (!values.firstName) {
@@ -84,22 +84,21 @@ const Profile = ({ ...others }) => {
 
         try {
           await updateProfile(user?.user_name, formData).then((res) => {
-            if (scriptedRef.current) {
-              setLoading(false);
-              setStatus({ success: true, msg: 'success' });
-              setSubmitting(false);
-              dispatch(
-                openSnackbar({
-                  open: true,
-                  message: 'Your Profile has been successfully Updated.',
-                  variant: 'alert',
-                  alert: {
-                    color: 'success'
-                  },
-                  close: false
-                })
-              );
-            }
+            // if (scriptedRef.current) {
+            setLoading(false);
+            setStatus({ success: true, msg: 'success' });
+            setSubmitting(false);
+            dispatch(
+              openSnackbar({
+                open: true,
+                message: 'Your Profile has been successfully Updated.',
+                variant: 'alert',
+                alert: {
+                  color: 'success'
+                },
+                close: false
+              })
+            );
           });
         } catch (err) {
           if (scriptedRef.current === false) {
@@ -168,10 +167,19 @@ const Profile = ({ ...others }) => {
                         label="Phone number"
                         name="phone"
                         type="number"
+                        required
                         placeholder="6012345678"
                         value={values.phone}
                         onBlur={handleBlur}
                         onChange={handleChange}
+                        // focused
+                        error={user?.phone ? false : true}
+                        sx={{
+                          '& .MuiFormHelperText-root ': {
+                            color: 'red'
+                          }
+                        }}
+                        helperText={errors.phone && touched.phone && String(errors.phone)}
                       />
                     </Grid>
                     <Grid item xs={12} md={6}>
@@ -191,14 +199,15 @@ const Profile = ({ ...others }) => {
                         style={{
                           borderRadius: '8px',
                           width: '-webkit-fill-available',
-                          borderRadius: ' 8px',
+                          borderRadius: '8px',
                           borderColor: '#afafaf',
                           padding: matchDownSM ? '5%' : '2%',
-                          fontFamily: 'inherit'
+                          fontFamily: 'inherit',
+                          overflow: 'unset'
                         }}
                       />
                     </Grid>
-                    <Grid item xs={12}>
+                    {/* <Grid item xs={12}>
                       <Grid container alignItems="center" spacing={gridSpacing} sx={{ mb: 1.25 }}>
                         <Grid item>
                           <WhatsAppIcon />
@@ -215,15 +224,15 @@ const Profile = ({ ...others }) => {
                             onChange={handleChange}
                           />
                         </Grid>
-                        {/* <Grid item>
+                        <Grid item>
                           <AnimateButton>
                             <Button variant="contained" size="small" color="secondary">
                               Connect
                             </Button>
                           </AnimateButton>
-                        </Grid> */}
+                        </Grid>
                       </Grid>
-                    </Grid>
+                    </Grid> */}
 
                     <Grid item xs={12}>
                       <Grid container alignItems="center" spacing={gridSpacing} sx={{ mb: 1.25 }}>

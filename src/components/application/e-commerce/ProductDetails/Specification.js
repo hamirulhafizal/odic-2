@@ -160,7 +160,8 @@ const Specification = ({ product }) => {
                       cursor: 'default',
                       border: '0px',
                       resize: 'none',
-                      fontFamily: 'inherit'
+                      fontFamily: 'inherit',
+                      overflow: 'unset'
                     }}
                   />
                 </TableCell>
@@ -184,7 +185,8 @@ const Specification = ({ product }) => {
                 width: '100%',
                 cursor: 'default',
                 border: '0px',
-                fontFamily: 'inherit'
+                fontFamily: 'inherit',
+                overflow: 'unset'
               }}
             />
           </Stack>

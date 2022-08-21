@@ -415,7 +415,7 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
               id="furnishing"
               name="furnishing"
               captionLabel="Furnishing"
-              value={formik.values.furnishing || editData?.furnishing}
+              value={formik.values.furnishing}
               onChange={formik.handleChange}
               error={formik.touched.furnishing && Boolean(formik.errors.furnishing)}
               helperText={formik.touched.furnishing && formik.errors.furnishing}
@@ -427,9 +427,9 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
               currencies={carPark}
               id="carpark"
               name="carpark"
-              captionLabel="Car Park*"
+              captionLabel="Carpark"
               type="number"
-              value={formik.values.carpark || editData?.carpark}
+              value={formik.values.carpark}
               onChange={formik.handleChange}
               error={formik.touched.carpark && Boolean(formik.errors.carpark)}
               helperText={formik.touched.carpark && formik.errors.carpark}
@@ -440,7 +440,7 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
             <TextField
               id="amenities"
               name="amenities"
-              label="Amenities*"
+              label="Amenities"
               value={formik.values.amenities}
               onChange={formik.handleChange}
               error={formik.touched.amenities && Boolean(formik.errors.amenities)}
@@ -452,7 +452,8 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
             <TextField
               id="title"
               name="title"
-              label="Title*"
+              label="Title"
+              required
               value={formik.values.title}
               onChange={formik.handleChange}
               error={formik.touched.title && Boolean(formik.errors.title)}
@@ -567,7 +568,8 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
                 width: '-webkit-fill-available',
                 borderColor: '#afafaf',
                 padding: matchDownSM ? '3%' : '2%',
-                fontFamily: 'inherit'
+                fontFamily: 'inherit',
+                overflow: 'unset'
               }}
             />
             {/* <TextField

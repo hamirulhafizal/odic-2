@@ -104,8 +104,6 @@ export const ApiProvider = ({ children }) => {
         password
       })
       .then((res) => {
-        console.log('res->', res);
-
         login(email, password, user_name);
         updateProfile(user_name, { firstName: first_name, lastName: last_name });
         history.push('/login');
@@ -113,7 +111,6 @@ export const ApiProvider = ({ children }) => {
         return res;
       })
       .catch((err) => {
-        console.log('err-->', err);
         history.push('/register');
         return err;
       });

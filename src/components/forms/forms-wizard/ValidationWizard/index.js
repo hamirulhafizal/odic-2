@@ -264,7 +264,17 @@ const ValidationWizard = ({ updateProperty, formFor }) => {
 
           return (
             <Step key={label}>
-              <StepLabel {...labelProps}>{label}</StepLabel>
+              <StepLabel
+                sx={{
+                  width: 'max-content',
+                  '& .MuiStepIcon-text': {
+                    fill: 'white'
+                  }
+                }}
+                {...labelProps}
+              >
+                {label}
+              </StepLabel>
             </Step>
           );
         })}

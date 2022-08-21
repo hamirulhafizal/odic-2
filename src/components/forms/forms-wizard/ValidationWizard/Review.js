@@ -119,7 +119,8 @@ export default function Review({ shippingData, imageProperty, previewData, editD
                   border: '0px',
                   fontFamily: 'inherit',
                   resize: 'none',
-                  backgroundColor: 'transparent'
+                  backgroundColor: 'transparent',
+                  overflow: 'unset'
                 }}
               />
             </ListItem>

@@ -78,6 +78,8 @@ function AgentProfile({ userData }) {
   const [error, setError] = useState();
   const router = useRouter();
 
+  const defaultImage = 'https://onedream.dynamicdigital.guru/media/profile_photo/avatar.png';
+
   const matchDownLG = useMediaQuery(theme.breakpoints.down('lg'));
   const matchDownMD = useMediaQuery(theme.breakpoints.down('md'));
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
@@ -105,8 +107,6 @@ function AgentProfile({ userData }) {
       }
     }
   }, [agent, userData]);
-
-  // const title = (document.getElementById('titleMeta').content = userData.firstName);
 
   return (
     <>
@@ -198,18 +198,22 @@ function AgentProfile({ userData }) {
                                 badgeContent={<VerifiedIcon color="secondary" />}
                               >
                                 <Avatar
-                                  alt="User 1"
-                                  src={agent?.photo}
+                                  alt="One Dream Legacy"
+                                  src={agent?.photo == defaultImage ? '/oneDream.ico' : agent?.photo}
                                   sx={{
                                     borderRadius: '16px',
                                     margin: '5px auto 0',
                                     width: { xs: 72, sm: 100, md: 140 },
                                     height: { xs: 72, sm: 100, md: 140 },
-                                    backgroundColor: 'transparent',
+                                    backgroundColor: agent?.photo == defaultImage ? 'white' : 'white',
                                     borderRadius: '100%',
                                     borderColor: 'white',
                                     border: '2px solid white',
-                                    borderRadius: '125px'
+                                    borderRadius: '125px',
+
+                                    '& .MuiAvatar-img': {
+                                      objectFit: Boolean(agent?.photo == defaultImage) ? 'contain' : null
+                                    }
                                   }}
                                 />
                               </Badge>
@@ -219,76 +223,78 @@ function AgentProfile({ userData }) {
                                   {agent?.firstName} {agent?.lastName}
                                 </Typography>
 
-                                {/* <Typography variant="subtitle2" color="main" sx={{ color: 'white', pt: 1 }}>
-                                  {agent?.description}
-                                </Typography> */}
+                                {agent?.description !== '' && (
+                                  <TextareaAutosize
+                                    variant="subtitle2"
+                                    color="main"
+                                    type="text"
+                                    className="textArea"
+                                    value={agent?.description}
+                                    disableUnderline
+                                    readOnly
+                                    disabled
+                                    style={{
+                                      color: 'white',
+                                      backgroundColor: 'transparent',
+                                      pt: 1,
+                                      borderRadius: '8px',
+                                      width: '-webkit-fill-available',
+                                      borderColor: 'transparent',
+                                      padding: matchDownSM ? '5%' : '2%',
+                                      fontFamily: 'inherit',
+                                      textAlign: 'center',
+                                      cursor: 'default',
+                                      opacity: 1,
+                                      resize: 'none'
+                                      // overflow: 'unset'
+                                    }}
+                                  />
+                                )}
 
-                                <TextareaAutosize
-                                  variant="subtitle2"
-                                  color="main"
-                                  type="text"
-                                  className="textArea"
-                                  value={agent?.description}
-                                  disableUnderline
-                                  readOnly
-                                  disabled
-                                  style={{
-                                    color: 'white',
-                                    backgroundColor: 'transparent',
-                                    pt: 1,
-                                    borderRadius: '8px',
-                                    width: '-webkit-fill-available',
-                                    borderColor: 'transparent',
-                                    padding: matchDownSM ? '5%' : '2%',
-                                    fontFamily: 'inherit',
-                                    textAlign: 'center',
-                                    cursor: 'default',
-                                    opacity: 1,
-                                    resize: 'none'
+                                {userData['inventories']?.length == 0 ? null : (
+                                  <Typography variant="caption" sx={{ color: 'white' }}>
+                                    {userData['inventories']?.length} listing
+                                  </Typography>
+                                )}
 
-                                    // '& textarea:disabled': {
-                                    //   color: 'red'
-                                    // }
-                                  }}
-                                />
-
-                                <Typography variant="caption" sx={{ color: 'white' }}>
-                                  {userData['inventories']?.length} listing
-                                </Typography>
-
-                                <Stack sx={{ pt: 2 }} justifyContent={'center'} direction="row">
-                                  <Stack direction="row" sx={{ width: { xs: '70%', lg: '60%' }, justifyContent: 'space-evenly' }}>
-                                    <Link href="https://codedthemes.com/" target="_blank" underline="hover">
+                                {agent?.instagram !== null ||
+                                  agent?.facebook !== null ||
+                                  agent?.linkedin !== null ||
+                                  (agent?.youtube !== null && (
+                                    <Stack sx={{ pt: 2 }} justifyContent={'center'} direction="row">
+                                      <Stack direction="row" sx={{ width: { xs: '70%', lg: '60%' }, justifyContent: 'space-evenly' }}>
+                                        {/* <Link href="https://codedthemes.com/" target="_blank" underline="hover">
                                       <PublicTwoToneIcon color="secondary" />
-                                    </Link>
+                                    </Link> */}
 
-                                    {agent?.instagram && (
-                                      <Link href={`${agent?.instagram}`} target="_blank" underline="hover">
-                                        <InstagramIcon color="secondary" />
-                                      </Link>
-                                    )}
-                                    {agent?.facebook && (
-                                      <Link href={`${agent?.facebook}`} target="_blank" underline="hover">
-                                        <FacebookIcon color="secondary" />
-                                      </Link>
-                                    )}
-                                    {agent?.linkedin && (
-                                      <Link href={`${agent?.linkedin}`} target="_blank" underline="hover">
-                                        <LinkedInIcon color="secondary" />
-                                      </Link>
-                                    )}
-                                    {agent?.youtube && (
-                                      <Link href={`${agent?.youtube}`} target="_blank" underline="hover">
-                                        <YouTubeIcon color="secondary" />
-                                      </Link>
-                                    )}
-                                    {/* {agent?.tiktok && (
+                                        {agent?.instagram && (
+                                          <Link href={`${agent?.instagram}`} target="_blank" underline="hover">
+                                            <InstagramIcon color="secondary" />
+                                          </Link>
+                                        )}
+                                        {agent?.facebook && (
+                                          <Link href={`${agent?.facebook}`} target="_blank" underline="hover">
+                                            <FacebookIcon color="secondary" />
+                                          </Link>
+                                        )}
+                                        {agent?.linkedin && (
+                                          <Link href={`${agent?.linkedin}`} target="_blank" underline="hover">
+                                            <LinkedInIcon color="secondary" />
+                                          </Link>
+                                        )}
+                                        {agent?.youtube && (
+                                          <Link href={`${agent?.youtube}`} target="_blank" underline="hover">
+                                            <YouTubeIcon color="secondary" />
+                                          </Link>
+                                        )}
+                                        {/* {agent?.tiktok && (
                                       <Link href={`${agent?.tiktok}`} target="_blank" underline="hover">
                                         <LinkedInIcon color="secondary" />
                                       </Link>
                                     )} */}
-                                  </Stack>
-                                </Stack>
+                                      </Stack>
+                                    </Stack>
+                                  ))}
                               </Stack>
                             </>
                           )}

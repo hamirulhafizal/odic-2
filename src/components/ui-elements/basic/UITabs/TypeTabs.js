@@ -4,13 +4,15 @@ import Link from 'Link';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
-import { Box, Chip, Tab, Tabs, Typography } from '@mui/material';
+import { Box, Chip, Stack, Tab, Tabs, Typography, Button } from '@mui/material';
 
 // assets
 import CardProperty from 'components/ui-component/cards/CardProperty';
 import BedroomParentTwoToneIcon from '@mui/icons-material/BedroomParentTwoTone';
+import AddLocationAltOutlinedIcon from '@mui/icons-material/AddLocationAltOutlined';
 import HomeTwoToneIcon from '@mui/icons-material/HomeTwoTone';
 import HotelTwoToneIcon from '@mui/icons-material/HotelTwoTone';
+import { useRouter } from 'next/router';
 
 // tab content customize
 
@@ -58,6 +60,7 @@ function a11yProps(index) {
 
 export default function TypeTabs({ username, agentData }) {
   const theme = useTheme();
+  const router = useRouter();
 
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
@@ -126,6 +129,25 @@ export default function TypeTabs({ username, agentData }) {
         {agentData?.inventories?.map((element, index) => {
           return <CardProperty agentData={agentData} itemData={element} key={index} />;
         })}
+        {agentData?.inventories == 0 && (
+          <Stack sx={{ p: 2, alignItems: 'center' }}>
+            <Typography variant="h4" sx={{ pb: 2, textAlign: 'center' }}>
+              No Item Found
+            </Typography>
+            <Button
+              onClick={() => {
+                router.push('/listing/create');
+              }}
+              variant="contained"
+              color="secondary"
+              sx={{ color: 'white' }}
+              size="small"
+              startIcon={<AddLocationAltOutlinedIcon sx={{ color: 'white' }} fontSize="small" />}
+            >
+              Create New List
+            </Button>
+          </Stack>
+        )}
       </TabPanel>
       <TabPanel value={value} index={1}>
         {/* {inventories?.map((item, index) => {
