@@ -131,16 +131,16 @@ const CardProperty = ({ itemData, agentData }) => {
                 onClick={() => {
                   router.push(`/listing/${itemData?.id}`);
                 }}
-                variant="h3"
+                variant="h4"
                 color="main"
                 sx={{ textTransform: 'capitalize', cursor: 'pointer' }}
               >
                 {itemData?.title}
               </Typography>
-              <Typography noWrap variant="h5" color="main" sx={{ textTransform: 'capitalize' }}>
+              <Typography noWrap variant="h5" color="main" sx={{ textTransform: 'capitalize', pt: 1 }}>
                 {itemData?.description}
               </Typography>
-              <Typography variant="h4" color="secondary" sx={{ pt: 2 }}>
+              <Typography variant="h2" color="secondary" sx={{ pt: 2 }}>
                 RM {itemData?.price} / month
               </Typography>
 

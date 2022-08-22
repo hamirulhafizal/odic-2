@@ -1,3 +1,5 @@
+// eslint-disable-next-line import/no-unresolved
+
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 
@@ -18,9 +20,9 @@ import useConfig from '../../../../hooks/useConfig';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 // Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
+// import 'swiper/css';
+// import 'swiper/css/navigation';
+// import 'swiper/css/pagination';
 
 import { Navigation, Pagination, Mousewheel, Keyboard } from 'swiper';
 
@@ -32,6 +34,7 @@ const ProductImages = ({ product }) => {
   const products = [product?.featureImage, product?.photo_2, product?.photo_3, product?.photo_4, product?.photo_5, product?.photo_1];
 
   const matchDownLG = useMediaQuery(theme.breakpoints.up('lg'));
+  const matchDownSM = useMediaQuery(theme.breakpoints.down('sm'));
   const initialImage = product.image ? product?.photo_1 : product?.photo_1;
 
   const [selected, setSelected] = useState(initialImage);
@@ -74,8 +77,21 @@ const ProductImages = ({ product }) => {
               {resultObject
                 .filter((item) => item != null)
                 .map((item, index) => (
-                  <SwiperSlide>
-                    <img id={index} style={{ width: '100%', height: '100%', p: 2 }} src={item} />
+                  <SwiperSlide key={index}>
+                    <CardMedia
+                      key={index}
+                      style={{
+                        width: '100%',
+                        height: matchDownSM ? '250px' : '450px',
+                        p: 2,
+                        objectFit: 'cover',
+                        backgroundColor: 'white',
+                        borderRadius: '8px'
+                      }}
+                      component="img"
+                      image={item}
+                      alt="one dream property"
+                    />
                   </SwiperSlide>
                 ))}
             </Swiper>

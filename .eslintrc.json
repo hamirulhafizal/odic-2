@@ -16,7 +16,10 @@
   "settings": {
     "import/resolver": {
       "node": {
-        "moduleDirectory": ["node_modules", "src/"]
+        "moduleDirectory": [
+          "node_modules",
+          "src/"
+        ]
       }
     }
   },
@@ -29,7 +32,10 @@
     },
     "ecmaVersion": 12
   },
-  "plugins": ["prettier", "react"],
+  "plugins": [
+    "prettier",
+    "react"
+  ],
   "rules": {
     "jsx-a11y/no-autofocus": "off",
     "prefer-const": "off",
@@ -53,7 +59,9 @@
     "import/no-unresolved": [
       2,
       {
-        "caseSensitive": false
+        "caseSensitive": false,
+        "commonjs": true,
+        "amd": true
       }
     ],
     "prettier/prettier": [
@@ -72,7 +80,10 @@
     "react/jsx-filename-extension": [
       1,
       {
-        "extensions": [".js", ".jsx"]
+        "extensions": [
+          ".js",
+          ".jsx"
+        ]
       }
     ]
   }

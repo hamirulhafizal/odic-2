@@ -164,8 +164,12 @@ const ProductInfo = ({ product }) => {
   };
 
   useEffect(() => {
-    agetData(product?.user_name);
-  }, [product?.user_name]);
+    if (agentData == null) {
+      agetData(product?.user_name);
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [product?.user_name, agentData]);
 
   const formik = useFormik({
     enableReinitialize: true,

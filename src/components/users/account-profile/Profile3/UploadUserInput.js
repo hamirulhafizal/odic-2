@@ -68,7 +68,7 @@ const UploadUserInput = () => {
         <Grid item xs={12}>
           <Stack directiom="column">
             <Typography variant="subtitle2" align="center">
-              Upload/Change Your Profile Image
+              Upload/Change Your Profile Image <br /> *Below 1MB
             </Typography>
             <FormHelperText sx={{ textAlign: 'center' }} error>
               {message}

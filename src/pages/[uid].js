@@ -111,6 +111,8 @@ function AgentProfile({ userData }) {
   return (
     <>
       <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
         <title>{`ONE DREAM LEGACY | List all type properties at One Dream Property`}</title>
         <meta property="og:image" content={userData?.photo || Cover} />
         <meta property="og:title" content={`${userData?.firstName} ${userData?.lastName}`} />
@@ -247,7 +249,7 @@ function AgentProfile({ userData }) {
                                       opacity: 1,
                                       resize: 'none',
                                       overflow: 'unset',
-                                      height: '160px'
+                                      height: '170px'
                                     }}
                                   />
                                 )}

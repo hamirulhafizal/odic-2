@@ -31,6 +31,7 @@ import { ConfigProvider } from 'contexts/ConfigContext';
 // import { AWSCognitoProvider as AuthProvider } from 'contexts/AWSCognitoContext';
 
 import { ApiProvider as AuthProvider } from 'contexts/ApiContext';
+import Head from 'next/head';
 
 const Noop = ({ children }) => <> {children} </>;
 
@@ -58,6 +59,9 @@ function App({ Component, pageProps }) {
 
   return (
     <div>
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+      </Head>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persister}>
           <ConfigProvider>

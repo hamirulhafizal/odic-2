@@ -1,3 +1,5 @@
+/* eslint-disable import/no-unresolved */
+
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 
@@ -5,13 +7,9 @@ import { useEffect, useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import { Box, useMediaQuery } from '@mui/material';
 
-// third-party
-import Slider from 'react-slick';
-
 // project imports
 import ProductCard from 'components/ui-component/cards/ProductCard';
 import { useDispatch, useSelector } from 'store';
-import { getRelatedProducts } from 'store/slices/product';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -37,11 +35,6 @@ const RelatedProducts = ({ id }) => {
   useEffect(() => {
     setRelated(relatedProducts);
   }, [relatedProducts]);
-
-  useEffect(() => {
-    // dispatch(getRelatedProducts(id));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   let noItems = 3;
   noItems = matchDownSM ? 1 : noItems;
@@ -80,9 +73,8 @@ const RelatedProducts = ({ id }) => {
         }}
       >
         {related.map((product, index) => (
-          <Box>
-            {console.log('product', product)}
-            <SwiperSlide>
+          <Box key={index}>
+            <SwiperSlide key={index}>
               <ProductCard
                 key={index}
                 id={product.id}

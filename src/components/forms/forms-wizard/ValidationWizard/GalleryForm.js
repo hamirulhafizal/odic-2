@@ -96,18 +96,20 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
   const preViewImageCover = (e) => {
     if (e.target?.files[0]?.size >= 2000000) {
       setMessage('File Size is too large');
-    }
-    const fileReader = new FileReader();
+    } else {
+      setMessage('');
+      const fileReader = new FileReader();
 
-    fileReader.onload = () => {
-      if (fileReader.readyState === 2) {
-        formik.setFieldValue('photo', e.target?.files[0]);
-        formik.setFieldValue('size', e.target?.files[0]?.size);
-        setAvatarPreview(fileReader.result);
-        setEImg(e.target.files[0]);
-      }
-    };
-    fileReader.readAsDataURL(e.target.files[0]);
+      fileReader.onload = () => {
+        if (fileReader.readyState === 2) {
+          formik.setFieldValue('photo', e.target?.files[0]);
+          formik.setFieldValue('size', e.target?.files[0]?.size);
+          setAvatarPreview(fileReader.result);
+          setEImg(e.target.files[0]);
+        }
+      };
+      fileReader.readAsDataURL(e.target.files[0]);
+    }
   };
 
   const preViewImageAlbum = (e) => {
@@ -118,20 +120,30 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
 
       const output = document.querySelector('#result');
       output.innerHTML = '';
+      var totalSize = [];
       for (let i = 0; i < files.length; i++) {
-        if (!files[i].type.match('image')) continue;
-        const picReader = new FileReader();
-        picReader.addEventListener('load', function (event) {
-          const picFile = event.target;
+        totalSize.push(files[i].size);
+        const sum = totalSize.reduce((accumulator, value) => {
+          return accumulator + value;
+        }, 0);
 
-          console.log('picFile', picFile);
+        if (sum >= 2000000) {
+          setMessageAlbum('Total image size is too large');
+        } else {
+          setMessageAlbum('');
+          if (!files[i].type.match('image')) continue;
+          const picReader = new FileReader();
+          picReader.addEventListener('load', function (event) {
+            const picFile = event.target;
 
-          const div = document.createElement('div');
-          div.innerHTML = ` <img style="width: 40vw;height: auto;"  src="${picFile.result}" title="${picFile.name}" /> `;
+            const div = document.createElement('div');
+            div.innerHTML = ` <img style="width: 40vw;height: auto;"  src="${picFile.result}" title="${picFile.name}" /> `;
 
-          output.appendChild(div);
-        });
-        picReader.readAsDataURL(files[i]);
+            output.appendChild(div);
+          });
+
+          picReader.readAsDataURL(files[i]);
+        }
       }
     } else {
       alert('Your browser does not support File API');
@@ -168,7 +180,7 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
           <Grid item xs={12} md={12}>
             <Stack direction="row" justifyContent="space-between">
               <Typography variant="h5" gutterBottom>
-                Cover Image
+                Cover Image <br /> *below 1MB
               </Typography>
               {avatarPreview && (
                 <AnimateButton>
@@ -181,16 +193,15 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
           </Grid>
 
           <Grid item xs={12}>
+            <FormHelperText error>{message}</FormHelperText>
             {!avatarPreview ? (
               <div
                 style={{
-                  // border: `1px solid grey`,
                   boxShadow: 'inset 0 0 5px #000000',
                   borderRadius: '5px'
                 }}
               >
                 <TextField
-                  // multiple
                   inputProps={{
                     accept: 'image/jpeg, image/png, image/jpg'
                   }}
@@ -221,8 +232,6 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
                 >
                   <CloudUploadIcon /> Click Here Or Drop file here to upload
                 </InputLabel>
-
-                <FormHelperText error>{message}</FormHelperText>
               </div>
             ) : (
               <ImageWrapper>
@@ -236,7 +245,7 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
           <Grid item xs={12} md={12}>
             <Stack direction="row" justifyContent="space-between">
               <Typography variant="h5" gutterBottom>
-                Gallery Image
+                Gallery Image <br /> *Total image below 1MB <br /> *max 5 Image
               </Typography>
               {avatarPreviewAlbum && (
                 <AnimateButton>
@@ -261,27 +270,14 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
               />
             </Box>
 
+            <FormHelperText error>{messageAlbum}</FormHelperText>
+
             <div
               style={{
-                // border: `1px solid grey`,
                 boxShadow: 'inset 0 0 5px #000000',
                 borderRadius: '5px'
               }}
             >
-              {/* <TextField
-                  accept="image/jpeg, image/png, image/jpg"
-                  inputProps={{ multiple: true }}
-                  name="file"
-                  type="file"
-                  id="files"
-                  fullWidth
-                  label="Enter SKU"
-                  sx={{ display: 'none' }}
-                  onChange={(e) => {
-                    preViewImageAlbum(e);
-                  }}
-                /> */}
-
               <Box
                 sx={{
                   display: 'flex',
@@ -292,48 +288,6 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
               >
                 <output id="result" />
               </Box>
-
-              {/* {avatarPreviewAlbum && (
-                <ImageWrapper>
-                 
-                </ImageWrapper>
-              )} */}
-
-              {/* <InputLabel
-                  htmlFor="file-upload"
-                  sx={{
-                    py: 3.75,
-                    px: 3,
-                    textAlign: 'center',
-                    borderRadius: '4px',
-                    cursor: 'pointer',
-                    '& > svg': {
-                      verticalAlign: 'sub',
-                      mr: 0.5
-                    }
-                  }}
-                >
-                  <CloudUploadIcon /> Click Here Or Drop file here to uploads
-                </InputLabel> */}
-
-              {/* <InputLabel htmlFor="photo">
-                  <Input
-                    accept="image/*"
-                    id="photo"
-                    type="file"
-                    name="photo"
-                    label="photo"
-                    onChange={(e) => {
-                      setFieldImgValue(e.target.files[0]);
-                      preViewImage(e);
-                    }}
-                  />
-                  <Button color="secondary" sx={{ color: 'white' }} variant="contained" component="span">
-                    Upload Avatar
-                  </Button>
-                </InputLabel> */}
-
-              <FormHelperText error>{messageAlbum}</FormHelperText>
             </div>
           </Grid>
 
