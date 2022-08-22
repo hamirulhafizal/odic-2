@@ -245,8 +245,9 @@ function AgentProfile({ userData }) {
                                       textAlign: 'center',
                                       cursor: 'default',
                                       opacity: 1,
-                                      resize: 'none'
-                                      // overflow: 'unset'
+                                      resize: 'none',
+                                      overflow: 'unset',
+                                      height: '160px'
                                     }}
                                   />
                                 )}
@@ -257,44 +258,46 @@ function AgentProfile({ userData }) {
                                   </Typography>
                                 )}
 
-                                {agent?.instagram !== null ||
-                                  agent?.facebook !== null ||
-                                  agent?.linkedin !== null ||
-                                  (agent?.youtube !== null && (
-                                    <Stack sx={{ pt: 2 }} justifyContent={'center'} direction="row">
-                                      <Stack direction="row" sx={{ width: { xs: '70%', lg: '60%' }, justifyContent: 'space-evenly' }}>
-                                        {/* <Link href="https://codedthemes.com/" target="_blank" underline="hover">
+                                {agent?.instagram != null ||
+                                agent?.facebook != null ||
+                                agent?.linkedin != null ||
+                                agent?.youtube != null ? (
+                                  <Stack sx={{ pt: 2 }} justifyContent={'center'} direction="row">
+                                    <Stack direction="row" sx={{ width: { xs: '70%', lg: '60%' }, justifyContent: 'space-evenly' }}>
+                                      {/* <Link href="https://codedthemes.com/" target="_blank" underline="hover">
                                       <PublicTwoToneIcon color="secondary" />
                                     </Link> */}
 
-                                        {agent?.instagram && (
-                                          <Link href={`${agent?.instagram}`} target="_blank" underline="hover">
-                                            <InstagramIcon color="secondary" />
-                                          </Link>
-                                        )}
-                                        {agent?.facebook && (
-                                          <Link href={`${agent?.facebook}`} target="_blank" underline="hover">
-                                            <FacebookIcon color="secondary" />
-                                          </Link>
-                                        )}
-                                        {agent?.linkedin && (
-                                          <Link href={`${agent?.linkedin}`} target="_blank" underline="hover">
-                                            <LinkedInIcon color="secondary" />
-                                          </Link>
-                                        )}
-                                        {agent?.youtube && (
-                                          <Link href={`${agent?.youtube}`} target="_blank" underline="hover">
-                                            <YouTubeIcon color="secondary" />
-                                          </Link>
-                                        )}
-                                        {/* {agent?.tiktok && (
+                                      {agent?.instagram && (
+                                        <Link href={`${agent?.instagram}`} target="_blank" underline="hover">
+                                          <InstagramIcon color="secondary" />
+                                        </Link>
+                                      )}
+                                      {agent?.facebook && (
+                                        <Link href={`${agent?.facebook}`} target="_blank" underline="hover">
+                                          <FacebookIcon color="secondary" />
+                                        </Link>
+                                      )}
+                                      {agent?.linkedin && (
+                                        <Link href={`${agent?.linkedin}`} target="_blank" underline="hover">
+                                          <LinkedInIcon color="secondary" />
+                                        </Link>
+                                      )}
+                                      {agent?.youtube && (
+                                        <Link href={`${agent?.youtube}`} target="_blank" underline="hover">
+                                          <YouTubeIcon color="secondary" />
+                                        </Link>
+                                      )}
+                                      {/* {agent?.tiktok && (
                                       <Link href={`${agent?.tiktok}`} target="_blank" underline="hover">
                                         <LinkedInIcon color="secondary" />
                                       </Link>
                                     )} */}
-                                      </Stack>
                                     </Stack>
-                                  ))}
+                                  </Stack>
+                                ) : (
+                                  ''
+                                )}
                               </Stack>
                             </>
                           )}

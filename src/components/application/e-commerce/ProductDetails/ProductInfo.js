@@ -63,6 +63,7 @@ import VerifiedIcon from '@mui/icons-material/Verified';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 
 import moment from 'moment';
+import { getRelatedProducts } from 'store/slices/product';
 
 // product color select
 function getColor(color) {
@@ -157,6 +158,8 @@ const ProductInfo = ({ product }) => {
   const agetData = (user_name) => {
     getProfileAgentById(user_name).then((res) => {
       setAgentData(res?.data);
+
+      dispatch(getRelatedProducts(router.query.id, res?.data?.inventories));
     });
   };
 
@@ -236,7 +239,7 @@ const ProductInfo = ({ product }) => {
 
       <Grid item xs={12}>
         <Stack direction="row" alignItems="center" spacing={1}>
-          <Typography variant="h2" color="primary">
+          <Typography variant="h1" color="primary">
             RM {product?.price} / month
           </Typography>
         </Stack>
@@ -278,7 +281,6 @@ const ProductInfo = ({ product }) => {
               {agentData?.firstName} {agentData?.lastName}
             </Typography>
             <Typography variant="subtitle2" color="secondary">
-              {/* {product?.inventory_date} */}
               Posted on {moment(product?.inventory_date).format('DD MMM YYYY')}
             </Typography>
           </Stack>
@@ -363,18 +365,18 @@ const ProductInfo = ({ product }) => {
                     <TableBody>
                       <TableRow sx={{ '& td, & th': { border: 0, textTransform: 'capitalize' } }}>
                         <TableCell>
-                          <b>Deposit </b> {product?.rentalDeposit.replace('-', ' ')}
-                        </TableCell>
-                        <TableCell>
-                          <b>State </b> {product?.state}
-                        </TableCell>
-                      </TableRow>
-                      <TableRow sx={{ '& td, & th': { border: 0, textTransform: 'capitalize' } }}>
-                        <TableCell>
                           <b>Bedrooms </b> {product?.bedrooms}
                         </TableCell>
                         <TableCell>
                           <b>Bathrooms </b> {parseInt(product?.bathrooms)}
+                        </TableCell>
+                      </TableRow>
+                      <TableRow sx={{ '& td, & th': { border: 0, textTransform: 'capitalize' } }}>
+                        <TableCell>
+                          <b>Deposit </b> {product?.rentalDeposit.replace('-', ' ')}
+                        </TableCell>
+                        <TableCell>
+                          <b>State </b> {product?.state}
                         </TableCell>
                       </TableRow>
                     </TableBody>
@@ -493,13 +495,7 @@ const ProductInfo = ({ product }) => {
                       }}
                     >
                       {product?.video !== null && (
-                        <Button
-                          sx={{ position: 'relative', right: '2%' }}
-                          variant="contained"
-                          size="medium"
-                          startIcon={<YouTubeIcon />}
-                          // onClick={addCart}
-                        >
+                        <Button sx={{ position: 'relative', right: '2%' }} variant="contained" size="medium" startIcon={<YouTubeIcon />}>
                           <a target="_blank" href={product?.video} rel="noopener noreferrer">
                             Youtube
                           </a>
@@ -517,11 +513,11 @@ const ProductInfo = ({ product }) => {
                       </Button>
                     </Stack>
                   </Grid>
-                  <Grid item xs={12}>
-                    {/* <Button type="submit" fullWidth color="secondary" variant="contained" size="large">
+                  {/* <Grid item xs={12}>
+                    <Button type="submit" fullWidth color="secondary" variant="contained" size="large">
                       Buy Now
-                    </Button> */}
-                  </Grid>
+                    </Button>
+                  </Grid> */}
                 </Grid>
               </Grid>
             </Grid>

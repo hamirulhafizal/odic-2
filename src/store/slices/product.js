@@ -130,11 +130,14 @@ export function filterProducts(filter) {
   };
 }
 
-export function getRelatedProducts(id) {
+export function getRelatedProducts(query, data) {
   return async () => {
     try {
-      const response = await axios.post('/api/product/related', { id });
-      dispatch(slice.actions.getRelatedProductsSuccess(response.data));
+      const response = data.filter((object) => {
+        return object.id !== Number(query);
+      });
+
+      dispatch(slice.actions.getRelatedProductsSuccess(response));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }

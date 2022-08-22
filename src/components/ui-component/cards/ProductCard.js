@@ -8,6 +8,7 @@ import { Button, CardContent, CardMedia, Grid, Rating, Stack, Typography } from 
 // redux
 import { useDispatch, useSelector } from 'store';
 import { addProduct } from 'store/slices/cart';
+import { useRouter } from 'next/router';
 
 // project import
 import MainCard from './MainCard';
@@ -21,26 +22,20 @@ const prodImage = '/assets/images/e-commerce';
 
 // ==============================|| PRODUCT CARD ||============================== //
 
-const ProductCard = ({ id, color, name, image, description, offerPrice, salePrice, rating }) => {
+const ProductCard = ({ id, color, title, image, description, offerPrice, salePrice, rating }) => {
   const dispatch = useDispatch();
 
-  const prodProfile = image && `${prodImage}/${image}`;
+  // const prodProfile = image && `${prodImage}/${image}`;
   const [productRating] = useState(rating);
   const cart = useSelector((state) => state.cart);
+  const router = useRouter();
 
-  const addCart = () => {
-    dispatch(addProduct({ id, name, image, salePrice, offerPrice, color, size: 8, quantity: 1 }, cart.checkout.products));
-    dispatch(
-      openSnackbar({
-        open: true,
-        message: 'Add To Cart Success',
-        variant: 'alert',
-        alert: {
-          color: 'success'
-        },
-        close: false
-      })
-    );
+  const truncate = (str, n) => {
+    return str?.length > n ? str.substr(0, n - 1) + '...' : str;
+  };
+
+  const addCart = (id) => {
+    window.location.href = `/listing/${id}`;
   };
 
   const [isLoading, setLoading] = useState(true);
@@ -60,26 +55,30 @@ const ProductCard = ({ id, color, name, image, description, offerPrice, salePric
             '&:hover': {
               transform: 'scale3d(1.02, 1.02, 1)',
               transition: 'all .4s ease-in-out'
-            }
+            },
+            boxShadow: 'rgb(36 37 44 / 30%) 0px 2px 8px',
+            width: '300px'
           }}
         >
           <CardMedia
             sx={{ height: 220 }}
-            image={prodProfile}
+            image={image}
             title="Contemplative Reptile"
-            component={Link}
-            href={`/app/e-commerce/product-details/${id}`}
+            onClick={() => {
+              addCart(id);
+            }}
           />
           <CardContent sx={{ p: 2 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12}>
+              <Grid item xs={12} sx={{ textAlign: 'start' }}>
                 <Typography
-                  component={Link}
-                  href={`/app/e-commerce/product-details/${id}`}
+                  onClick={() => {
+                    addCart(id);
+                  }}
                   variant="subtitle1"
                   sx={{ textDecoration: 'none' }}
                 >
-                  {name}
+                  {truncate(title, 15)}
                 </Typography>
               </Grid>
               {description && (
@@ -95,27 +94,16 @@ const ProductCard = ({ id, color, name, image, description, offerPrice, salePric
                   </Typography>
                 </Grid>
               )}
-              <Grid item xs={12} sx={{ pt: '8px !important' }}>
-                <Stack direction="row" alignItems="center" spacing={1}>
-                  <Rating precision={0.5} name="size-small" value={productRating} size="small" readOnly />
-                  <Typography variant="caption">({offerPrice}+)</Typography>
-                </Stack>
-              </Grid>
+
               <Grid item xs={12}>
                 <Stack direction="row" justifyContent="space-between" alignItems="center">
                   <Grid container spacing={1}>
                     <Grid item>
-                      <Typography variant="h4">${offerPrice}</Typography>
-                    </Grid>
-                    <Grid item>
-                      <Typography variant="h6" sx={{ color: 'grey.500', textDecoration: 'line-through' }}>
-                        ${salePrice}
+                      <Typography variant="h3" variant="primary">
+                        RM {offerPrice} / month
                       </Typography>
                     </Grid>
                   </Grid>
-                  <Button variant="contained" sx={{ minWidth: 0 }} onClick={addCart}>
-                    <ShoppingCartTwoToneIcon fontSize="small" />
-                  </Button>
                 </Stack>
               </Grid>
             </Grid>

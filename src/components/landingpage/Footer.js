@@ -19,7 +19,7 @@ const images2 = '/assets/images/landing/footerBg-1.png';
 const FooterWrapper = styled('div')(({ theme }) => ({
   padding: '35px 0',
   color: '#fff',
-  backgroundImage: `url(${images2})`,
+  backgroundImage: `url(${images2}) !important`,
   backgroundSize: 'cover',
   background: '#00000057',
   justifyContent: 'space-between',
@@ -33,6 +33,7 @@ const FooterLink = styled(Link)({
   display: 'inline-flex',
   alignItems: 'flex-start',
   textDecoration: 'none !important',
+  backgroundImage: `url(${images2}) !important`,
   opacity: '0.8',
   '& svg': {
     fontsize: '1.125rem',
@@ -47,6 +48,8 @@ const FooterSubWrapper = styled('div')(({ theme }) => ({
   padding: '20px 0',
   background: '#00000057',
   borderTop: `1px solid ${theme.palette.secondary.main}`,
+  backgroundImage: `url(${images2}) !important`,
+
   [theme.breakpoints.down('md')]: {
     textAlign: 'center'
   }

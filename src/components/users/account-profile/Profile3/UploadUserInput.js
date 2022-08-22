@@ -34,7 +34,7 @@ const UploadUserInput = () => {
       // console.log('photo', photo);
 
       if (photo.size >= 2000000) {
-        setMessage('File Size is too large');
+        setMessage('File Size is too large, below 1MB');
       } else {
         setMessage('');
         const formData = new FormData();
@@ -91,7 +91,7 @@ const UploadUserInput = () => {
                 }}
               />
               <Button color="secondary" sx={{ color: 'white' }} variant="contained" component="span">
-                Upload Avatar
+                Profile Picture
               </Button>
             </InputLabel>
           </AnimateButton>

@@ -395,7 +395,7 @@ const Profile = ({ ...others }) => {
                       <Stack direction="row">
                         <AnimateButton>
                           <Button type="submit" variant="contained" color="secondary" sx={{ color: 'white' }}>
-                            {isLoading ? <CircularProgress sx={{ color: 'white' }} size={20} /> : 'Change Details'}
+                            {isLoading ? <CircularProgress sx={{ color: 'white' }} size={20} /> : 'Save Details'}
                           </Button>
                         </AnimateButton>
                       </Stack>

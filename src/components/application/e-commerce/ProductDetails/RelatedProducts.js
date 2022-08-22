@@ -13,6 +13,15 @@ import ProductCard from 'components/ui-component/cards/ProductCard';
 import { useDispatch, useSelector } from 'store';
 import { getRelatedProducts } from 'store/slices/product';
 
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+
+import { Navigation, Pagination, Mousewheel, Keyboard, autoplay } from 'swiper';
+
 // ==============================|| PRODUCT DETAILS - RELATED PRODUCTS ||============================== //
 
 const RelatedProducts = ({ id }) => {
@@ -30,7 +39,7 @@ const RelatedProducts = ({ id }) => {
   }, [relatedProducts]);
 
   useEffect(() => {
-    dispatch(getRelatedProducts(id));
+    // dispatch(getRelatedProducts(id));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -40,33 +49,55 @@ const RelatedProducts = ({ id }) => {
   noItems = matchDownLG ? 3 : noItems;
   noItems = matchDownXl ? 4 : noItems;
 
-  const settings = {
-    dots: false,
-    centerMode: true,
-    swipeToSlide: true,
-    focusOnSelect: true,
-    centerPadding: '0px',
-    slidesToShow: noItems
-  };
-
   let productResult = <></>;
-  if (related) {
-    productResult = related.map((product, index) => (
-      <Box key={index} sx={{ p: 1.5 }}>
-        <ProductCard
-          key={index}
-          id={product.id}
-          image={product.image}
-          name={product.name}
-          offerPrice={product.offerPrice}
-          salePrice={product.salePrice}
-          rating={product.rating}
-        />
-      </Box>
-    ));
-  }
 
-  return <Slider {...settings}>{productResult}</Slider>;
+  return (
+    <>
+      <Swiper
+        slidesPerView={1}
+        spaceBetween={10}
+        pagination={{
+          clickable: true
+        }}
+        breakpoints={{
+          640: {
+            slidesPerView: 2,
+            spaceBetween: 20
+          },
+          768: {
+            slidesPerView: 4,
+            spaceBetween: 40
+          },
+          1024: {
+            slidesPerView: 5,
+            spaceBetween: 50
+          }
+        }}
+        modules={[Navigation, Pagination, Mousewheel, Keyboard]}
+        className="mySwiper"
+        style={{
+          paddingBottom: 50
+        }}
+      >
+        {related.map((product, index) => (
+          <Box>
+            {console.log('product', product)}
+            <SwiperSlide>
+              <ProductCard
+                key={index}
+                id={product.id}
+                image={product?.featureImage}
+                title={product?.title}
+                offerPrice={product.price}
+                salePrice={product.price}
+                // rating={product.rating}
+              />
+            </SwiperSlide>
+          </Box>
+        ))}
+      </Swiper>
+    </>
+  );
 };
 
 RelatedProducts.propTypes = {

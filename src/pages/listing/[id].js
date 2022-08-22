@@ -21,6 +21,7 @@ import { getProductById } from 'store/slices/product';
 import { resetCart } from 'store/slices/cart';
 import AppBar from 'components/ui-component/extended/AppBar';
 import { styled, useTheme } from '@mui/material/styles';
+import FooterPage from 'components/landingpage/Footer';
 const headerBackground = '/assets/images/landing/header-bg.jpg';
 
 // import MainLayout from 'layout/MainLayout';
@@ -161,14 +162,14 @@ const ProductDetails = () => {
             )}
           </MainCard>
         </Grid>
-        {/* <Grid item xs={12} lg={10} sx={{ mt: 3 }}>
-          <Typography variant="h2">Related Products</Typography>
+        <Grid item xs={12} lg={10} sx={{ mt: 3, ml: 2 }}>
+          <Typography variant="h2">Similar Properties</Typography>
         </Grid>
         <Grid item xs={11} lg={10}>
-          <RelatedProducts id={router.query.id.toString()} />
+          <RelatedProducts id={product?.user_name} />
         </Grid>
-        <FloatingCart /> */}
       </Grid>
+      <FooterPage />
     </>
 
     //  </MainLayout>

@@ -13,7 +13,16 @@ import { gridSpacing } from 'store/constant';
 // third-party
 import Slider from 'react-slick';
 import Carousel, { Modal, ModalGateway } from 'react-images';
+
 import useConfig from '../../../../hooks/useConfig';
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+
+import { Navigation, Pagination, Mousewheel, Keyboard } from 'swiper';
 
 // ==============================|| PRODUCT DETAILS - IMAGES ||============================== //
 
@@ -32,20 +41,11 @@ const ProductImages = ({ product }) => {
 
   var resultObject = Object.values(products).filter((item) => item != null);
 
-  const settings = {
-    dots: false,
-    centerMode: true,
-    swipeToSlide: true,
-    focusOnSelect: true,
-    centerPadding: '0px',
-    slidesToShow: resultObject?.length > 3 ? lgNo : resultObject?.length
-  };
-
   return (
     <>
       <Grid container alignItems="center" justifyContent="center" spacing={gridSpacing}>
         <Grid item xs={12}>
-          <MainCard content={false} sx={{ m: '0 auto' }}>
+          {/* <MainCard content={false} sx={{ m: '0 auto' }}>
             <CardMedia
               // onClick={() => setModal(!modal)}
               component="img"
@@ -60,24 +60,26 @@ const ProductImages = ({ product }) => {
               }}
             />
           </MainCard>
-        </Grid>
-        <Grid item xs={11} sm={7} md={9} lg={10} xl={8}>
-          <Slider {...settings}>
-            {products
-              .filter((item) => item != null)
-              .map((item, index) => (
-                <Box key={index} onClick={() => setSelected(item)} sx={{ p: 1 }}>
-                  <Avatar
-                    outline={selected === item}
-                    size={matchDownLG ? 'lg' : 'md'}
-                    color="primary"
-                    src={item}
-                    variant="rounded"
-                    sx={{ m: '0 auto', cursor: 'pointer' }}
-                  />
-                </Box>
-              ))}
-          </Slider>
+        </Grid> */}
+          <Grid item>
+            <Swiper
+              cssMode={true}
+              navigation={true}
+              pagination={true}
+              mousewheel={true}
+              keyboard={true}
+              modules={[Navigation, Pagination, Mousewheel, Keyboard]}
+              className="mySwiper"
+            >
+              {resultObject
+                .filter((item) => item != null)
+                .map((item, index) => (
+                  <SwiperSlide>
+                    <img id={index} style={{ width: '100%', height: '100%', p: 2 }} src={item} />
+                  </SwiperSlide>
+                ))}
+            </Swiper>
+          </Grid>
         </Grid>
       </Grid>
       {/* <ModalGateway>
