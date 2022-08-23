@@ -230,28 +230,27 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
     propertyTitle: editData?.propertyTitle || '',
     saleType: editData?.saleType || '',
     tenure: editData?.tenure || 1,
-    furnishing: editData?.furnishing || '',
-    carpark: editData?.carpark || '',
+    furnishing: editData?.furnishing || 'Freehold',
+    carpark: editData?.carpark || '1',
     amenities: editData?.amenities || '',
     title: editData?.title || '',
     description: editData?.description || '',
     price: editData?.price || '',
-    rentalDeposit: editData?.rentalDeposit || '',
-    phone: editData?.phone || '',
+    phone: editData?.phone || user?.phone || '',
     location: editData?.location || '',
     city: editData?.city || '',
     lat: editData?.lat || '',
     lon: editData?.lon || '',
-    address: editData?.address || '',
-    video: editData?.video || '',
+    address: editData?.address || '-',
+    floorRange: editData?.floorRange || '1',
+    zipcode: editData?.zipcode || '-',
 
+    video: editData?.video || '',
     state: editData?.state || '',
     slug: editData?.slug || '',
-    zipcode: editData?.zipcode || '',
     bedrooms: editData?.bedrooms || 1,
-    bathrooms: editData?.bathrooms || '1',
-    floorRange: editData?.floorRange || '1'
-    // realtor: user?.user
+    bathrooms: editData?.bathrooms || '1'
+    // rentalDeposit: editData?.rentalDeposit || '',
   };
 
   const check = (value) => {
@@ -307,14 +306,11 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
       const {
         slug,
         title,
-        address,
         city,
         state,
-        zipcode,
         price,
         bedrooms,
         bathrooms,
-        floorRange,
         furnishing,
         carpark,
         video,
@@ -325,27 +321,26 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
         tenure,
         amenities,
         description,
-        rentalDeposit,
+        address,
+        floorRange,
+        zipcode,
         phone,
         location,
         lat,
         lon
+        // rentalDeposit,
       } = values;
 
       setShippingData({
         slug: slugify(title),
         title: title,
-        address: address,
         state: state,
-        zipcode: zipcode,
         price: price,
         bedrooms: bedrooms,
         bathrooms: bathrooms,
-        floorRange: floorRange,
         furnishing: furnishing,
         carpark: carpark,
         city: city,
-
         video: video,
         category: category,
         propertyType: propertyType,
@@ -354,11 +349,14 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
         tenure: tenure,
         amenities: amenities,
         description: description,
-        rentalDeposit: rentalDeposit,
+        address: address,
+        zipcode: zipcode,
+        floorRange: floorRange,
         phone: phone,
         location: location,
         lat: lat,
         lon: lon
+        // rentalDeposit: rentalDeposit,
       });
 
       handleNext();
@@ -378,23 +376,12 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
               id="category"
               name="category"
               captionLabel="Category"
-              value={formik.values.category || editData?.category}
+              value={formik.values.category}
               onChange={formik.handleChange}
               error={formik.touched.category && Boolean(formik.errors.category)}
               helperText={formik.touched.category && formik.errors.category}
               fullWidth
             />
-            {/* <TextField
-              id="category"
-              name="category"
-              label="category*"
-              value={formik.values.category || editData?.category}
-              onChange={formik.handleChange}
-              onChange={formik.handleChange}
-              error={formik.touched.category && Boolean(formik.errors.category)}
-              helperText={formik.touched.category && formik.errors.category}
-              fullWidth
-            /> */}
           </Grid>
           <Grid item xs={12} sm={12}>
             <FormControlSelect
@@ -402,7 +389,7 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
               id="propertyType"
               name="propertyType"
               captionLabel="Property Type"
-              value={formik.values.propertyType || editData?.propertyType}
+              value={formik.values.propertyType}
               onChange={formik.handleChange}
               error={formik.touched.propertyType && Boolean(formik.errors.propertyType)}
               helperText={formik.touched.propertyType && formik.errors.propertyType}
@@ -450,10 +437,10 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
           </Grid>
           <Grid item xs={12}>
             <TextField
+              required
               id="title"
               name="title"
               label="Title"
-              required
               value={formik.values.title}
               onChange={formik.handleChange}
               error={formik.touched.title && Boolean(formik.errors.title)}
@@ -461,12 +448,12 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
               fullWidth
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid hidden item xs={12}>
             <TextField
+              hidden
               id="address"
               name="address"
               label="Address"
-              required
               value={formik.values.address}
               onChange={formik.handleChange}
               error={formik.touched.address && Boolean(formik.errors.address)}
@@ -476,10 +463,10 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
           </Grid>
           <Grid item xs={12}>
             <TextField
+              required
               id="state"
               name="state"
               label="State"
-              required
               value={formik.values.state}
               onChange={formik.handleChange}
               error={formik.touched.state && Boolean(formik.errors.state)}
@@ -487,12 +474,12 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
               fullWidth
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid hidden item xs={12}>
             <TextField
+              hidden
               id="zipcode"
               name="zipcode"
               label="Postcode"
-              required
               value={formik.values.zipcode}
               onChange={formik.handleChange}
               error={formik.touched.zipcode && Boolean(formik.errors.zipcode)}
@@ -502,10 +489,10 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
           </Grid>
           <Grid item xs={12}>
             <TextField
+              required
               id="bedrooms"
               name="bedrooms"
               label="Bedrooms"
-              required
               value={formik.values.bedrooms}
               onChange={formik.handleChange}
               error={formik.touched.bedrooms && Boolean(formik.errors.bedrooms)}
@@ -515,10 +502,10 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
           </Grid>
           <Grid item xs={12}>
             <TextField
+              required
               id="bathrooms"
               name="bathrooms"
               label="Bathrooms"
-              required
               value={formik.values.bathrooms}
               onChange={formik.handleChange}
               error={formik.touched.bathrooms && Boolean(formik.errors.bathrooms)}
@@ -526,12 +513,12 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
               fullWidth
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid hidden item xs={12}>
             <TextField
+              hidden
               id="floorRange"
               name="floorRange"
               label="Floor Range"
-              required
               value={formik.values.floorRange}
               onChange={formik.handleChange}
               error={formik.touched.floorRange && Boolean(formik.errors.floorRange)}
@@ -587,11 +574,11 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
           </Grid>
           <Grid item xs={12}>
             <TextField
+              required
               id="price"
               name="price"
               label="Price/Month"
               type="number"
-              required
               placeholder="RM/Month"
               value={formik.values.price}
               onChange={formik.handleChange}
@@ -600,7 +587,7 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
               fullWidth
             />
           </Grid>
-          <Grid item xs={12} sm={12}>
+          {/* <Grid item xs={12} sm={12}>
             <FormControlSelect
               currencies={rentalDeposit}
               type="number"
@@ -614,16 +601,16 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
               helperText={formik.touched.rentalDeposit && formik.errors.rentalDeposit}
               fullWidth
             />
-          </Grid>
+          </Grid> */}
           <Grid item xs={12}>
             <TextField
+              required
               id="phone"
               name="phone"
               label="Phone"
               type="tel"
-              required
-              placeholder="6014644305"
-              value={user?.phone || formik.values.phone}
+              placeholder="014644305"
+              value={formik.values.phone}
               onChange={formik.handleChange}
               error={formik.touched.phone && Boolean(formik.errors.phone)}
               helperText={formik.touched.phone && formik.errors.phone}
@@ -632,6 +619,7 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
           </Grid>
           <Grid item xs={12} sm={12}>
             <FormControlSelect
+              required
               currencies={location}
               id="location"
               name="location"
@@ -643,11 +631,7 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
               fullWidth
             />
           </Grid>
-          <Grid item xs={12}>
-            {/* <MapLoader
-              googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${GOOLE_API_MAP}&libraries=places`}
-              loadingElement={<div style={{ height: `100%` }} />}
-            /> */}
+          {/* <Grid item xs={12}>
             <TextField
               id="map"
               name="map"
@@ -660,9 +644,10 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
               helperText={formik.touched.map && formik.errors.map}
               fullWidth
             />
-          </Grid>
+          </Grid> */}
           <Grid item xs={12}>
             <TextField
+              required
               id="city"
               name="city"
               label="City*"

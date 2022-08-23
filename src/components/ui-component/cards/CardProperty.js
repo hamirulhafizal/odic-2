@@ -1,3 +1,5 @@
+/* eslint-disable import/no-unresolved */
+
 import React, { useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -31,6 +33,14 @@ import QuestionAnswerOutlinedIcon from '@mui/icons-material/QuestionAnswerOutlin
 
 import { useRouter } from 'next/router';
 
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Mousewheel, Keyboard } from 'swiper';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+
 const CardProperty = ({ itemData, agentData }) => {
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
@@ -38,7 +48,15 @@ const CardProperty = ({ itemData, agentData }) => {
   const { user } = useAuth();
   const router = useRouter();
 
+  const temArr = [];
+
+  const { photo_1, photo_2, photo_3, photo_4, photo_5, featureimage } = itemData;
+
   const { photo, phone, firstName, lastName, user_name } = agentData;
+
+  temArr.push(photo_1, photo_2, photo_3, photo_4, photo_5, featureimage);
+
+  var resultObject = Object.values(temArr).filter((item) => item != null || item !== undefined);
 
   return (
     <>
@@ -65,7 +83,41 @@ const CardProperty = ({ itemData, agentData }) => {
             }
           }}
         >
-          <CardMedia
+          <Swiper
+            cssMode={true}
+            navigation={true}
+            pagination={true}
+            mousewheel={true}
+            keyboard={true}
+            modules={[Navigation, Pagination, Mousewheel, Keyboard]}
+            className="mySwiper"
+          >
+            {resultObject
+              .filter((item) => item != null)
+              .map((item, index) => (
+                <SwiperSlide key={index}>
+                  <CardMedia
+                    onClick={() => {
+                      router.push(`/listing/${itemData?.id}`);
+                    }}
+                    key={index}
+                    sx={{
+                      cursor: 'pointer',
+                      width: '100%',
+                      height: matchDownSM ? '30vh !important' : '40vh  !important',
+                      objectFit: 'cover',
+                      backgroundColor: 'black',
+                      borderRadius: '8px'
+                    }}
+                    component="img"
+                    image={item}
+                    alt="one dream property"
+                  />
+                </SwiperSlide>
+              ))}
+          </Swiper>
+
+          {/* <CardMedia
             onClick={() => {
               router.push(`/listing/${itemData?.id}`);
             }}
@@ -79,9 +131,10 @@ const CardProperty = ({ itemData, agentData }) => {
             }}
             component="img"
             image={itemData?.featureImage != null ? itemData?.featureImage : `/assets/images/noImg.webp`}
-          />
+          /> */}
+
           <Stack direction="row" alignItems="center">
-            <Stack direction="column" sx={{ pt: 2 }}>
+            {/* <Stack direction="column" sx={{ pt: 2 }}>
               <Badge
                 overlap="circular"
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
@@ -104,9 +157,8 @@ const CardProperty = ({ itemData, agentData }) => {
                   }}
                 />
               </Badge>
-            </Stack>
-
-            <Stack direction="column" sx={{ pl: 2, pt: { xs: 3 } }}>
+            </Stack> */}
+            {/*  <Stack direction="column" sx={{ pl: 2, pt: { xs: 3 } }}>
               <Typography
                 onClick={() => {
                   router.push(`/${user_name}`);
@@ -120,7 +172,7 @@ const CardProperty = ({ itemData, agentData }) => {
               <Typography variant="subtitle2" color="secondary">
                 Posted on {moment(itemData?.inventory_date).format('DD MMM YYYY')}
               </Typography>
-            </Stack>
+            </Stack> */}
           </Stack>
         </Box>
 
@@ -140,7 +192,7 @@ const CardProperty = ({ itemData, agentData }) => {
               <Typography noWrap variant="h5" color="main" sx={{ textTransform: 'capitalize', pt: 1 }}>
                 {itemData?.description}
               </Typography>
-              <Typography variant="h2" color="secondary" sx={{ pt: 2 }}>
+              <Typography variant="h3" color="secondary" sx={{ pt: 2 }}>
                 RM {itemData?.price} / month
               </Typography>
 
@@ -173,14 +225,14 @@ const CardProperty = ({ itemData, agentData }) => {
                       <>
                         <Stack display="flex" direction="row" alignItems="center">
                           <ListItemIcon>
-                            <LocalParkingIcon />
-                            {itemData?.carpark} Park
+                            <BedIcon />
                           </ListItemIcon>
+                          {itemData?.bedrooms} Bedroom
                         </Stack>
                       </>
                     }
                   />
-                  <ListItemText
+                  {/* <ListItemText
                     sx={{
                       display: 'flex',
                       justifyContent: 'start',
@@ -193,9 +245,9 @@ const CardProperty = ({ itemData, agentData }) => {
                       <>
                         <Stack display="flex" direction="row" alignItems="center">
                           <ListItemIcon>
-                            <BedIcon />
+                            <LocalParkingIcon />
+                            {itemData?.carpark} Park
                           </ListItemIcon>
-                          {itemData?.bedrooms} Bedroom
                         </Stack>
                       </>
                     }
@@ -209,7 +261,7 @@ const CardProperty = ({ itemData, agentData }) => {
                         </Stack>
                       </>
                     }
-                  />
+                  /> */}
                 </ListItem>
               </List>
             </Stack>

@@ -243,7 +243,7 @@ const ProductInfo = ({ product }) => {
 
       <Grid item xs={12}>
         <Stack direction="row" alignItems="center" spacing={1}>
-          <Typography variant="h1" color="primary">
+          <Typography variant="h2" color="primary">
             RM {product?.price} / month
           </Typography>
         </Stack>
@@ -376,9 +376,9 @@ const ProductInfo = ({ product }) => {
                         </TableCell>
                       </TableRow>
                       <TableRow sx={{ '& td, & th': { border: 0, textTransform: 'capitalize' } }}>
-                        <TableCell>
+                        {/* <TableCell>
                           <b>Deposit </b> {product?.rentalDeposit.replace('-', ' ')}
-                        </TableCell>
+                        </TableCell> */}
                         <TableCell>
                           <b>State </b> {product?.state}
                         </TableCell>

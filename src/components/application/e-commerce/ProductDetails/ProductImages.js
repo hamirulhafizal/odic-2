@@ -17,12 +17,8 @@ import Slider from 'react-slick';
 import Carousel, { Modal, ModalGateway } from 'react-images';
 
 import useConfig from '../../../../hooks/useConfig';
-import { Swiper, SwiperSlide } from 'swiper/react';
 
-// Import Swiper styles
-// import 'swiper/css';
-// import 'swiper/css/navigation';
-// import 'swiper/css/pagination';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { Navigation, Pagination, Mousewheel, Keyboard } from 'swiper';
 

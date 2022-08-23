@@ -166,9 +166,9 @@ const Profile = ({ ...others }) => {
                         id="outlined-basic4"
                         label="Phone number"
                         name="phone"
-                        type="number"
+                        type="tel"
                         required
-                        placeholder="6012345678"
+                        placeholder="012345678"
                         value={values.phone}
                         onBlur={handleBlur}
                         onChange={handleChange}

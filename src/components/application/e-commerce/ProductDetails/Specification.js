@@ -130,14 +130,14 @@ const Specification = ({ product }) => {
                 </TableCell>
                 <TableCell>{furnishing(productData?.furnishing)}</TableCell>
               </TableRow>
-              <TableRow sx={{ '& td, & th': { border: 0 } }}>
+              {/* <TableRow sx={{ '& td, & th': { border: 0 } }}>
                 <TableCell component="th" scope="row">
                   <Typography variant="caption" sx={{ fontWeight: 500 }}>
                     Address
                   </Typography>
                 </TableCell>
                 <TableCell>{productData?.address}</TableCell>
-              </TableRow>
+              </TableRow> */}
               <TableRow sx={{ '& td, & th': { border: 0 }, display: matchDownSM ? 'none' : '' }}>
                 <TableCell sx={{ display: 'block' }} component="th" scope="row">
                   <Typography variant="caption" sx={{ fontWeight: 500 }}>
