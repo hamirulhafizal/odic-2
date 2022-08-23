@@ -38,7 +38,7 @@ import { addProduct } from 'store/slices/cart';
 import CircleIcon from '@mui/icons-material/Circle';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import WhatsappTwoToneIcon from '@mui/icons-material/WhatsappTwoTone';
+import WhatsApp from '@mui/icons-material/WhatsApp';
 import { getProfileAgentById } from 'contexts/ApiListing';
 import { useEffect, useState } from 'react';
 import VerifiedIcon from '@mui/icons-material/Verified';
@@ -488,7 +488,7 @@ const ProductInfo = ({ product }) => {
                         </Button>
                       )}
                       <Button
-                        startIcon={<WhatsappTwoToneIcon />}
+                        startIcon={<WhatsApp />}
                         variant="contained"
                         size="medium"
                         sx={{ backgroundColor: '#28933F', color: 'white' }}

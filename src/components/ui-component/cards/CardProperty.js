@@ -30,6 +30,7 @@ import BedIcon from '@mui/icons-material/Bed';
 import moment from 'moment';
 import ShowerOutlinedIcon from '@mui/icons-material/ShowerOutlined';
 import QuestionAnswerOutlinedIcon from '@mui/icons-material/QuestionAnswerOutlined';
+import WhatsApp from '@mui/icons-material/WhatsApp';
 
 import { useRouter } from 'next/router';
 
@@ -254,7 +255,7 @@ const CardProperty = ({ itemData, agentData }) => {
           <Divider sx={{ width: '90%', position: 'relative', left: '2%' }} />
 
           <CardActions sx={{ p: 0, py: 2, pl: matchDownSM ? 0 : 2 }}>
-            <Button variant="contained" size="medium" sx={{ backgroundColor: '#28933F', color: 'white' }}>
+            <Button startIcon={<WhatsApp />} variant="contained" size="medium" sx={{ backgroundColor: '#28933F', color: 'white' }}>
               <a target="_blank" href={`https://wasap.my/${phone}/${itemData.title}`} rel="noopener noreferrer">
                 Whatsapp
               </a>
