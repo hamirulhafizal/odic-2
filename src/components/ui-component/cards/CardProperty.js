@@ -104,7 +104,7 @@ const CardProperty = ({ itemData, agentData }) => {
                     sx={{
                       cursor: 'pointer',
                       width: '100%',
-                      height: matchDownSM ? '30vh !important' : '40vh  !important',
+                      height: matchDownSM ? '32vh !important' : '40vh  !important',
                       objectFit: 'cover',
                       backgroundColor: 'black',
                       borderRadius: '8px'
@@ -116,22 +116,6 @@ const CardProperty = ({ itemData, agentData }) => {
                 </SwiperSlide>
               ))}
           </Swiper>
-
-          {/* <CardMedia
-            onClick={() => {
-              router.push(`/listing/${itemData?.id}`);
-            }}
-            sx={{
-              cursor: 'pointer',
-              width: '100%',
-              height: '40VH',
-              objectFit: 'cover',
-              backgroundColor: 'black',
-              borderRadius: '8px'
-            }}
-            component="img"
-            image={itemData?.featureImage != null ? itemData?.featureImage : `/assets/images/noImg.webp`}
-          /> */}
 
           <Stack direction="row" alignItems="center">
             {/* <Stack direction="column" sx={{ pt: 2 }}>

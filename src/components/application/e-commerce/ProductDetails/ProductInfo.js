@@ -1,6 +1,7 @@
+/* eslint-disable import/no-unresolved */
+
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
-import Link from 'Link';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -9,15 +10,7 @@ import {
   ButtonBase,
   ButtonGroup,
   Divider,
-  FormControl,
-  FormControlLabel,
-  FormHelperText,
   Grid,
-  MenuItem,
-  Radio,
-  RadioGroup,
-  Rating,
-  Select,
   Stack,
   Table,
   TableBody,
@@ -25,10 +18,6 @@ import {
   TableRow,
   Tooltip,
   Typography,
-  ListItem,
-  List,
-  ListItemText,
-  ListItemIcon,
   TableContainer,
   Badge
 } from '@mui/material';
@@ -47,16 +36,9 @@ import { addProduct } from 'store/slices/cart';
 
 // assets
 import CircleIcon from '@mui/icons-material/Circle';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import StarTwoToneIcon from '@mui/icons-material/StarTwoTone';
-import StarBorderTwoToneIcon from '@mui/icons-material/StarBorderTwoTone';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import WhatsappTwoToneIcon from '@mui/icons-material/WhatsappTwoTone';
-import PoolIcon from '@mui/icons-material/Pool';
-import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
-import StoreMallDirectoryIcon from '@mui/icons-material/StoreMallDirectory';
-import MosqueIcon from '@mui/icons-material/Mosque';
 import { getProfileAgentById } from 'contexts/ApiListing';
 import { useEffect, useState } from 'react';
 import VerifiedIcon from '@mui/icons-material/Verified';
