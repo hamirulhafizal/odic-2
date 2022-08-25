@@ -1,6 +1,6 @@
 /* eslint-disable import/no-unresolved */
 
-import React, { useState } from 'react';
+import React from 'react';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -117,48 +117,6 @@ const CardProperty = ({ itemData, agentData }) => {
                 </SwiperSlide>
               ))}
           </Swiper>
-
-          <Stack direction="row" alignItems="center">
-            {/* <Stack direction="column" sx={{ pt: 2 }}>
-              <Badge
-                overlap="circular"
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                badgeContent={<VerifiedIcon sx={{ fontSize: '1.5em' }} color="secondary" />}
-              >
-                <Avatar
-                  onClick={() => {
-                    router.push(`/${user_name}`);
-                  }}
-                  alt="User 1"
-                  src={user?.photo || photo}
-                  sx={{
-                    borderRadius: '16px',
-                    margin: '5px auto 0',
-                    width: '50px',
-                    height: '50px',
-                    backgroundColor: 'transparent',
-                    borderRadius: '100%',
-                    cursor: 'pointer'
-                  }}
-                />
-              </Badge>
-            </Stack> */}
-            {/*  <Stack direction="column" sx={{ pl: 2, pt: { xs: 3 } }}>
-              <Typography
-                onClick={() => {
-                  router.push(`/${user_name}`);
-                }}
-                variant="h4"
-                color="main"
-                sx={{ textTransform: 'capitalize', cursor: 'pointer' }}
-              >
-                {user?.firstName || firstName} {user?.lastName || lastName}
-              </Typography>
-              <Typography variant="subtitle2" color="secondary">
-                Posted on {moment(itemData?.inventory_date).format('DD MMM YYYY')}
-              </Typography>
-            </Stack> */}
-          </Stack>
         </Box>
 
         <Box sx={{ width: { xs: '-webkit-fill-available', md: '60%' }, pl: { md: 2 } }}>
@@ -178,7 +136,7 @@ const CardProperty = ({ itemData, agentData }) => {
                 {itemData?.description}
               </Typography>
               <Typography variant="h3" color="secondary" sx={{ pt: 2 }}>
-                RM {itemData?.price} / month
+                {itemData?.category == 1 ? ` RM ${itemData?.price} / month` : ` RM ${itemData?.price}`}
               </Typography>
 
               <Typography variant="h5" color="primary" sx={{ pt: 2, color: 'black' }}>
@@ -217,36 +175,6 @@ const CardProperty = ({ itemData, agentData }) => {
                       </>
                     }
                   />
-                  {/* <ListItemText
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'start',
-
-                      '& .MuiListItemText-primary': {
-                        pr: '10%'
-                      }
-                    }}
-                    primary={
-                      <>
-                        <Stack display="flex" direction="row" alignItems="center">
-                          <ListItemIcon>
-                            <LocalParkingIcon />
-                            {itemData?.carpark} Park
-                          </ListItemIcon>
-                        </Stack>
-                      </>
-                    }
-                    secondary={
-                      <>
-                        <Stack display="flex" direction="row" alignItems="center">
-                          <ListItemIcon sx={{ alignItems: 'center' }}>
-                            <QuestionAnswerOutlinedIcon />
-                            {itemData?.rentalDeposit.replaceAll('-', ' ')}
-                          </ListItemIcon>
-                        </Stack>
-                      </>
-                    }
-                  /> */}
                 </ListItem>
               </List>
             </Stack>
@@ -260,9 +188,6 @@ const CardProperty = ({ itemData, agentData }) => {
                 Whatsapp
               </a>
             </Button>
-            {/* <Button size="medium" color="secondary" variant="contained" sx={{ color: 'white' }}>
-              Make Offer
-            </Button> */}
           </CardActions>
         </Box>
       </Card>

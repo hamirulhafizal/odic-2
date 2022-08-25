@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'Link';
 
 // material-ui
@@ -67,6 +67,11 @@ export default function TypeTabs({ username, agentData }) {
     setValue(newValue);
   };
 
+  const filterByCategory = (param) => {
+    return agentData?.inventories.filter((item) => {
+      return item.category == param;
+    });
+  };
   return (
     <>
       <Tabs
@@ -100,63 +105,93 @@ export default function TypeTabs({ username, agentData }) {
         centered
       >
         <LinkTab
-          label="Rent"
           component={Link}
-          href={`/rent`}
+          href={`#all`}
+          label={
+            <>
+              All{' '}
+              <Chip
+                label={agentData?.inventories.length}
+                size="small"
+                sx={{ color: theme.palette.secondary.main, background: theme.palette.secondary.light, ml: 1.3 }}
+              />
+            </>
+          }
           icon={<BedroomParentTwoToneIcon sx={{ fontSize: '1.3rem' }} />}
           {...a11yProps(0)}
         />
 
-        {/* <Tab component={Link} href="#" icon={<HomeTwoToneIcon sx={{ fontSize: '1.3rem' }} />} label="Buy" {...a11yProps(1)} />
-        <Tab
+        <LinkTab
           component={Link}
-          href="#"
+          href="#sale"
+          icon={<HomeTwoToneIcon sx={{ fontSize: '1.3rem' }} />}
+          label={
+            <>
+              Sale{' '}
+              <Chip
+                label={`${filterByCategory(2).length}`}
+                size="small"
+                sx={{ color: theme.palette.secondary.main, background: theme.palette.secondary.light, ml: 1.3 }}
+              />
+            </>
+          }
+          {...a11yProps(1)}
+        />
+
+        <LinkTab
+          component={Link}
+          href="#rent"
           icon={<HotelTwoToneIcon sx={{ fontSize: '1.3rem' }} />}
           label={
             <>
-              Sell{' '}
+              Rent{' '}
               <Chip
-                label="10"
+                label={`${filterByCategory(1).length}`}
                 size="small"
                 sx={{ color: theme.palette.secondary.main, background: theme.palette.secondary.light, ml: 1.3 }}
               />
             </>
           }
           {...a11yProps(2)}
-        /> */}
+        />
       </Tabs>
       <TabPanel value={value} index={0}>
         {agentData?.inventories?.map((element, index) => {
           return <CardProperty agentData={agentData} itemData={element} key={index} />;
         })}
-        {agentData?.inventories == 0 && (
-          <Stack sx={{ p: 2, alignItems: 'center' }}>
-            <Typography variant="h4" sx={{ pb: 2, textAlign: 'center' }}>
-              No Item Found
-            </Typography>
-            <Button
-              onClick={() => {
-                router.push('/listing/create');
-              }}
-              variant="contained"
-              color="secondary"
-              sx={{ color: 'white' }}
-              size="small"
-              startIcon={<AddLocationAltOutlinedIcon sx={{ color: 'white' }} fontSize="small" />}
-            >
-              Create New List
-            </Button>
-          </Stack>
-        )}
       </TabPanel>
+
       <TabPanel value={value} index={1}>
-        {/* {inventories?.map((item, index) => {
-          <CardProperty avatar={photo} itemData={item} />;
-        })} */}
+        {filterByCategory(2).map((element, index) => {
+          return <CardProperty agentData={agentData} itemData={element} key={index} />;
+        })}
       </TabPanel>
+
       <TabPanel value={value} index={2}>
-        <CardProperty />
+        {filterByCategory(1).map((element, index) => {
+          return <CardProperty agentData={agentData} itemData={element} key={index} />;
+        })}
       </TabPanel>
+
+      {agentData?.inventories == 0 && (
+        <Stack sx={{ p: 2, alignItems: 'center' }}>
+          <Typography variant="h4" sx={{ pb: 2, textAlign: 'center' }}>
+            No Item Found
+          </Typography>
+          <Button
+            onClick={() => {
+              router.push('/listing/create');
+            }}
+            variant="contained"
+            color="secondary"
+            sx={{ color: 'white' }}
+            size="small"
+            startIcon={<AddLocationAltOutlinedIcon sx={{ color: 'white' }} fontSize="small" />}
+          >
+            Create New List
+          </Button>
+        </Stack>
+      )}
     </>
   );
 }

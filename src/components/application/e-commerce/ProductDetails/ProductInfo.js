@@ -35,9 +35,6 @@ import { useDispatch, useSelector } from 'store';
 import { addProduct } from 'store/slices/cart';
 
 // assets
-import CircleIcon from '@mui/icons-material/Circle';
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
 import WhatsApp from '@mui/icons-material/WhatsApp';
 import { getProfileAgentById } from 'contexts/ApiListing';
 import { useEffect, useState } from 'react';
@@ -47,13 +44,7 @@ import YouTubeIcon from '@mui/icons-material/YouTube';
 import moment from 'moment';
 import { getRelatedProducts } from 'store/slices/product';
 
-// product color select
-function getColor(color) {
-  return ColorOptions.filter((item) => item.value === color);
-}
-
 // product size
-const sizeOptions = [8, 10, 12, 14, 16, 18, 20];
 
 const validationSchema = yup.object({
   color: yup.string().required('Colors selection is required'),
@@ -61,71 +52,6 @@ const validationSchema = yup.object({
 });
 
 // ==============================|| COLORS OPTION ||============================== //
-
-const Colors = ({ checked, colorsData }) => {
-  const theme = useTheme();
-  return (
-    <Grid item>
-      <Tooltip title={colorsData[0].label}>
-        <ButtonBase sx={{ borderRadius: '50%' }}>
-          <Avatar
-            color="inherit"
-            size="badge"
-            sx={{
-              bgcolor: colorsData[0].bg,
-              color: theme.palette.mode === 'light' ? 'grey.50' : 'grey.800'
-            }}
-          >
-            {checked && <CircleIcon sx={{ color: theme.palette.mode === 'light' ? 'grey.50' : 'grey.800', fontSize: '0.75rem' }} />}
-            {!checked && <CircleIcon sx={{ color: colorsData[0].bg, fontSize: '0.75rem' }} />}
-          </Avatar>
-        </ButtonBase>
-      </Tooltip>
-    </Grid>
-  );
-};
-
-Colors.propTypes = {
-  checked: PropTypes.bool,
-  colorsData: PropTypes.array
-};
-
-function createData(key, value) {
-  return { key, value };
-}
-
-const rowsGeneral = [
-  createData('Type', 'Hooded Neck, Paint Clothes'),
-  createData('Sleeve', 'Full'),
-  createData('Fit', 'Regular'),
-  createData('Fabric', 'Hosiery, Smooth, Silk'),
-  createData('Style', 'CV-TS9865'),
-  createData('Ideal For', 'All'),
-  createData('Size', 'Free'),
-  createData('Pattern', 'Printed'),
-  createData('Reversible', 'No'),
-  createData('Secondary Color', 'Black, Brown')
-];
-
-const Increment = (props) => {
-  const [field, , helpers] = useField(props);
-
-  const { value } = field;
-  const { setValue } = helpers;
-  return (
-    <ButtonGroup size="large" variant="text" color="inherit" sx={{ border: '1px solid', borderColor: 'grey.400' }}>
-      <Button key="three" disabled={value <= 1} onClick={() => setValue(value - 1)} sx={{ pr: 0.75, pl: 0.75, minWidth: '0px !important' }}>
-        <RemoveIcon fontSize="inherit" />
-      </Button>
-      <Button key="two" sx={{ pl: 0.5, pr: 0.5 }}>
-        {value}
-      </Button>
-      <Button key="one" onClick={() => setValue(value + 1)} sx={{ pl: 0.75, pr: 0.75, minWidth: '0px !important' }}>
-        <AddIcon fontSize="inherit" />
-      </Button>
-    </ButtonGroup>
-  );
-};
 
 // ==============================|| PRODUCT DETAILS - INFORMATION ||============================== //
 
@@ -179,29 +105,10 @@ const ProductInfo = ({ product }) => {
           close: false
         })
       );
-
-      router.push('/app/e-commerce/checkout');
     }
   });
 
   const { values, errors, handleSubmit, handleChange } = formik;
-
-  const addCart = () => {
-    values.color = values.color ? values.color : 'primaryDark';
-    values.size = values.size ? values.size : '8';
-    dispatch(addProduct(values, cart.checkout.products));
-    dispatch(
-      openSnackbar({
-        open: true,
-        message: 'Add To Cart Success',
-        variant: 'alert',
-        alert: {
-          color: 'success'
-        },
-        close: false
-      })
-    );
-  };
 
   return (
     <Grid container spacing={2}>
@@ -226,7 +133,7 @@ const ProductInfo = ({ product }) => {
       <Grid item xs={12}>
         <Stack direction="row" alignItems="center" spacing={1}>
           <Typography variant="h2" color="primary">
-            RM {product?.price} / month
+            {product.category == 1 ? ` RM ${product?.price} / month` : ` RM ${product?.price}`}
           </Typography>
         </Stack>
         <Stack direction="row" alignItems="center">
@@ -280,72 +187,6 @@ const ProductInfo = ({ product }) => {
           <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
             <Grid container spacing={2}>
               <Grid item xs={12} lg={10}>
-                {/* <List>
-                  <ListItem disablePadding sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap ', py: 1, px: 0 }}>
-                    <ListItemText
-                      sx={{
-                        display: 'flex',
-                        justifyContent: 'start',
-
-                        '& .MuiListItemText-primary': {
-                          pr: '10%'
-                        }
-                      }}
-                      primary={
-                        <>
-                          <Stack display="flex" direction="row" alignItems="center">
-                            <ListItemIcon>
-                              <PoolIcon />
-                            </ListItemIcon>
-                            Pool
-                          </Stack>
-                        </>
-                      }
-                      secondary={
-                        <>
-                          <Stack display="flex" direction="row" alignItems="center">
-                            <ListItemIcon>
-                              <LocalGasStationIcon />
-                            </ListItemIcon>
-                            Petrol
-                          </Stack>
-                        </>
-                      }
-                    />
-
-                    <ListItemText
-                      sx={{
-                        display: 'flex',
-                        justifyContent: 'start',
-
-                        '& .MuiListItemText-primary': {
-                          pr: '10%'
-                        }
-                      }}
-                      primary={
-                        <>
-                          <Stack display="flex" direction="row" alignItems="center">
-                            <ListItemIcon>
-                              <StoreMallDirectoryIcon />
-                            </ListItemIcon>
-                            Mall
-                          </Stack>
-                        </>
-                      }
-                      secondary={
-                        <>
-                          <Stack display="flex" direction="row" alignItems="center">
-                            <ListItemIcon>
-                              <MosqueIcon />
-                            </ListItemIcon>
-                            Mosque
-                          </Stack>
-                        </>
-                      }
-                    />
-                  </ListItem>
-                </List> */}
-
                 <TableContainer>
                   <Table sx={{ maxWidth: 380 }} size="small" aria-label="simple table">
                     <TableBody>
@@ -357,116 +198,9 @@ const ProductInfo = ({ product }) => {
                           <b>Bathrooms </b> {parseInt(product?.bathrooms)}
                         </TableCell>
                       </TableRow>
-                      <TableRow sx={{ '& td, & th': { border: 0, textTransform: 'capitalize' } }}>
-                        {/* <TableCell>
-                          <b>Deposit </b> {product?.rentalDeposit.replace('-', ' ')}
-                        </TableCell> */}
-                        <TableCell>
-                          <b>State </b> {product?.state}
-                        </TableCell>
-                      </TableRow>
                     </TableBody>
                   </Table>
                 </TableContainer>
-                {/* <Table>
-                  <TableBody sx={{ '& .MuiTableCell-root': { borderBottom: 'none' } }}>
-                    <TableRow>
-                      <TableCell>
-                        <Typography variant="body2">
-                          Colors{' '}
-                          <Typography color="error" component="span">
-                            *
-                          </Typography>
-                        </Typography>
-                      </TableCell>
-                      <TableCell align="left">
-                        <RadioGroup
-                          row
-                          value={values.color}
-                          onChange={handleChange}
-                          aria-label="colors"
-                          name="color"
-                          id="color"
-                          sx={{ ml: 1 }}
-                        >
-                          {product.colors &&
-                            product.colors.map((item, index) => {
-                              const colorsData = getColor(item);
-                              return (
-                                <FormControlLabel
-                                  key={index}
-                                  value={item}
-                                  control={
-                                    <Radio
-                                      sx={{ p: 0.25 }}
-                                      disableRipple
-                                      checkedIcon={<Colors checked colorsData={colorsData} />}
-                                      icon={<Colors colorsData={colorsData} />}
-                                    />
-                                  }
-                                  label=""
-                                />
-                              );
-                            })}
-                        </RadioGroup>
-                        {errors.color && (
-                          <FormHelperText error id="standard-label-color">
-                            {errors.color}
-                          </FormHelperText>
-                        )}
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>
-                        <Stack>
-                          <Typography variant="body2">
-                            Size{' '}
-                            <Typography color="error" component="span">
-                              *
-                            </Typography>
-                          </Typography>
-                          <Typography variant="caption" color="primary" component={Link} href="#">
-                            Size Chart?
-                          </Typography>
-                        </Stack>
-                      </TableCell>
-                      <TableCell align="left">
-                        <FormControl sx={{ minWidth: 120 }}>
-                          <Select
-                            id="size"
-                            name="size"
-                            value={values.size}
-                            onChange={handleChange}
-                            displayEmpty
-                            inputProps={{ 'aria-label': 'Without label' }}
-                          >
-                            <MenuItem value="">
-                              <em>None</em>
-                            </MenuItem>
-                            {sizeOptions.map((option, index) => (
-                              <MenuItem sx={{ p: 1.25 }} key={index} value={option}>
-                                {option}
-                              </MenuItem>
-                            ))}
-                          </Select>
-                        </FormControl>
-                        {errors.size && (
-                          <FormHelperText error id="standard-label-size">
-                            {errors.size}
-                          </FormHelperText>
-                        )}
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>
-                        <Typography variant="body2">Quantity</Typography>
-                      </TableCell>
-                      <TableCell align="left">
-                        <Increment name="quantity" />
-                      </TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table> */}
               </Grid>
               <Grid item xs={12}>
                 <Divider />
@@ -499,11 +233,6 @@ const ProductInfo = ({ product }) => {
                       </Button>
                     </Stack>
                   </Grid>
-                  {/* <Grid item xs={12}>
-                    <Button type="submit" fullWidth color="secondary" variant="contained" size="large">
-                      Buy Now
-                    </Button>
-                  </Grid> */}
                 </Grid>
               </Grid>
             </Grid>

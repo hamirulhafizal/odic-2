@@ -27,7 +27,6 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
-// import TiktokIcon from '@mui/icons-material/tiktok';
 
 // ==============================|| PROFILE 3 - PROFILE ||============================== //
 
@@ -52,7 +51,13 @@ const Profile = ({ ...others }) => {
         phone: user?.phone || '',
         description:
           user?.description ||
-          `Nama saya ${user?.firstName} ${user?.lastName}. Saya merupakan agent Sah aktif One Dream Property. Saya sudah bantu lebih 500 orang pembeli dan pelabur hartanah. <br/> Ingin saya bantu anda? Hubungi saya untuk bimbingan.`,
+          `Nama saya ${user?.firstName} ${user?.lastName}.
+          
+          <br/>Saya merupakan agent Sah aktif One Dream Property.
+          
+          <br/>Saya sudah bantu lebih 500 orang pembeli dan pelabur hartanah.
+          
+          <br/>Ingin saya bantu anda? Hubungi saya untuk bimbingan.`,
         facebook: user?.facebook || '',
         instagram: user?.instagram || '',
         youtube: user?.youtube || '',
@@ -207,32 +212,6 @@ const Profile = ({ ...others }) => {
                         }}
                       />
                     </Grid>
-                    {/* <Grid item xs={12}>
-                      <Grid container alignItems="center" spacing={gridSpacing} sx={{ mb: 1.25 }}>
-                        <Grid item>
-                          <WhatsAppIcon />
-                        </Grid>
-                        <Grid item xs zeroMinWidth>
-                          <TextField
-                            fullWidth
-                            id="outlined-basic4"
-                            label="Whatsapp Url"
-                            name="phone"
-                            type="text"
-                            value={values.phone}
-                            onBlur={handleBlur}
-                            onChange={handleChange}
-                          />
-                        </Grid>
-                        <Grid item>
-                          <AnimateButton>
-                            <Button variant="contained" size="small" color="secondary">
-                              Connect
-                            </Button>
-                          </AnimateButton>
-                        </Grid>
-                      </Grid>
-                    </Grid> */}
 
                     <Grid item xs={12}>
                       <Grid container alignItems="center" spacing={gridSpacing} sx={{ mb: 1.25 }}>
@@ -251,13 +230,6 @@ const Profile = ({ ...others }) => {
                             onChange={handleChange}
                           />
                         </Grid>
-                        {/* <Grid item>
-                          <AnimateButton>
-                            <Button variant="contained" size="small" color="secondary">
-                              Connect
-                            </Button>
-                          </AnimateButton>
-                        </Grid> */}
                       </Grid>
                     </Grid>
                     <Grid item xs={12}>
@@ -277,13 +249,6 @@ const Profile = ({ ...others }) => {
                             onChange={handleChange}
                           />
                         </Grid>
-                        {/* <Grid item>
-                          <AnimateButton>
-                            <Button variant="contained" size="small" color="secondary">
-                              Connect
-                            </Button>
-                          </AnimateButton>
-                        </Grid> */}
                       </Grid>
                     </Grid>
                     <Grid item xs={12}>
@@ -303,13 +268,6 @@ const Profile = ({ ...others }) => {
                             onChange={handleChange}
                           />
                         </Grid>
-                        {/* <Grid item>
-                          <AnimateButton>
-                            <Button variant="contained" size="small" color="secondary">
-                              Connect
-                            </Button>
-                          </AnimateButton>
-                        </Grid> */}
                       </Grid>
                     </Grid>
                     <Grid item xs={12}>
@@ -329,13 +287,13 @@ const Profile = ({ ...others }) => {
                             onChange={handleChange}
                           />
                         </Grid>
-                        {/* <Grid item>
+                        <Grid item>
                           <AnimateButton>
                             <Button variant="contained" size="small" color="secondary">
                               Connect
                             </Button>
                           </AnimateButton>
-                        </Grid> */}
+                        </Grid>
                       </Grid>
                     </Grid>
                     {/* <Grid item xs={12}>
@@ -364,10 +322,19 @@ const Profile = ({ ...others }) => {
                         </Grid>
                       </Grid>
                     </Grid> */}
-                    {/* <Grid item xs={12}>
+                    <Grid item xs={12}>
                       <Grid container alignItems="center" spacing={gridSpacing} sx={{ mb: 1.25 }}>
                         <Grid item>
-                          <TwitterIcon />
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            fill="currentColor"
+                            className="bi bi-tiktok"
+                            viewBox="0 0 16 16"
+                          >
+                            <path d="M9 0h1.98c.144.715.54 1.617 1.235 2.512C12.895 3.389 13.797 4 15 4v2c-1.753 0-3.07-.814-4-1.829V11a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3V0Z" />
+                          </svg>
                         </Grid>
                         <Grid item xs zeroMinWidth>
                           <TextField
@@ -381,15 +348,8 @@ const Profile = ({ ...others }) => {
                             onChange={handleChange}
                           />
                         </Grid>
-                        <Grid item>
-                          <AnimateButton>
-                            <Button variant="contained" size="small" color="secondary">
-                              Connect
-                            </Button>
-                          </AnimateButton>
-                        </Grid>
                       </Grid>
-                    </Grid> */}
+                    </Grid>
 
                     <Grid item xs={12}>
                       <Stack direction="row">

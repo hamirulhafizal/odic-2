@@ -24,17 +24,38 @@ const category = [
   {
     value: 1,
     label: 'Rent'
+  },
+  {
+    value: 2,
+    label: 'Sales'
   }
-  // {
-  //   value: 2,
-  //   label: 'Sales'
-  // },
   // {
   //   value: 3,
   //   label: 'Short Stay'
   // }
 ];
 
+const tenures = [
+  {
+    value: 0,
+    label: 'Leasehold'
+  },
+  {
+    value: 1,
+    label: 'Freehold'
+  }
+];
+
+const propertyTitles = [
+  {
+    value: 'Freehold',
+    label: 'Land'
+  },
+  {
+    value: 'Leasehold',
+    label: 'Strata'
+  }
+];
 const propertyTypes = [
   {
     value: 1,
@@ -227,9 +248,8 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
   const initials = {
     category: editData?.category || 1,
     propertyType: editData?.propertyType || 1,
-    propertyTitle: editData?.propertyTitle || '',
     saleType: editData?.saleType || '',
-    tenure: editData?.tenure || 1,
+    tenure: editData?.tenure || 0,
     furnishing: editData?.furnishing || 'Freehold',
     carpark: editData?.carpark || '1',
     amenities: editData?.amenities || '',
@@ -244,12 +264,12 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
     address: editData?.address || '-',
     floorRange: editData?.floorRange || '1',
     zipcode: editData?.zipcode || '-',
-
     video: editData?.video || '',
-    state: editData?.state || '',
     slug: editData?.slug || '',
     bedrooms: editData?.bedrooms || 1,
-    bathrooms: editData?.bathrooms || '1'
+    bathrooms: editData?.bathrooms || '1',
+    state: '-'
+    // propertyTitle: editData?.propertyTitle || '-',
     // rentalDeposit: editData?.rentalDeposit || '',
   };
 
@@ -279,7 +299,7 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
       .required('Title is required')
       .test(
         'title',
-        'Title already in usea', // <- key, message
+        'Title already in used', // <- key, message
         async (value) => {
           if (editData != null || editData != undefined) {
             return false;
@@ -307,7 +327,6 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
         slug,
         title,
         city,
-        state,
         price,
         bedrooms,
         bathrooms,
@@ -316,7 +335,6 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
         video,
         category,
         propertyType,
-        propertyTitle,
         saleType,
         tenure,
         amenities,
@@ -327,14 +345,16 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
         phone,
         location,
         lat,
-        lon
+        lon,
+        otherInfo,
+        state
+        // propertyTitle
         // rentalDeposit,
       } = values;
 
       setShippingData({
         slug: slugify(title),
         title: title,
-        state: state,
         price: price,
         bedrooms: bedrooms,
         bathrooms: bathrooms,
@@ -344,7 +364,6 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
         video: video,
         category: category,
         propertyType: propertyType,
-        propertyTitle: propertyTitle,
         saleType: saleType,
         tenure: tenure,
         amenities: amenities,
@@ -355,7 +374,9 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
         phone: phone,
         location: location,
         lat: lat,
-        lon: lon
+        lon: lon,
+        state: state
+        // propertyTitle: propertyTitle,
         // rentalDeposit: rentalDeposit,
       });
 
@@ -383,6 +404,7 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
               fullWidth
             />
           </Grid>
+
           <Grid item xs={12} sm={12}>
             <FormControlSelect
               currencies={propertyTypes}
@@ -396,6 +418,57 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
               fullWidth
             />
           </Grid>
+
+          {formik.values.category == 2 && (
+            <>
+              <Grid item xs={12} sm={12}>
+                <FormControlSelect
+                  currencies={tenures}
+                  id="tenure"
+                  name="tenure"
+                  captionLabel="Tenure"
+                  value={formik.values.tenure}
+                  onChange={formik.handleChange}
+                  error={formik.touched.tenure && Boolean(formik.errors.tenure)}
+                  helperText={formik.touched.tenure && formik.errors.tenure}
+                  fullWidth
+                />
+              </Grid>
+
+              {/* <Grid item xs={12} sm={12}>
+                <FormControlSelect
+                  currencies={propertyTitles}
+                  id="propertyTitle"
+                  name="propertyTitle"
+                  captionLabel="Property Title"
+                  value={formik.values.propertyTitle}
+                  onChange={formik.handleChange}
+                  error={formik.touched.propertyTitle && Boolean(formik.errors.propertyTitle)}
+                  helperText={formik.touched.propertyTitle && formik.errors.propertyTitle}
+                  fullWidth
+                />
+              </Grid> */}
+            </>
+          )}
+
+          {/*
+          Property Type
+          Tenure
+          Property Title
+          Size (sq.ft.)
+          Other Info
+          Title
+          Description
+          Price
+          Phone
+          Property Location
+          Area / City
+          Map
+          Feature Image
+          Photos
+          Videos
+          */}
+
           <Grid item xs={12} sm={12}>
             <FormControlSelect
               currencies={furnish}
@@ -464,6 +537,8 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
           <Grid item xs={12}>
             <TextField
               required
+              sx={{ display: 'none' }}
+              hidden
               id="state"
               name="state"
               label="State"
@@ -575,16 +650,16 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
           <Grid item xs={12}>
             <TextField
               required
+              fullWidth
               id="price"
               name="price"
-              label="Price/Month"
               type="number"
-              placeholder="RM/Month"
               value={formik.values.price}
               onChange={formik.handleChange}
-              error={formik.touched.price && Boolean(formik.errors.price)}
+              label={formik.values.category == 2 ? 'Price' : 'Price/Month'}
+              placeholder={formik.values.category == 2 ? 'Asking Price' : 'Price/Month'}
               helperText={formik.touched.price && formik.errors.price}
-              fullWidth
+              error={formik.touched.price && Boolean(formik.errors.price)}
             />
           </Grid>
           {/* <Grid item xs={12} sm={12}>
@@ -650,7 +725,7 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
               required
               id="city"
               name="city"
-              label="City*"
+              label="City"
               type="text"
               placeholder="Area/City"
               value={formik.values.city}
@@ -665,7 +740,7 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
             <TextField
               id="video"
               name="video"
-              label="Video*"
+              label="Youtube"
               type="text"
               placeholder="Youtube Link"
               value={formik.values.video}

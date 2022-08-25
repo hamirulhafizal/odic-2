@@ -69,7 +69,10 @@ const RelatedProducts = ({ id }) => {
         modules={[Navigation, Pagination, Mousewheel, Keyboard]}
         className="mySwiper"
         style={{
-          paddingBottom: 50
+          paddingBottom: 50,
+          '& .swiper-wrapper': {
+            justifyContent: 'center'
+          }
         }}
       >
         {related.map((product, index) => (

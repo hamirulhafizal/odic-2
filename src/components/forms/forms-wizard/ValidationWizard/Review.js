@@ -95,11 +95,16 @@ export default function Review({ shippingData, imageProperty, previewData, editD
         {[shippingData].map((product, key) => (
           <Box key={key}>
             <ListItem sx={{ py: 1, px: 0 }}>
-              <ListItemText primary={'Title'} secondary={previewData?.title} />
+              <ListItemText primary={'Title'} secondary={title} />
+            </ListItem>
+
+            <ListItem sx={{ py: 1, px: 0 }}>
+              {category == 2 && <ListItemText primary={'Category'} secondary={'Sales'} />}
+              {category == 1 && <ListItemText primary={'Category'} secondary={'Rent'} />}
             </ListItem>
 
             <ListItem sx={{ py: 1, px: 0, flexWrap: 'wrap' }} key={product.title}>
-              <ListItemText primary={'Price'} secondary={`  RM ${product.price} / month`} />
+              <ListItemText primary={'Price'} secondary={category == 2 ? `RM ${product.price}` : `RM ${product.price} / month`} />
             </ListItem>
 
             <ListItem sx={{ py: 1, px: 0, flexWrap: 'wrap' }} key={product.title}>
@@ -120,22 +125,11 @@ export default function Review({ shippingData, imageProperty, previewData, editD
                   fontFamily: 'inherit',
                   resize: 'none',
                   backgroundColor: 'transparent',
-                  overflow: 'unset'
+                  overflow: 'unset',
+                  color: 'black'
                 }}
               />
             </ListItem>
-
-            {/* <ListItem sx={{ py: 1, px: 0 }}>
-              <ListItemText primary={'Price'} secondary={product?.price} />
-            </ListItem> */}
-
-            {/* <ListItem sx={{ py: 1, px: 0 }}>
-              <ListItemText primary={'Type'} secondary={propertyType} />
-            </ListItem>
-
-            <ListItem sx={{ py: 1, px: 0 }}>
-              <ListItemText primary={'Category'} secondary={category} />
-            </ListItem> */}
           </Box>
         ))}
 

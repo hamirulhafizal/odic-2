@@ -161,36 +161,44 @@ const ValidationWizard = ({ updateProperty, formFor }) => {
       });
 
       if (formFor == 'CreateListing' && lisitngId == null) {
-        setProduct(form_data).then((res) => {
-          const resJson1 = JSON.stringify(res);
-          const resParse1 = JSON.parse(resJson1);
+        setProduct(form_data)
+          .then((res) => {
+            const resJson1 = JSON.stringify(res);
+            const resParse1 = JSON.parse(resJson1);
 
-          if (res.status == 201 || res.status == 200) {
-            setLisitngId(res?.data?.id);
+            if (res.status == 201 || res.status == 200) {
+              setLisitngId(res?.data?.id);
+              setLoading(false);
+              setApi(false);
+              handleNext();
+
+              dispatch(
+                openSnackbar({
+                  open: true,
+                  message: 'Your list has been successfully Created.',
+                  variant: 'alert',
+                  alert: {
+                    color: 'success'
+                  },
+                  close: false
+                })
+              );
+              dispatch(getProducts(res?.data?.user_name));
+            }
+
+            if (resParse1.status == 400) {
+              setErrorIndex(2);
+              setLoading(false);
+              setErrorMessage('something error, please check detail');
+            }
+          })
+          .catch((err) => {
             setLoading(false);
-            setApi(false);
-            handleNext();
-
-            dispatch(
-              openSnackbar({
-                open: true,
-                message: 'Your list has been successfully Created.',
-                variant: 'alert',
-                alert: {
-                  color: 'success'
-                },
-                close: false
-              })
-            );
-            dispatch(getProducts(res?.data?.user_name));
-          }
-
-          if (resParse1.status == 400) {
-            setErrorIndex(2);
+            setErrorMessage('something error, please check detail');
+          })
+          .finally(() => {
             setLoading(false);
-            setErrorMessage('something error');
-          }
-        });
+          });
       }
 
       if (formFor == 'UpdateListing' && updateProperty !== null) {
