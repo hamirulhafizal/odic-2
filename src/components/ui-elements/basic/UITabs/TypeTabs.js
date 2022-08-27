@@ -58,12 +58,22 @@ function a11yProps(index) {
 
 // ================================|| UI TABS - COLOR ||================================ //
 
+const NavBarItem = {
+  '/': 0,
+  '#sales': 1,
+  '#rent': 2
+};
 export default function TypeTabs({ username, agentData }) {
   const theme = useTheme();
   const router = useRouter();
 
-  const [value, setValue] = React.useState(0);
+  // const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState(location.hash !== '' ? NavBarItem[location.hash] : 0);
+
   const handleChange = (event, newValue) => {
+    let decoded = decodeURIComponent(Object.keys(NavBarItem)[newValue]);
+    router.push(`${agentData?.user_name}/${decoded}`, undefined, { shallow: true });
+
     setValue(newValue);
   };
 
@@ -106,7 +116,7 @@ export default function TypeTabs({ username, agentData }) {
       >
         <LinkTab
           component={Link}
-          href={`#all`}
+          href={`/`}
           label={
             <>
               All{' '}
@@ -123,11 +133,11 @@ export default function TypeTabs({ username, agentData }) {
 
         <LinkTab
           component={Link}
-          href="#sale"
+          href="#sales"
           icon={<HomeTwoToneIcon sx={{ fontSize: '1.3rem' }} />}
           label={
             <>
-              Sale{' '}
+              Sales{' '}
               <Chip
                 label={`${filterByCategory(2).length}`}
                 size="small"

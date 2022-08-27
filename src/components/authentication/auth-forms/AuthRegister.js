@@ -78,7 +78,9 @@ const JWTRegister = ({ ...others }) => {
       <Grid container direction="column" justifyContent="center" spacing={2}>
         <Grid item xs={12} container alignItems="center" justifyContent="center">
           <Box sx={{ mb: 2 }}>
-            <Typography variant="subtitle1">Sign up with Email address</Typography>
+            <Typography color={theme.palette.secondary.main} variant="subtitle1">
+              Sign up with Email address
+            </Typography>
           </Box>
         </Grid>
       </Grid>
@@ -222,7 +224,7 @@ const JWTRegister = ({ ...others }) => {
                       <Box style={{ backgroundColor: level.color }} sx={{ width: 85, height: 8, borderRadius: '7px' }} />
                     </Grid>
                     <Grid item>
-                      <Typography variant="subtitle1" fontSize="0.75rem">
+                      <Typography sx={{ color: 'white' }} variant="subtitle1" fontSize="0.75rem">
                         {level.label}
                       </Typography>
                     </Grid>
@@ -238,9 +240,9 @@ const JWTRegister = ({ ...others }) => {
                     <Checkbox checked={checked} onChange={(event) => setChecked(event.target.checked)} name="checked" color="primary" />
                   }
                   label={
-                    <Typography variant="subtitle1">
+                    <Typography sx={{ color: 'white' }} variant="subtitle1">
                       Agree with &nbsp;
-                      <Typography variant="subtitle1" component={Link} href="/">
+                      <Typography sx={{ color: 'white' }} variant="subtitle1" component={Link} href="/">
                         Terms & Condition.
                       </Typography>
                     </Typography>

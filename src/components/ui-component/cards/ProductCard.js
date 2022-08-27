@@ -99,7 +99,7 @@ const ProductCard = ({ id, color, title, image, description, offerPrice, salePri
                 <Stack direction="row" justifyContent="space-between" alignItems="center">
                   <Grid container spacing={1}>
                     <Grid item>
-                      <Typography variant="h3" color="primary">
+                      <Typography variant="h4" color="primary">
                         RM {offerPrice} / month
                       </Typography>
                     </Grid>

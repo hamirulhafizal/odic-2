@@ -25,6 +25,9 @@ import {
   Toolbar,
   Tooltip,
   Typography,
+  Tab,
+  Tabs,
+  Box,
   useMediaQuery
 } from '@mui/material';
 import AddLocationAltOutlinedIcon from '@mui/icons-material/AddLocationAltOutlined';
@@ -241,6 +244,26 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired
 };
 
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div role="tabpanel" hidden={value !== index} id={`simple-tabpanel-${index}`} aria-labelledby={`simple-tab-${index}`} {...other}>
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired
+};
+
 // ==============================|| PRODUCT LIST ||============================== //
 
 const handleDelete = (index) => {
@@ -262,6 +285,13 @@ const handleDelete = (index) => {
   });
 };
 
+const a11yProps = (index) => {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`
+  };
+};
+
 const Listing = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
@@ -276,6 +306,12 @@ const Listing = () => {
   const [search, setSearch] = React.useState('');
   const [rows, setRows] = React.useState([]);
   const { products } = useSelector((state) => state.product);
+
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   const { user } = useAuth();
 
@@ -314,6 +350,12 @@ const Listing = () => {
     dispatch(getProducts(user?.user_name));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [paging]);
+
+  const filterByCategory = (param) => {
+    return rows?.filter((item) => {
+      return item.category == param;
+    });
+  };
 
   const handleSearch = (event) => {
     const newString = event.target.value;
@@ -462,226 +504,222 @@ const Listing = () => {
           </>
         ) : (
           <>
-            <TableContainer>
-              <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
-                <EnhancedTableHead
-                  numSelected={selected.length}
-                  order={order}
-                  orderBy={orderBy}
-                  onSelectAllClick={handleSelectAllClick}
-                  onRequestSort={handleRequestSort}
-                  rowCount={rows?.length}
-                  theme={theme}
-                  selected={selected}
-                />
-                <TableBody>
-                  {rows?.map((row, index) => {
-                    if (typeof row === 'number') return null;
-                    const isItemSelected = isSelected(index);
-                    const labelId = `enhanced-table-checkbox-${index}`;
+            <Box sx={{ width: '100%' }}>
+              <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+                  <Tab label={`Sale (${filterByCategory(2)?.length})`} {...a11yProps(0)} />
+                  <Tab label={`Rent (${filterByCategory(1)?.length})`} {...a11yProps(1)} />
+                  {/* <Tab label="Item Three" {...a11yProps(2)} /> */}
+                </Tabs>
+              </Box>
+              <TabPanel value={value} index={0}>
+                <TableContainer>
+                  <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
+                    <EnhancedTableHead
+                      numSelected={selected.length}
+                      order={order}
+                      orderBy={orderBy}
+                      onSelectAllClick={handleSelectAllClick}
+                      onRequestSort={handleRequestSort}
+                      rowCount={rows?.length}
+                      theme={theme}
+                      selected={selected}
+                    />
+                    <TableBody>
+                      {filterByCategory(2)?.map((row, index) => {
+                        if (typeof row === 'number') return null;
+                        const isItemSelected = isSelected(index);
+                        const labelId = `enhanced-table-checkbox-${index}`;
 
-                    return (
-                      <TableRow
-                        id={`row-${row?.id}`}
-                        hover
-                        role="checkbox"
-                        aria-checked={isItemSelected}
-                        tabIndex={-1}
-                        key={index}
-                        selected={isItemSelected}
-                      >
-                        {/* <TableCell padding="checkbox" sx={{ pl: 3 }} onClick={(event) => handleClick(event, row.name)}>
-                          <Checkbox
-                            color="primary"
-                            checked={isItemSelected}
-                            inputProps={{
-                              'aria-labelledby': labelId
-                            }}
-                          />
-                        </TableCell> */}
-                        <TableCell align="center" component="th" id={labelId} scope="row" sx={{ cursor: 'pointer' }}>
-                          <Avatar
-                            component={Link}
-                            href={`/listing/${row?.id}`}
-                            src={row?.photo_1 && `${row?.featureImage}`}
-                            size="md"
-                            variant="rounded"
-                          />
-                        </TableCell>
-                        <TableCell component="th" id={labelId} scope="row" sx={{ cursor: 'pointer' }}>
-                          <Typography
-                            component={Link}
-                            href={`/listing/${row?.id}`}
-                            variant="span"
-                            sx={{
-                              color: theme.palette.mode === 'dark' ? theme.palette.grey[600] : 'grey.900',
-                              textDecoration: 'none'
-                            }}
+                        return (
+                          <TableRow
+                            id={`row-${row?.id}`}
+                            hover
+                            role="checkbox"
+                            aria-checked={isItemSelected}
+                            tabIndex={-1}
+                            key={index}
+                            selected={isItemSelected}
                           >
-                            {row?.title}
-                          </Typography>
-                        </TableCell>
-                        {/* <TableCell>{format(new Date(row.created), 'E, MMM d yyyy')}</TableCell> */}
-                        <TableCell align="center">RM {row?.price}</TableCell>
-                        <TableCell align="center">{row?.location}</TableCell>
+                            <TableCell align="center" component="th" id={labelId} scope="row" sx={{ cursor: 'pointer' }}>
+                              <Avatar
+                                component={Link}
+                                href={`/listing/${row?.id}`}
+                                src={row?.photo_1 && `${row?.featureImage}`}
+                                size="md"
+                                variant="rounded"
+                              />
+                            </TableCell>
+                            <TableCell component="th" id={labelId} scope="row" sx={{ cursor: 'pointer' }}>
+                              <Typography
+                                component={Link}
+                                href={`/listing/${row?.id}`}
+                                variant="span"
+                                sx={{
+                                  color: theme.palette.mode === 'dark' ? theme.palette.grey[600] : 'grey.900',
+                                  textDecoration: 'none'
+                                }}
+                              >
+                                {row?.title}
+                              </Typography>
+                            </TableCell>
+                            <TableCell align="center">RM {row?.price}</TableCell>
+                            <TableCell align="center">{row?.location}</TableCell>
 
-                        <TableCell align="center">{propertyTypeData(row?.propertyType)}</TableCell>
-                        <TableCell align="center">{parseInt(row?.bathrooms)}</TableCell>
-                        <TableCell align="center">{row?.bedrooms}</TableCell>
+                            <TableCell align="center">{propertyTypeData(row?.propertyType)}</TableCell>
+                            <TableCell align="center">{parseInt(row?.bathrooms)}</TableCell>
+                            <TableCell align="center">{row?.bedrooms}</TableCell>
 
-                        <TableCell align="center">
-                          <Chip
-                            size="small"
-                            label={row?.status ? 'Active' : 'Active'}
-                            chipcolor={row?.status ? 'success' : 'success'}
-                            sx={{ borderRadius: '4px', textTransform: 'capitalize' }}
-                          />
-                        </TableCell>
-                        <TableCell align="center" sx={{ pr: 3 }}>
-                          <IconButton
-                            onClick={() => {
-                              router.push(`listing/${row?.id}`);
-                            }}
-                            color="primary"
-                            size="large"
+                            <TableCell align="center">
+                              <Chip
+                                size="small"
+                                label={row?.status ? 'Active' : 'Active'}
+                                chipcolor={row?.status ? 'success' : 'success'}
+                                sx={{ borderRadius: '4px', textTransform: 'capitalize' }}
+                              />
+                            </TableCell>
+                            <TableCell align="center" sx={{ pr: 3 }}>
+                              <IconButton
+                                onClick={() => {
+                                  router.push(`listing/${row?.id}`);
+                                }}
+                                color="primary"
+                                size="large"
+                              >
+                                <VisibilityTwoToneIcon sx={{ fontSize: '1.3rem' }} />
+                              </IconButton>
+                              <IconButton
+                                color="secondary"
+                                onClick={() => {
+                                  handleDialog(row?.id);
+                                }}
+                                size="large"
+                              >
+                                <EditTwoToneIcon sx={{ fontSize: '1.3rem' }} />
+                              </IconButton>
+                              <IconButton
+                                color="secondary"
+                                onClick={() => {
+                                  handleDelete(row?.id);
+                                }}
+                                size="large"
+                              >
+                                <DeleteTwoToneIcon sx={{ fontSize: '1.3rem' }} />
+                              </IconButton>
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </TabPanel>
+              <TabPanel value={value} index={1}>
+                <TableContainer>
+                  <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
+                    <EnhancedTableHead
+                      numSelected={selected.length}
+                      order={order}
+                      orderBy={orderBy}
+                      onSelectAllClick={handleSelectAllClick}
+                      onRequestSort={handleRequestSort}
+                      rowCount={rows?.length}
+                      theme={theme}
+                      selected={selected}
+                    />
+                    <TableBody>
+                      {filterByCategory(1)?.map((row, index) => {
+                        if (typeof row === 'number') return null;
+                        const isItemSelected = isSelected(index);
+                        const labelId = `enhanced-table-checkbox-${index}`;
+
+                        return (
+                          <TableRow
+                            id={`row-${row?.id}`}
+                            hover
+                            role="checkbox"
+                            aria-checked={isItemSelected}
+                            tabIndex={-1}
+                            key={index}
+                            selected={isItemSelected}
                           >
-                            <VisibilityTwoToneIcon sx={{ fontSize: '1.3rem' }} />
-                          </IconButton>
-                          <IconButton
-                            color="secondary"
-                            onClick={() => {
-                              handleDialog(row?.id);
-                            }}
-                            size="large"
-                          >
-                            <EditTwoToneIcon sx={{ fontSize: '1.3rem' }} />
-                          </IconButton>
-                          <IconButton
-                            color="secondary"
-                            onClick={() => {
-                              handleDelete(row?.id);
-                            }}
-                            size="large"
-                          >
-                            <DeleteTwoToneIcon sx={{ fontSize: '1.3rem' }} />
-                          </IconButton>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
+                            <TableCell align="center" component="th" id={labelId} scope="row" sx={{ cursor: 'pointer' }}>
+                              <Avatar
+                                component={Link}
+                                href={`/listing/${row?.id}`}
+                                src={row?.photo_1 && `${row?.featureImage}`}
+                                size="md"
+                                variant="rounded"
+                              />
+                            </TableCell>
+                            <TableCell component="th" id={labelId} scope="row" sx={{ cursor: 'pointer' }}>
+                              <Typography
+                                component={Link}
+                                href={`/listing/${row?.id}`}
+                                variant="span"
+                                sx={{
+                                  color: theme.palette.mode === 'dark' ? theme.palette.grey[600] : 'grey.900',
+                                  textDecoration: 'none'
+                                }}
+                              >
+                                {row?.title}
+                              </Typography>
+                            </TableCell>
+                            <TableCell align="center">RM {row?.price} / month</TableCell>
+                            <TableCell align="center">{row?.location}</TableCell>
 
-                  {/* {emptyRows > 0 && (
-                    <TableRow
-                      style={{
-                        height: 53 * emptyRows
-                      }}
-                    >
-                      <TableCell colSpan={6} />
-                    </TableRow>
-                  )} */}
+                            <TableCell align="center">{propertyTypeData(row?.propertyType)}</TableCell>
+                            <TableCell align="center">{parseInt(row?.bathrooms)}</TableCell>
+                            <TableCell align="center">{row?.bedrooms}</TableCell>
 
-                  {/* {stableSort(rows, getComparator(order, orderBy))
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row, index) => {
-                if (typeof row === 'number') return null;
-                const isItemSelected = isSelected(row.name);
-                const labelId = `enhanced-table-checkbox-${index}`;
-
-                return (
-                  <TableRow hover role="checkbox" aria-checked={isItemSelected} tabIndex={-1} key={index} selected={isItemSelected}>
-                    <TableCell padding="checkbox" sx={{ pl: 3 }} onClick={(event) => handleClick(event, row.name)}>
-                      <Checkbox
-                        color="primary"
-                        checked={isItemSelected}
-                        inputProps={{
-                          'aria-labelledby': labelId
-                        }}
-                      />
-                    </TableCell>
-                    <TableCell
-                      align="center"
-                      component="th"
-                      id={labelId}
-                      scope="row"
-                      onClick={(event) => handleClick(event, row.name)}
-                      sx={{ cursor: 'pointer' }}
-                    >
-                      <Avatar src={row.image && `${prodImage}/${row.image}`} size="md" variant="rounded" />
-                    </TableCell>
-                    <TableCell component="th" id={labelId} scope="row" sx={{ cursor: 'pointer' }}>
-                      <Typography
-                        component={Link}
-                        href={`/app/e-commerce/product-details/${row.id}`}
-                        variant="subtitle1"
-                        sx={{
-                          color: theme.palette.mode === 'dark' ? theme.palette.grey[600] : 'grey.900',
-                          textDecoration: 'none'
-                        }}
-                      >
-                        {row.name}
-                      </Typography>
-                    </TableCell>
-                    <TableCell>{format(new Date(row.created), 'E, MMM d yyyy')}</TableCell>
-                    <TableCell align="right">${row.offerPrice}</TableCell>
-                    <TableCell align="right">${row.salePrice}</TableCell>
-                    <TableCell align="center">
-                      <Chip
-                        size="small"
-                        label={row.isStock ? 'In Stock' : 'Out of Stock'}
-                        chipcolor={row.isStock ? 'success' : 'error'}
-                        sx={{ borderRadius: '4px', textTransform: 'capitalize' }}
-                      />
-                    </TableCell>
-                    <TableCell align="center" sx={{ pr: 3 }}>
-                      <IconButton onClick={handleMenuClick} size="large">
-                        <MoreHorizOutlinedIcon
-                          fontSize="small"
-                          aria-controls="menu-popular-card-1"
-                          aria-haspopup="true"
-                          sx={{ color: 'grey.500' }}
-                        />
-                      </IconButton>
-                      <Menu
-                        id="menu-popular-card-1"
-                        anchorEl={anchorEl}
-                        keepMounted
-                        open={Boolean(anchorEl)}
-                        onClose={handleClose}
-                        variant="selectedMenu"
-                        anchorOrigin={{
-                          vertical: 'bottom',
-                          horizontal: 'right'
-                        }}
-                        transformOrigin={{
-                          vertical: 'top',
-                          horizontal: 'right'
-                        }}
-                        sx={{
-                          '& .MuiMenu-paper': {
-                            boxShadow: theme.customShadows.z1
-                          }
-                        }}
-                      >
-                        <MenuItem onClick={handleClose}> Edit</MenuItem>
-                        <MenuItem onClick={handleClose}> Delete</MenuItem>
-                      </Menu>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-
-            {emptyRows > 0 && (
-              <TableRow
-                style={{
-                  height: 53 * emptyRows
-                }}
-              >
-                <TableCell colSpan={6} />
-              </TableRow>
-            )} */}
-                </TableBody>
-              </Table>
-            </TableContainer>
+                            <TableCell align="center">
+                              <Chip
+                                size="small"
+                                label={row?.status ? 'Active' : 'Active'}
+                                chipcolor={row?.status ? 'success' : 'success'}
+                                sx={{ borderRadius: '4px', textTransform: 'capitalize' }}
+                              />
+                            </TableCell>
+                            <TableCell align="center" sx={{ pr: 3 }}>
+                              <IconButton
+                                onClick={() => {
+                                  router.push(`listing/${row?.id}`);
+                                }}
+                                color="primary"
+                                size="large"
+                              >
+                                <VisibilityTwoToneIcon sx={{ fontSize: '1.3rem' }} />
+                              </IconButton>
+                              <IconButton
+                                color="secondary"
+                                onClick={() => {
+                                  handleDialog(row?.id);
+                                }}
+                                size="large"
+                              >
+                                <EditTwoToneIcon sx={{ fontSize: '1.3rem' }} />
+                              </IconButton>
+                              <IconButton
+                                color="secondary"
+                                onClick={() => {
+                                  handleDelete(row?.id);
+                                }}
+                                size="large"
+                              >
+                                <DeleteTwoToneIcon sx={{ fontSize: '1.3rem' }} />
+                              </IconButton>
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </TabPanel>
+              {/* <TabPanel value={value} index={2}>
+                Item Three
+              </TabPanel> */}
+            </Box>
 
             {/* <TablePagination
               rowsPerPageOptions={[5, 10, 25]}

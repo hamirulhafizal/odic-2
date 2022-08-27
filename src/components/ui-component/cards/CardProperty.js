@@ -72,7 +72,7 @@ const CardProperty = ({ itemData, agentData }) => {
           boxShadow: '0px 0px 6px 4px rgba(0, 0, 0, 0.15)',
           borderRadius: '10pX',
           justifyContent: 'center',
-          p: 4,
+          p: 3,
           mb: 4
         }}
       >

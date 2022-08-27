@@ -37,10 +37,15 @@ const Register = () => {
                     <Grid container direction={matchDownSM ? 'column-reverse' : 'row'} alignItems="center" justifyContent="center">
                       <Grid item>
                         <Stack alignItems="center" justifyContent="center" spacing={1}>
-                          <Typography color={theme.palette.secondary.main} gutterBottom variant={matchDownSM ? 'h3' : 'h2'}>
+                          <Typography sx={{ color: 'white' }} gutterBottom variant={matchDownSM ? 'h3' : 'h2'}>
                             Sign up
                           </Typography>
-                          <Typography variant="caption" fontSize="16px" textAlign={matchDownSM ? 'center' : 'inherit'}>
+                          <Typography
+                            color={theme.palette.secondary.main}
+                            variant="caption"
+                            fontSize="16px"
+                            textAlign={matchDownSM ? 'center' : 'inherit'}
+                          >
                             Enter your credentials to continue
                           </Typography>
                         </Stack>
@@ -60,6 +65,7 @@ const Register = () => {
                         href={isLoggedIn ? '/pages/authentication/auth3/login' : '/login'}
                         variant="subtitle1"
                         sx={{ textDecoration: 'none' }}
+                        color={theme.palette.secondary.main}
                       >
                         Already have an account?
                       </Typography>

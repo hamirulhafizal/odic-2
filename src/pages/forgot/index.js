@@ -34,12 +34,12 @@ const ForgotPassword = () => {
                   <Grid item xs={12}>
                     <Grid container alignItems="center" justifyContent="center" textAlign="center" spacing={2}>
                       <Grid item xs={12}>
-                        <Typography color={theme.palette.secondary.main} gutterBottom variant={matchDownSM ? 'h3' : 'h2'}>
+                        <Typography sx={{ color: 'white' }} gutterBottom variant={matchDownSM ? 'h3' : 'h2'}>
                           Forgot password?
                         </Typography>
                       </Grid>
                       <Grid item xs={12}>
-                        <Typography variant="caption" fontSize="16px" textAlign="center">
+                        <Typography color={theme.palette.secondary.main} variant="caption" fontSize="16px" textAlign="center">
                           Enter your email address below and we&apos;ll send you password reset OTP.
                         </Typography>
                       </Grid>
@@ -58,6 +58,7 @@ const ForgotPassword = () => {
                         href={isLoggedIn ? '/pages/authentication/auth3/login' : '/login'}
                         variant="subtitle1"
                         sx={{ textDecoration: 'none' }}
+                        color={theme.palette.secondary.main}
                       >
                         Already have an account?
                       </Typography>

@@ -153,6 +153,7 @@ const JWTLogin = ({ loginProp, ...others }) => {
           <Grid container alignItems="center" justifyContent="space-between">
             <Grid item>
               <FormControlLabel
+                sx={{ color: 'white' }}
                 control={
                   <Checkbox checked={checked} onChange={(event) => setChecked(event.target.checked)} name="checked" color="primary" />
                 }
@@ -163,9 +164,9 @@ const JWTLogin = ({ loginProp, ...others }) => {
               <Typography
                 variant="subtitle1"
                 component={Link}
-                href={loginProp ? `/pages/authentication/auth${loginProp}/forgot-password` : '/pages/authentication/auth3/forgot-password'}
+                href={`/forgot`}
                 color="secondary"
-                sx={{ textDecoration: 'none' }}
+                sx={{ textDecoration: 'none', color: 'white' }}
               >
                 Forgot Password?
               </Typography>
