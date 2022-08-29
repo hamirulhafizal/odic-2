@@ -44,14 +44,12 @@ import YouTubeIcon from '@mui/icons-material/YouTube';
 import moment from 'moment';
 import { getRelatedProducts } from 'store/slices/product';
 
-// product size
+const defaultImage = 'https://onedream.dynamicdigital.guru/media/profile_photo/avatar.png';
 
 const validationSchema = yup.object({
   color: yup.string().required('Colors selection is required'),
   size: yup.number().required('Size selection is required.')
 });
-
-// ==============================|| COLORS OPTION ||============================== //
 
 // ==============================|| PRODUCT DETAILS - INFORMATION ||============================== //
 
@@ -147,8 +145,8 @@ const ProductInfo = ({ product }) => {
                 onClick={() => {
                   router.push(`/${agentData?.user_name}`);
                 }}
-                alt="User 1"
-                src={agentData?.photo}
+                alt={`${agentData?.user_name}`}
+                src={agentData?.photo == defaultImage ? '/oneDream.ico' : agentData?.photo}
                 sx={{
                   borderRadius: '16px',
                   margin: '5px auto 0',
@@ -156,7 +154,12 @@ const ProductInfo = ({ product }) => {
                   height: '50px',
                   backgroundColor: 'transparent',
                   borderRadius: '100%',
-                  cursor: 'pointer'
+                  cursor: 'pointer',
+                  '& .MuiAvatar-img': {
+                    objectFit: Boolean(agentData?.photo == defaultImage) ? 'contain' : null,
+                    border: Boolean(agentData?.photo == defaultImage) ? ' 1px solid #b5a837' : null,
+                    borderRadius: '50%'
+                  }
                 }}
               />
             </Badge>

@@ -33,6 +33,8 @@ const HeaderAnimationImage = styled('img')({
 const Suscribe1 = () => {
   const theme = useTheme();
 
+  const parse = localStorage.getItem('agent');
+  const agent = JSON.parse(parse);
   return (
     <Container>
       <Grid
@@ -68,12 +70,20 @@ const Suscribe1 = () => {
                   color="secondary"
                   sx={{
                     fontWeight: 900,
-                    lineHeight: 1.4
+                    lineHeight: 1.4,
+                    textTransform: 'capitalize'
                   }}
                 >
                   Need Help
                   <Box component="span" variant="h5" color="inherit" sx={{ ml: 2, color: 'white' }}>
-                    From Agent?
+                    from {agent?.firstName} {agent?.lastName}
+                    {!agent?.firstName && (
+                      <>
+                        <br />
+                        One Dream Property
+                      </>
+                    )}{' '}
+                    ?
                   </Box>
                 </Typography>
               </motion.div>

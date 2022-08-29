@@ -72,9 +72,9 @@ const HeaderPage = () => {
                     lineHeight: 1.4
                   }}
                 >
-                  The Only Way to <br></br>Find Your
+                  The Only Way to <br></br>Find
                   <Box component="span" variant="h2" color="inherit" sx={{ ml: 2, color: 'white' }}>
-                    DREAM HOUSE
+                    YOUR CHOICE OF DREAM HOME
                   </Box>
                 </Typography>
               </motion.div>
@@ -100,8 +100,8 @@ const HeaderPage = () => {
                     lineHeight: 1.4
                   }}
                 >
-                  Reduce your burden with our Zero Deposit Guarantee. Zero Deposit replace traditional security deposit. It make renting
-                  faster and more affordable, move into the home you love without putting an expensive 2-3 months cash deposit.
+                  There are no excuses to get your own house. Everyone can own their dream house without any deposit and risk. Come & take a
+                  fast action. Don’t wait to buy property, you must buy first and wait.
                 </Typography>
               </motion.div>
             </Grid>
@@ -116,7 +116,7 @@ const HeaderPage = () => {
                   delay: 0.4
                 }}
               >
-                <Grid container spacing={2} sx={{ justifyContent: { xs: 'center', md: 'center' } }}>
+                {/* <Grid container spacing={2} sx={{ justifyContent: { xs: 'center', md: 'center' } }}>
                   <Grid item>
                     <AnimateButton>
                       <Button sx={{ color: 'white' }} component={Link} href="/listing/" size="large" variant="contained" color="secondary">
@@ -124,7 +124,7 @@ const HeaderPage = () => {
                       </Button>
                     </AnimateButton>
                   </Grid>
-                </Grid>
+                </Grid> */}
               </motion.div>
             </Grid>
           </Grid>

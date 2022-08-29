@@ -14,39 +14,35 @@ import {
 
 import { useTheme } from '@mui/material/styles';
 
-function createData(key, value) {
-  return { key, value };
-}
-
 const propertyType = (item) => {
-  if (item == 1) {
+  if (item == 5) {
     return 'Apartment';
   }
-  if (item == 2) {
+  if (item == 6) {
     return 'Landed House';
   }
 
-  if (item == 3) {
+  if (item == 7) {
     return 'Private Room';
   }
 
-  if (item == 4) {
+  if (item == 8) {
     return 'Factory';
   }
 
-  if (item == 5) {
+  if (item == 9) {
     return 'Office';
   }
 
-  if (item == 6) {
+  if (item == 10) {
     return 'Hotel/Resort';
   }
 
-  if (item == 7) {
+  if (item == 11) {
     return 'ShopLot';
   }
 
-  if (item == 8) {
+  if (item == 12) {
     return 'Land';
   }
   if (item == null) {
@@ -55,8 +51,8 @@ const propertyType = (item) => {
 };
 
 const furnishing = (item) => {
-  if (item == 'Freehold') {
-    return 'Full Furnished';
+  if (item == 'Fully furnish') {
+    return 'Fully Furnish';
   }
   if (item == 'Partial') {
     return 'Partly Furnish';
@@ -141,7 +137,7 @@ const Specification = ({ product }) => {
               <TableRow sx={{ '& td, & th': { border: 0 }, display: matchDownSM ? 'none' : '' }}>
                 <TableCell sx={{ display: 'block' }} component="th" scope="row">
                   <Typography variant="caption" sx={{ fontWeight: 500 }}>
-                    Description
+                    Descriptions
                   </Typography>
                 </TableCell>
                 <TableCell>
@@ -151,8 +147,8 @@ const Specification = ({ product }) => {
                     multiline
                     rows={5}
                     value={productData?.description}
-                    disable
                     disableUnderline
+                    disabled
                     readOnly
                     aria-label="empty textarea"
                     style={{
@@ -161,7 +157,9 @@ const Specification = ({ product }) => {
                       border: '0px',
                       resize: 'none',
                       fontFamily: 'inherit',
-                      overflow: 'unset'
+                      overflow: 'unset',
+                      cursor: 'default',
+                      backgroundColor: 'white'
                     }}
                   />
                 </TableCell>
@@ -186,7 +184,8 @@ const Specification = ({ product }) => {
                 cursor: 'default',
                 border: '0px',
                 fontFamily: 'inherit',
-                overflow: 'unset'
+                overflow: 'unset',
+                resize: 'none'
               }}
             />
           </Stack>

@@ -227,59 +227,47 @@ const ProfileSection = () => {
                           <ListItemButton
                             sx={{
                               borderRadius: `${borderRadius}px`,
-
                               backgroundColor: user?.phone ? '#44b700' : '',
-                              color: user?.phone ? '#44b700' : ''
+                              color: user?.phone && 'white',
+                              '&:hover': {
+                                color: '#616161'
+                              }
                             }}
                             selected={selectedIndex === 1}
-                            // onClick={(event) => handleListItemClick(event, 1)}
                             onClick={() => {
                               router.push(`/${user?.user_name}`);
                             }}
                           >
                             <ListItemIcon
                               sx={{
-                                color: user?.phone ? 'white' : ''
+                                color: user?.phone ? 'white' : '',
+                                '&:hover': {
+                                  color: '#616161'
+                                }
                               }}
                             >
                               <AccountCircleOutlinedIcon stroke={1.5} size="1.3rem" />
                             </ListItemIcon>
-                            <ListItemText
-                              primary={
-                                <Typography
-                                  sx={{
-                                    color: user?.phone ? 'white' : ''
-                                  }}
-                                >
-                                  Live Profile
-                                </Typography>
-                              }
-                            />
+                            <ListItemText primary={<Typography>Live Profile</Typography>} />
                           </ListItemButton>
                           <ListItemButton
                             sx={{
                               borderRadius: `${borderRadius}px`,
-                              backgroundColor: user?.phone == null ? 'red' : ''
+                              backgroundColor: user?.phone == null && 'red',
+                              color: user?.phone == null && 'white',
+                              '&:hover': {
+                                color: '#616161'
+                              }
                             }}
                             selected={selectedIndex === 0}
                             onClick={() => {
                               router.push(`/profile`);
                             }}
                           >
-                            <ListItemIcon sx={{ color: user?.phone == null ? 'white' : '' }}>
+                            <ListItemIcon sx={{ color: user?.phone == null && 'white' }}>
                               <IconSettings stroke={1.5} size="1.3rem" />
                             </ListItemIcon>
-                            <ListItemText
-                              primary={
-                                <Typography
-                                  sx={{
-                                    color: user?.phone == null ? 'white' : ''
-                                  }}
-                                >
-                                  Account Settings
-                                </Typography>
-                              }
-                            />
+                            <ListItemText primary={<Typography>Account Settings</Typography>} />
                           </ListItemButton>
 
                           <ListItemButton sx={{ borderRadius: `${borderRadius}px` }} selected={selectedIndex === 4} onClick={handleLogout}>

@@ -53,11 +53,11 @@ const Profile = ({ ...others }) => {
           user?.description ||
           `Nama saya ${user?.firstName} ${user?.lastName}.
           
-          <br/>Saya merupakan agent Sah aktif One Dream Property.
+          Saya merupakan agent sah aktif One Dream Property.
           
-          <br/>Saya sudah bantu lebih 500 orang pembeli dan pelabur hartanah.
+          Saya sudah bantu lebih 500 orang pembeli dan pelabur hartanah.
           
-          <br/>Ingin saya bantu anda? Hubungi saya untuk bimbingan.`,
+          Ingin saya bantu anda? Hubungi saya untuk bimbingan.`,
         facebook: user?.facebook || '',
         instagram: user?.instagram || '',
         youtube: user?.youtube || '',
@@ -287,41 +287,9 @@ const Profile = ({ ...others }) => {
                             onChange={handleChange}
                           />
                         </Grid>
-                        <Grid item>
-                          <AnimateButton>
-                            <Button variant="contained" size="small" color="secondary">
-                              Connect
-                            </Button>
-                          </AnimateButton>
-                        </Grid>
                       </Grid>
                     </Grid>
-                    {/* <Grid item xs={12}>
-                      <Grid container alignItems="center" spacing={gridSpacing} sx={{ mb: 1.25 }}>
-                        <Grid item>
-                          <TwitterIcon />
-                        </Grid>
-                        <Grid item xs zeroMinWidth>
-                          <TextField
-                            fullWidth
-                            id="outlined-basic4"
-                            label="Twitter Profile Url"
-                            name="twitter"
-                            type="text"
-                            value={values.twitter}
-                            onBlur={handleBlur}
-                            onChange={handleChange}
-                          />
-                        </Grid>
-                        <Grid item>
-                          <AnimateButton>
-                            <Button variant="contained" size="small" color="secondary">
-                              Connect
-                            </Button>
-                          </AnimateButton>
-                        </Grid>
-                      </Grid>
-                    </Grid> */}
+
                     <Grid item xs={12}>
                       <Grid container alignItems="center" spacing={gridSpacing} sx={{ mb: 1.25 }}>
                         <Grid item>
@@ -344,6 +312,7 @@ const Profile = ({ ...others }) => {
                             name="tiktok"
                             type="text"
                             value={values.tiktok}
+                            sx={{ pl: 1 }}
                             onBlur={handleBlur}
                             onChange={handleChange}
                           />

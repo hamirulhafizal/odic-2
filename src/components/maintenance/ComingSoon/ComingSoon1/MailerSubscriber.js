@@ -19,6 +19,8 @@ const MailerSubscriber = ({ ...others }) => {
   const scriptedRef = useScriptRef();
   const dispatch = useDispatch();
 
+  const parse = localStorage.getItem('agent');
+  const agent = JSON.parse(parse);
   return (
     <Formik
       initialValues={{
@@ -33,18 +35,28 @@ const MailerSubscriber = ({ ...others }) => {
         phone: Yup.number().required('Phone is required')
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-        console.log('values', values);
+        if (agent && agent?.phone !== null) {
+          const link = `https://api.whatsapp.com/send?phone=6${agent?.phone}&text=Hi ${agent?.firstName} ${agent?.lastName} dari One Dream Property, ${values?.message}`;
+          window.open(link, '_blank');
+        } else if (agent && agent?.email !== null) {
+          const link = `mailto:${agent?.email}?subject=One Dream Property&body= Hi ${agent?.firstName} ${agent?.lastName} dari One Dream Property, ${values?.message}`;
+          window.open(link, '_blank');
+        } else if (agent == null) {
+          const link = `mailto:onedream.mns@gmail.com?subject=One Dream Property&body=Hi One Dream Property, ${values?.message}`;
+          window.open(link, '_blank');
+        }
+
         // try {
         //   const options = {
         //     headers: {
         //       'content-type': 'application/json'
         //     }
         //   };
-        //   await axios.post('https://yourapicall', { email: values.email }, options);
+        //   await axios.post(`hhttps://api.whatsapp.com/send?phone=${agent?.phone}&text=${message}`, options);
         //   dispatch(
         //     openSnackbar({
         //       open: true,
-        //       message: 'Success! Please check inbox and confirm.',
+        //       message: 'Success! Please check whatsapp.',
         //       variant: 'alert',
         //       alert: {
         //         color: 'success'
@@ -169,7 +181,7 @@ const MailerSubscriber = ({ ...others }) => {
                     color: 'white'
                   }}
                 >
-                  Subscribe
+                  Submit
                 </Button>
               </AnimateButton>
             </Grid>

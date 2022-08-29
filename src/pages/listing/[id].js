@@ -82,6 +82,7 @@ const ProductDetails = () => {
 
   const [product, setProduct] = useState(null);
   const productState = useSelector((state) => state.product);
+  const { relatedProducts } = useSelector((state) => state.product);
 
   useEffect(() => {
     setProduct(productState.product);
@@ -121,7 +122,7 @@ const ProductDetails = () => {
         spacing={gridSpacing}
       >
         <Grid item xs={11} lg={10}>
-          <MainCard>
+          <MainCard sx={{ borderColor: '#b5a837' }}>
             {product && (
               <Grid container spacing={matchDownSM ? 1 : 5}>
                 <Grid item xs={12} md={6}>
@@ -162,12 +163,18 @@ const ProductDetails = () => {
             )}
           </MainCard>
         </Grid>
-        <Grid item xs={12} lg={10} sx={{ mt: 3, ml: 2 }}>
-          <Typography variant="h2">Similar Properties</Typography>
-        </Grid>
-        <Grid item xs={11} lg={10}>
-          <RelatedProducts id={product?.user_name} />
-        </Grid>
+        {relatedProducts.length == 0 ? (
+          <>{''}</>
+        ) : (
+          <>
+            <Grid item xs={12} lg={10} sx={{ mt: 3, ml: 2 }}>
+              <Typography variant="h2">Similar Properties</Typography>
+            </Grid>
+            <Grid item xs={11} lg={10}>
+              <RelatedProducts id={product?.user_name} />
+            </Grid>
+          </>
+        )}
       </Grid>
       <FooterPage />
     </>

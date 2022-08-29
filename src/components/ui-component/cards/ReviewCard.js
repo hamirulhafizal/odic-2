@@ -17,21 +17,21 @@ const Avatar3 = 'https://avatars.githubusercontent.com/u/197012?s=116';
 
 const steps = [
   {
-    label: 'Mohd Taufiq Janudin',
-    description: `"Renting process is easy, managed to find a good room through OD"`,
+    label: 'Mr.Lee',
+    description: `"Fast respond from REN & information of house selling were clearly explained"`,
     avatar: Avatar1,
-    star: 3
+    star: 4.5
   },
   {
-    label: 'Hamirul Hafizal',
+    label: 'Ms. Prema',
     description:
-      '"Last minute looking for place to move due to house renovation, rent through OD without physical viewing, house is the same as listing, good condition."',
+      '"OD managed to get purchaser for my property as fast as 5 days. Luckily the purchaser managed to get fast loan approval also. Goodjob !"',
     avatar: Avatar2,
-    star: 1
+    star: 5
   },
   {
-    label: 'Wan Mat Noor',
-    description: `"OD helped me to find the perfect property, plus no agent fee and free tenancy agreement!"`,
+    label: 'Encik Roslan Saat',
+    description: `"Very knowledgeable and experience agent when they make sharing on what we must do as owner/buyer especially on the process flow."`,
     avatar: Avatar3,
     star: 5
   }

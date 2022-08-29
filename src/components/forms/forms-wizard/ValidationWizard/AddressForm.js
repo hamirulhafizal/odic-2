@@ -22,26 +22,22 @@ import { useTheme } from '@mui/styles';
 
 const category = [
   {
-    value: 1,
+    value: 4,
     label: 'Rent'
   },
   {
     value: 2,
     label: 'Sales'
   }
-  // {
-  //   value: 3,
-  //   label: 'Short Stay'
-  // }
 ];
 
 const tenures = [
   {
-    value: 0,
+    value: true,
     label: 'Leasehold'
   },
   {
-    value: 1,
+    value: false,
     label: 'Freehold'
   }
 ];
@@ -56,37 +52,38 @@ const propertyTitles = [
     label: 'Strata'
   }
 ];
+
 const propertyTypes = [
   {
-    value: 1,
+    value: 5,
     label: 'Apartment'
   },
   {
-    value: 2,
+    value: 6,
     label: 'Landed House'
   },
   {
-    value: 3,
+    value: 7,
     label: 'Private Room'
   },
   {
-    value: 4,
+    value: 8,
     label: 'Factory'
   },
   {
-    value: 5,
+    value: 9,
     label: 'Office'
   },
   {
-    value: 6,
+    value: 10,
     label: 'Hotel/Resort'
   },
   {
-    value: 7,
+    value: 11,
     label: 'ShopLot'
   },
   {
-    value: 8,
+    value: 12,
     label: 'Land'
   }
 ];
@@ -101,7 +98,7 @@ const furnish = [
     label: 'Partly Furnish'
   },
   {
-    value: 'Freehold',
+    value: 'Fully furnish',
     label: 'Fully Furnished'
   }
 ];
@@ -246,11 +243,11 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
 
   const initials = {
-    category: editData?.category || 1,
-    propertyType: editData?.propertyType || 1,
+    category: editData?.category || 4,
+    propertyType: editData?.propertyType || 6,
     saleType: editData?.saleType || '',
-    tenure: editData?.tenure || 0,
-    furnishing: editData?.furnishing || 'Freehold',
+    tenure: editData?.tenure || true,
+    furnishing: editData?.furnishing || 'Partial',
     carpark: editData?.carpark || '1',
     amenities: editData?.amenities || '',
     title: editData?.title || '',
@@ -617,8 +614,8 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
             <TextareaAutosize
               id="description"
               name="description"
-              label="Description"
-              placeholder="Description"
+              label="Descriptions"
+              placeholder="Descriptions"
               minRows={5}
               value={formik.values.description}
               onChange={formik.handleChange}

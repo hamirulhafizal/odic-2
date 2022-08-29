@@ -68,6 +68,8 @@ function AgentProfile({ userData }) {
       .get(`${BACKEND_PATH}/api/v1/profile/${id}`)
       .then((res) => {
         setAgent(res?.data);
+        const agent = JSON.stringify(res?.data);
+        localStorage.setItem('agent', agent);
         return res;
       })
       .catch((err) => {
@@ -330,9 +332,6 @@ AgentProfile.getInitialProps = async (context) => {
     .then((json) => {
       return json;
     });
-
-  console.log('uids-->', uids);
-  console.log('userData1-->', userData1);
 
   return {
     userData: userData1

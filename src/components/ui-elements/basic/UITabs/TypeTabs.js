@@ -13,6 +13,7 @@ import AddLocationAltOutlinedIcon from '@mui/icons-material/AddLocationAltOutlin
 import HomeTwoToneIcon from '@mui/icons-material/HomeTwoTone';
 import HotelTwoToneIcon from '@mui/icons-material/HotelTwoTone';
 import { useRouter } from 'next/router';
+import useAuth from 'hooks/useAuth';
 
 // tab content customize
 
@@ -66,8 +67,8 @@ const NavBarItem = {
 export default function TypeTabs({ username, agentData }) {
   const theme = useTheme();
   const router = useRouter();
+  const user = useAuth();
 
-  // const [value, setValue] = React.useState(0);
   const [value, setValue] = React.useState(location.hash !== '' ? NavBarItem[location.hash] : 0);
 
   const handleChange = (event, newValue) => {
@@ -156,7 +157,7 @@ export default function TypeTabs({ username, agentData }) {
             <>
               Rent{' '}
               <Chip
-                label={`${filterByCategory(1).length}`}
+                label={`${filterByCategory(4).length}`}
                 size="small"
                 sx={{ color: theme.palette.secondary.main, background: theme.palette.secondary.light, ml: 1.3 }}
               />
@@ -169,39 +170,51 @@ export default function TypeTabs({ username, agentData }) {
         {agentData?.inventories?.map((element, index) => {
           return <CardProperty agentData={agentData} itemData={element} key={index} />;
         })}
+        {agentData?.inventories?.length == 0 && (
+          <Typography variant="h4" sx={{ pb: 2, textAlign: 'center' }}>
+            No Property Found
+          </Typography>
+        )}
       </TabPanel>
-
       <TabPanel value={value} index={1}>
         {filterByCategory(2).map((element, index) => {
           return <CardProperty agentData={agentData} itemData={element} key={index} />;
         })}
+        {filterByCategory(2).length == 0 && (
+          <Typography variant="h4" sx={{ pb: 2, textAlign: 'center' }}>
+            No Property Found
+          </Typography>
+        )}
       </TabPanel>
-
       <TabPanel value={value} index={2}>
-        {filterByCategory(1).map((element, index) => {
+        {filterByCategory(4).map((element, index) => {
           return <CardProperty agentData={agentData} itemData={element} key={index} />;
         })}
+
+        {filterByCategory(4).length == 0 && (
+          <Typography variant="h4" sx={{ pb: 2, textAlign: 'center' }}>
+            No Property Found
+          </Typography>
+        )}
       </TabPanel>
 
-      {agentData?.inventories == 0 && (
-        <Stack sx={{ p: 2, alignItems: 'center' }}>
-          <Typography variant="h4" sx={{ pb: 2, textAlign: 'center' }}>
-            No Item Found
-          </Typography>
-          <Button
-            onClick={() => {
-              router.push('/listing/create');
-            }}
-            variant="contained"
-            color="secondary"
-            sx={{ color: 'white' }}
-            size="small"
-            startIcon={<AddLocationAltOutlinedIcon sx={{ color: 'white' }} fontSize="small" />}
-          >
-            Create New List
-          </Button>
-        </Stack>
-      )}
+      {/*  {(user.isLoggedIn && filterByCategory(2).length == 0) ||
+        (filterByCategory(4).length == 0 && (
+          <Stack sx={{ p: 2, alignItems: 'center' }}>
+            <Button
+              onClick={() => {
+                router.push('/listing/create');
+              }}
+              variant="contained"
+              color="secondary"
+              sx={{ color: 'white' }}
+              size="small"
+              startIcon={<AddLocationAltOutlinedIcon sx={{ color: 'white' }} fontSize="small" />}
+            >
+              Create New List
+            </Button>
+          </Stack>
+        ))} */}
     </>
   );
 }

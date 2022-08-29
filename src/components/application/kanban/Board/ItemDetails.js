@@ -162,7 +162,7 @@ const ItemDetails = () => {
           {!selectedData && (
             <Stack justifyContent="center" alignItems="center" sx={{ height: '100vh' }}>
               <Typography variant="h5" color="error">
-                No item found
+                No Property found
               </Typography>
             </Stack>
           )}

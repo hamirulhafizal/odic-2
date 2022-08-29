@@ -131,18 +131,18 @@ const Landing = () => {
                     Who Are We
                   </Typography>
                   <Stack sx={{ mr: matchDownLG ? '0%' : '50%' }}>
-                    <Typography sx={{ py: 2, color: 'white', textAlign: 'left' }} variant="body1">
-                      Reduce your burden with our Zero Deposit Guarantee. Zero Deposit replace traditional security deposit. It make renting
-                      {matchDownLG ? (
-                        <>
-                          {' '}
-                          <br></br>
-                          <br></br>{' '}
-                        </>
-                      ) : (
-                        ''
-                      )}
-                      faster and more affordable, move into the home you love without putting an expensive 2-3 months cash deposit.
+                    <Typography sx={{ py: 2, color: 'white', textAlign: 'justify' }} variant="body1">
+                      <b>ONE LEGACY REALTY SDN BHD E(1) 2004</b> is a registered Real Estate Agents (REA) with Board of Valuers, Appraisers,
+                      Estate Agents and Property Managers (BOVAEA). Our agency was incorporated on APRIL 2018 and which is located at Johor
+                      Bahru city centre.
+                      <br />
+                      <br />
+                      We have all 3 branches which is include our HQ office located at Taman Damansara Aliff, Taman Adda Height and our
+                      Training Centre at Taman Molek.
+                      <br />
+                      <br />
+                      Our best achievement throughout establishment, we have managed to help almost more than 2000 client in property field
+                      include buy, sell & rent property.
                     </Typography>
                   </Stack>
 
@@ -214,7 +214,7 @@ const Landing = () => {
                     boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)'
                   }}
                 >
-                  <Typography sx={{ ml: 2, py: 2, color: 'white' }} variant="h4">
+                  <Typography sx={{ ml: 2, py: 2, color: 'white' }} variant="h2">
                     Why join us ?
                   </Typography>
 
@@ -224,8 +224,8 @@ const Landing = () => {
                         <SubCard sx={{ borderRadius: 'none' }}>
                           <Grid container alignItems="center" spacing={2}>
                             <Grid item xs zeroMinWidth>
-                              <Typography variant="h1">200</Typography>
-                              <Typography variant="h5">Agent</Typography>
+                              <Typography variant="h1">200 AGENT</Typography>
+                              <Typography variant="h5">We have almost 200 registered property consultants.</Typography>
                             </Grid>
                           </Grid>
                         </SubCard>
@@ -237,8 +237,8 @@ const Landing = () => {
                         <SubCard>
                           <Grid container alignItems="center" spacing={2}>
                             <Grid item xs zeroMinWidth>
-                              <Typography variant="h1">100k</Typography>
-                              <Typography variant="h5">Property</Typography>
+                              <Typography variant="h1">1200 RENT</Typography>
+                              <Typography variant="h5">We have more 1200 listing unit for rent every year.</Typography>
                             </Grid>
                           </Grid>
                         </SubCard>
@@ -250,8 +250,8 @@ const Landing = () => {
                         <SubCard>
                           <Grid container alignItems="center" spacing={2}>
                             <Grid item xs zeroMinWidth>
-                              <Typography variant="h1">240k</Typography>
-                              <Typography variant="h5">Property</Typography>
+                              <Typography variant="h1">600 SALE</Typography>
+                              <Typography variant="h5">More than 600 listing for sell & buy.</Typography>
                             </Grid>
                           </Grid>
                         </SubCard>
@@ -263,8 +263,8 @@ const Landing = () => {
                         <SubCard>
                           <Grid container alignItems="center" spacing={2}>
                             <Grid item xs zeroMinWidth>
-                              <Typography variant="h1">89k</Typography>
-                              <Typography variant="h5">Property</Typography>
+                              <Typography variant="h1">6 PROJECT</Typography>
+                              <Typography variant="h5">We already engage with 6 new project with developer.</Typography>
                             </Grid>
                           </Grid>
                         </SubCard>
@@ -312,7 +312,7 @@ const Landing = () => {
                   <Stack sx={{ ml: matchDownLG ? '0%' : '50%' }}>
                     <Typography sx={{ py: 2, color: 'white', textAlign: 'right' }} variant="body1">
                       Our agents are able to enjoy training such as the products and services we provide, as well as selling method skills
-                      in our ONE DREAM LEGACY (HQ).
+                      in our <b>ONE DREAM LEGACY (HQ).</b>
                       {matchDownLG ? (
                         <>
                           {' '}
