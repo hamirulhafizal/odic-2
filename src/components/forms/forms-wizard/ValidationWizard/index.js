@@ -133,7 +133,6 @@ const ValidationWizard = ({ updateProperty, formFor }) => {
       if (formFor == 'UpdateListing') {
         const clean = (obj) => {
           if (editData?.featureImage == featureImage) {
-            console.log('masul features', featureImage);
             delete propertyObj['featureImage'];
           }
 
@@ -202,11 +201,7 @@ const ValidationWizard = ({ updateProperty, formFor }) => {
       }
 
       if (formFor == 'UpdateListing' && updateProperty !== null) {
-        console.log('masuk 2');
-        console.log('form_data 2', form_data);
-
         updateListingById(updateProperty?.id, form_data).then((res) => {
-          console.log('res update', res);
           if (res?.status == 200) {
             setLisitngId(res?.data?.id);
             setLoading(false);

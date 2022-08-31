@@ -243,7 +243,7 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
 
   const initials = {
-    category: editData?.category || 4,
+    category: editData?.category || 2,
     propertyType: editData?.propertyType || 6,
     saleType: editData?.saleType || '',
     tenure: editData?.tenure || true,
@@ -254,8 +254,8 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
     description: editData?.description || '',
     price: editData?.price || '',
     phone: editData?.phone || user?.phone || '',
-    location: editData?.location || '',
-    city: editData?.city || '',
+    location: editData?.location || 'Johor',
+    city: editData?.city || 'Johor Bahru',
     lat: editData?.lat || '',
     lon: editData?.lon || '',
     address: editData?.address || '-',
@@ -653,8 +653,8 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
               type="number"
               value={formik.values.price}
               onChange={formik.handleChange}
-              label={formik.values.category == 2 ? 'Price' : 'Price/Month'}
-              placeholder={formik.values.category == 2 ? 'Asking Price' : 'Price/Month'}
+              label={formik.values.category == 2 ? 'Price' : 'Price/month'}
+              placeholder={formik.values.category == 2 ? 'Asking Price' : 'Price/month'}
               helperText={formik.touched.price && formik.errors.price}
               error={formik.touched.price && Boolean(formik.errors.price)}
             />

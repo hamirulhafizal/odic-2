@@ -131,7 +131,7 @@ const ProductInfo = ({ product }) => {
       <Grid item xs={12}>
         <Stack direction="row" alignItems="center" spacing={1}>
           <Typography variant="h2" color="primary">
-            {product.category == 1 ? ` RM ${product?.price} / month` : ` RM ${product?.price}`}
+            {product.category == 4 ? ` RM ${product?.price} / month` : ` RM ${product?.price}`}
           </Typography>
         </Stack>
         <Stack direction="row" alignItems="center">

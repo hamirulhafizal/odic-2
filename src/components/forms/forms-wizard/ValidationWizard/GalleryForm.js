@@ -15,6 +15,7 @@ import { useEffect, useState } from 'react';
 import { useTheme, styled } from '@mui/material/styles';
 import { Box } from '@mui/material';
 
+import imageCompression from 'browser-image-compression';
 const example = 'assets/images/e-commerce/landscape2.jpeg';
 
 const validationSchema = yup.object({
@@ -55,6 +56,24 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
   const [messageAlbum, setMessageAlbum] = useState('');
   const theme = useTheme();
 
+  const options = {
+    maxSizeMB: 1,
+    maxWidthOrHeight: 1920,
+    useWebWorker: true
+  };
+
+  const resizeFile = async (file) =>
+    await imageCompression(file, options).then((compressedBlob) => {
+      compressedBlob.lastModifiedDate = new Date();
+
+      const convertedBlobFile = new File([compressedBlob], file.name, {
+        type: file.type,
+        lastModified: Date.now()
+      });
+
+      return convertedBlobFile;
+    });
+
   const formik = useFormik({
     initialValues: {
       file: '',
@@ -67,8 +86,6 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
         setMessage('File Size is too large');
       } else {
         if (formFor == 'CreateListing' && imgE !== undefined && imgEAlbum !== undefined) {
-          console.log('imgE---->', imgE, imgEAlbum);
-
           setPaymentData({
             imgE: imgE,
             imgEAlbum: imgEAlbum
@@ -76,8 +93,6 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
 
           handleNext();
         } else if (formFor == 'UpdateListing' && (imgE !== null || imgEAlbum !== null)) {
-          console.log('masuk UpdateListing---->');
-
           setPaymentData({
             imgE: imgE,
             imgEAlbum: imgEAlbum
@@ -85,65 +100,72 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
 
           handleNext();
         } else {
-          console.log('masuk error---->');
-
           setErrorIndex(1);
         }
       }
     }
   });
 
-  const preViewImageCover = (e) => {
-    if (e.target?.files[0]?.size >= 2000000) {
-      setMessage('File Size is too large');
+  const preViewImageCover = async (e) => {
+    const image = await resizeFile(e.target.files[0]);
+
+    if (image?.size >= 1000000) {
+      setMessage('File Size is too largess');
     } else {
       setMessage('');
+      setEImg(image);
       const fileReader = new FileReader();
 
       fileReader.onload = () => {
         if (fileReader.readyState === 2) {
-          formik.setFieldValue('photo', e.target?.files[0]);
-          formik.setFieldValue('size', e.target?.files[0]?.size);
+          formik.setFieldValue('photo', image);
+          formik.setFieldValue('size', image?.size);
           setAvatarPreview(fileReader.result);
-          setEImg(e.target.files[0]);
         }
       };
-      fileReader.readAsDataURL(e.target.files[0]);
+      fileReader.readAsDataURL(image);
     }
   };
 
-  const preViewImageAlbum = (e) => {
+  const preViewImageAlbum = async (e) => {
     if (window.File && window.FileReader && window.FileList && window.Blob) {
       const files = e.target.files;
 
-      setEImgAlbum(files);
+      // setEImgAlbum(files);
 
       const output = document.querySelector('#result');
       output.innerHTML = '';
       var totalSize = [];
+
+      var dropTotal = 0;
+
       for (let i = 0; i < files.length; i++) {
-        totalSize.push(files[i].size);
-        const sum = totalSize.reduce((accumulator, value) => {
-          return accumulator + value;
-        }, 0);
+        const album = await resizeFile(files[i]);
 
-        if (sum >= 2000000) {
-          setMessageAlbum('Total image size is too large');
-        } else {
-          setMessageAlbum('');
-          if (!files[i].type.match('image')) continue;
-          const picReader = new FileReader();
-          picReader.addEventListener('load', function (event) {
-            const picFile = event.target;
+        totalSize.push(album);
 
-            const div = document.createElement('div');
-            div.innerHTML = ` <img style="width: 40vw;height: auto;"  src="${picFile.result}" title="${picFile.name}" /> `;
+        if (!files[i].type.match('image')) continue;
+        const picReader = new FileReader();
+        picReader.addEventListener('load', function (event) {
+          const picFile = event.target;
 
-            output.appendChild(div);
-          });
+          const div = document.createElement('div');
+          div.innerHTML = ` <img style="width: 40vw;height: auto;"  src="${picFile.result}" title="${picFile.name}" /> `;
 
-          picReader.readAsDataURL(files[i]);
-        }
+          output.appendChild(div);
+        });
+
+        picReader.readAsDataURL(album);
+      }
+      totalSize.forEach((element) => {
+        dropTotal += element.size;
+      });
+
+      if (dropTotal >= 2000000) {
+        setMessageAlbum('Total image size is too large, please upload total image below 1MB');
+      } else {
+        setMessageAlbum('');
+        setEImgAlbum(totalSize);
       }
     } else {
       alert('Your browser does not support File API');

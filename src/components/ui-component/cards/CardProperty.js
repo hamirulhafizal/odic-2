@@ -51,11 +51,11 @@ const CardProperty = ({ itemData, agentData }) => {
 
   const temArr = [];
 
-  const { photo_1, photo_2, photo_3, photo_4, photo_5, featureimage } = itemData;
+  const { photo_1, photo_2, photo_3, photo_4, photo_5, featureImage } = itemData;
 
   const { photo, phone, firstName, lastName, user_name } = agentData;
 
-  temArr.push(photo_1, photo_2, photo_3, photo_4, photo_5, featureimage);
+  temArr.push(featureImage, photo_1, photo_2, photo_3, photo_4, photo_5);
 
   var resultObject = Object.values(temArr).filter((item) => item != null || item !== undefined);
 
@@ -136,7 +136,7 @@ const CardProperty = ({ itemData, agentData }) => {
                 {itemData?.description}
               </Typography>
               <Typography variant="h3" color="secondary" sx={{ pt: 2 }}>
-                {itemData?.category == 1 ? ` RM ${itemData?.price} / month` : ` RM ${itemData?.price}`}
+                {itemData?.category == 4 ? ` RM ${itemData?.price} / month` : ` RM ${itemData?.price}`}
               </Typography>
 
               <Typography variant="h5" color="primary" sx={{ pt: 2, color: 'black' }}>
@@ -184,7 +184,7 @@ const CardProperty = ({ itemData, agentData }) => {
 
           <CardActions sx={{ p: 0, py: 2, pl: matchDownSM ? 0 : 2 }}>
             <Button startIcon={<WhatsApp />} variant="contained" size="medium" sx={{ backgroundColor: '#28933F', color: 'white' }}>
-              <a target="_blank" href={`https://wasap.my/${phone}/${itemData.title}`} rel="noopener noreferrer">
+              <a target="_blank" href={`https://wasap.my/6${phone}/${itemData.title}`} rel="noopener noreferrer">
                 Whatsapp
               </a>
             </Button>
