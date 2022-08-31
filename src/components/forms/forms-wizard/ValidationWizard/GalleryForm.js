@@ -83,7 +83,7 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
 
     onSubmit: (values) => {
       if (values.size >= 2000000) {
-        setMessage('File Size is too large');
+        setMessage('File size is too large');
       } else {
         if (formFor == 'CreateListing' && imgE !== undefined && imgEAlbum !== undefined) {
           setPaymentData({
