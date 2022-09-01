@@ -230,7 +230,7 @@ const ProductInfo = ({ product }) => {
                         size="medium"
                         sx={{ backgroundColor: '#28933F', color: 'white' }}
                       >
-                        <a target="_blank" href={`https://wasap.my/${agentData?.phone}/${product.title}`} rel="noopener noreferrer">
+                        <a target="_blank" href={`https://wasap.my/6${agentData?.phone}/${product.title}`} rel="noopener noreferrer">
                           Whatsapp
                         </a>
                       </Button>

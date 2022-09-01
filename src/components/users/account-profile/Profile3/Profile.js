@@ -52,11 +52,8 @@ const Profile = ({ ...others }) => {
         description:
           user?.description ||
           `Nama saya ${user?.firstName} ${user?.lastName}.
-          
           Saya merupakan agent sah aktif One Dream Property.
-          
           Saya sudah bantu lebih 500 orang pembeli dan pelabur hartanah.
-          
           Ingin saya bantu anda? Hubungi saya untuk bimbingan.`,
         facebook: user?.facebook || '',
         instagram: user?.instagram || '',

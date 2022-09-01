@@ -32,6 +32,7 @@ const HeaderAnimationImage = styled('img')({
 const HeaderPage = () => {
   const theme = useTheme();
 
+  const agentLocal = JSON.parse(localStorage.getItem('agent'));
   return (
     <Container>
       <Grid
@@ -105,28 +106,38 @@ const HeaderPage = () => {
                 </Typography>
               </motion.div>
             </Grid>
-            <Grid item xs={12} sx={{ my: 3.25 }}>
-              <motion.div
-                initial={{ opacity: 0, translateY: 550 }}
-                animate={{ opacity: 1, translateY: 0 }}
-                transition={{
-                  type: 'spring',
-                  stiffness: 150,
-                  damping: 30,
-                  delay: 0.4
-                }}
-              >
-                {/* <Grid container spacing={2} sx={{ justifyContent: { xs: 'center', md: 'center' } }}>
-                  <Grid item>
-                    <AnimateButton>
-                      <Button sx={{ color: 'white' }} component={Link} href="/listing/" size="large" variant="contained" color="secondary">
-                        View Home List
-                      </Button>
-                    </AnimateButton>
+
+            {agentLocal && (
+              <Grid item xs={12} sx={{ my: 3.25 }}>
+                <motion.div
+                  initial={{ opacity: 0, translateY: 550 }}
+                  animate={{ opacity: 1, translateY: 0 }}
+                  transition={{
+                    type: 'spring',
+                    stiffness: 150,
+                    damping: 30,
+                    delay: 0.4
+                  }}
+                >
+                  <Grid container spacing={2} sx={{ justifyContent: { xs: 'center', md: 'center' } }}>
+                    <Grid item>
+                      <AnimateButton>
+                        <Button
+                          sx={{ color: 'white' }}
+                          component={Link}
+                          href={`/${agentLocal?.user_name}`}
+                          size="large"
+                          variant="contained"
+                          color="secondary"
+                        >
+                          View Home List
+                        </Button>
+                      </AnimateButton>
+                    </Grid>
                   </Grid>
-                </Grid> */}
-              </motion.div>
-            </Grid>
+                </motion.div>
+              </Grid>
+            )}
           </Grid>
         </Grid>
       </Grid>

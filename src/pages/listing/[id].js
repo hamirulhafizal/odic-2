@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import Link from 'Link';
 
 // material-ui
-import { Box, Grid, Stack, Tab, Tabs, Typography, useMediaQuery } from '@mui/material';
+import { Box, Grid, Stack, Tab, Tabs, Typography, useMediaQuery, Breadcrumbs, Button } from '@mui/material';
 
 // project imports
 import ProductImages from 'components/application/e-commerce/ProductDetails/ProductImages';
@@ -122,6 +122,30 @@ const ProductDetails = () => {
         spacing={gridSpacing}
       >
         <Grid item xs={11} lg={10}>
+          <Box sx={{ pb: 2 }}>
+            <Breadcrumbs separator="›" aria-label="breadcrumbs">
+              <Button
+                // variant="plain"
+                active
+                sx={{
+                  color: 'black',
+
+                  ':hover': {
+                    backgroundColor: 'white'
+                  }
+                }}
+                onClick={() => {
+                  router.push(`/${product?.user_name}`);
+                }}
+              >
+                <Typography fontSize="inherit" href={`/${product?.user_name}`}>
+                  {product?.user_name}
+                </Typography>
+              </Button>
+              <Typography fontSize="inherit">Listing {product?.id}</Typography>
+            </Breadcrumbs>
+          </Box>
+
           <MainCard sx={{ borderColor: '#b5a837' }}>
             {product && (
               <Grid container spacing={matchDownSM ? 1 : 5}>
