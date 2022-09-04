@@ -166,9 +166,9 @@ export default function TypeTabs({ username, agentData }) {
           {...a11yProps(2)}
         />
       </Tabs>
-      {/* <Box textAlign="right" sx={{ my: 3 }}>
+      <Box textAlign="right" sx={{ mt: 3, mb: 4 }}>
         <FilterByState />
-      </Box> */}
+      </Box>
       <TabPanel value={value} index={0}>
         {agentData?.inventories
           ?.slice(0)

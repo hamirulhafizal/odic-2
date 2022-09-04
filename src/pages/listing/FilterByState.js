@@ -65,7 +65,7 @@ export default function FilterByState(param) {
 
   return (
     <div>
-      <Button
+      {/* <Button
         variant="text"
         id="basic-button"
         aria-controls={open ? 'basic-menu' : undefined}
@@ -87,7 +87,7 @@ export default function FilterByState(param) {
         endIcon={<TuneIcon />}
       >
         Filter
-      </Button>
+      </Button> */}
 
       <Menu
         id="basic-menu"
