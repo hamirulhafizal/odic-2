@@ -85,11 +85,15 @@ const ProductDetails = () => {
   const { relatedProducts } = useSelector((state) => state.product);
 
   useEffect(() => {
-    setProduct(productState.product);
-    if (productState.product && productState.product.id) {
+    setProduct(productState?.product);
+    if (productState?.product && productState?.product?.id) {
       if (router.query.id === 'default') {
         router.push(`/app/e-commerce/product-details/${productState.product.id}`);
       }
+    }
+
+    if (productState?.product == null) {
+      router.push('/not-found');
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
