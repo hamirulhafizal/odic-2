@@ -32,8 +32,11 @@ const RelatedProducts = ({ id }) => {
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
   const { relatedProducts } = useSelector((state) => state.product);
 
+  const relatedProductsCopy = [...relatedProducts];
+
   useEffect(() => {
-    setRelated(relatedProducts);
+    setRelated(relatedProductsCopy?.splice(0, 5));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [relatedProducts]);
 
   let noItems = 3;
@@ -41,8 +44,6 @@ const RelatedProducts = ({ id }) => {
   noItems = matchDownMD ? 2 : noItems;
   noItems = matchDownLG ? 3 : noItems;
   noItems = matchDownXl ? 4 : noItems;
-
-  let productResult = <></>;
 
   return (
     <>

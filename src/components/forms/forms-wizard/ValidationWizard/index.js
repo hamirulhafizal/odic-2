@@ -244,11 +244,6 @@ const ValidationWizard = ({ updateProperty, formFor }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeStep, shippingData, imageProperty, user, updateProperty, editData, formFor, previewData, handleNext, handleBack]);
 
-  // console.log('lisitngId', lisitngId);
-  // console.log('updateProperty', updateProperty);
-  // console.log('user----->', user);
-  // console.log('formFor', formFor);
-
   return (
     <MainCard title={formFor == 'CreateListing' ? 'Cover Image' : formFor == 'UpdateListing' ? 'Update Listing' : null}>
       <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5, overflow: matchDownSM ? 'scroll' : 'unset' }}>
@@ -288,34 +283,21 @@ const ValidationWizard = ({ updateProperty, formFor }) => {
             <Typography variant="h5" gutterBottom>
               Thank you for your Submit
             </Typography>
-            <Typography variant="subtitle1">Your Lisiting Property is Live. Share to your waiting clients using this </Typography>
-
-            {/* <Link href={`/listing/${lisitngId}`}>link</Link> */}
-
-            {/* <Button
-              variant="text"
-              sx={{ color: 'black' }}
-              onClick={() => {
-                router.push(`/listing/${lisitngId}`);
-              }}
-            >
-              link
-            </Button> */}
+            <Typography variant="subtitle1">Your Lisiting property is Live. Share to your waiting clients using this </Typography>
 
             <Link
               href={`/listing/${lisitngId}`}
               underline="hover"
               color="default"
-              // onClick={() => {
-              //   router.push(`/listing/${lisitngId}`);
-              // }}
+              variant="h6"
               sx={{
                 overflow: 'hidden',
                 display: 'block',
                 textOverflow: 'ellipsis',
                 whiteSpace: 'nowrap',
                 ':hover': { color: 'primary.main' },
-                cursor: 'pointer'
+                cursor: 'pointer',
+                fontWeight: 'bold'
               }}
             >
               LINK

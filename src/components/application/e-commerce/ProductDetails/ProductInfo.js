@@ -43,6 +43,7 @@ import YouTubeIcon from '@mui/icons-material/YouTube';
 
 import moment from 'moment';
 import { getRelatedProducts } from 'store/slices/product';
+import { numberWithCommas } from 'utils/helper';
 
 const defaultImage = 'https://onedream.dynamicdigital.guru/media/profile_photo/avatar.png';
 
@@ -110,13 +111,13 @@ const ProductInfo = ({ product }) => {
 
   return (
     <Grid container spacing={2}>
-      <Grid item xs={12}>
+      <Grid item xs={12} sx={{ mt: 2 }}>
         <Stack direction="row" alignItems="center" justifyContent="space-between">
           <Grid container spacing={1}>
             <Grid item xs={12}>
               <Chip
                 size="small"
-                label={product.isStock ? 'Active' : 'Active'}
+                label={product.category == 4 ? 'For Rent' : 'For Sale'}
                 chipcolor={product.isStock ? 'success' : 'success'}
                 sx={{ borderRadius: '4px', textTransform: 'capitalize' }}
               />
@@ -131,7 +132,7 @@ const ProductInfo = ({ product }) => {
       <Grid item xs={12}>
         <Stack direction="row" alignItems="center" spacing={1}>
           <Typography variant="h2" color="primary">
-            {product.category == 4 ? ` RM ${product?.price} / month` : ` RM ${product?.price}`}
+            RM {numberWithCommas(product?.price)} {product?.category == 4 && '/ month'}
           </Typography>
         </Stack>
         <Stack direction="row" alignItems="center">

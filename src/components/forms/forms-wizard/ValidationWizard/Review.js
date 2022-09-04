@@ -5,6 +5,7 @@ import { CardMedia, Grid, List, ListItem, ListItemText, TextareaAutosize, Typogr
 import { styled } from '@mui/system';
 import { useTheme } from '@mui/styles';
 import { Box } from '@mui/material';
+import { numberWithCommas } from 'utils/helper';
 
 // ==============================|| FORM WIZARD - VALIDATION  ||============================== //
 
@@ -38,15 +39,12 @@ export default function Review({ shippingData, imageProperty, previewData, editD
     category,
     propertyType,
     propertyTitle,
-    saleType,
     tenure,
     furnishing,
-    carpark,
     amenities,
     title,
     description,
     price,
-    rentalDeposit,
     phone,
     location,
     city,
@@ -64,6 +62,9 @@ export default function Review({ shippingData, imageProperty, previewData, editD
     photo_9,
     photo_10,
     video
+    // rentalDeposit,
+    // carpark,
+    // saleType
   } = editData != null ? editData : previewData;
 
   const preViewImage = (item) => {
@@ -88,7 +89,7 @@ export default function Review({ shippingData, imageProperty, previewData, editD
   return (
     <>
       <Typography variant="h3" gutterBottom sx={{ mb: 2 }}>
-        Review Property Details
+        Review Property Detail
       </Typography>
 
       <List disablePadding>
@@ -99,15 +100,18 @@ export default function Review({ shippingData, imageProperty, previewData, editD
             </ListItem>
 
             <ListItem sx={{ py: 1, px: 0 }}>
-              {category == 2 && <ListItemText primary={'Category'} secondary={'Sales'} />}
-              {category == 1 && <ListItemText primary={'Category'} secondary={'Rent'} />}
+              {category == 2 && <ListItemText primary={'Category'} secondary={'Sale'} />}
+              {category == 4 && <ListItemText primary={'Category'} secondary={'Rent'} />}
             </ListItem>
 
-            <ListItem sx={{ py: 1, px: 0, flexWrap: 'wrap' }} key={product.title}>
-              <ListItemText primary={'Price'} secondary={category == 2 ? `RM ${product.price}` : `RM ${product.price} / month`} />
+            <ListItem sx={{ py: 1, px: 0, flexWrap: 'wrap' }} key={product?.title}>
+              <ListItemText
+                primary={'Price'}
+                secondary={category == 2 ? `RM ${numberWithCommas(product?.price)}` : `RM ${product?.price} / month`}
+              />
             </ListItem>
 
-            <ListItem sx={{ py: 1, px: 0, flexWrap: 'wrap' }} key={product.title}>
+            <ListItem sx={{ py: 1, px: 0, flexWrap: 'wrap' }} key={product?.title}>
               <ListItemText primary={'Description'} />
 
               <TextareaAutosize

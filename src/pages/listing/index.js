@@ -352,9 +352,12 @@ const Listing = () => {
   }, [paging]);
 
   const filterByCategory = (param) => {
-    return rows?.filter((item) => {
-      return item.category == param;
-    });
+    return rows
+      ?.slice(0)
+      .reverse()
+      .filter((item) => {
+        return item.category == param;
+      });
   };
 
   const handleSearch = (event) => {

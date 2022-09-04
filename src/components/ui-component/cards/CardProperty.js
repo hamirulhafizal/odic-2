@@ -34,6 +34,7 @@ import WhatsApp from '@mui/icons-material/WhatsApp';
 
 import { useRouter } from 'next/router';
 
+import { numberWithCommas } from 'utils/helper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Mousewheel, Keyboard } from 'swiper';
 
@@ -136,7 +137,7 @@ const CardProperty = ({ itemData, agentData }) => {
                 {itemData?.description}
               </Typography>
               <Typography variant="h3" color="secondary" sx={{ pt: 2 }}>
-                {itemData?.category == 4 ? ` RM ${itemData?.price} / month` : ` RM ${itemData?.price}`}
+                RM {numberWithCommas(itemData?.price)} {itemData?.category == 4 && '/ month'}
               </Typography>
 
               <Typography variant="h5" color="primary" sx={{ pt: 2, color: 'black' }}>

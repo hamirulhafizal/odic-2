@@ -15,6 +15,7 @@ import HotelTwoToneIcon from '@mui/icons-material/HotelTwoTone';
 import { useRouter } from 'next/router';
 import useAuth from 'hooks/useAuth';
 
+import FilterByState from '../../../../pages/listing/FilterByState';
 // tab content customize
 
 function LinkTab(props) {
@@ -79,7 +80,7 @@ export default function TypeTabs({ username, agentData }) {
   };
 
   const filterByCategory = (param) => {
-    return agentData?.inventories.filter((item) => {
+    return agentData?.inventories?.reverse().filter((item) => {
       return item.category == param;
     });
   };
@@ -92,7 +93,6 @@ export default function TypeTabs({ username, agentData }) {
         textColor="secondary"
         indicatorColor="secondary"
         sx={{
-          mb: 6,
           '& a': {
             minHeight: 'auto',
             minWidth: 10,
@@ -166,10 +166,16 @@ export default function TypeTabs({ username, agentData }) {
           {...a11yProps(2)}
         />
       </Tabs>
+      {/* <Box textAlign="right" sx={{ my: 3 }}>
+        <FilterByState />
+      </Box> */}
       <TabPanel value={value} index={0}>
-        {agentData?.inventories?.map((element, index) => {
-          return <CardProperty agentData={agentData} itemData={element} key={index} />;
-        })}
+        {agentData?.inventories
+          ?.slice(0)
+          .reverse()
+          .map((element, index) => {
+            return <CardProperty agentData={agentData} itemData={element} key={index} />;
+          })}
         {agentData?.inventories?.length == 0 && (
           <Typography variant="h4" sx={{ pb: 2, textAlign: 'center' }}>
             No Property Found

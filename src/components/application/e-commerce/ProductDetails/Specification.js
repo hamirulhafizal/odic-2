@@ -94,22 +94,29 @@ const Specification = ({ product }) => {
                 </TableCell>
                 <TableCell>{parseInt(productData?.bathrooms)}</TableCell>
               </TableRow>
-              <TableRow sx={{ '& td, & th': { border: 0 } }}>
-                <TableCell component="th" scope="row">
-                  <Typography variant="caption" sx={{ fontWeight: 500 }}>
-                    Carpark
-                  </Typography>
-                </TableCell>
-                <TableCell>{productData?.carpark}</TableCell>
-              </TableRow>
-              <TableRow sx={{ '& td, & th': { border: 0 } }}>
-                <TableCell component="th" scope="row">
-                  <Typography variant="caption" sx={{ fontWeight: 500 }}>
-                    Floor
-                  </Typography>
-                </TableCell>
-                <TableCell>{productData?.floorRange}</TableCell>
-              </TableRow>
+
+              {productData?.propertyTitle !== '-' && productData?.category == 2 && (
+                <TableRow sx={{ '& td, & th': { border: 0 } }}>
+                  <TableCell component="th" scope="row">
+                    <Typography variant="caption" sx={{ fontWeight: 500 }}>
+                      Property Title
+                    </Typography>
+                  </TableCell>
+                  <TableCell>{productData?.propertyTitle}</TableCell>
+                </TableRow>
+              )}
+
+              {productData?.category == 2 && (
+                <TableRow sx={{ '& td, & th': { border: 0 } }}>
+                  <TableCell component="th" scope="row">
+                    <Typography variant="caption" sx={{ fontWeight: 500 }}>
+                      Tenure
+                    </Typography>
+                  </TableCell>
+                  <TableCell>{productData?.tenure ? 'Leasehold' : 'Freehold'}</TableCell>
+                </TableRow>
+              )}
+
               <TableRow sx={{ '& td, & th': { border: 0 } }}>
                 <TableCell component="th" scope="row">
                   <Typography variant="caption" sx={{ fontWeight: 500 }}>
@@ -118,6 +125,7 @@ const Specification = ({ product }) => {
                 </TableCell>
                 <TableCell>{propertyType(productData?.propertyType)}</TableCell>
               </TableRow>
+
               <TableRow sx={{ '& td, & th': { border: 0 } }}>
                 <TableCell component="th" scope="row">
                   <Typography variant="caption" sx={{ fontWeight: 500 }}>
@@ -126,69 +134,77 @@ const Specification = ({ product }) => {
                 </TableCell>
                 <TableCell>{furnishing(productData?.furnishing)}</TableCell>
               </TableRow>
-              {/* <TableRow sx={{ '& td, & th': { border: 0 } }}>
-                <TableCell component="th" scope="row">
-                  <Typography variant="caption" sx={{ fontWeight: 500 }}>
-                    Address
-                  </Typography>
-                </TableCell>
-                <TableCell>{productData?.address}</TableCell>
-              </TableRow> */}
-              <TableRow sx={{ '& td, & th': { border: 0 }, display: matchDownSM ? 'none' : '' }}>
-                <TableCell sx={{ display: 'block' }} component="th" scope="row">
-                  <Typography variant="caption" sx={{ fontWeight: 500 }}>
-                    Descriptions
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <TextareaAutosize
-                    inputProps={{ readOnly: true }}
-                    label="Description"
-                    multiline
-                    rows={5}
-                    value={productData?.description}
-                    disableUnderline
-                    disabled
-                    readOnly
-                    aria-label="empty textarea"
-                    style={{
-                      width: '100%',
-                      cursor: 'default',
-                      border: '0px',
-                      resize: 'none',
-                      fontFamily: 'inherit',
-                      overflow: 'unset',
-                      cursor: 'default',
-                      backgroundColor: 'white'
-                    }}
-                  />
-                </TableCell>
-              </TableRow>
+
+              {productData?.otherInfo !== '-' && productData?.otherInfo !== null && (
+                <TableRow sx={{ '& td, & th': { border: 0 } }}>
+                  <TableCell component="th" scope="row">
+                    <Typography variant="caption" sx={{ fontWeight: 500 }}>
+                      Other Info
+                    </Typography>
+                  </TableCell>
+                  <TableCell>{productData?.otherInfo}</TableCell>
+                </TableRow>
+              )}
+
+              {productData?.description !== '' && (
+                <TableRow sx={{ '& td, & th': { border: 0 }, display: matchDownSM ? 'none' : '' }}>
+                  <TableCell sx={{ display: 'block' }} component="th" scope="row">
+                    <Typography variant="caption" sx={{ fontWeight: 500 }}>
+                      Description
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <TextareaAutosize
+                      inputProps={{ readOnly: true }}
+                      label="Description"
+                      multiline
+                      rows={5}
+                      value={productData?.description}
+                      disableUnderline
+                      disabled
+                      readOnly
+                      aria-label="empty textarea"
+                      style={{
+                        width: '100%',
+                        cursor: 'default',
+                        border: '0px',
+                        resize: 'none',
+                        fontFamily: 'inherit',
+                        overflow: 'unset',
+                        cursor: 'default',
+                        backgroundColor: 'white'
+                      }}
+                    />
+                  </TableCell>
+                </TableRow>
+              )}
             </TableBody>
           </Table>
 
-          <Stack sx={{ padding: '6px 16px ', width: '100%', display: matchDownSM ? 'flex' : 'none' }}>
-            <Typography variant="caption" sx={{ fontWeight: 500 }}>
-              Description
-            </Typography>
-            <TextareaAutosize
-              InputProps={{ readOnly: true, disableUnderline: true }}
-              label="Description"
-              multiline
-              rows={5}
-              value={productData?.description}
-              disable
-              aria-label="empty textarea"
-              style={{
-                width: '100%',
-                cursor: 'default',
-                border: '0px',
-                fontFamily: 'inherit',
-                overflow: 'unset',
-                resize: 'none'
-              }}
-            />
-          </Stack>
+          {productData?.description !== '' && (
+            <Stack sx={{ padding: '6px 16px ', width: '100%', display: matchDownSM ? 'flex' : 'none' }}>
+              <Typography variant="caption" sx={{ fontWeight: 500 }}>
+                Description
+              </Typography>
+              <TextareaAutosize
+                InputProps={{ readOnly: true, disableUnderline: true }}
+                label="Description"
+                multiline
+                rows={5}
+                value={productData?.description}
+                disable
+                aria-label="empty textarea"
+                style={{
+                  width: '100%',
+                  cursor: 'default',
+                  border: '0px',
+                  fontFamily: 'inherit',
+                  overflow: 'unset',
+                  resize: 'none'
+                }}
+              />
+            </Stack>
+          )}
         </TableContainer>
       </Grid>
 

@@ -187,3 +187,9 @@
 .swiper-pagination-bullet-active {
   background-color: #b5a837 !important;
 }
+
+textarea:focus {
+  outline: 1px solid #b5a837;
+  border-color: #b5a837 !important;
+  border: '5px solid  #b5a837';
+}

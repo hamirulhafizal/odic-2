@@ -245,7 +245,10 @@ function AgentProfile({ userData }) {
                                 agent?.linkedin != null ||
                                 agent?.youtube != null ? (
                                   <Stack sx={{ pt: 2 }} justifyContent={'center'} direction="row">
-                                    <Stack direction="row" sx={{ width: { xs: '70%', lg: '60%' }, justifyContent: 'space-evenly' }}>
+                                    <Stack
+                                      direction="row"
+                                      sx={{ width: { xs: '70%', lg: '60%' }, justifyContent: 'space-evenly', alignItems: 'center' }}
+                                    >
                                       {agent?.instagram && (
                                         <Link href={`${agent?.instagram}`} target="_blank" underline="hover">
                                           <InstagramIcon color="secondary" />
