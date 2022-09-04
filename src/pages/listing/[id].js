@@ -68,7 +68,6 @@ function a11yProps(index) {
 const ProductDetails = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const cart = useSelector((state) => state.cart);
 
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down('sm'));
@@ -92,21 +91,11 @@ const ProductDetails = () => {
       }
     }
 
-    if (productState?.product == null) {
-      router.push('/not-found');
-    }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [productState]);
 
   useEffect(() => {
-    // getProduct();
     dispatch(getProductById(router.query.id));
-
-    // clear cart if complete order
-    if (cart.checkout.step > 2) {
-      dispatch(resetCart());
-    }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -129,7 +118,6 @@ const ProductDetails = () => {
           <Box sx={{ pb: 2 }}>
             <Breadcrumbs separator="›" aria-label="breadcrumbs">
               <Button
-                // variant="plain"
                 active
                 sx={{
                   color: 'black',
@@ -169,16 +157,6 @@ const ProductDetails = () => {
                     variant="scrollable"
                   >
                     <Tab component={Link} href="#" label="Property Detail" {...a11yProps(0)} />
-                    {/* <Tab
-                      component={Link}
-                      href="#"
-                      label={
-                        <Stack direction="row" alignItems="center">
-                          Reviews <Chip label={String(product.salePrice)} size="small" chipcolor="secondary" sx={{ ml: 1.5 }} />
-                        </Stack>
-                      }
-                      {...a11yProps(1)}
-                    /> */}
                   </Tabs>
                   <TabPanel value={value} index={0}>
                     <ProductDescription product={product} />

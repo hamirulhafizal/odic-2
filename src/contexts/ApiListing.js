@@ -31,9 +31,16 @@ const getAllListing = async (user_name) => {
 };
 
 const getListingById = async (id) => {
-  const respond = await axios.get(`${BACKEND_PATH}/api/v1/inventory/${id}`).then((res) => {
-    return res.data;
-  });
+  const respond = await axios
+    .get(`${BACKEND_PATH}/api/v1/inventory/${id}`)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      const stringErr = JSON.stringify(err);
+      const error = JSON.parse(stringErr);
+      if (error?.status == 404) location?.replace('/not-found');
+    });
 
   return respond;
 };
