@@ -281,11 +281,10 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
     bathrooms: editData?.bathrooms || '1',
     address: editData?.address || '-',
     otherInfo: editData?.otherInfo || '-',
-    propertyTitle: editData?.propertyTitle || 'Land',
     size: editData?.size || '',
     carpark: editData?.carpark || '0',
     zipcode: editData?.zipcode || '-'
-
+    // propertyTitle: editData?.propertyTitle || 'Land',
     // state: '-'
     // saleType: editData?.saleType || ''
     // floorRange: editData?.floorRange || '1'
@@ -363,9 +362,9 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
         lon,
         otherInfo,
         size,
-        propertyTitle,
         zipcode,
         carpark
+        // propertyTitle
         // floorRange,
         // saleType
         // rentalDeposit,
@@ -392,13 +391,11 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
         lon: lon,
         otherInfo: otherInfo,
         size: size,
-        propertyTitle: propertyTitle,
         zipcode: zipcode,
         carpark: carpark
-
+        // propertyTitle: propertyTitle
         // saleType: saleType
         // floorRange: floorRange
-        // propertyTitle: propertyTitle,
         // rentalDeposit: rentalDeposit,
       });
 
@@ -429,19 +426,6 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
 
           {formik.values.category == 2 && (
             <>
-              <Grid item xs={12} sm={12}>
-                <FormControlSelect
-                  currencies={propertyTitles}
-                  id="propertyTitle"
-                  name="propertyTitle"
-                  captionLabel="Property Title"
-                  value={formik.values.propertyTitle}
-                  onChange={formik.handleChange}
-                  error={formik.touched.propertyTitle && Boolean(formik.errors.propertyTitle)}
-                  helperText={formik.touched.propertyTitle && formik.errors.propertyTitle}
-                  fullWidth
-                />
-              </Grid>
               <Grid item xs={12} sm={12}>
                 <FormControlSelect
                   currencies={propertyTypes}
@@ -584,46 +568,6 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
               fullWidth
             />
           </Grid>
-          {/* <Grid hidden item xs={12}>
-            <TextField
-              hidden
-              id="address"
-              name="address"
-              label="Address"
-              value={formik.values.address}
-              onChange={formik.handleChange}
-              error={formik.touched.address && Boolean(formik.errors.address)}
-              helperText={formik.touched.address && formik.errors.address}
-              fullWidth
-            />
-          </Grid> */}
-          {/* <Grid hidden item xs={12}>
-            <TextField
-              hidden
-              id="floorRange"
-              name="floorRange"
-              label="Floor Range"
-              value={formik.values.floorRange}
-              onChange={formik.handleChange}
-              error={formik.touched.floorRange && Boolean(formik.errors.floorRange)}
-              helperText={formik.touched.floorRange && formik.errors.floorRange}
-              fullWidth
-            />
-          </Grid> */}
-          {/* <Grid item xs={12}>
-            <TextField
-              id="map"
-              name="map"
-              label="Map*"
-              type="text"
-              placeholder="Adress"
-              value={formik.values.map}
-              onChange={formik.handleChange}
-              error={formik.touched.map && Boolean(formik.errors.map)}
-              helperText={formik.touched.map && formik.errors.map}
-              fullWidth
-            />
-          </Grid> */}
           <Grid item xs={12}>
             <TextField
               required
@@ -747,6 +691,59 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
               helperText={formik.touched.video && formik.errors.video}
             />
           </Grid>
+          {/* <Grid item xs={12} sm={12}>
+                <FormControlSelect
+                  currencies={propertyTitles}
+                  id="propertyTitle"
+                  name="propertyTitle"
+                  captionLabel="Property Title"
+                  value={formik.values.propertyTitle}
+                  onChange={formik.handleChange}
+                  error={formik.touched.propertyTitle && Boolean(formik.errors.propertyTitle)}
+                  helperText={formik.touched.propertyTitle && formik.errors.propertyTitle}
+                  fullWidth
+                />
+              </Grid> */}
+          {/* <Grid hidden item xs={12}>
+            <TextField
+              hidden
+              id="address"
+              name="address"
+              label="Address"
+              value={formik.values.address}
+              onChange={formik.handleChange}
+              error={formik.touched.address && Boolean(formik.errors.address)}
+              helperText={formik.touched.address && formik.errors.address}
+              fullWidth
+            />
+          </Grid> */}
+          {/* <Grid hidden item xs={12}>
+            <TextField
+              hidden
+              id="floorRange"
+              name="floorRange"
+              label="Floor Range"
+              value={formik.values.floorRange}
+              onChange={formik.handleChange}
+              error={formik.touched.floorRange && Boolean(formik.errors.floorRange)}
+              helperText={formik.touched.floorRange && formik.errors.floorRange}
+              fullWidth
+            />
+          </Grid> */}
+          {/* <Grid item xs={12}>
+            <TextField
+              id="map"
+              name="map"
+              label="Map*"
+              type="text"
+              placeholder="Adress"
+              value={formik.values.map}
+              onChange={formik.handleChange}
+              error={formik.touched.map && Boolean(formik.errors.map)}
+              helperText={formik.touched.map && formik.errors.map}
+              fullWidth
+            />
+          </Grid> */}
           <Grid item xs={12}>
             <Stack direction="row" justifyContent="flex-end">
               <AnimateButton>

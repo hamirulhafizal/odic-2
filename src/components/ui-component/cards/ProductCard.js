@@ -17,12 +17,13 @@ import { openSnackbar } from 'store/slices/snackbar';
 
 // assets
 import ShoppingCartTwoToneIcon from '@mui/icons-material/ShoppingCartTwoTone';
+import { numberWithCommas } from 'utils/helper';
 
 const prodImage = '/assets/images/e-commerce';
 
 // ==============================|| PRODUCT CARD ||============================== //
 
-const ProductCard = ({ id, color, title, image, description, offerPrice, salePrice, rating }) => {
+const ProductCard = ({ id, color, title, image, description, offerPrice, salePrice, rating, category }) => {
   const dispatch = useDispatch();
 
   // const prodProfile = image && `${prodImage}/${image}`;
@@ -100,7 +101,7 @@ const ProductCard = ({ id, color, title, image, description, offerPrice, salePri
                   <Grid container spacing={1}>
                     <Grid item>
                       <Typography variant="h4" color="primary">
-                        RM {offerPrice} / month
+                        RM {numberWithCommas(offerPrice)} {category == 4 && '/ month'}
                       </Typography>
                     </Grid>
                   </Grid>

@@ -38,7 +38,6 @@ export default function Review({ shippingData, imageProperty, previewData, editD
   const {
     category,
     propertyType,
-    propertyTitle,
     tenure,
     furnishing,
     amenities,
@@ -82,9 +81,6 @@ export default function Review({ shippingData, imageProperty, previewData, editD
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [imgE, imageProperty, previewData, editData]);
-
-  // console.log('editData--->', editData);
-  // console.log('previewData--->', previewData);
 
   return (
     <>

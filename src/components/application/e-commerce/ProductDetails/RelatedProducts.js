@@ -81,12 +81,12 @@ const RelatedProducts = ({ id }) => {
             <SwiperSlide key={index}>
               <ProductCard
                 key={index}
-                id={product.id}
+                id={product?.id}
                 image={product?.featureImage}
                 title={product?.title}
-                offerPrice={product.price}
-                salePrice={product.price}
-                // rating={product.rating}
+                offerPrice={product?.price}
+                salePrice={product?.price}
+                category={product?.category}
               />
             </SwiperSlide>
           </Box>

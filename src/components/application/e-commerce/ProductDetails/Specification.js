@@ -95,17 +95,6 @@ const Specification = ({ product }) => {
                 <TableCell>{parseInt(productData?.bathrooms)}</TableCell>
               </TableRow>
 
-              {productData?.propertyTitle !== '-' && productData?.category == 2 && (
-                <TableRow sx={{ '& td, & th': { border: 0 } }}>
-                  <TableCell component="th" scope="row">
-                    <Typography variant="caption" sx={{ fontWeight: 500 }}>
-                      Property Title
-                    </Typography>
-                  </TableCell>
-                  <TableCell>{productData?.propertyTitle}</TableCell>
-                </TableRow>
-              )}
-
               {productData?.category == 2 && (
                 <TableRow sx={{ '& td, & th': { border: 0 } }}>
                   <TableCell component="th" scope="row">
