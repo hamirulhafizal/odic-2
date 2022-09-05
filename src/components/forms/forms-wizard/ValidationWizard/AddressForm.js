@@ -423,23 +423,22 @@ const AddressForm = ({ shippingData, setShippingData, handleNext, setErrorIndex,
               fullWidth
             />
           </Grid>
+          <Grid item xs={12} sm={12}>
+            <FormControlSelect
+              currencies={propertyTypes}
+              id="propertyType"
+              name="propertyType"
+              captionLabel="Property Type"
+              value={formik.values.propertyType}
+              onChange={formik.handleChange}
+              error={formik.touched.propertyType && Boolean(formik.errors.propertyType)}
+              helperText={formik.touched.propertyType && formik.errors.propertyType}
+              fullWidth
+            />
+          </Grid>
 
           {formik.values.category == 2 && (
             <>
-              <Grid item xs={12} sm={12}>
-                <FormControlSelect
-                  currencies={propertyTypes}
-                  id="propertyType"
-                  name="propertyType"
-                  captionLabel="Property Type"
-                  value={formik.values.propertyType}
-                  onChange={formik.handleChange}
-                  error={formik.touched.propertyType && Boolean(formik.errors.propertyType)}
-                  helperText={formik.touched.propertyType && formik.errors.propertyType}
-                  fullWidth
-                />
-              </Grid>
-
               <Grid item xs={12} sm={12}>
                 <FormControlSelect
                   currencies={tenures}
