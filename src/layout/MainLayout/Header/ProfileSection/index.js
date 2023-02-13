@@ -224,7 +224,7 @@ const ProfileSection = () => {
                             }
                           }}
                         >
-                          <ListItemButton
+                          {/* <ListItemButton
                             sx={{
                               borderRadius: `${borderRadius}px`,
                               backgroundColor: user?.phone ? '#44b700' : '',
@@ -249,7 +249,7 @@ const ProfileSection = () => {
                               <AccountCircleOutlinedIcon stroke={1.5} size="1.3rem" />
                             </ListItemIcon>
                             <ListItemText primary={<Typography>Live Profile</Typography>} />
-                          </ListItemButton>
+                          </ListItemButton> */}
                           <ListItemButton
                             sx={{
                               borderRadius: `${borderRadius}px`,
