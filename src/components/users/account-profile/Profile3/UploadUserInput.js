@@ -11,7 +11,7 @@ const Input = styled('input')({
   display: 'none'
 });
 
-const UploadUserInput = () => {
+const UploadUserInput = ({ htmlFor }) => {
   const { updateProfile, user } = useAuth();
   const [photo, setFieldImgValue] = useState(undefined);
   const [message, setMessage] = useState('');
@@ -62,7 +62,21 @@ const UploadUserInput = () => {
     <>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Avatar alt={user?.nickname} src={avatarPreview || user?.photo} sx={{ width: 100, height: 100, margin: '0 auto' }} />
+          <Avatar
+            alt={user?.nickname}
+            src={avatarPreview || user?.photo}
+            sx={{
+              height: htmlFor == 'ICPicture' ? 150 : 100,
+              width: htmlFor == 'ICPicture' ? 250 : 100,
+              margin: '0 auto',
+              borderRadius: htmlFor == 'ICPicture' ? '0px' : '50px',
+
+              '.MuiAvatar-img': {
+                objectFit: htmlFor == 'ICPicture' ? 'contain' : 'cover',
+                backgroundColor: 'black'
+              }
+            }}
+          />
         </Grid>
 
         <Grid item xs={12}>
@@ -91,7 +105,8 @@ const UploadUserInput = () => {
                 }}
               />
               <Button color="secondary" sx={{ color: 'white' }} variant="contained" component="span">
-                Profile Picture
+                {htmlFor == 'ProfilePicture' && 'Profile Picture'}
+                {htmlFor == 'ICPicture' && 'IC Picture'}
               </Button>
             </InputLabel>
           </AnimateButton>

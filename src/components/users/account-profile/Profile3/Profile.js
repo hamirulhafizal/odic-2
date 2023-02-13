@@ -47,6 +47,7 @@ const Profile = ({ ...others }) => {
       initialValues={{
         firstName: user?.firstName || '',
         lastName: user?.lastName || '',
+        fullName: user?.fullName || '',
         email: user?.email || '',
         phone: user?.phone || '',
         description:
@@ -124,44 +125,33 @@ const Profile = ({ ...others }) => {
             <Grid container spacing={gridSpacing}>
               <Grid item sm={6} md={4}>
                 <SubCard title="Profile Picture" contentSX={{ textAlign: 'center' }}>
-                  <UploadUserInput />
+                  <UploadUserInput htmlFor="ProfilePicture" />
+                </SubCard>
+
+                <SubCard title="IC Picture" contentSX={{ textAlign: 'center' }}>
+                  <UploadUserInput htmlFor="ICPicture" />
                 </SubCard>
               </Grid>
               <Grid item sm={6} md={8}>
                 <SubCard title="Edit Account Details">
                   <Grid container spacing={gridSpacing}>
-                    <Grid item xs={12} md={6}>
+                    <Grid item xs={12} md={12}>
                       <TextField
                         required
                         fullWidth
                         inputProps={{ style: { textTransform: 'capitalize' } }}
-                        label="First Name"
+                        label="Full Name"
                         id="outlined-basic1"
-                        name="firstName"
+                        name="fullName"
                         type="text"
-                        value={values.firstName}
+                        value={values.fullName}
                         onBlur={handleBlur}
                         onChange={handleChange}
-                        error={Boolean(errors.firstName && touched.firstName)}
-                        helperText={errors.firstName && touched.firstName && String(errors.firstName)}
+                        error={Boolean(errors.fullName && touched.fullName)}
+                        helperText={errors.fullName && touched.fullName && String(errors.fullName)}
                       />
                     </Grid>
-                    <Grid item xs={12} md={6}>
-                      <TextField
-                        required
-                        fullWidth
-                        inputProps={{ style: { textTransform: 'capitalize' } }}
-                        id="outlined-basic6"
-                        label="Last Name"
-                        name="lastName"
-                        type="text"
-                        value={values.lastName}
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        error={Boolean(errors.lastName && touched.lastName)}
-                        helperText={errors.lastName && touched.lastName && String(errors.lastName)}
-                      />
-                    </Grid>
+
                     <Grid item xs={12} md={6}>
                       <TextField
                         fullWidth
@@ -187,7 +177,8 @@ const Profile = ({ ...others }) => {
                     <Grid item xs={12} md={6}>
                       <TextField fullWidth disabled type="email" value={values.email} name="email" id="filled-disabled" label="Email" />
                     </Grid>
-                    <Grid item xs={12}>
+
+                    {/* <Grid item xs={12}>
                       <TextareaAutosize
                         rows={6}
                         fullWidth
@@ -208,9 +199,9 @@ const Profile = ({ ...others }) => {
                           overflow: 'unset'
                         }}
                       />
-                    </Grid>
+                    </Grid> */}
 
-                    <Grid item xs={12}>
+                    {/* <Grid item xs={12}>
                       <Grid container alignItems="center" spacing={gridSpacing} sx={{ mb: 1.25 }}>
                         <Grid item>
                           <FacebookIcon />
@@ -228,8 +219,9 @@ const Profile = ({ ...others }) => {
                           />
                         </Grid>
                       </Grid>
-                    </Grid>
-                    <Grid item xs={12}>
+                    </Grid> */}
+
+                    {/* <Grid item xs={12}>
                       <Grid container alignItems="center" spacing={gridSpacing} sx={{ mb: 1.25 }}>
                         <Grid item>
                           <InstagramIcon />
@@ -315,7 +307,7 @@ const Profile = ({ ...others }) => {
                           />
                         </Grid>
                       </Grid>
-                    </Grid>
+                    </Grid> */}
 
                     <Grid item xs={12}>
                       <Stack direction="row">
