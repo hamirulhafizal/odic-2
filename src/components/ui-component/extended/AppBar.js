@@ -22,6 +22,9 @@ import {
 } from '@mui/material';
 import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
 import AddLocationAltOutlinedIcon from '@mui/icons-material/AddLocationAltOutlined';
+import BookOutlinedIcon from '@mui/icons-material/BookOutlined';
+import LoginIcon from '@mui/icons-material/Login';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 // project imports
 import Logo from '../Logo';
@@ -32,6 +35,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import LogoSection from 'layout/MainLayout/LogoSection';
 import useAuth from 'hooks/useAuth';
 import { useRouter } from 'next/router';
+import ListIcon from '@mui/icons-material/List';
 
 function ElevationScroll({ children, window }) {
   const theme = useTheme();
@@ -88,8 +92,8 @@ const AppBar = ({ ...others }) => {
     router.push('/login');
   };
 
-  const handleListing = () => {
-    router.push('/listing');
+  const handleboard = () => {
+    router.push('/board');
   };
 
   return (
@@ -101,39 +105,18 @@ const AppBar = ({ ...others }) => {
               <LogoSection />
             </Typography>
             <Stack direction="row" sx={{ display: { xs: 'none', sm: 'block' } }} spacing={2}>
-              <Button sx={{ color: 'white' }} component={Link} onClick={user ? handleLogout : handleLogin}>
-                {user ? 'Logout' : 'Login'}
-              </Button>
-
               <Button
-                component={Link}
-                onClick={() => {
-                  router.push('/listing');
-                }}
-                disableElevation
+                sx={{ color: 'white' }}
                 variant="contained"
                 color="secondary"
-                sx={{ color: 'white' }}
-                startIcon={<AddLocationAltOutlinedIcon />}
+                endIcon={user ? <LogoutIcon /> : <LoginIcon />}
+                component={Link}
+                onClick={user ? handleLogout : handleLogin}
               >
-                Post Ads Property
+                {user ? 'LOGOUT' : 'LOGIN'}
               </Button>
             </Stack>
             <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
-              {/* <Button
-                component={Link}
-                onClick={() => {
-                  router.push('/listing');
-                }}
-                disableElevation
-                variant="contained"
-                color="secondary"
-                sx={{ color: 'white' }}
-                size="small"
-                startIcon={<AddLocationAltOutlinedIcon />}
-              >
-                List Ads
-              </Button> */}
               <IconButton sx={{ ml: 1 }} color="secondary" onClick={drawerToggler(true)} size="large">
                 <MenuIcon />
               </IconButton>
@@ -143,11 +126,12 @@ const AppBar = ({ ...others }) => {
                   <Box sx={{ width: 'auto' }} role="presentation" onClick={drawerToggler(false)} onKeyDown={drawerToggler(false)}>
                     <List>
                       <Link style={{ textDecoration: 'none', display: `${!user && 'none'}` }}>
-                        <ListItemButton component="a" onClick={user ? handleListing : ''}>
-                          <ListItemIcon>{user ? <GridViewOutlinedIcon /> : ''}</ListItemIcon>
-                          <ListItemText primary={user ? 'Listing' : ''} />
+                        <ListItemButton component="a" onClick={user ? handleboard : ''}>
+                          <ListItemIcon>{user ? <ListIcon /> : ''}</ListItemIcon>
+                          <ListItemText primary={user ? 'Board' : ''} />
                         </ListItemButton>
                       </Link>
+
                       <Link style={{ textDecoration: 'none' }}>
                         <ListItemButton component="a" onClick={user ? handleLogout : handleLogin}>
                           <ListItemIcon>{user ? <IconLogout /> : <IconLogin />}</ListItemIcon>

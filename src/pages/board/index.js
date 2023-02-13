@@ -580,7 +580,7 @@ const Listing = () => {
             </Stack>
           ) : (
             <>
-              <Button onClick={handleClear} variant="contained" sx={{ mb: 2 }}>
+              <Button onClick={handleClear} variant="contained" sx={{ mb: 3 }}>
                 CLEAR
               </Button>
               <Stack

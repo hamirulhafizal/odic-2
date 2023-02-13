@@ -145,7 +145,7 @@ const CardSlot = () => {
                       {`Dividend:`}
                     </Typography>
                     <CountdownTimer created_date={item?.created_date} created_time={item?.created_time} dividenDate={item?.dividenDate}>
-                      <StatusProgress />
+                      {/* <StatusProgress /> */}
                       <Box
                         sx={{
                           pt: 2,

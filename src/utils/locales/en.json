@@ -1,7 +1,9 @@
 {
   "dashboard": "Dashboard",
 
-  "listing":"Listing",
+  "listing": "Listing",
+  "Board": "Board",
+  "Menu": "menu",
 
   "default": "Default",
   "analytics": "Analytics",

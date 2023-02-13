@@ -10,6 +10,9 @@ import Link from 'Link';
 import Avatar from 'components/ui-component/extended/Avatar';
 import AnimateButton from 'components/ui-component/extended/AnimateButton';
 import { gridSpacing } from 'store/constant';
+import ListIcon from '@mui/icons-material/List';
+import LoginIcon from '@mui/icons-material/Login';
+import useAuth from 'hooks/useAuth';
 
 // styles
 const HeaderImage = styled('img')(({ theme }) => ({
@@ -30,9 +33,8 @@ const HeaderAnimationImage = styled('img')({
 // ==============================|| LANDING - HEADER PAGE ||============================== //
 
 const HeaderPage = () => {
-  const theme = useTheme();
+  const { user } = useAuth();
 
-  const agentLocal = JSON.parse(localStorage.getItem('agent'));
   return (
     <Container>
       <Grid
@@ -65,17 +67,17 @@ const HeaderPage = () => {
                 }}
               >
                 <Typography
-                  variant="h1"
+                  variant="h6"
                   color="secondary"
                   sx={{
-                    fontSize: { xs: '2.25rem', sm: '3rem', md: '4rem' },
+                    fontSize: { xs: '1.50rem', sm: '3rem', md: '4rem' },
                     fontWeight: 900,
                     lineHeight: 1.4
                   }}
                 >
-                  The Only Way to <br></br>Find
+                  Welcome to<br></br>
                   <Box component="span" variant="h2" color="inherit" sx={{ ml: 2, color: 'white' }}>
-                    YOUR CHOICE OF DREAM HOME
+                    ONE DREAM INVESTMENT CENTER
                   </Box>
                 </Typography>
               </motion.div>
@@ -101,43 +103,41 @@ const HeaderPage = () => {
                     lineHeight: 1.4
                   }}
                 >
-                  There are no excuses to get your own house. Everyone can own their dream house without any deposit and risk. Come & take a
-                  fast action. Don’t wait to buy property, you must buy first and wait.
+                  {`Are you looking to grow your wealth and secure your financial future? Look no further than ODIC. Don't miss out on the opportunity to grow your wealth and secure your financial future. Sign up for ODIC today and start taking control of your investments.`}
                 </Typography>
               </motion.div>
             </Grid>
 
-            {agentLocal && (
-              <Grid item xs={12} sx={{ my: 3.25 }}>
-                <motion.div
-                  initial={{ opacity: 0, translateY: 550 }}
-                  animate={{ opacity: 1, translateY: 0 }}
-                  transition={{
-                    type: 'spring',
-                    stiffness: 150,
-                    damping: 30,
-                    delay: 0.4
-                  }}
-                >
-                  <Grid container spacing={2} sx={{ justifyContent: { xs: 'center', md: 'center' } }}>
-                    <Grid item>
-                      <AnimateButton>
-                        <Button
-                          sx={{ color: 'white' }}
-                          component={Link}
-                          href={`/${agentLocal?.user_name}`}
-                          size="large"
-                          variant="contained"
-                          color="secondary"
-                        >
-                          View Home List
-                        </Button>
-                      </AnimateButton>
-                    </Grid>
+            <Grid item xs={12} sx={{ my: 3.25 }}>
+              <motion.div
+                initial={{ opacity: 0, translateY: 550 }}
+                animate={{ opacity: 1, translateY: 0 }}
+                transition={{
+                  type: 'spring',
+                  stiffness: 150,
+                  damping: 30,
+                  delay: 0.4
+                }}
+              >
+                <Grid container spacing={2} sx={{ justifyContent: { xs: 'center', md: 'center' } }}>
+                  <Grid item>
+                    <AnimateButton>
+                      <Button
+                        sx={{ color: 'white' }}
+                        component={Link}
+                        href={user == null ? '/register' : '/board'}
+                        size="large"
+                        variant="contained"
+                        color="secondary"
+                        startIcon={user == null ? <LoginIcon /> : <ListIcon />}
+                      >
+                        {user == null ? 'SIGN UP NOW' : 'VIEW BOARD'}
+                      </Button>
+                    </AnimateButton>
                   </Grid>
-                </motion.div>
-              </Grid>
-            )}
+                </Grid>
+              </motion.div>
+            </Grid>
           </Grid>
         </Grid>
       </Grid>
