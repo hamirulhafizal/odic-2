@@ -84,7 +84,7 @@ export const ApiProvider = ({ children }) => {
           }
         });
 
-        history.push('/listing');
+        history.push('/board');
 
         return res;
       });

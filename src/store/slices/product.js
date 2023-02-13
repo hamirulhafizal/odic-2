@@ -1,6 +1,6 @@
 // third-party
 import { createSlice } from '@reduxjs/toolkit';
-import { getAllListing, getListingById, updateListingById } from 'contexts/ApiListing';
+import { getListingById, getListsbyQuery, updateListingById } from 'contexts/ApiListing';
 
 // project imports
 import axios from 'utils/axios';
@@ -14,7 +14,8 @@ const initialState = {
   product: null,
   relatedProducts: [],
   reviews: [],
-  addresses: []
+  addresses: [],
+  slot: []
 };
 
 const slice = createSlice({
@@ -69,6 +70,16 @@ const slice = createSlice({
     // EDIT ADDRESS
     editAddressSuccess(state, action) {
       state.addresses = action.payload;
+    },
+
+    // GET SLOT
+    getSlot: (state, action) => {
+      state.slot.push(action.payload);
+    },
+
+    // RESET CART
+    resetSlot(state) {
+      state.slot = initialState.slot;
     }
   }
 });
@@ -76,13 +87,27 @@ const slice = createSlice({
 // Reducer
 export default slice.reducer;
 
-// ----------------------------------------------------------------------
+export const {
+  getProductsSuccess,
+  getProductSuccess,
+  editProductSuccess,
+  filterProductsSuccess,
+  getRelatedProductsSuccess,
+  getProductReviewsSuccess,
+  getAddressesSuccess,
+  addAddressSuccess,
+  editAddressSuccess,
+  getSlot,
+  resetSlot
+} = slice.actions;
 
-export function getProducts(user_name) {
-  return async () => {
+// ----------------------------------------------------------------------ƒ
+
+export function getProducts(user_name, data) {
+  return async (dispatch) => {
     try {
-      const response = getAllListing(user_name).then((res) => {
-        dispatch(slice.actions.getProductsSuccess(res));
+      const response = getListsbyQuery({ username: user_name }, 1).then((res) => {
+        dispatch(slice.actions.getProductsSuccess(res.results));
       });
       return response;
     } catch (error) {
@@ -91,13 +116,16 @@ export function getProducts(user_name) {
   };
 }
 
-export function getProductById(id) {
-  return async () => {
+export function getProductById(id, data) {
+  return async (dispatch) => {
     try {
-      const response = getListingById(id).then((res) => {
-        dispatch(slice.actions.getProductSuccess(res));
-      });
-      return response;
+      if (id !== null) {
+        const response = getListingById(id).then((res) => {
+          dispatch(slice.actions.getProductSuccess(res));
+        });
+        return response;
+      }
+      dispatch(slice.actions.getProductSuccess(data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
       return error;
@@ -106,7 +134,7 @@ export function getProductById(id) {
 }
 
 export function editProductById(id, formData) {
-  return async () => {
+  return async (dispatch) => {
     try {
       const response = updateListingById(id, formData).then((res) => {
         dispatch(slice.actions.editProductSuccess(res));
@@ -120,7 +148,7 @@ export function editProductById(id, formData) {
 }
 
 export function filterProducts(filter) {
-  return async () => {
+  return async (dispatch) => {
     try {
       const response = await axios.post('/api/product/filter', { filter });
       dispatch(slice.actions.filterProductsSuccess(response.data));
@@ -131,7 +159,7 @@ export function filterProducts(filter) {
 }
 
 export function getRelatedProducts(query, data) {
-  return async () => {
+  return async (dispatch) => {
     try {
       const response = data.filter((object) => {
         return object.id !== Number(query);
@@ -145,7 +173,7 @@ export function getRelatedProducts(query, data) {
 }
 
 export function getProductReviews() {
-  return async () => {
+  return async (dispatch) => {
     try {
       const response = await axios.get('/api/review/list');
       dispatch(slice.actions.getProductReviewsSuccess(response.data.productReviews));
@@ -156,7 +184,7 @@ export function getProductReviews() {
 }
 
 export function getAddresses() {
-  return async () => {
+  return async (dispatch) => {
     try {
       const response = await axios.get('/api/address/list');
       dispatch(slice.actions.getAddressesSuccess(response.data.address));
@@ -167,7 +195,7 @@ export function getAddresses() {
 }
 
 export function addAddress(address) {
-  return async () => {
+  return async (dispatch) => {
     try {
       const response = await axios.post('/api/address/new', address);
       dispatch(slice.actions.addAddressSuccess(response.data.address));
@@ -178,10 +206,32 @@ export function addAddress(address) {
 }
 
 export function editAddress(address) {
-  return async () => {
+  return async (dispatch) => {
     try {
       const response = await axios.post('/api/address/edit', address);
       dispatch(slice.actions.editAddressSuccess(response.data.address));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
+
+export function getSlotData(obj) {
+  return async (dispatch) => {
+    try {
+      // const response = await axios.post('/api/address/edit', id);
+      dispatch(slice.actions.getSlot(obj));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
+
+export function resetAllSlot() {
+  return async (dispatch) => {
+    try {
+      // const response = await axios.post('/api/address/edit', id);
+      dispatch(slice.actions.resetSlot());
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
