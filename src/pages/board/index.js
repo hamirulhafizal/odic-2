@@ -587,7 +587,8 @@ const Listing = () => {
                 direction="column"
                 sx={{
                   justifyContent: 'center',
-                  alignItems: 'center'
+                  alignItems: 'center',
+                  gap: '20px'
                 }}
               >
                 <CardSlot />
