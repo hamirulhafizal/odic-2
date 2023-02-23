@@ -72,11 +72,10 @@ export const ApiProvider = ({ children }) => {
       .then(async (res) => {
         if (typeof window !== 'undefined') {
           axiosInstance.defaults.headers['Authorization'] = 'Bearer ' + localStorage.getItem('access');
-          localStorage.setItem('access', res?.token);
-          localStorage.setItem('refresh', res?.token);
+          localStorage.setItem('access', res?.data.token);
+          localStorage.setItem('refresh', res?.data.token);
         }
-
-        await getProfile(res?.username);
+        await getProfile(res?.data.username);
 
         dispatch({
           type: LOGIN,
@@ -204,6 +203,7 @@ export const ApiProvider = ({ children }) => {
   const resetPassword = (email) => console.log(email);
 
   const getProfile = async (username) => {
+    console.log(username);
     axiosInstance.defaults.headers['Authorization'] = 'Bearer ' + localStorage.getItem('access');
     const response = await axiosInstance.get(`${BACKEND_PATH}/api/username/${username}`).then((res) => {
       if (typeof window !== 'undefined') {
