@@ -17,6 +17,7 @@ import axiosInstance from './axios';
 //next
 import { useRouter } from 'next/router';
 import user from 'store/slices/user';
+import { Axios } from 'axios';
 
 const initialState = {
   isLoggedIn: false,
@@ -63,19 +64,19 @@ export const ApiProvider = ({ children }) => {
   };
 
   const login = async (email, password) => {
-    const response = await axiosInstance
-      .post(`${BACKEND_PATH}/api/v1/user/login`, {
+    const response = await axios
+      .post(`${BACKEND_PATH}/api/auth/login`, {
         email,
         password
       })
       .then(async (res) => {
         if (typeof window !== 'undefined') {
           axiosInstance.defaults.headers['Authorization'] = 'Bearer ' + localStorage.getItem('access');
-          localStorage.setItem('access', res?.data?.access);
-          localStorage.setItem('refresh', res?.data?.refresh);
+          localStorage.setItem('access', res?.token);
+          localStorage.setItem('refresh', res?.token);
         }
 
-        await getProfile(res?.data?.user_name);
+        await getProfile(res?.username);
 
         dispatch({
           type: LOGIN,
@@ -87,30 +88,63 @@ export const ApiProvider = ({ children }) => {
         history.push('/board');
 
         return res;
+      })
+      .catch((err) => {
+        console.log('err-->', err);
+
+        return err;
       });
 
     return response;
   };
 
-  const register = async (email, password, first_name, last_name) => {
-    // todo: this flow need to be recode as it not verified\
-    const user_name = first_name + last_name;
-
+  const register = async ({ email, name, password }) => {
+    const password_confirmation = password;
     const respond = await axios
-      .post(`${BACKEND_PATH}/api/v1/user/register`, {
+      .post(`${BACKEND_PATH}/api/auth/register`, {
         email,
-        user_name,
-        first_name,
-        password
+        name,
+        password,
+        password_confirmation
       })
       .then((res) => {
-        login(email, password, user_name);
-        updateProfile(user_name, { firstName: first_name, lastName: last_name });
-        history.push('/login');
+        const { token, email, name, phone_no, updated_at, created_at, id, username, referrel_url, verified_status, roles } = res;
+
+        console.log('res', res);
+
+        // "token": "2|Gh8hCRiV55B15sYxpDwsDiHrdCrrXc0AAX0kM2Yk",
+        // "username": "odic000002",
+        // "id": 2,
+
+        // const {
+        //   token,
+        //   email,
+        //   name,
+        //   phone_no,
+        //   updated_at
+        //   created_at,
+        //   id,
+        //   username,
+        //   referrel_url,
+        //   verified_status,
+        //   email_verified_at,
+        //   profile_image,
+        //   bank_account,
+        //   bank_name,
+        //   identity_card,
+        //   fullname,
+        //   identity_card_no,
+        // } = res;
+
+        // login(email, password, user_name);
+        // updateProfile(user_name, { firstName: first_name, lastName: last_name });
+        history.push('/checkmail');
 
         return res;
       })
       .catch((err) => {
+        console.log('err', err);
+
         history.push('/register');
         return err;
       });
@@ -133,11 +167,45 @@ export const ApiProvider = ({ children }) => {
     window.localStorage.removeItem('users');
   };
 
+  const forgetPassword = async (email, password) => {
+    const response = await axios
+      .post(`${BACKEND_PATH}/api/auth/forgot-password?email=${email}`, {
+        password
+      })
+      .then(async (res) => {
+        if (typeof window !== 'undefined') {
+          axiosInstance.defaults.headers['Authorization'] = 'Bearer ' + localStorage.getItem('access');
+          localStorage.setItem('access', res?.token);
+          localStorage.setItem('refresh', res?.token);
+        }
+
+        await getProfile(res?.username);
+
+        dispatch({
+          type: LOGIN,
+          payload: {
+            isLoggedIn: true
+          }
+        });
+
+        history.push('/board');
+
+        return res;
+      })
+      .catch((err) => {
+        console.log('err-->', err);
+
+        return err;
+      });
+
+    return response;
+  };
+
   const resetPassword = (email) => console.log(email);
 
-  const getProfile = async (user_name) => {
+  const getProfile = async (username) => {
     axiosInstance.defaults.headers['Authorization'] = 'Bearer ' + localStorage.getItem('access');
-    const response = await axiosInstance.get(`${BACKEND_PATH}/api/v1/profile/${user_name}`).then((res) => {
+    const response = await axiosInstance.get(`${BACKEND_PATH}/api/username/${username}`).then((res) => {
       if (typeof window !== 'undefined') {
         const users = JSON.stringify(res.data);
         localStorage.setItem('users', users);
@@ -154,10 +222,11 @@ export const ApiProvider = ({ children }) => {
 
       return res;
     });
+    return response;
   };
 
-  const updateProfile = async (user_name, formData) => {
-    const response = await axiosInstance.patch(`${BACKEND_PATH}/api/v1/profile/${user_name}`, formData).then((res) => {
+  const updateProfile = async (username, formData) => {
+    const response = await axiosInstance.post(`${BACKEND_PATH}/api/user-profile/edit/${username}`, formData).then((res) => {
       if (typeof window !== 'undefined') {
         const users = JSON.stringify(res.data);
         localStorage.setItem('users', users);
@@ -181,7 +250,7 @@ export const ApiProvider = ({ children }) => {
   }
 
   return (
-    <ApiContext.Provider value={{ ...state, login, logout, register, resetPassword, updateProfile, getProfile }}>
+    <ApiContext.Provider value={{ ...state, login, logout, register, resetPassword, updateProfile, getProfile, forgetPassword }}>
       {children}
     </ApiContext.Provider>
   );

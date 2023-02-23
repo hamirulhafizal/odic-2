@@ -33,6 +33,7 @@ import { dispatch } from 'store';
 import { getSlot } from 'store/slices/product';
 import { getSlotData } from 'store/slices/product';
 import moment from 'moment';
+import axiosInstance from 'contexts/axios';
 
 // ==============================|| FORM VALIDATION - LOGIN FORMIK  ||============================== //
 
@@ -61,9 +62,19 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
   const [isDoc, setDoc] = useState(false);
   const [isPreview, setPreview] = useState(true);
 
+  const handleFormInvestment = (formData) => {
+    return axiosInstance.post('https://app.onedreamproperty.net/api/investments', formData);
+  };
+
   const handleSubmitAggrement = () => {
     setLoadingSubmit(true);
     setSubmit(true);
+
+    const formData = {
+      amount: 1000,
+      username: 'odic000002'
+    };
+    handleFormInvestment(formData);
   };
 
   const handleClickOpen = () => {

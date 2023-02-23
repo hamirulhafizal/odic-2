@@ -443,21 +443,21 @@ const Listing = () => {
   const isSelected = (name) => selected.indexOf(name) !== -1;
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows?.length) : 0;
 
-  const fetchPrimaryPokemonData = async (categoryState, locationState, type, page) => {
-    try {
-      const querySet = { username: user?.user_name };
-      setLoading(true);
-      await getListsbyQuery(querySet, page).then((response) => {
-        let data = response.results;
-        setRows(data);
-        setLoading(false);
-      });
-    } catch (err) {
-      console.log(err);
-      setLoading(false);
-      setMessage(true);
-    }
-  };
+  // const fetchPrimaryPokemonData = async (categoryState, locationState, type, page) => {
+  //   try {
+  //     const querySet = { username: user?.user_name };
+  //     setLoading(true);
+  //     await getListsbyQuery(querySet, page).then((response) => {
+  //       let data = response.results;
+  //       setRows(data);
+  //       setLoading(false);
+  //     });
+  //   } catch (err) {
+  //     console.log(err);
+  //     setLoading(false);
+  //     setMessage(true);
+  //   }
+  // };
 
   const handleSwipe = () => {
     const btnAdd = document.getElementById('ButtonAddInvest');
@@ -469,15 +469,13 @@ const Listing = () => {
   };
 
   React.useEffect(() => {
-    fetchPrimaryPokemonData(categoryState, locationState, typeState.value, 1);
-
+    // fetchPrimaryPokemonData(categoryState, locationState, typeState.value, 1);
     // slotState?.aggrement == undefined && handleSlot();
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   React.useEffect(() => {
-    dispatch(getProducts(user?.user_name));
+    // dispatch(getProducts(user?.user_name));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [paging]);
 

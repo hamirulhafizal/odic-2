@@ -69,7 +69,7 @@ const UploadUserInput = ({ htmlFor }) => {
               height: htmlFor == 'ICPicture' ? 150 : 100,
               width: htmlFor == 'ICPicture' ? 250 : 100,
               margin: '0 auto',
-              borderRadius: htmlFor == 'ICPicture' ? '0px' : '50px',
+              borderRadius: htmlFor == 'ICPicture' ? '5px' : '50px',
 
               '.MuiAvatar-img': {
                 objectFit: htmlFor == 'ICPicture' ? 'contain' : 'cover',

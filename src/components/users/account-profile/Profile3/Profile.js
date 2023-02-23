@@ -41,6 +41,21 @@ const Profile = ({ ...others }) => {
 
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
 
+  // "id": 2,
+  // "name": "Hamirul",
+  // "email": "hamirul@odic.com",
+  // "email_verified_at": null,
+  // "phone_no": null,
+  // "profile_image": null,
+  // "bank_account": "984751620500",
+  // "bank_name": "CIMB BANK",
+  // "username": "odic000002",
+  // "identity_card": null,
+  // "fullname": "HAMIRUL HAFIZAL",
+  // "identity_card_no": "940910086019",
+  // "verified_status": "Pending",
+  // "referrel_url": "https://onedreamproperty/odic000002",
+
   return (
     <Formik
       enableReinitialize={Boolean(true)}
@@ -164,7 +179,6 @@ const Profile = ({ ...others }) => {
                         value={values.phone}
                         onBlur={handleBlur}
                         onChange={handleChange}
-                        // focused
                         error={user?.phone ? false : true}
                         sx={{
                           '& .MuiFormHelperText-root ': {
@@ -177,137 +191,6 @@ const Profile = ({ ...others }) => {
                     <Grid item xs={12} md={6}>
                       <TextField fullWidth disabled type="email" value={values.email} name="email" id="filled-disabled" label="Email" />
                     </Grid>
-
-                    {/* <Grid item xs={12}>
-                      <TextareaAutosize
-                        rows={6}
-                        fullWidth
-                        id="outlined-basic4"
-                        label="Bio"
-                        name="description"
-                        type="text"
-                        value={values.description}
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        style={{
-                          borderRadius: '8px',
-                          width: '-webkit-fill-available',
-                          borderRadius: '8px',
-                          borderColor: '#afafaf',
-                          padding: matchDownSM ? '5%' : '2%',
-                          fontFamily: 'inherit',
-                          overflow: 'unset'
-                        }}
-                      />
-                    </Grid> */}
-
-                    {/* <Grid item xs={12}>
-                      <Grid container alignItems="center" spacing={gridSpacing} sx={{ mb: 1.25 }}>
-                        <Grid item>
-                          <FacebookIcon />
-                        </Grid>
-                        <Grid item xs zeroMinWidth>
-                          <TextField
-                            fullWidth
-                            id="outlined-basic4"
-                            label="Facebook Profile Url"
-                            name="facebook"
-                            type="text"
-                            value={values.facebook}
-                            onBlur={handleBlur}
-                            onChange={handleChange}
-                          />
-                        </Grid>
-                      </Grid>
-                    </Grid> */}
-
-                    {/* <Grid item xs={12}>
-                      <Grid container alignItems="center" spacing={gridSpacing} sx={{ mb: 1.25 }}>
-                        <Grid item>
-                          <InstagramIcon />
-                        </Grid>
-                        <Grid item xs zeroMinWidth>
-                          <TextField
-                            fullWidth
-                            id="outlined-basic4"
-                            label="Instagram Profile Url"
-                            name="instagram"
-                            type="text"
-                            value={values.instagram}
-                            onBlur={handleBlur}
-                            onChange={handleChange}
-                          />
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Grid container alignItems="center" spacing={gridSpacing} sx={{ mb: 1.25 }}>
-                        <Grid item>
-                          <YouTubeIcon />
-                        </Grid>
-                        <Grid item xs zeroMinWidth>
-                          <TextField
-                            fullWidth
-                            id="outlined-basic4"
-                            label="Youtube Profile Url"
-                            name="youtube"
-                            type="text"
-                            value={values.youtube}
-                            onBlur={handleBlur}
-                            onChange={handleChange}
-                          />
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Grid container alignItems="center" spacing={gridSpacing} sx={{ mb: 1.25 }}>
-                        <Grid item>
-                          <LinkedInIcon />
-                        </Grid>
-                        <Grid item xs zeroMinWidth>
-                          <TextField
-                            fullWidth
-                            id="outlined-basic4"
-                            label="Linkedin Profile Url"
-                            name="linkedin"
-                            type="text"
-                            value={values.linkedin}
-                            onBlur={handleBlur}
-                            onChange={handleChange}
-                          />
-                        </Grid>
-                      </Grid>
-                    </Grid>
-
-                    <Grid item xs={12}>
-                      <Grid container alignItems="center" spacing={gridSpacing} sx={{ mb: 1.25 }}>
-                        <Grid item>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            fill="currentColor"
-                            className="bi bi-tiktok"
-                            viewBox="0 0 16 16"
-                          >
-                            <path d="M9 0h1.98c.144.715.54 1.617 1.235 2.512C12.895 3.389 13.797 4 15 4v2c-1.753 0-3.07-.814-4-1.829V11a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3V0Z" />
-                          </svg>
-                        </Grid>
-                        <Grid item xs zeroMinWidth>
-                          <TextField
-                            fullWidth
-                            id="outlined-basic4"
-                            label="Tiktok Profile Url"
-                            name="tiktok"
-                            type="text"
-                            value={values.tiktok}
-                            sx={{ pl: 1 }}
-                            onBlur={handleBlur}
-                            onChange={handleChange}
-                          />
-                        </Grid>
-                      </Grid>
-                    </Grid> */}
 
                     <Grid item xs={12}>
                       <Stack direction="row">

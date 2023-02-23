@@ -7,7 +7,7 @@ import { Box, Tab, Tabs } from '@mui/material';
 
 // project imports
 import Profile from 'components/users/account-profile/Profile3/Profile';
-import Billing from 'components/users/account-profile/Profile3/Billing';
+import Bank from 'components/users/account-profile/Profile3/Bank';
 import Security from 'components/users/account-profile/Profile3/Security';
 import Notifications from 'components/users/account-profile/Profile3/Notifications';
 import MainCard from 'components/ui-component/cards/MainCard';
@@ -71,12 +71,16 @@ const Profile3 = () => {
           variant="scrollable"
         >
           <Tab component={Link} href="#" label="Profile" {...a11yProps(0)} />
-          {/* <Tab component={Link} href="#" label="Billing" {...a11yProps(1)} />
+          <Tab component={Link} href="#" label="Bank" {...a11yProps(1)} />
+          {/*
           <Tab component={Link} href="#" label="Security" {...a11yProps(1)} />
           <Tab component={Link} href="#" label="Notifications" {...a11yProps(2)} /> */}
         </Tabs>
         <TabPanel value={value} index={0}>
           <Profile />
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <Bank />
         </TabPanel>
         {/* <TabPanel value={value} index={1}>
           <Billing />

@@ -32,7 +32,8 @@ export const LISTING_PATH = '/board';
 
 export const GOOLE_API_MAP = 'AIzaSyCw3wsa90tFvFey2uNhqaA3iIn_eLCFTv8';
 
-export const BACKEND_PATH = 'https://onedream.dynamicdigital.guru';
+export const BACKEND_PATH = 'https://app.onedreamproperty.net';
+// export const BACKEND_PATH = 'https://onedream.dynamicdigital.guru';
 //export const BACKEND_PATH = 'http://127.0.0.1:8000';
 
 const config = {

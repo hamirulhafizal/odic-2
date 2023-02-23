@@ -89,82 +89,82 @@ const JWTRegister = ({ ...others }) => {
         initialValues={{
           email: '',
           password: '',
-          firstName: '',
-          lastName: '',
+          name: '',
           submit: null
         }}
         validationSchema={Yup.object().shape({
           email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
+          name: Yup.string().max(255).required('Full Name is required'),
           password: Yup.string().max(255).required('Password is required')
         })}
         onSubmit={(values, { setErrors, setStatus, setSubmitting }) => {
           setLoading(true);
 
-          register(values.email, values.password, values.firstName, values.lastName).then((res) => {
-            if (res?.email && res?.email[0] == 'Email is already in use.') {
-              setErrors({ submit: 'Email is already in use.' });
+          console.log('values--->', values);
+
+          register({ email: values.email, password: values.password, name: values.name })
+            .then((res) => {
+              console.log('res-->', res);
+              if (res['email'] == 'The email has already been taken.') {
+                setErrors({ submit: 'Email is already in use.' });
+                setSubmitting(false);
+                setLoading(false);
+              }
+
+              // if (res?.user_name && res?.user_name[0] == 'Username is already in use.') {
+              //   setErrors({ submit: 'First Name dan Last Name is already in use.' });
+              //   setSubmitting(false);
+              //   setLoading(false);
+              // }
+
+              if (res.status == 200) {
+                setStatus({ success: true });
+                setSubmitting(false);
+                dispatch(
+                  openSnackbar({
+                    open: true,
+                    message: 'Your registration has been successfully completed.',
+                    variant: 'alert',
+                    alert: {
+                      color: 'success'
+                    },
+                    close: false
+                  })
+                );
+              } else {
+                setErrors({ submit: 'Try Again, something went wrong' });
+                setSubmitting(false);
+                setLoading(false);
+              }
+            })
+            .catch((err) => {
+              setErrors({ submit: 'Try Again, something went wrong' });
               setSubmitting(false);
               setLoading(false);
-            }
-
-            if (res?.user_name && res?.user_name[0] == 'Username is already in use.') {
-              setErrors({ submit: 'First Name dan Last Name is already in use.' });
-              setSubmitting(false);
-              setLoading(false);
-            }
-
-            if (res.status == 200) {
-              setStatus({ success: true });
-              setSubmitting(false);
-              dispatch(
-                openSnackbar({
-                  open: true,
-                  message: 'Your registration has been successfully completed.',
-                  variant: 'alert',
-                  alert: {
-                    color: 'success'
-                  },
-                  close: false
-                })
-              );
-            }
-          });
+            });
         }}
       >
         {({ errors, status, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
           <form onSubmit={handleSubmit} {...others}>
             <Grid container spacing={matchDownSM ? 1 : 2}>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12}>
                 <TextField
+                  required
                   fullWidth
-                  label="First Name"
+                  label="Full Name (As Per IC)"
                   margin="normal"
-                  name="firstName"
+                  name="name"
                   type="text"
-                  value={values.firstName}
+                  value={values.name}
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  inputProps={{ style: { textTransform: 'capitalize' } }}
-                  sx={{ ...theme.typography.customInput }}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  fullWidth
-                  label="Last Name"
-                  margin="normal"
-                  name="lastName"
-                  type="text"
-                  value={values.lastName}
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  inputProps={{ style: { textTransform: 'capitalize' } }}
+                  inputProps={{ style: { textTransform: 'normal' } }}
                   sx={{ ...theme.typography.customInput }}
                 />
               </Grid>
             </Grid>
             <FormControl fullWidth error={Boolean(touched.email && errors.email)} sx={{ ...theme.typography.customInput }}>
-              <InputLabel htmlFor="outlined-adornment-email-register">Email Address / Username</InputLabel>
+              <InputLabel htmlFor="outlined-adornment-email-register">Email Address</InputLabel>
               <OutlinedInput
                 id="outlined-adornment-email-register"
                 type="email"
