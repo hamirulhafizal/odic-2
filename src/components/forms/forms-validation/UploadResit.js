@@ -23,7 +23,6 @@ import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import CancelIcon from '@mui/icons-material/Cancel';
 import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import { stringifyFile } from 'utils/helper';
 import { dispatch } from 'store';
 import { getReceiptImg } from 'store/slices/product';
 import { useSelector } from 'store';
@@ -69,37 +68,14 @@ const UploadResit = ({ handlePreviewImg }) => {
         photo && dispatch(getReceiptImg(photo));
 
         if (isSubmit) {
-          setLoding(false);
-          setFieldImgValue(undefined);
-          // setAvatarPreview('');
-          handlePreviewImg(true);
-          setSubmit(false);
-          setSuccessMessage('UPLOAD');
-
-          localStorage.setItem('resitUploadimg', stringifyFile(photo));
-
-          // const formString = JSON.parse(localStorage.getItem('resitUploadimg'));
-
-          // console.log('formString', JSON.stringify(localStorage.getItem('resitUploadimg')));
-
-          // await updateProfile(user?.user_name, formData)
-          //   .then((res) => {
-          //     setLoding(false);
-          //     setFieldImgValue(undefined);
-          //     setAvatarPreview('');
-          //     handlePreviewImg(true);
-          //     setSubmit(false);
-          //     setSuccessMessage('UPLOAD');
-          //     localStorage.setItem('resitUpload', true);
-          //   })
-          //   .catch((err) => {
-          //     setMessage('Something when wrong, please try again');
-          //     setLoding(false);
-          //     setFieldImgValue(undefined);
-          //     setAvatarPreview('');
-          //     handlePreviewImg(false);
-          //     setSubmit(false);
-          //   });
+          setTimeout(() => {
+            setLoding(false);
+            setFieldImgValue(undefined);
+            setAvatarPreview('');
+            handlePreviewImg(true);
+            setSubmit(false);
+            setSuccessMessage('UPLOAD');
+          }, 1000);
         }
       }
     }
@@ -142,7 +118,7 @@ const UploadResit = ({ handlePreviewImg }) => {
                     preViewImage(e);
                   }}
                 />
-                <AnimateButton>
+                <AnimateButton direction="up">
                   <Button
                     endIcon={<AttachFileIcon />}
                     color="secondary"
@@ -151,7 +127,7 @@ const UploadResit = ({ handlePreviewImg }) => {
                     size="small"
                     component="span"
                   >
-                    Upload
+                    UPLOAD
                   </Button>
                 </AnimateButton>
               </>
@@ -209,7 +185,7 @@ const UploadResit = ({ handlePreviewImg }) => {
                     setSubmit(true);
                     setLoding(true);
                   }}
-                  fullwidth
+                  fullwidth="true"
                   endIcon={isLoading ? <CircularProgress size={15} sx={{ color: 'white' }} /> : <SendOutlinedIcon />}
                   color="secondary"
                   sx={{ color: 'white', ml: 2 }}
@@ -246,7 +222,6 @@ const UploadResit = ({ handlePreviewImg }) => {
                     }}
                   >
                     <ZoomInIcon
-                      onClick={handleClickOpen}
                       sx={{
                         p: 1,
                         position: 'relative',

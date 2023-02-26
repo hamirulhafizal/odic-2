@@ -6,9 +6,10 @@ const CountdownTimer = ({ created_date, created_time, dividenDate, children }) =
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down('sm'));
 
+  const dividenDate1 = moment(created_date).add({ years: 1, months: 2 });
   const targetTime = moment(dividenDate);
   const [currentTime, setCurrentTime] = useState(moment());
-  const timeBetween = moment.duration(targetTime.diff(currentTime));
+  const timeBetween = moment.duration(dividenDate1.diff(currentTime));
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -31,7 +32,7 @@ const CountdownTimer = ({ created_date, created_time, dividenDate, children }) =
         }}
       >
         <Typography variant="span">
-          {targetTime?.format('DD MMM YYYY')}{' '}
+          {dividenDate1?.format('DD MMM YYYY')}{' '}
           {!matchDownSM && (
             <Typography variant="span">
               :

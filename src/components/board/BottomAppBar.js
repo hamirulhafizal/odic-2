@@ -19,6 +19,8 @@ import AddIcon from '@mui/icons-material/Add';
 import SearchIcon from '@mui/icons-material/Search';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import SwipeableEdgeDrawer from './SwipeableEdgeDrawer';
+import useAuth from 'hooks/useAuth';
+import AnimateButton from 'components/ui-component/extended/AnimateButton';
 
 const messages = [
   {
@@ -75,11 +77,13 @@ const StyledFab = styled(Fab)({
   top: -30,
   left: 0,
   right: 0,
-  margin: '0 auto'
+  margin: '0 auto',
+  boxShadow: '0px 3px 5px -1px rgb(0 0 0 /20%),0px 6px 10px 0px rgb(0 0 0 /14%),0px 1px 18px 0px rgb(0 0 0 /12%) !important'
 });
 
 const BottomAppBar = () => {
   const [open, setOpen] = React.useState(false);
+  const { user } = useAuth();
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
@@ -89,7 +93,19 @@ const BottomAppBar = () => {
     <>
       <AppBar position="fixed" color="primary" sx={{ top: 'auto', bottom: 0, zIndex: 1000 }}>
         <Toolbar>
-          <StyledFab id="ButtonAddInvest" color="secondary" aria-label="add" onClick={toggleDrawer(true)}>
+          <StyledFab
+            disabled={!user?.identity_card ? true : false}
+            id="ButtonAddInvest"
+            color="secondary"
+            aria-label="add"
+            onClick={toggleDrawer(true)}
+            sx={{
+              '&.MuiFab-root.Mui-disabled': {
+                backgroundColor: 'grey',
+                opacity: 0.9
+              }
+            }}
+          >
             <AddIcon sx={{ color: 'white' }} />
           </StyledFab>
         </Toolbar>

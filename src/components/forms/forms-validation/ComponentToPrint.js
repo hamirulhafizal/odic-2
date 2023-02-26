@@ -46,9 +46,9 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
             </Typography>
 
             <Typography variant="h4" className="h3Title">
-              {user.name}
+              {user?.name}
               <br />
-              [NO K/P: {user.identity_card_no}]
+              [NO K/P: {user?.identity_card_no}]
             </Typography>
             <br />
             <br />

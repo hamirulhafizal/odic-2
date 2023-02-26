@@ -8,11 +8,8 @@ import { useSelector } from 'store';
 import CountdownTimer from './CountdownTimer';
 import StatusProgress from './StatusProgress';
 import AnimateButton from 'components/ui-component/extended/AnimateButton';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
-const CardSlot = () => {
-  const value = 10000;
-
+const CardSlot = ({ data }) => {
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -40,11 +37,12 @@ const CardSlot = () => {
 
   return (
     <>
-      {slot?.map((item, index) => {
+      {data?.map((item, index) => {
         return (
           <>
             <MainCard
               id={index}
+              key={index}
               sx={{
                 width: matchDownSM ? '100%' : '550px',
                 boxShadow: '1px 2px 5px -1px rgb(0 0 0 / 64%) !important',
@@ -62,6 +60,15 @@ const CardSlot = () => {
                 }}
               >
                 <Stack
+                  direction="row"
+                  sx={{
+                    width: '100%',
+                    textAlign: 'start'
+                  }}
+                >
+                  <Typography variant="span">SLOT ID : {item?.id}</Typography>
+                </Stack>
+                <Stack
                   sx={{
                     display: 'flex',
                     flexDirection: 'row',
@@ -71,7 +78,7 @@ const CardSlot = () => {
                     p: 0
                   }}
                 >
-                  <Typography variant="h6">RM {numberWithCommas(+item?.investVal)}</Typography>
+                  <Typography variant="h5">RM {numberWithCommas(+item?.amount)}</Typography>
                   <Typography
                     variant="h6"
                     sx={{
@@ -79,7 +86,7 @@ const CardSlot = () => {
                       pl: 1
                     }}
                   >
-                    Invested {+item?.investVal / 1000} Slot
+                    = Invested {+item?.amount / 1000} Slot
                   </Typography>
                 </Stack>
 
@@ -105,7 +112,7 @@ const CardSlot = () => {
                         textAlign: 'start'
                       }}
                     >
-                      RM {numberWithCommas(+item?.investVal * 0.33)}
+                      RM {numberWithCommas((+item?.amount * checkRoi(item?.amount)) / 100)}
                     </Typography>
                     <Typography
                       variant="h6"
@@ -117,7 +124,7 @@ const CardSlot = () => {
                         pt: 1
                       }}
                     >
-                      ROI {checkRoi(+item?.investVal)}%
+                      ROI {checkRoi(+item?.amount)}%
                     </Typography>
                   </Box>
                 </Stack>
@@ -157,13 +164,14 @@ const CardSlot = () => {
                         <AnimateButton>
                           <Button
                             // fullWidth
-                            // disabled={isSuccess ? false : true}
+                            disabled={item?.status == 'pending' ? false : true}
                             endIcon={'🔍'}
                             variant="contained"
                             type="submit"
                             // onClick={handleNext}
+                            sx={{ textTransform: 'uppercase' }}
                           >
-                            APPROVAL
+                            {item?.status}
                           </Button>
                         </AnimateButton>
                       </Box>

@@ -194,7 +194,15 @@ function SwipeableEdgeDrawer({ open, handleToggle }) {
                       }}
                     >
                       <Paper square elevation={0} sx={{ p: 3 }}>
-                        <Typography>All steps completed - you&apos;re finished</Typography>
+                        <Typography variant="h5">
+                          <strong>ALL STEPS COMPLETED</strong>
+                        </Typography>
+                        <Typography variant="caption">
+                          <br />
+                          {`your slot's will be review within 24 hours working day`}
+                          <br />
+                          <br />
+                        </Typography>
                         <Stack
                           direction={matchDownSM ? 'column' : 'row'}
                           sx={{

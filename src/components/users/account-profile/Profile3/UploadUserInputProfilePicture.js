@@ -58,7 +58,6 @@ const UploadUserInputProfilePicture = () => {
     fileReader.readAsDataURL(e.target.files[0]);
   };
 
-
   return (
     <>
       <Grid container spacing={2}>

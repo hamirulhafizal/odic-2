@@ -198,7 +198,8 @@ const ProfileSection = () => {
                         <Stack direction="row" spacing={0.5} alignItems="center">
                           <Typography variant="h4">Good Day,</Typography>
                           <Typography component="span" variant="h4" sx={{ wordWrap: 'break-word', fontWeight: 400 }}>
-                            {user ? user.name.slice(0, 10) + '..' : 'OD'}
+                            {/* {user ? user.name.slice(0, 10) + '..' : 'OD'} */}
+                            {user?.username}
                           </Typography>
                         </Stack>
                         <Typography variant="subtitle2">OD Legacy</Typography>
@@ -264,7 +265,7 @@ const ProfileSection = () => {
                               router.push(`/profile`);
                             }}
                           >
-                            <ListItemIcon sx={{ color: user?.phone == null && 'white' }}>
+                            <ListItemIcon sx={{ color: user?.phone_no == null && 'black' }}>
                               <IconSettings stroke={1.5} size="1.3rem" />
                             </ListItemIcon>
                             <ListItemText primary={<Typography>Account Settings</Typography>} />

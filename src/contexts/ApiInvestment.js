@@ -17,6 +17,30 @@ const createInvestment = async (form_data) => {
   return response;
 };
 
+const getInvestments = async (username) => {
+  const response = await axiosInstance
+    .post(`${BACKEND_PATH}/api/investments`, username)
+    .then(async (res) => {
+      return res;
+    })
+    .catch((err) => {
+      return err;
+    });
+  return response;
+};
+
+const getAllInvestment = async (username) => {
+  const response = await axiosInstance
+    .get(`${BACKEND_PATH}/api/investments/${username}`)
+    .then(async (res) => {
+      return res;
+    })
+    .catch((err) => {
+      return err;
+    });
+  return response;
+};
+
 const setProduct = async (form_data) => {
   const response = await axiosInstance
     .post(`${BACKEND_PATH}/api/v1/inventory/`, form_data)
@@ -157,5 +181,7 @@ export {
   deleteListingById,
   getAllProfileAgent,
   getListsbyQuery,
-  createInvestment
+  createInvestment,
+  getInvestments,
+  getAllInvestment
 };

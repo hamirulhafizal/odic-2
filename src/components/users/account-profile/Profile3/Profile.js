@@ -49,14 +49,16 @@ const Profile = ({ ...others }) => {
         email: user?.email || '',
         phone_no: user?.phone_no || '',
         bank_name: user?.bank_name || '',
-        bank_account: user?.bank_account || ''
+        bank_account: user?.bank_account || '',
+        identity_card_no: user?.identity_card_no || ''
       }}
       validator={() => ({})}
       validationSchema={Yup.object().shape({
         fullName: Yup.string().required(),
         phone_no: Yup.number().required(),
         bank_name: Yup.string().required(),
-        bank_account: Yup.string().required()
+        bank_account: Yup.string().required(),
+        identity_card_no: Yup.string().required()
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         if (!values.fullName) setErrors({ fullName: 'Required' });
@@ -109,16 +111,12 @@ const Profile = ({ ...others }) => {
           <Form noValidate onSubmit={handleSubmit} {...others}>
             <Grid container spacing={gridSpacing}>
               <Grid item sm={6} md={4}>
-                <SubCard title="Profile Picture" contentSX={{ textAlign: 'center' }}>
-                  <UploadUserInput htmlFor="ProfilePicture" />
-                </SubCard>
-
-                <SubCard title="IC Picture" contentSX={{ textAlign: 'center' }}>
+                <SubCard title="*IC Picture" contentSX={{ textAlign: 'center' }}>
                   <UploadUserInput htmlFor="ICPicture" />
                 </SubCard>
               </Grid>
               <Grid item sm={6} md={8}>
-                <SubCard title="Edit Account Details">
+                <SubCard title="*Edit Account Details">
                   <Grid container spacing={gridSpacing}>
                     <Grid item xs={12} md={12}>
                       <TextField
@@ -140,6 +138,30 @@ const Profile = ({ ...others }) => {
                     <Grid item xs={12} md={6}>
                       <TextField
                         fullWidth
+                        id="identity_card_no"
+                        label="No IC"
+                        name="identity_card_no"
+                        type="text"
+                        required
+                        placeholder="970105015223"
+                        value={values.identity_card_no}
+                        onBlur={handleBlur}
+                        onChange={handleChange}
+                        error={user?.identity_card_no ? false : true}
+                        sx={{
+                          '& .MuiFormHelperText-root ': {
+                            color: 'red'
+                          }
+                        }}
+                        helperText={
+                          errors.identity_card_no && touched.identity_card_no && String(errors.identity_card_no && 'No IC is required')
+                        }
+                      />
+                    </Grid>
+
+                    <Grid item xs={12} md={6}>
+                      <TextField
+                        fullWidth
                         id="phone_no"
                         label="Phone"
                         name="phone_no"
@@ -155,7 +177,24 @@ const Profile = ({ ...others }) => {
                             color: 'red'
                           }
                         }}
-                        helperText={errors.phone_no && touched.phone_no && String(errors.phone_no)}
+                        helperText={errors.phone_no && touched.phone_no && String(errors.phone_no && 'Phone is required')}
+                      />
+                    </Grid>
+
+                    <Grid item xs={12} md={6}>
+                      <TextField fullWidth disabled type="email" value={values.email} name="email" id="filled-disabled" label="Email" />
+                    </Grid>
+
+                    <Grid item xs={12} md={6}>
+                      <TextField
+                        fullWidth
+                        disabled
+                        type="text"
+                        value={user?.username}
+                        name="username"
+                        id="filled-disabled"
+                        label="username"
+                        aria-readonly
                       />
                     </Grid>
 
@@ -205,10 +244,6 @@ const Profile = ({ ...others }) => {
                       />
                     </Grid>
 
-                    <Grid item xs={12} md={6}>
-                      <TextField fullWidth disabled type="email" value={values.email} name="email" id="filled-disabled" label="Email" />
-                    </Grid>
-
                     <Grid item xs={12}>
                       <Stack direction="row">
                         <AnimateButton>
@@ -223,6 +258,9 @@ const Profile = ({ ...others }) => {
                       </Box>
                     </Grid>
                   </Grid>
+                </SubCard>
+                <SubCard title="Profile Picture" contentSX={{ textAlign: 'center' }}>
+                  <UploadUserInput htmlFor="ProfilePicture" />
                 </SubCard>
               </Grid>
             </Grid>

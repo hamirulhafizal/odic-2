@@ -65,6 +65,10 @@ const prodImage = '/assets/images/e-commerce';
 
 import ListIcon from '@mui/icons-material/List';
 import CardSlot from 'components/board/CardSlot';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import AddReactionOutlinedIcon from '@mui/icons-material/AddReactionOutlined';
+import AnimateButton from 'components/ui-component/extended/AnimateButton';
+import { getAllInvestment, getInvestments } from 'contexts/ApiInvestment';
 
 // table sort
 function descendingComparator(a, b, orderBy) {
@@ -443,21 +447,20 @@ const Listing = () => {
   const isSelected = (name) => selected.indexOf(name) !== -1;
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows?.length) : 0;
 
-  // const fetchPrimaryPokemonData = async (categoryState, locationState, type, page) => {
-  //   try {
-  //     const querySet = { username: user?.user_name };
-  //     setLoading(true);
-  //     await getListsbyQuery(querySet, page).then((response) => {
-  //       let data = response.results;
-  //       setRows(data);
-  //       setLoading(false);
-  //     });
-  //   } catch (err) {
-  //     console.log(err);
-  //     setLoading(false);
-  //     setMessage(true);
-  //   }
-  // };
+  const fetchAllInvestment = async (username) => {
+    try {
+      setLoading(true);
+      await getAllInvestment(username).then((response) => {
+        let results = response.data;
+        setRows(results);
+        setLoading(false);
+      });
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+      setMessage(true);
+    }
+  };
 
   const handleSwipe = () => {
     const btnAdd = document.getElementById('ButtonAddInvest');
@@ -469,10 +472,9 @@ const Listing = () => {
   };
 
   React.useEffect(() => {
-    // fetchPrimaryPokemonData(categoryState, locationState, typeState.value, 1);
-    // slotState?.aggrement == undefined && handleSlot();
+    fetchAllInvestment(user?.username);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [user]);
 
   React.useEffect(() => {
     // dispatch(getProducts(user?.user_name));
@@ -499,100 +501,112 @@ const Listing = () => {
         }
         content={false}
         contentSX={{ p: 0 }}
-        sx={{ textAlign: 'center' }}
+        sx={{ textAlign: 'center', mb: matchDownSM ? '30%' : '5%' }}
       >
         <CardContent>
-          {/* {products?.length != 0 && (
-            <>
-              <Stack
-                direction="column"
-                sx={{
-                  justifyContent: 'center',
-                  alignItems: 'center'
-                }}
-              >
+          <Stack
+            direction="column"
+            sx={{
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+          >
+            {!user?.identity_card ? (
+              <>
                 <Typography
-                  variant="h4"
+                  variant="h5"
+                  fontWeight={'normal'}
+                  textAlign={'center'}
                   onClick={() => {
-                    handleSwipe();
+                    router.push('profile');
                   }}
                 >
-                  Start
+                  Dear Investor, <br />
+                  we are excited to welcome you to our <br />
+                  <strong>ODIC</strong> investment platform.
+                  <br />
+                  <br />
+                  Before you begin investing,
+                  <br /> we need to verify your identity.
+                  <br />
+                  <br />
+                  Please <strong>upload your IC</strong> to complete <br />
+                  the verification process and grow your wealth by start investing.
+                  <br />
+                  <br />
                 </Typography>
-                <IconButton
-                  onClick={() => {
-                    handleSwipe();
-                  }}
-                  aria-label="delete"
-                  sx={{
-                    mt: 1,
-                    maxWidth: 'max-content',
-                    backgroundColor: '#b5a837',
-                    boxShadow: '0px 3px 5px -1px rgb(0 0 0 / 20%), 0px 6px 10px 0px rgb(0 0 0 / 14%), 0px 1px 18px 0px rgb(0 0 0 / 12%)',
-                    '&:hover': {
-                      backgroundColor: '#b5a837'
-                    }
-                  }}
-                  size="small"
-                >
-                  <AddIcon sx={{ color: 'white' }} fontSize="small" />
-                </IconButton>
-              </Stack>
-            </>
-          )} */}
-
-          {slot.length == 0 ? (
-            <Stack
-              direction="column"
-              sx={{
-                justifyContent: 'center',
-                alignItems: 'center'
-              }}
-            >
-              <Typography
-                variant="h4"
-                onClick={() => {
-                  handleSwipe();
-                }}
-              >
-                Start
-              </Typography>
-              <IconButton
-                onClick={() => {
-                  handleSwipe();
-                }}
-                aria-label="delete"
-                sx={{
-                  mt: 1,
-                  maxWidth: 'max-content',
-                  backgroundColor: '#b5a837',
-                  boxShadow: '0px 3px 5px -1px rgb(0 0 0 / 20%), 0px 6px 10px 0px rgb(0 0 0 / 14%), 0px 1px 18px 0px rgb(0 0 0 / 12%)',
-                  '&:hover': {
-                    backgroundColor: '#b5a837'
-                  }
-                }}
-                size="small"
-              >
-                <AddIcon sx={{ color: 'white' }} fontSize="small" />
-              </IconButton>
-            </Stack>
-          ) : (
-            <>
-              <Button onClick={handleClear} variant="contained" sx={{ mb: 3 }}>
+                <AnimateButton>
+                  <IconButton
+                    onClick={() => {
+                      router.push('profile');
+                    }}
+                    aria-label="delete"
+                    sx={{
+                      maxWidth: 'max-content',
+                      backgroundColor: '#b5a837',
+                      boxShadow: '0px 3px 5px -1px rgb(0 0 0 / 20%), 0px 6px 10px 0px rgb(0 0 0 / 14%), 0px 1px 18px 0px rgb(0 0 0 / 12%)',
+                      '&:hover': {
+                        backgroundColor: '#b5a837'
+                      }
+                    }}
+                    size="medium"
+                  >
+                    <AddReactionOutlinedIcon sx={{ color: 'white' }} fontSize="medium" />
+                  </IconButton>
+                </AnimateButton>
+              </>
+            ) : (
+              <>
+                {rows?.length == 0 ? (
+                  <>
+                    <Typography
+                      variant="h4"
+                      onClick={() => {
+                        handleSwipe();
+                      }}
+                    >
+                      Start
+                    </Typography>
+                    <IconButton
+                      onClick={() => {
+                        handleSwipe();
+                      }}
+                      aria-label="delete"
+                      sx={{
+                        mt: 1,
+                        maxWidth: 'max-content',
+                        backgroundColor: '#b5a837',
+                        boxShadow:
+                          '0px 3px 5px -1px rgb(0 0 0 / 20%), 0px 6px 10px 0px rgb(0 0 0 / 14%), 0px 1px 18px 0px rgb(0 0 0 / 12%)',
+                        '&:hover': {
+                          backgroundColor: '#b5a837'
+                        }
+                      }}
+                      size="small"
+                    >
+                      <AddIcon sx={{ color: 'white' }} fontSize="small" />
+                    </IconButton>{' '}
+                  </>
+                ) : (
+                  <>
+                    {/* <Button onClick={handleClear} variant="contained" sx={{ mb: 3 }}>
                 CLEAR
-              </Button>
-              <Stack
-                direction="column"
-                sx={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  gap: '20px'
-                }}
-              >
-                <CardSlot />
-              </Stack>
-            </>
-          )}
+              </Button> */}
+                    <Stack
+                      direction="column"
+                      sx={{
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        gap: '3em'
+                      }}
+                    >
+                      <CardSlot data={rows} />
+                    </Stack>
+                  </>
+                )}
+              </>
+            )}
+          </Stack>
         </CardContent>
       </MainCard>
 

@@ -27,7 +27,6 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 
 // assets
-import LinkIcon from '@mui/icons-material/Link';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 import InvestFormula from './InvestFormula';
@@ -61,17 +60,6 @@ const BankAcc = ({ handleNext, handleBack, index }) => {
     },
     validationSchema,
     onSubmit: () => {
-      // dispatch(
-      //   openSnackbar({
-      //     open: true,
-      //     message: 'Submit Success',
-      //     variant: 'alert',
-      //     alert: {
-      //       color: 'success'
-      //     },
-      //     close: false
-      //   })
-      // );
       handleNext();
     }
   });
@@ -108,7 +96,7 @@ const BankAcc = ({ handleNext, handleBack, index }) => {
             }}
           >
             <AnimateButton>
-              <Button startIcon={<ArrowBackIcon />} variant="contained" onClick={handleBack}>
+              <Button disabled={!isImg ? false : true} startIcon={<ArrowBackIcon />} variant="contained" onClick={handleBack}>
                 BACK
               </Button>
             </AnimateButton>

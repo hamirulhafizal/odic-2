@@ -62,27 +62,6 @@ const Bank = () => {
           <Grid container spacing={gridSpacing}>
             <Grid item xs={12}>
               <Grid container spacing={1} alignItems="center" justifyContent="space-between">
-                {/* <Grid item>
-                  <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
-                    <CardMedia component="img" image={imageVisa} title="payment" sx={{ width: 65 }} />
-                    <Stack>
-                      <Typography variant="subtitle1">Visa card</Typography>
-                      <Typography variant="subtitle2">Ending in 5269 07XX XXXX 8110</Typography>
-                    </Stack>
-                  </Stack>
-                </Grid> */}
-                {/* <Grid item>
-                  <Stack direction="row" justifyContent="flex-end" alignItems="center" spacing={1}>
-                    <Chip label="Default" size="small" />
-                    <Typography variant="caption" sx={{ color: 'grey.300' }}>
-                      |
-                    </Typography>
-                    <MuiLink component={Link} href="#" underline="hover">
-                      Edit
-                    </MuiLink>
-                  </Stack>
-                </Grid> */}
-
                 <SubCard title="" contentSX={{ textAlign: 'center' }}>
                   <UploadUserInput htmlFor="BankPicture" />
                 </SubCard>
@@ -91,34 +70,6 @@ const Bank = () => {
           </Grid>
         </SubCard>
       </Grid>
-      {/* <Grid item xs={12}>
-        <SubCard sx={{ overflowX: 'auto' }} title="Billing History" content={false}>
-          <TableContainer>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell sx={{ pl: 3 }}>Order No.</TableCell>
-                  <TableCell>Date</TableCell>
-                  <TableCell>Price</TableCell>
-                  <TableCell sx={{ pr: 3 }}>Status</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows.map((row, index) => (
-                  <TableRow hover key={index}>
-                    <TableCell sx={{ pl: 3 }}>{row.tid}</TableCell>
-                    <TableCell>{row.date}</TableCell>
-                    <TableCell>{row.amount}</TableCell>
-                    <TableCell sx={{ pr: 3 }}>
-                      <Chip chipcolor={row.badgeType} label={row.badgeText} size="small" />
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </SubCard>
-      </Grid> */}
     </Grid>
   );
 };

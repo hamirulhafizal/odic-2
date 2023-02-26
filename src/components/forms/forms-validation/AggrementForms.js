@@ -7,11 +7,7 @@ import { Avatar, Box, Button, CircularProgress, Dialog, Grid, IconButton, Slide,
 // project imports
 import MainCard from 'components/ui-component/cards/MainCard';
 import AnimateButton from 'components/ui-component/extended/AnimateButton';
-import { openSnackbar } from 'store/slices/snackbar';
 import { gridSpacing } from 'store/constant';
-
-// third-party
-import * as yup from 'yup';
 
 // assets
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
@@ -19,7 +15,6 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
 import CancelIcon from '@mui/icons-material/Cancel';
-import ScreenRotationIcon from '@mui/icons-material/ScreenRotation';
 import ClearIcon from '@mui/icons-material/Clear';
 import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
@@ -29,14 +24,10 @@ import SignatureCanvas from 'react-signature-canvas';
 
 import { useReactToPrint } from 'react-to-print';
 import ComponentToPrint from './ComponentToPrint';
-import { dispatch } from 'store';
-import { getSlot } from 'store/slices/product';
 import { getSlotData } from 'store/slices/product';
 import moment from 'moment';
-import axiosInstance from 'contexts/axios';
 import useAuth from 'hooks/useAuth';
 import { createInvestment } from 'contexts/ApiInvestment';
-import { stringifyFile } from 'utils/helper';
 
 // ==============================|| FORM VALIDATION - LOGIN FORMIK  ||============================== //
 
@@ -61,6 +52,7 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
   const [loadingSubmit, setLoadingSubmit] = useState(false);
   const [isSubmit, setSubmit] = useState(false);
   const [isSuccess, setSuccessMessage] = useState('');
+  const [isError, setErrMessage] = useState('');
 
   const [text, setText] = useState('old boring text');
   const [isDoc, setDoc] = useState(false);
@@ -68,26 +60,49 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
 
   const { user } = useAuth();
 
-  // const handleFormInvestment = (formData) => {
-  //   return axiosInstance.post('https://app.onedreamproperty.net/api/investments', formData);
-  // };
-
   const handleSubmitAggrement = async () => {
+    const amount = localStorage.getItem('investVal');
+    const investVal = localStorage.getItem('investVal');
+    const resitUpload = localStorage.getItem('resitUpload');
+
+    const formData = new FormData();
+
     setLoadingSubmit(true);
     setSubmit(true);
-
-    const resitBank = JSON.parse(localStorage.getItem('resitUploadimg'));
-    const amount = localStorage.getItem('investVal');
-    const formData = new FormData();
 
     formData.append('amount', amount);
     formData.append('username', user?.username);
     formData.append('receipt', receipt);
 
+    // const todayDate = moment().format('DD MMM YYYY h:mma');
+    const todayDate = moment().format('DD MMM YYYY');
+    const todayTime = moment().format('H');
+
+    const dividenDate = moment(todayDate).add({ years: 1, months: 2 });
+
+    const slot1 = {
+      aggrement: true,
+      investVal: investVal,
+      resitUpload: resitUpload,
+      created_date: todayDate,
+      created_time: todayTime,
+      dividenDate: dividenDate
+    };
+
+    dispatch(getSlotData(slot1));
+
     await createInvestment(formData).then((res) => {
-      if (res.status == 200) {
+      if (res?.status == 200) {
         localStorage.removeItem('investVal');
         localStorage.removeItem('resitUploadimg');
+        localStorage.removeItem('resitUpload');
+        setSubmit(false);
+        setLoadingSubmit(false);
+        setSuccessMessage('UPLOAD');
+      } else {
+        setLoadingSubmit(false);
+        setErrMessage('ERROR');
+        setSuccessMessage('');
       }
     });
   };
@@ -120,6 +135,7 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
   };
 
   const handleAfterPrint = useCallback(() => {
+    setLoading(false);
     setPreview(true);
   }, []);
 
@@ -135,7 +151,6 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
       onBeforeGetContentResolve.current = resolve;
 
       setTimeout(() => {
-        setLoading(false);
         setText('New, Updated Text!');
         resolve();
       }, 2000);
@@ -167,7 +182,6 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
 
       if (document) {
         const html = document.getElementsByTagName('html')[0];
-
         await html2pdf().set(opt).from(html).save();
       }
     }
@@ -178,66 +192,8 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
       onBeforeGetContentResolve.current();
     }
 
-    if (isSubmit) {
-      setTimeout(() => {
-        setLoadingSubmit(false);
-        setSubmit(true);
-        setSuccessMessage('UPLOAD');
-        const aggrement = localStorage.setItem('aggrement', true);
-        const investVal = localStorage.getItem('investVal');
-        const resitUpload = localStorage.getItem('resitUpload');
-
-        // const todayDate = moment().format('DD MMM YYYY h:mma');
-        const todayDate = moment().format('DD MMM YYYY');
-        const todayTime = moment().format('H');
-
-        const dividenDate = moment(todayDate).add({ years: 1, months: 2 });
-
-        const slot1 = {
-          aggrement: true,
-          investVal: investVal,
-          resitUpload: resitUpload,
-          created_date: todayDate,
-          created_time: todayTime,
-          dividenDate: dividenDate
-        };
-
-        dispatch(getSlotData(slot1));
-
-        // dispatch(
-        //   openSnackbar({
-        //     open: true,
-        //     message: 'Submit Success',
-        //     variant: 'alert',
-        //     alert: {
-        //       color: 'success'
-        //     },
-        //     close: false
-        //   })
-        // );
-      }, 3000);
-
-      // await updateProfile(user?.user_name, formData)
-      //   .then((res) => {
-      //     setLoadingSubmit(false);
-      //     setSubmit(false);
-      //     setSuccessMessage('UPLOAD');
-      //   })
-      //   .catch((err) => {
-      //     setLoadingSubmit(false);
-      //     setMessage('Something when wrong, please try again');
-      //     setSubmit(false);
-      //   });
-    }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onBeforeGetContentResolve.current, text, isSubmit]);
-
-  // console.log('isSubmit', isSubmit);
-  // console.log('isSuccess', isSuccess);
-  // console.log('isSign?.trimmedDataURL', isSign?.trimmedDataURL !== null);
-
-  console.log('slot', slot);
 
   return (
     <>
@@ -259,41 +215,46 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
         >
           {isSign?.trimmedDataURL !== null ? (
             <>
-              <AnimateButton>
-                <Button
-                  variant="contained"
-                  component="label"
-                  type="submit"
-                  size="small"
-                  endIcon={
-                    loading ? <CircularProgress sx={{ color: 'white', position: 'relative', left: '10%' }} size={20} /> : <DownloadIcon />
-                  }
-                  onClick={() => {
-                    handlePrint();
-                  }}
-                >
-                  {loading ? 'LOADING...' : 'DOWNLOAD'}
-                </Button>
-              </AnimateButton>
-
-              {isSuccess ? (
-                <AnimateButton>
-                  <Button
-                    endIcon={<CheckCircleOutlineIcon />}
-                    sx={{
-                      '&.Mui-disabled': {
-                        color: 'white',
-                        backgroundColor: 'green',
-                        opacity: 0.5
+              {isSuccess == 'UPLOAD' ? (
+                <>
+                  <AnimateButton>
+                    <Button
+                      variant="contained"
+                      component="label"
+                      type="submit"
+                      size="small"
+                      endIcon={
+                        loading ? (
+                          <CircularProgress sx={{ color: 'white', position: 'relative', left: '10%' }} size={20} />
+                        ) : (
+                          <DownloadIcon />
+                        )
                       }
-                    }}
-                    variant="contained"
-                    size="small"
-                    disabled
-                  >
-                    {isSuccess}
-                  </Button>
-                </AnimateButton>
+                      onClick={() => {
+                        handlePrint();
+                      }}
+                    >
+                      {loading ? 'LOADING...' : 'DOWNLOAD'}
+                    </Button>
+                  </AnimateButton>
+                  <AnimateButton>
+                    <Button
+                      endIcon={<CheckCircleOutlineIcon />}
+                      sx={{
+                        '&.Mui-disabled': {
+                          color: 'white',
+                          backgroundColor: 'green',
+                          opacity: 0.5
+                        }
+                      }}
+                      variant="contained"
+                      size="small"
+                      disabled
+                    >
+                      {isSuccess}
+                    </Button>
+                  </AnimateButton>
+                </>
               ) : (
                 <>
                   <AnimateButton>
@@ -312,6 +273,8 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
                   </AnimateButton>
                 </>
               )}
+
+              {/* {isError} */}
             </>
           ) : (
             <>
@@ -360,7 +323,7 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
                   }}
                 >
                   <ComponentToPrint ref={componentRef} isPreview={isPreview}>
-                    {!isSubmit ? (
+                    {isSuccess != 'UPLOAD' ? (
                       <Box
                         sx={{
                           width: '100%',
@@ -470,7 +433,7 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
             }}
           >
             <AnimateButton>
-              <Button startIcon={<ArrowBackIcon />} variant="contained" onClick={handleBack}>
+              <Button disabled={!isSuccess ? false : true} startIcon={<ArrowBackIcon />} variant="contained" onClick={handleBack}>
                 BACK
               </Button>
             </AnimateButton>
@@ -523,20 +486,6 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
           />
         </IconButton>
         <Box>
-          {/* {window.innerHeight > window.innerWidth && (
-            <Button
-              fullWidth
-              variant="text"
-              component="label"
-              color="secondary"
-              endIcon={<ScreenRotationIcon />}
-              sx={{ pb: 3, color: 'white', backgroundColor: 'black' }}
-            >
-              For best Signature,
-              <br /> rotate your Mobile !
-            </Button>
-          )} */}
-
           <Stack
             sx={{
               flexDirection: 'row',

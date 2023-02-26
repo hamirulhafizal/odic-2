@@ -15,6 +15,7 @@ import {
 import React from 'react';
 
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import AnimateButton from 'components/ui-component/extended/AnimateButton';
 
 const HtmlTooltip = styled(({ className, ...props }) => <Tooltip {...props} classes={{ popper: className }} />)(({ theme }) => ({
   [`& .${tooltipClasses.tooltip}`]: {
@@ -105,55 +106,57 @@ const BankQr = ({ value, children }) => {
             </Typography>
 
             <ClickAwayListener onClickAway={handleBankTooltipClose}>
-              <IconButton
-                size="small"
-                aria-label="delete"
-                variant="contained"
-                sx={{
-                  backgroundColor: '#b5a837',
-                  ml: 1,
-                  boxShadow: '0px 3px 1px -2px rgb(0 0 0/20%) , 0px 2px 2px 0px rgb(0 0 0/14%) , 0px 1px 5px 0px rgb(0 0 0/12%)',
-                  '&:hover': {
-                    backgroundColor: 'green',
-                    color: 'white !important'
-                  }
-                }}
-                onClick={() => {
-                  handleBankTooltipOpen();
-                }}
-              >
-                <HtmlTooltip
-                  arrow
-                  placement="bottom-end"
-                  disableFocusListener
-                  disableHoverListener
-                  disableTouchListener
-                  onClose={handleBankTooltipClose}
-                  open={openBank}
-                  title={
-                    <>
-                      <Typography
-                        variant="h5"
-                        sx={{
-                          color: 'white'
-                        }}
-                      >
-                        Copied !
-                      </Typography>
-                    </>
-                  }
+              <AnimateButton>
+                <IconButton
+                  size="small"
+                  aria-label="delete"
+                  variant="contained"
+                  sx={{
+                    backgroundColor: '#b5a837',
+                    ml: 1,
+                    boxShadow: '0px 3px 1px -2px rgb(0 0 0/20%) , 0px 2px 2px 0px rgb(0 0 0/14%) , 0px 1px 5px 0px rgb(0 0 0/12%)',
+                    '&:hover': {
+                      backgroundColor: 'green',
+                      color: 'white !important'
+                    }
+                  }}
+                  onClick={() => {
+                    handleBankTooltipOpen();
+                  }}
                 >
-                  <ContentCopyIcon
-                    sx={{
-                      color: 'white',
-                      '&:hover': {
-                        color: 'white !important'
-                      }
-                    }}
-                    fontSize="small"
-                  />
-                </HtmlTooltip>
-              </IconButton>
+                  <HtmlTooltip
+                    arrow
+                    placement="bottom-end"
+                    disableFocusListener
+                    disableHoverListener
+                    disableTouchListener
+                    onClose={handleBankTooltipClose}
+                    open={openBank}
+                    title={
+                      <>
+                        <Typography
+                          variant="h5"
+                          sx={{
+                            color: 'white'
+                          }}
+                        >
+                          Copied !
+                        </Typography>
+                      </>
+                    }
+                  >
+                    <ContentCopyIcon
+                      sx={{
+                        color: 'white',
+                        '&:hover': {
+                          color: 'white !important'
+                        }
+                      }}
+                      fontSize="small"
+                    />
+                  </HtmlTooltip>
+                </IconButton>
+              </AnimateButton>
             </ClickAwayListener>
           </Box>
         </Stack>

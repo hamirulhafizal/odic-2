@@ -231,7 +231,6 @@ export function editAddress(address) {
 export function getSlotData(obj) {
   return async (dispatch) => {
     try {
-      // const response = await axios.post('/api/address/edit', id);
       dispatch(slice.actions.getSlot(obj));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
@@ -262,7 +261,6 @@ export function resetAllSlot() {
 }
 
 export const getReceiptImg = (obj) => {
-  console.log('obj', obj);
   return async (dispatch) => {
     try {
       // const response = await axios.post('/api/address/edit', id);

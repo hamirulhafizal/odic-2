@@ -135,7 +135,14 @@ const InvestForms = ({ handleNext, handleBack, index }) => {
                     textAlign: 'initial'
                   }}
                   variant="caption"
-                  control={<Checkbox defaultChecked />}
+                  control={
+                    <Checkbox
+                      defaultChecked
+                      onClick={() => {
+                        handleCheckBox(!isChecked);
+                      }}
+                    />
+                  }
                   label={`By ticking this Box, your agreed with our T&C`}
                 />
               </Box>

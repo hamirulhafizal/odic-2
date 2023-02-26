@@ -33,8 +33,6 @@ const UploadUserInput = ({ htmlFor }) => {
         htmlFor == 'ProfilePicture' && formData.append('profile_image', photo1);
         htmlFor == 'ICPicture' && formData.append('identity_card', photo2);
 
-        console.log('photo2', photo2);
-
         await updateProfile(user?.username, formData).then((res) => {
           res?.status == '201' && htmlFor == 'ProfilePicture' ? setAvatarPreview1('') : setAvatarPreview2('');
 
@@ -104,7 +102,13 @@ const UploadUserInput = ({ htmlFor }) => {
           {htmlFor == 'ICPicture' && (
             <Avatar
               alt={user?.nickname}
-              src={avatarPreview2 || `https://app.onedreamproperty.net/profile/${user?.identity_card}`}
+              src={
+                user?.identity_card !== null
+                  ? avatarPreview2
+                    ? avatarPreview2
+                    : `https://app.onedreamproperty.net/profile/${user?.identity_card}`
+                  : '/assets/sampleIc.PNG'
+              }
               sx={{
                 height: htmlFor == 'ICPicture' ? 150 : 100,
                 width: htmlFor == 'ICPicture' ? 250 : 100,
@@ -157,25 +161,42 @@ const UploadUserInput = ({ htmlFor }) => {
 
           {htmlFor == 'ICPicture' && (
             <>
-              <AnimateButton>
-                <InputLabel htmlFor="photo2">
-                  <Input
-                    accept="image/*"
-                    id="photo2"
-                    type="file"
-                    name="photo2"
-                    label="photo2"
-                    onChange={(e) => {
-                      console.log('masukl');
-                      preViewImage2(e);
-                      setFieldImgValue2(e.target.files[0]);
-                    }}
-                  ></Input>
-                  <Button color="secondary" sx={{ color: 'white' }} variant="contained" component="span">
-                    {'UPLOAD'}
-                  </Button>
-                </InputLabel>
-              </AnimateButton>
+              <Stack direction="row" sx={{ gap: 2, justifyContent: 'center' }}>
+                <AnimateButton>
+                  <InputLabel htmlFor="photo2">
+                    <Input
+                      accept="image/*"
+                      id="photo2"
+                      type="file"
+                      name="photo2"
+                      label="photo2"
+                      onChange={(e) => {
+                        preViewImage2(e);
+                        setFieldImgValue2(e.target.files[0]);
+                      }}
+                    ></Input>
+                    <Button color="secondary" sx={{ color: 'white' }} variant="contained" component="span">
+                      {'UPLOAD'}
+                    </Button>
+                  </InputLabel>
+                </AnimateButton>
+
+                {/* {user?.identity_card && (
+                  <AnimateButton>
+                    <Button color="error" sx={{ color: 'white' }} variant="contained" component="span"
+
+                    onClick={(()=>{
+
+
+
+
+                    })}
+                    >
+                      {'DELETE'}
+                    </Button>
+                  </AnimateButton>
+                )} */}
+              </Stack>
             </>
           )}
         </Grid>
