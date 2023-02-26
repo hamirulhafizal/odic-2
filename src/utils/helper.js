@@ -18,4 +18,12 @@ const filterByCategory = (param, objArray) => {
   });
 };
 
-export { slugify, numberWithCommas, filterByCategory };
+const stringifyFile = (obj) => {
+  const replacer = [];
+  for (const key in obj) {
+    replacer.push(key);
+  }
+  return JSON.stringify(obj, replacer);
+};
+
+export { slugify, numberWithCommas, filterByCategory, stringifyFile };

@@ -141,15 +141,15 @@ const ProfileSection = () => {
             overlap="circular"
             sx={{
               '& .MuiBadge-badge': {
-                backgroundColor: user?.phone ? '#44b700' : 'red',
-                color: user?.phone ? '#44b700' : 'red'
+                backgroundColor: user?.phone_no ? '#44b700' : 'red',
+                color: user?.phone_no ? '#44b700' : 'red'
               }
             }}
             anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
             variant="dot"
           >
             <Avatar
-              src={user?.photo}
+              src={`https://app.onedreamproperty.net/profile/${user?.profile_image}`}
               sx={{
                 ...theme.typography.mediumAvatar,
                 cursor: 'pointer'
@@ -198,7 +198,7 @@ const ProfileSection = () => {
                         <Stack direction="row" spacing={0.5} alignItems="center">
                           <Typography variant="h4">Good Day,</Typography>
                           <Typography component="span" variant="h4" sx={{ wordWrap: 'break-word', fontWeight: 400 }}>
-                            {user ? user.firstName.slice(0, 10) + '..' : 'OD'}
+                            {user ? user.name.slice(0, 10) + '..' : 'OD'}
                           </Typography>
                         </Stack>
                         <Typography variant="subtitle2">OD Legacy</Typography>
@@ -253,8 +253,8 @@ const ProfileSection = () => {
                           <ListItemButton
                             sx={{
                               borderRadius: `${borderRadius}px`,
-                              backgroundColor: user?.phone == null && 'red',
-                              color: user?.phone == null && 'white',
+                              backgroundColor: user?.phone_no == null && 'red',
+                              color: user?.phone_no == null && 'white',
                               '&:hover': {
                                 color: '#616161'
                               }

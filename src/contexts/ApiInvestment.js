@@ -1,15 +1,21 @@
 /* eslint-disable arrow-body-style */
 /* eslint-disable camelcase */
 
-// reducer - state management
-import { LOGIN, LOGOUT } from 'store/actions';
-
-// project imports
-import Loader from 'components/ui-component/Loader';
-
 import { BACKEND_PATH } from 'config';
 import axiosInstance from './axios';
-import axios, { Axios } from 'axios';
+import axios from 'axios';
+
+const createInvestment = async (form_data) => {
+  const response = await axiosInstance
+    .post(`${BACKEND_PATH}/api/investments`, form_data)
+    .then(async (res) => {
+      return res;
+    })
+    .catch((err) => {
+      return err;
+    });
+  return response;
+};
 
 const setProduct = async (form_data) => {
   const response = await axiosInstance
@@ -150,5 +156,6 @@ export {
   deletePhotoListingById,
   deleteListingById,
   getAllProfileAgent,
-  getListsbyQuery
+  getListsbyQuery,
+  createInvestment
 };

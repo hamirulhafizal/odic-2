@@ -9,7 +9,7 @@ import accountReducer from 'store/accountReducer';
 
 // project imports
 import Loader from 'components/ui-component/Loader';
-import axios from 'utils/axios';
+// import axios from 'utils/axios';
 
 import { BACKEND_PATH } from 'config';
 import axiosInstance from './axios';
@@ -17,7 +17,7 @@ import axiosInstance from './axios';
 //next
 import { useRouter } from 'next/router';
 import user from 'store/slices/user';
-import { Axios } from 'axios';
+import axios from 'axios';
 
 const initialState = {
   isLoggedIn: false,
@@ -71,18 +71,72 @@ export const ApiProvider = ({ children }) => {
       })
       .then(async (res) => {
         if (typeof window !== 'undefined') {
+          localStorage.setItem('access', res?.data?.token);
+          localStorage.setItem('refresh', res?.data?.token);
           axiosInstance.defaults.headers['Authorization'] = 'Bearer ' + localStorage.getItem('access');
-          localStorage.setItem('access', res?.data.token);
-          localStorage.setItem('refresh', res?.data.token);
         }
-        await getProfile(res?.data.username);
+
+        // login(email, password, user_name);
+        // updateProfile(user_name, { firstName: first_name, lastName: last_name });
+
+        // await getProfile(res?.data.username);
+
+        const {
+          token,
+          id,
+          name,
+          email,
+          email_verified_at,
+          phone_no,
+          profile_image,
+          bank_account,
+          bank_name,
+          username,
+          identity_card,
+          fullname,
+          identity_card_no,
+          verified_status,
+          referrel_url,
+          created_at,
+          updated_at
+        } = res?.data;
+
+        const users = {
+          token,
+          id,
+          name,
+          email,
+          email_verified_at,
+          phone_no,
+          profile_image,
+          bank_account,
+          bank_name,
+          username,
+          identity_card,
+          fullname,
+          identity_card_no,
+          verified_status,
+          referrel_url,
+          created_at,
+          updated_at
+        };
+        let usersData = JSON.stringify(users);
+        localStorage.setItem('users', usersData);
 
         dispatch({
           type: LOGIN,
           payload: {
-            isLoggedIn: true
+            isLoggedIn: true,
+            user: users
           }
         });
+
+        // dispatch({
+        //   payload: {
+        //     isLoggedIn: true,
+        //     user: users
+        //   }
+        // });
 
         history.push('/board');
 
@@ -109,34 +163,6 @@ export const ApiProvider = ({ children }) => {
       .then((res) => {
         const { token, email, name, phone_no, updated_at, created_at, id, username, referrel_url, verified_status, roles } = res;
 
-        console.log('res', res);
-
-        // "token": "2|Gh8hCRiV55B15sYxpDwsDiHrdCrrXc0AAX0kM2Yk",
-        // "username": "odic000002",
-        // "id": 2,
-
-        // const {
-        //   token,
-        //   email,
-        //   name,
-        //   phone_no,
-        //   updated_at
-        //   created_at,
-        //   id,
-        //   username,
-        //   referrel_url,
-        //   verified_status,
-        //   email_verified_at,
-        //   profile_image,
-        //   bank_account,
-        //   bank_name,
-        //   identity_card,
-        //   fullname,
-        //   identity_card_no,
-        // } = res;
-
-        // login(email, password, user_name);
-        // updateProfile(user_name, { firstName: first_name, lastName: last_name });
         history.push('/checkmail');
 
         return res;
@@ -228,8 +254,10 @@ export const ApiProvider = ({ children }) => {
   const updateProfile = async (username, formData) => {
     const response = await axiosInstance.post(`${BACKEND_PATH}/api/user-profile/edit/${username}`, formData).then((res) => {
       if (typeof window !== 'undefined') {
-        const users = JSON.stringify(res.data);
+        const users = JSON.stringify(res.data[0]);
         localStorage.setItem('users', users);
+
+        console.log('users--->', users);
 
         dispatch({
           payload: {

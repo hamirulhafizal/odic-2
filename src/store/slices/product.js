@@ -15,7 +15,8 @@ const initialState = {
   relatedProducts: [],
   reviews: [],
   addresses: [],
-  slot: []
+  slot: [],
+  receipt: null
 };
 
 const slice = createSlice({
@@ -77,9 +78,18 @@ const slice = createSlice({
       state.slot.push(action.payload);
     },
 
+    // EDIT SLOT
+    editSlot: (state, action) => {
+      state.slot.push(action.payload);
+    },
+
     // RESET CART
     resetSlot(state) {
       state.slot = initialState.slot;
+    },
+
+    getReceipt: (state, action) => {
+      state.receipt = action.payload;
     }
   }
 });
@@ -98,7 +108,9 @@ export const {
   addAddressSuccess,
   editAddressSuccess,
   getSlot,
-  resetSlot
+  editSlot,
+  resetSlot,
+  getReceipt
 } = slice.actions;
 
 // ----------------------------------------------------------------------ƒ
@@ -227,6 +239,17 @@ export function getSlotData(obj) {
   };
 }
 
+export function editSlotData(obj) {
+  return async (dispatch) => {
+    try {
+      // const response = await axios.post('/api/address/edit', id);
+      dispatch(slice.actions.editSlot(obj));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
+
 export function resetAllSlot() {
   return async (dispatch) => {
     try {
@@ -237,3 +260,15 @@ export function resetAllSlot() {
     }
   };
 }
+
+export const getReceiptImg = (obj) => {
+  console.log('obj', obj);
+  return async (dispatch) => {
+    try {
+      // const response = await axios.post('/api/address/edit', id);
+      dispatch(slice.actions.getReceipt(obj));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+};

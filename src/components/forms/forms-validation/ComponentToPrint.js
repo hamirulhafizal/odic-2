@@ -9,7 +9,6 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down('sm'));
   const { user } = useAuth();
-  const { firstName, lastName } = user;
 
   return (
     <>
@@ -47,9 +46,9 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
             </Typography>
 
             <Typography variant="h4" className="h3Title">
-              {firstName} {lastName}
+              {user.name}
               <br />
-              [NO K/P: 750611-01-5643]
+              [NO K/P: {user.identity_card_no}]
             </Typography>
             <br />
             <br />
@@ -95,7 +94,8 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
           <Stack direction="row" sx={{ width: '100%', textAlign: 'justify', color: 'black' }}>
             <Typography variant="p">
               <b style={{ textTransform: 'uppercase' }}>
-                {firstName} {lastName} (NO. K/P: 750611-01-5643)
+                {user.name}
+                (NO. K/P: {user.identity_card_no} )
               </b>{' '}
               yang beralamat di No 2 Jalan Haji Abu Husin Rahman, Kampung Desa Pahlawan, Jalan Kluang, 86100 Ayer Hitam, Johor (selepas ini
               dirujuk “Pihak Pertama”);
@@ -310,9 +310,7 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
               sx={{ width: matchDownSM && isPreview ? '50%' : '100%', textAlign: 'justify', color: 'black', justifyContent: 'end' }}
             >
               <Typography variant="p">
-                <b style={{ textTransform: 'uppercase' }}>
-                  {firstName} {lastName}
-                </b>
+                <b style={{ textTransform: 'uppercase' }}> {user.name}</b>
               </Typography>
             </Stack>
           </Box>

@@ -23,6 +23,7 @@ import SubCard from 'components/ui-component/cards/SubCard';
 import AnimateButton from 'components/ui-component/extended/AnimateButton';
 import Chip from 'components/ui-component/extended/Chip';
 import { gridSpacing } from 'store/constant';
+import UploadUserInput from './UploadUserInput';
 
 // assets
 const imageDiscover = '/assets/images/pages/card-discover.png';
@@ -61,16 +62,16 @@ const Bank = () => {
           <Grid container spacing={gridSpacing}>
             <Grid item xs={12}>
               <Grid container spacing={1} alignItems="center" justifyContent="space-between">
-                <Grid item>
+                {/* <Grid item>
                   <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
-                    {/* <CardMedia component="img" image={imageVisa} title="payment" sx={{ width: 65 }} /> */}
+                    <CardMedia component="img" image={imageVisa} title="payment" sx={{ width: 65 }} />
                     <Stack>
                       <Typography variant="subtitle1">Visa card</Typography>
                       <Typography variant="subtitle2">Ending in 5269 07XX XXXX 8110</Typography>
                     </Stack>
                   </Stack>
-                </Grid>
-                <Grid item>
+                </Grid> */}
+                {/* <Grid item>
                   <Stack direction="row" justifyContent="flex-end" alignItems="center" spacing={1}>
                     <Chip label="Default" size="small" />
                     <Typography variant="caption" sx={{ color: 'grey.300' }}>
@@ -80,7 +81,11 @@ const Bank = () => {
                       Edit
                     </MuiLink>
                   </Stack>
-                </Grid>
+                </Grid> */}
+
+                <SubCard title="" contentSX={{ textAlign: 'center' }}>
+                  <UploadUserInput htmlFor="BankPicture" />
+                </SubCard>
               </Grid>
             </Grid>
           </Grid>

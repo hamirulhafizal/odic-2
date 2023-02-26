@@ -1,5 +1,5 @@
 import { forwardRef, useRef, useState, useCallback, useEffect } from 'react';
-import { useDispatch } from 'store';
+import { useDispatch, useSelector } from 'store';
 
 // material-ui
 import { Avatar, Box, Button, CircularProgress, Dialog, Grid, IconButton, Slide, Stack, useMediaQuery, useTheme } from '@mui/material';
@@ -34,6 +34,9 @@ import { getSlot } from 'store/slices/product';
 import { getSlotData } from 'store/slices/product';
 import moment from 'moment';
 import axiosInstance from 'contexts/axios';
+import useAuth from 'hooks/useAuth';
+import { createInvestment } from 'contexts/ApiInvestment';
+import { stringifyFile } from 'utils/helper';
 
 // ==============================|| FORM VALIDATION - LOGIN FORMIK  ||============================== //
 
@@ -43,6 +46,7 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 const AggrementForms = ({ handleNext, handleBack, index }) => {
   const dispatch = useDispatch();
+  const { slot, receipt } = useSelector((state) => state.product);
   const signRef = useRef(null);
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down('sm'));
@@ -62,19 +66,30 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
   const [isDoc, setDoc] = useState(false);
   const [isPreview, setPreview] = useState(true);
 
-  const handleFormInvestment = (formData) => {
-    return axiosInstance.post('https://app.onedreamproperty.net/api/investments', formData);
-  };
+  const { user } = useAuth();
 
-  const handleSubmitAggrement = () => {
+  // const handleFormInvestment = (formData) => {
+  //   return axiosInstance.post('https://app.onedreamproperty.net/api/investments', formData);
+  // };
+
+  const handleSubmitAggrement = async () => {
     setLoadingSubmit(true);
     setSubmit(true);
 
-    const formData = {
-      amount: 1000,
-      username: 'odic000002'
-    };
-    handleFormInvestment(formData);
+    const resitBank = JSON.parse(localStorage.getItem('resitUploadimg'));
+    const amount = localStorage.getItem('investVal');
+    const formData = new FormData();
+
+    formData.append('amount', amount);
+    formData.append('username', user?.username);
+    formData.append('receipt', receipt);
+
+    await createInvestment(formData).then((res) => {
+      if (res.status == 200) {
+        localStorage.removeItem('investVal');
+        localStorage.removeItem('resitUploadimg');
+      }
+    });
   };
 
   const handleClickOpen = () => {
@@ -221,6 +236,8 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
   // console.log('isSubmit', isSubmit);
   // console.log('isSuccess', isSuccess);
   // console.log('isSign?.trimmedDataURL', isSign?.trimmedDataURL !== null);
+
+  console.log('slot', slot);
 
   return (
     <>

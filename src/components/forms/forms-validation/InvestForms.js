@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { useDispatch } from 'store';
+import { useDispatch, useSelector } from 'store';
 
 // material-ui
 import {
@@ -33,6 +33,8 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 import InvestFormula from './InvestFormula';
 
+import { getSlot, editSlot } from 'store/slices/product';
+
 /**
  * 'Enter your email'
  * yup.string Expected 0 arguments, but got 1 */
@@ -44,6 +46,8 @@ const validationSchema = yup.object({
 
 const InvestForms = ({ handleNext, handleBack, index }) => {
   const dispatch = useDispatch();
+  const slotState = useSelector((state) => state.slot);
+
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down('sm'));
 

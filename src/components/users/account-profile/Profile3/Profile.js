@@ -41,55 +41,25 @@ const Profile = ({ ...others }) => {
 
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
 
-  // "id": 2,
-  // "name": "Hamirul",
-  // "email": "hamirul@odic.com",
-  // "email_verified_at": null,
-  // "phone_no": null,
-  // "profile_image": null,
-  // "bank_account": "984751620500",
-  // "bank_name": "CIMB BANK",
-  // "username": "odic000002",
-  // "identity_card": null,
-  // "fullname": "HAMIRUL HAFIZAL",
-  // "identity_card_no": "940910086019",
-  // "verified_status": "Pending",
-  // "referrel_url": "https://onedreamproperty/odic000002",
-
   return (
     <Formik
       enableReinitialize={Boolean(true)}
       initialValues={{
-        firstName: user?.firstName || '',
-        lastName: user?.lastName || '',
-        fullName: user?.fullName || '',
+        fullName: user?.name || '',
         email: user?.email || '',
-        phone: user?.phone || '',
-        description:
-          user?.description ||
-          `Nama saya ${user?.firstName} ${user?.lastName}.
-          Saya merupakan agent sah aktif One Dream Property.
-          Saya sudah bantu lebih 500 orang pembeli dan pelabur hartanah.
-          Ingin saya bantu anda? Hubungi saya untuk bimbingan.`,
-        facebook: user?.facebook || '',
-        instagram: user?.instagram || '',
-        youtube: user?.youtube || '',
-        linkedin: user?.linkedin || '',
-        tiktok: user?.tiktok || '',
-        twitter: user?.twitter || ''
+        phone_no: user?.phone_no || '',
+        bank_name: user?.bank_name || '',
+        bank_account: user?.bank_account || ''
       }}
       validator={() => ({})}
       validationSchema={Yup.object().shape({
-        firstName: Yup.string().max(255).required(),
-        lastName: Yup.string().max(255).required(),
-        phone: Yup.number().min(15).required()
+        fullName: Yup.string().required(),
+        phone_no: Yup.number().required(),
+        bank_name: Yup.string().required(),
+        bank_account: Yup.string().required()
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-        if (!values.firstName) {
-          setErrors({ firstName: 'Required' });
-        } else if (!values.lastName) {
-          setErrors({ lastName: 'Required' });
-        }
+        if (!values.fullName) setErrors({ fullName: 'Required' });
 
         setLoading(true);
 
@@ -101,7 +71,7 @@ const Profile = ({ ...others }) => {
         });
 
         try {
-          await updateProfile(user?.user_name, formData).then((res) => {
+          await updateProfile(user?.username, formData).then((res) => {
             // if (scriptedRef.current) {
             setLoading(false);
             setStatus({ success: true, msg: 'success' });
@@ -154,8 +124,8 @@ const Profile = ({ ...others }) => {
                       <TextField
                         required
                         fullWidth
-                        inputProps={{ style: { textTransform: 'capitalize' } }}
-                        label="Full Name"
+                        inputProps={{ style: { textTransform: 'UPPERCASE' } }}
+                        label="Full Name (as IC)"
                         id="outlined-basic1"
                         name="fullName"
                         type="text"
@@ -163,7 +133,29 @@ const Profile = ({ ...others }) => {
                         onBlur={handleBlur}
                         onChange={handleChange}
                         error={Boolean(errors.fullName && touched.fullName)}
-                        helperText={errors.fullName && touched.fullName && String(errors.fullName)}
+                        helperText={errors.fullName && touched.fullName && String(errors.fullName && 'Full name is required')}
+                      />
+                    </Grid>
+
+                    <Grid item xs={12} md={6}>
+                      <TextField
+                        fullWidth
+                        id="phone_no"
+                        label="Phone"
+                        name="phone_no"
+                        type="tel"
+                        required
+                        placeholder="012345678"
+                        value={values.phone_no}
+                        onBlur={handleBlur}
+                        onChange={handleChange}
+                        error={user?.phone_no ? false : true}
+                        sx={{
+                          '& .MuiFormHelperText-root ': {
+                            color: 'red'
+                          }
+                        }}
+                        helperText={errors.phone_no && touched.phone_no && String(errors.phone_no)}
                       />
                     </Grid>
 
@@ -171,23 +163,48 @@ const Profile = ({ ...others }) => {
                       <TextField
                         fullWidth
                         id="outlined-basic4"
-                        label="Phone number"
-                        name="phone"
-                        type="tel"
+                        label="Bank Name"
+                        name="bank_name"
+                        type="text"
                         required
-                        placeholder="012345678"
-                        value={values.phone}
+                        placeholder="Cimb"
+                        value={values.bank_name}
                         onBlur={handleBlur}
                         onChange={handleChange}
-                        error={user?.phone ? false : true}
+                        error={user?.bank_name ? false : true}
                         sx={{
                           '& .MuiFormHelperText-root ': {
                             color: 'red'
                           }
                         }}
-                        helperText={errors.phone && touched.phone && String(errors.phone)}
+                        helperText={errors.bank_name && touched.bank_name && String(errors.bank_name && 'Bank name is required field')}
                       />
                     </Grid>
+
+                    <Grid item xs={12} md={6}>
+                      <TextField
+                        fullWidth
+                        id="outlined-basic4"
+                        label="Bank No Acc"
+                        name="bank_account"
+                        type="text"
+                        required
+                        placeholder="Cimb"
+                        value={values.bank_account}
+                        onBlur={handleBlur}
+                        onChange={handleChange}
+                        error={user?.bank_account ? false : true}
+                        sx={{
+                          '& .MuiFormHelperText-root ': {
+                            color: 'red'
+                          }
+                        }}
+                        helperText={
+                          errors.bank_account && touched.bank_account && String(errors.bank_account && 'Bank No Acc is required field')
+                        }
+                      />
+                    </Grid>
+
                     <Grid item xs={12} md={6}>
                       <TextField fullWidth disabled type="email" value={values.email} name="email" id="filled-disabled" label="Email" />
                     </Grid>
@@ -196,7 +213,7 @@ const Profile = ({ ...others }) => {
                       <Stack direction="row">
                         <AnimateButton>
                           <Button type="submit" variant="contained" color="secondary" sx={{ color: 'white' }}>
-                            {isLoading ? <CircularProgress sx={{ color: 'white' }} size={20} /> : 'Save Details'}
+                            {isLoading ? <CircularProgress sx={{ color: 'white' }} size={20} /> : 'Save'}
                           </Button>
                         </AnimateButton>
                       </Stack>

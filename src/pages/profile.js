@@ -71,7 +71,7 @@ const Profile3 = () => {
           variant="scrollable"
         >
           <Tab component={Link} href="#" label="Profile" {...a11yProps(0)} />
-          <Tab component={Link} href="#" label="Bank" {...a11yProps(1)} />
+          {/* <Tab component={Link} href="#" label="Bank" {...a11yProps(1)} /> */}
           {/*
           <Tab component={Link} href="#" label="Security" {...a11yProps(1)} />
           <Tab component={Link} href="#" label="Notifications" {...a11yProps(2)} /> */}
@@ -79,9 +79,9 @@ const Profile3 = () => {
         <TabPanel value={value} index={0}>
           <Profile />
         </TabPanel>
-        <TabPanel value={value} index={1}>
+        {/* <TabPanel value={value} index={1}>
           <Bank />
-        </TabPanel>
+        </TabPanel> */}
         {/* <TabPanel value={value} index={1}>
           <Billing />
         </TabPanel>

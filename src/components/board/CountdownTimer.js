@@ -31,7 +31,7 @@ const CountdownTimer = ({ created_date, created_time, dividenDate, children }) =
         }}
       >
         <Typography variant="span">
-          {dividenDate.format('DD MMM YYYY')}{' '}
+          {targetTime?.format('DD MMM YYYY')}{' '}
           {!matchDownSM && (
             <Typography variant="span">
               :

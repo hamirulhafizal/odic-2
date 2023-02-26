@@ -23,6 +23,10 @@ import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import CancelIcon from '@mui/icons-material/Cancel';
 import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import { stringifyFile } from 'utils/helper';
+import { dispatch } from 'store';
+import { getReceiptImg } from 'store/slices/product';
+import { useSelector } from 'store';
 
 const Input = styled('input')({
   display: 'none'
@@ -43,6 +47,8 @@ const UploadResit = ({ handlePreviewImg }) => {
   const [isSubmit, setSubmit] = useState(false);
   const [isLoading, setLoding] = useState(false);
 
+  const { receipt } = useSelector((state) => state.product);
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -60,25 +66,40 @@ const UploadResit = ({ handlePreviewImg }) => {
         const formData = new FormData();
         formData.append('photo', photo);
 
+        photo && dispatch(getReceiptImg(photo));
+
         if (isSubmit) {
-          await updateProfile(user?.user_name, formData)
-            .then((res) => {
-              setLoding(false);
-              setFieldImgValue(undefined);
-              setAvatarPreview('');
-              handlePreviewImg(true);
-              setSubmit(false);
-              setSuccessMessage('UPLOAD');
-              localStorage.setItem('resitUpload', true);
-            })
-            .catch((err) => {
-              setMessage('Something when wrong, please try again');
-              setLoding(false);
-              setFieldImgValue(undefined);
-              setAvatarPreview('');
-              handlePreviewImg(false);
-              setSubmit(false);
-            });
+          setLoding(false);
+          setFieldImgValue(undefined);
+          // setAvatarPreview('');
+          handlePreviewImg(true);
+          setSubmit(false);
+          setSuccessMessage('UPLOAD');
+
+          localStorage.setItem('resitUploadimg', stringifyFile(photo));
+
+          // const formString = JSON.parse(localStorage.getItem('resitUploadimg'));
+
+          // console.log('formString', JSON.stringify(localStorage.getItem('resitUploadimg')));
+
+          // await updateProfile(user?.user_name, formData)
+          //   .then((res) => {
+          //     setLoding(false);
+          //     setFieldImgValue(undefined);
+          //     setAvatarPreview('');
+          //     handlePreviewImg(true);
+          //     setSubmit(false);
+          //     setSuccessMessage('UPLOAD');
+          //     localStorage.setItem('resitUpload', true);
+          //   })
+          //   .catch((err) => {
+          //     setMessage('Something when wrong, please try again');
+          //     setLoding(false);
+          //     setFieldImgValue(undefined);
+          //     setAvatarPreview('');
+          //     handlePreviewImg(false);
+          //     setSubmit(false);
+          //   });
         }
       }
     }

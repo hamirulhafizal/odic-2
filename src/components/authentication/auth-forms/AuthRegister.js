@@ -99,9 +99,6 @@ const JWTRegister = ({ ...others }) => {
         })}
         onSubmit={(values, { setErrors, setStatus, setSubmitting }) => {
           setLoading(true);
-
-          console.log('values--->', values);
-
           register({ email: values.email, password: values.password, name: values.name })
             .then((res) => {
               console.log('res-->', res);
@@ -158,7 +155,7 @@ const JWTRegister = ({ ...others }) => {
                   value={values.name}
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  inputProps={{ style: { textTransform: 'normal' } }}
+                  inputProps={{ style: { textTransform: 'uppercase' } }}
                   sx={{ ...theme.typography.customInput }}
                 />
               </Grid>

@@ -146,7 +146,7 @@ function SwipeableEdgeDrawer({ open, handleToggle }) {
               width: matchDownSM ? '100%' : 'unset'
             }}
           >
-            {steps.map((step, index) => (
+            {steps?.map((step, index) => (
               <Step key={step.label}>
                 <StepLabel
                   optional={index === 2 ? <Typography variant="caption">Last step</Typography> : null}
