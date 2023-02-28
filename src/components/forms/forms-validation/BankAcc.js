@@ -29,7 +29,6 @@ import * as yup from 'yup';
 // assets
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
-import InvestFormula from './InvestFormula';
 import { useRef, useState } from 'react';
 import BankQr from './BankQr';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';

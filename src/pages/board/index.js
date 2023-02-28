@@ -69,6 +69,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AddReactionOutlinedIcon from '@mui/icons-material/AddReactionOutlined';
 import AnimateButton from 'components/ui-component/extended/AnimateButton';
 import { getAllInvestment, getInvestments } from 'contexts/ApiInvestment';
+import ScrollDialog from 'components/ui-elements/advance/UIDialog/ScrollDialog';
 
 // table sort
 function descendingComparator(a, b, orderBy) {
@@ -317,6 +318,9 @@ const Listing = () => {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [search, setSearch] = React.useState('');
   const [rows, setRows] = React.useState([]);
+  const [isModal, setOpenModal] = React.useState(false);
+  const [isSlotId, setSlotId] = React.useState();
+
   const { slot } = useSelector((state) => state.product);
 
   const [categoryState, setCategory] = React.useState(0);
@@ -445,6 +449,16 @@ const Listing = () => {
   };
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
+
+  const handleClickOpenModal = (slotId) => {
+    setOpenModal(true);
+    setSlotId(slotId);
+  };
+
+  const handleClickCloseModal = () => {
+    setOpenModal(false);
+  };
+
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows?.length) : 0;
 
   const fetchAllInvestment = async (username) => {
@@ -600,7 +614,7 @@ const Listing = () => {
                         gap: '3em'
                       }}
                     >
-                      <CardSlot data={rows} />
+                      <CardSlot data={rows} handleClickOpenModal={handleClickOpenModal} />
                     </Stack>
                   </>
                 )}
@@ -611,6 +625,12 @@ const Listing = () => {
       </MainCard>
 
       <BottomAppBar />
+      <ScrollDialog
+        isModal={isModal}
+        isSlotId={isSlotId}
+        handleClickOpenModal={handleClickOpenModal}
+        handleClickCloseModal={handleClickCloseModal}
+      />
     </>
   );
 };

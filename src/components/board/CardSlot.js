@@ -9,7 +9,7 @@ import CountdownTimer from './CountdownTimer';
 import StatusProgress from './StatusProgress';
 import AnimateButton from 'components/ui-component/extended/AnimateButton';
 
-const CardSlot = ({ data }) => {
+const CardSlot = ({ data, handleClickOpenModal }) => {
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -66,7 +66,7 @@ const CardSlot = ({ data }) => {
                     textAlign: 'start'
                   }}
                 >
-                  <Typography variant="span">SLOT ID : {item?.id}</Typography>
+                  <Typography variant="caption">slot ID : {item?.id}</Typography>
                 </Stack>
                 <Stack
                   sx={{
@@ -86,7 +86,7 @@ const CardSlot = ({ data }) => {
                       pl: 1
                     }}
                   >
-                    = Invested {+item?.amount / 1000} Slot
+                    {`=  Invested ${+item?.amount / 1000} Slot`}
                   </Typography>
                 </Stack>
 
@@ -164,11 +164,13 @@ const CardSlot = ({ data }) => {
                         <AnimateButton>
                           <Button
                             // fullWidth
-                            disabled={item?.status == 'pending' ? false : true}
+                            disabled={item?.status == 'Pending' ? true : false}
                             endIcon={'🔍'}
                             variant="contained"
                             type="submit"
-                            // onClick={handleNext}
+                            onClick={() => {
+                              item?.status == 'Progress' && handleClickOpenModal(item);
+                            }}
                             sx={{ textTransform: 'uppercase' }}
                           >
                             {item?.status}

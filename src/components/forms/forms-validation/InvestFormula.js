@@ -26,7 +26,7 @@ const HtmlTooltip = styled(({ className, ...props }) => <Tooltip {...props} clas
   }
 }));
 
-const InvestFormula = ({ value }) => {
+const InvestFormula = ({ value, htmlFor }) => {
   const [open, setOpen] = React.useState(false);
 
   const handleTooltipClose = () => {
@@ -160,7 +160,18 @@ const InvestFormula = ({ value }) => {
                     </>
                   }
                 >
-                  <InfoOutlinedIcon sx={{ fontSize: '70%', p: 0, mr: 0.5, color: '#28933F' }} />
+                  <InfoOutlinedIcon
+                    sx={{
+                      fontSize: '70%',
+                      p: 0,
+                      mr: 0.5,
+                      color: '#28933F',
+                      backgroundColor: '#28933F',
+                      color: 'white',
+                      borderRadius: '50%',
+                      boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)'
+                    }}
+                  />
                 </HtmlTooltip>
               </IconButton>
             </ClickAwayListener>
@@ -169,7 +180,9 @@ const InvestFormula = ({ value }) => {
               sx={{
                 position: 'relative',
                 top: '1px',
-                color: '#28933F'
+                color: '#28933F',
+                cursor: 'pointer'
+                // textDecoration: 'underline'
               }}
             >
               ROI {checkRoi(value)}%
@@ -190,7 +203,10 @@ const InvestFormula = ({ value }) => {
             Lock duration{' '}
           </Typography>
 
-          <Typography variant="h6">14 Month</Typography>
+          <Typography variant="h6">
+            {htmlFor == 'NewInvest' && `14 Month`}
+            {htmlFor == 'withdraw' && `Completed`}
+          </Typography>
         </Stack>
       </Box>
     </>

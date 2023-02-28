@@ -87,7 +87,7 @@ const InvestForms = ({ handleNext, handleBack, index }) => {
               borderColor: 'transparent'
             }}
           >
-            <InvestFormula value={formik.values.investVal != '' ? formik.values.investVal : 0} />
+            <InvestFormula value={formik.values.investVal != '' ? formik.values.investVal : 0} htmlFor="NewInvest" />
           </MainCard>
         </Box>
         <form onSubmit={formik.handleSubmit}>
@@ -128,9 +128,9 @@ const InvestForms = ({ handleNext, handleBack, index }) => {
 
               <Box sx={{ pb: 1, display: 'flex' }}>
                 <FormControlLabel
-                  onClick={() => {
-                    handleCheckBox(!isChecked);
-                  }}
+                  // onClick={() => {
+                  //   handleCheckBox(!isChecked);
+                  // }}
                   sx={{
                     textAlign: 'initial'
                   }}

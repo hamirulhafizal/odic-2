@@ -28,12 +28,12 @@ import MainCard from 'components/ui-component/cards/MainCard';
 const steps = [
   {
     label: 'How much would you like to invest ?',
-    description: `Make sure read all T&C before sign anything`,
+    description: `Enter your RM amount it will calculate how much you will earn`,
     component: 'InvestForms'
   },
   {
     label: 'Upload Bank Transfer',
-    description: 'kindlly upload recepit by click the clip',
+    description: `Kindlly transfer your investment amount and upload the receipt`,
     component: 'BankAcc'
   },
   {

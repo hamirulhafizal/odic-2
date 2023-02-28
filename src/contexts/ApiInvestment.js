@@ -41,6 +41,19 @@ const getAllInvestment = async (username) => {
   return response;
 };
 
+const setWithDrawAPI = async (data) => {
+  const { id } = data;
+  const response = await axiosInstance
+    .get(`${BACKEND_PATH}/api/investments/${id}`)
+    .then(async (res) => {
+      return res;
+    })
+    .catch((err) => {
+      return err;
+    });
+  return response;
+};
+
 const setProduct = async (form_data) => {
   const response = await axiosInstance
     .post(`${BACKEND_PATH}/api/v1/inventory/`, form_data)
@@ -183,5 +196,6 @@ export {
   getListsbyQuery,
   createInvestment,
   getInvestments,
-  getAllInvestment
+  getAllInvestment,
+  setWithDrawAPI
 };
