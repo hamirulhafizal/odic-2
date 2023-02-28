@@ -84,14 +84,6 @@ export default function ScrollDialog({ isModal, handleClickOpenModal, handleClic
                 continued confidence in our team.
               </Box> */}
 
-              <Box
-                sx={{
-                  textAlign: 'center'
-                }}
-              >
-                <Typography variant="caption">{"Your withdrawal request's will complete within the next 24 working hours"}</Typography>
-              </Box>
-
               <WidthdrawForms withDrawData={isSlotId} />
             </DialogContent>
             {/* <DialogActions sx={{ pr: 2.5, pt: 2.5 }}>

@@ -44,9 +44,11 @@ const getAllInvestment = async (username) => {
 const setWithDrawAPI = async (data) => {
   const { id } = data;
   const response = await axiosInstance
-    .get(`${BACKEND_PATH}/api/investments/${id}`)
+    .post(`${BACKEND_PATH}/api/withdraw/${id}`)
     .then(async (res) => {
-      return res;
+      console.log('res', res);
+      const { data, status } = res;
+      return data;
     })
     .catch((err) => {
       return err;

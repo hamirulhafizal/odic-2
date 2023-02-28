@@ -67,6 +67,7 @@ import ListIcon from '@mui/icons-material/List';
 import CardSlot from 'components/board/CardSlot';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AddReactionOutlinedIcon from '@mui/icons-material/AddReactionOutlined';
+import HowToRegOutlinedIcon from '@mui/icons-material/HowToRegOutlined';
 import AnimateButton from 'components/ui-component/extended/AnimateButton';
 import { getAllInvestment, getInvestments } from 'contexts/ApiInvestment';
 import ScrollDialog from 'components/ui-elements/advance/UIDialog/ScrollDialog';
@@ -550,7 +551,7 @@ const Listing = () => {
                   <br />
                 </Typography>
                 <AnimateButton>
-                  <IconButton
+                  <Button
                     onClick={() => {
                       router.push('profile');
                     }}
@@ -564,9 +565,10 @@ const Listing = () => {
                       }
                     }}
                     size="medium"
+                    endIcon={<HowToRegOutlinedIcon sx={{ color: 'white' }} fontSize="medium" />}
                   >
-                    <AddReactionOutlinedIcon sx={{ color: 'white' }} fontSize="medium" />
-                  </IconButton>
+                    UPLOAD IC
+                  </Button>
                 </AnimateButton>
               </>
             ) : (

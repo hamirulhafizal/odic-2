@@ -6,6 +6,7 @@ import {
   Box,
   Button,
   Checkbox,
+  CircularProgress,
   FormControlLabel,
   Grid,
   InputAdornment,
@@ -51,6 +52,8 @@ const WidthdrawForms = ({ withDrawData }) => {
   const dispatch = useDispatch();
   const slotState = useSelector((state) => state.slot);
   const [isChecked, setCheckBox] = useState(true);
+  const [isMessage, setMessage] = useState(false);
+  const [isLoading, setLoading] = useState(false);
 
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down('sm'));
@@ -60,69 +63,101 @@ const WidthdrawForms = ({ withDrawData }) => {
   };
 
   const handleWithdrawApi = async (data) => {
+    setLoading(true);
     await setWithDrawAPI(data).then((res) => {
       console.log('res', res);
+
+      res?.title == 'Success!' &&
+        setTimeout(() => {
+          setMessage(true);
+          setLoading(false);
+        }, 3000);
     });
   };
-
-  console.log('withDrawData', withDrawData);
 
   return (
     <>
       <Stack direction={'column'}>
-        <Box
-          sx={{
-            pt: 2,
-            pb: 3,
-            display: 'flex',
-            justifyContent: 'start'
-          }}
-        >
-          <MainCard
+        {isMessage ? (
+          <Box
             sx={{
-              width: matchDownSM ? '100%' : '550px',
-              boxShadow: '1px 2px 5px -1px rgb(0 0 0 / 64%) !important',
-              borderColor: 'transparent'
+              textAlign: 'center',
+              pb: 2
             }}
           >
-            <InvestFormula value={amount} htmlFor="withdraw" />
-          </MainCard>
-        </Box>
-        <Grid container spacing={gridSpacing}>
-          <Grid item xs={12}>
-            <Box sx={{ pb: 1, display: 'flex' }}>
-              <FormControlLabel
-                sx={{
-                  textAlign: 'initial',
-                  '& .MuiFormControlLabel-label': { fontSize: '12px' }
-                }}
-                variant="caption"
-                control={
-                  <Checkbox
-                    defaultChecked
-                    onClick={() => {
-                      handleCheckBox(!isChecked);
-                    }}
-                  />
-                }
-                label={`By ticking this Box, your agreed with our T&C`}
-              />
+            <Typography variant="caption">
+              I wanted to express my sincere appreciation for your trust and patience in our investment strategies.
+              <br />
+              <br />
+              Your commitment and belief in our expertise have been a driving force behind our success. Thank you for your continued
+              confidence in our team.
+            </Typography>
+          </Box>
+        ) : (
+          <>
+            <Box
+              sx={{
+                textAlign: 'center'
+              }}
+            >
+              <Typography variant="caption">{"Your withdrawal request's will complete within the next 24 working hours"}</Typography>
             </Box>
-          </Grid>
-        </Grid>
-
+            <Box
+              sx={{
+                pt: 2,
+                pb: 3,
+                display: 'flex',
+                justifyContent: 'start'
+              }}
+            >
+              <MainCard
+                sx={{
+                  width: matchDownSM ? '100%' : '550px',
+                  boxShadow: '1px 2px 5px -1px rgb(0 0 0 / 64%) !important',
+                  borderColor: 'transparent'
+                }}
+              >
+                <InvestFormula value={amount} htmlFor="withdraw" />
+              </MainCard>
+            </Box>
+            <Grid container spacing={gridSpacing}>
+              <Grid item xs={12}>
+                <Box sx={{ pb: 1, display: 'flex' }}>
+                  <FormControlLabel
+                    sx={{
+                      textAlign: 'initial',
+                      '& .MuiFormControlLabel-label': { fontSize: '12px' }
+                    }}
+                    variant="caption"
+                    control={
+                      <Checkbox
+                        defaultChecked
+                        onClick={() => {
+                          handleCheckBox(!isChecked);
+                        }}
+                      />
+                    }
+                    label={`By ticking this Box, your agreed with our T&C`}
+                  />
+                </Box>
+              </Grid>
+            </Grid>
+          </>
+        )}
         <AnimateButton>
           <Button
             onClick={() => {
-              handleWithdrawApi(withDrawData);
+              !isMessage && handleWithdrawApi(withDrawData);
             }}
             fullWidth
-            endIcon={<ArrowForwardIcon />}
+            endIcon={
+              isLoading ? <CircularProgress size={20} sx={{ color: 'white' }} /> : !isLoading && isMessage ? null : <ArrowForwardIcon />
+            }
             variant="contained"
             type="submit"
-            disabled={isChecked ? false : true}
+            disabled={isChecked || (!isLoading && isMessage) ? false : true}
           >
-            WITHDRAW
+            {!isLoading && isMessage ? 'COMPLETED' : 'WITHDRAW'}
           </Button>
         </AnimateButton>
       </Stack>

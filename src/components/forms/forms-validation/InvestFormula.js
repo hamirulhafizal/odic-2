@@ -179,7 +179,7 @@ const InvestFormula = ({ value, htmlFor }) => {
               variant="h6"
               sx={{
                 position: 'relative',
-                top: '1px',
+                top: htmlFor == 'NewInvest' ? '0px' : '1px',
                 color: '#28933F',
                 cursor: 'pointer'
                 // textDecoration: 'underline'
