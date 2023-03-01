@@ -156,6 +156,12 @@ const WidthdrawForms = ({ withDrawData }) => {
             variant="contained"
             type="submit"
             disabled={isChecked || (!isLoading && isMessage) ? false : true}
+            sx={{
+              backgroundColor: '#28933F',
+              '&:hover': {
+                backgroundColor: '#28933F'
+              }
+            }}
           >
             {!isLoading && isMessage ? 'COMPLETED' : 'WITHDRAW'}
           </Button>

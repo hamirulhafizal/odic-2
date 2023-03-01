@@ -518,7 +518,7 @@ const Listing = () => {
         contentSX={{ p: 0 }}
         sx={{ textAlign: 'center', mb: matchDownSM ? '30%' : '5%' }}
       >
-        <CardContent>
+        <CardContent sx={{ p: 2 }}>
           <Stack
             direction="column"
             sx={{

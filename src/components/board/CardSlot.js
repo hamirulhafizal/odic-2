@@ -87,7 +87,16 @@ const CardSlot = ({ data, handleClickOpenModal }) => {
                       p: 0
                     }}
                   >
-                    <Typography variant="h5" sx={{ textAlign: 'left' }}>
+                    <Typography
+                      variant="h5"
+                      sx={{
+                        textAlign: 'left',
+
+                        width: '90%'
+                        // display: 'flex',
+                        // flexGrow: 1
+                      }}
+                    >
                       RM {numberWithCommas(+item?.amount)}
                     </Typography>
                     <Typography
@@ -95,10 +104,13 @@ const CardSlot = ({ data, handleClickOpenModal }) => {
                       sx={{
                         color: '#287F93',
                         pl: 1,
-                        textAlign: 'right'
+                        textAlign: 'right',
+                        width: '100%',
+                        display: 'flex',
+                        flexGrow: 1
                       }}
                     >
-                      {`=  Invested ${+item?.amount / 1000} Slot`}
+                      {/* <span style={{ paddingRight: '2%' }}> = </span> */}= {`Invested ${+item?.amount / 1000} Slot`}
                     </Typography>
                   </Stack>
 
@@ -182,8 +194,11 @@ const CardSlot = ({ data, handleClickOpenModal }) => {
                               }}
                               sx={{
                                 textTransform: 'uppercase',
-                                backgroundColor: item?.status == 'Withdraw' ? '#28933F' : 'none',
-                                opacity: item?.status == 'Progress' ? '0.5' : 'none'
+                                opacity: item?.status == 'Progress' || item?.status == 'Fail' ? '0.5' : 'none',
+                                backgroundColor: item?.status == 'Withdraw' ? '#28933F' : item?.status == 'Fail' ? '#B53737' : 'none',
+                                '&:hover': {
+                                  backgroundColor: item?.status == 'Withdraw' ? '#28933F' : item?.status == 'Fail' ? '#B53737' : 'none'
+                                }
                               }}
                             >
                               {item?.status == 'Pending' && 'Pending 🔍'}
