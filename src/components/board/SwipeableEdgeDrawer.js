@@ -228,7 +228,7 @@ function SwipeableEdgeDrawer({ open, handleToggle }) {
                             component="label"
                             type="submit"
                             startIcon={<AddIcon />}
-                            sx={{ width: matchDownSM ? '150px' : '25%' }}
+                            sx={{ width: matchDownSM ? '150px' : '30%' }}
                           >
                             NEW SLOT
                           </Button>
@@ -238,7 +238,7 @@ function SwipeableEdgeDrawer({ open, handleToggle }) {
                             component="label"
                             type="submit"
                             startIcon={<ListIcon />}
-                            sx={{ width: matchDownSM ? '150px' : '25%', backgroundColor: '#28933F' }}
+                            sx={{ width: matchDownSM ? '150px' : '30%', backgroundColor: '#28933F' }}
                           >
                             STATUS SLOT
                           </Button>
