@@ -75,7 +75,7 @@ const JWTLogin = ({ loginProp, ...others }) => {
             .then((res) => {
               if (scriptedRef.current) {
                 setLoading(false);
-                setStatus({ success: true, msg: 'success' });
+                setStatus({ success: true, msg: 'SUCCESS' });
                 setSubmitting(false);
               }
               router.push(`/board`);

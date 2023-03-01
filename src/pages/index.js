@@ -49,7 +49,7 @@ import CallSplitTwoToneIcon from '@mui/icons-material/CallSplitTwoTone';
 import TextFieldsIcon from '@mui/icons-material/TextFields';
 import DesignServicesIcon from '@mui/icons-material/DesignServices';
 import AnimateButton from 'components/ui-component/extended/AnimateButton';
-const images1 = '/assets/images/landing/living-room-with-yellow.png';
+const images1 = '/assets/images/landing/living-room-with-yellow.jpg';
 const images2 = '/assets/images/landing/footerBg-1.png';
 const images3 = '/assets/images/landing/ladningbg1.png';
 const images4 = '/assets/images/landing/ladningbg2.png';
@@ -62,7 +62,8 @@ const HeaderWrapper = styled('div')(({ theme }) => ({
   backgroundImage: `url(${images1})`,
   backgroundSize: 'cover',
   backgroundRepeat: 'no-repeat',
-  backgroundPosition: 'bottom',
+  backgroundPosition: 'center',
+  boxShadow: 'inset 0px -20px 100vh 2px black',
 
   [theme.breakpoints.down('md')]: {
     paddingTop: 42

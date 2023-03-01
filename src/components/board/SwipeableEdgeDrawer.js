@@ -196,7 +196,7 @@ function SwipeableEdgeDrawer({ open, handleToggle }) {
                     >
                       <Paper square elevation={0} sx={{ p: 3 }}>
                         <Typography variant="h3">
-                          <strong>ALL STEPS COMPLETED</strong>
+                          <strong>ALL STEP COMPLETED</strong>
                         </Typography>
 
                         <Typography variant="h5">
