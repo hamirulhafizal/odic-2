@@ -626,6 +626,9 @@ const Listing = () => {
         </CardContent>
       </MainCard>
 
+      <button style={{ display: 'none' }} id="refreshButton" onClick={() => fetchAllInvestment(user?.username)}>
+        refresh
+      </button>
       <BottomAppBar />
       <ScrollDialog
         isModal={isModal}

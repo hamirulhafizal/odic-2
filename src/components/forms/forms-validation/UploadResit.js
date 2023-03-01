@@ -216,6 +216,7 @@ const UploadResit = ({ handlePreviewImg }) => {
                       backgroundSize: 'contain',
                       backgroundColor: 'black',
                       backgroundPosition: 'center',
+                      border: '1px solid grey',
                       '&:hover': {
                         backgroundColor: 'black'
                       }
@@ -232,7 +233,7 @@ const UploadResit = ({ handlePreviewImg }) => {
                         left: '3px',
                         width: '35px',
                         height: '35px',
-                        opacity: '0.5'
+                        opacity: '0.7'
                       }}
                     />
                   </IconButton>

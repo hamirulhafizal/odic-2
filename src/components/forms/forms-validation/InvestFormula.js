@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   ClickAwayListener,
   IconButton,
   List,
@@ -94,7 +95,7 @@ const InvestFormula = ({ value, htmlFor }) => {
               textAlign: 'start'
             }}
           >
-            RM {numberWithCommas(value * 0.33)}
+            RM {numberWithCommas(value * 0.33).substring(0, 10)}
           </Typography>
           <Box
             sx={{
@@ -104,10 +105,14 @@ const InvestFormula = ({ value, htmlFor }) => {
             }}
           >
             <ClickAwayListener onClickAway={handleTooltipClose}>
-              <IconButton
+              <Button
                 onClick={handleTooltipOpen}
+                color="secondary"
                 sx={{
-                  p: 0
+                  p: 0,
+                  ':hover': {
+                    backgroundColor: 'transparent'
+                  }
                 }}
               >
                 <HtmlTooltip
@@ -162,7 +167,7 @@ const InvestFormula = ({ value, htmlFor }) => {
                 >
                   <InfoOutlinedIcon
                     sx={{
-                      fontSize: '70%',
+                      fontSize: '130%',
                       p: 0,
                       mr: 0.5,
                       color: '#28933F',
@@ -173,20 +178,20 @@ const InvestFormula = ({ value, htmlFor }) => {
                     }}
                   />
                 </HtmlTooltip>
-              </IconButton>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    position: 'relative',
+                    top: htmlFor == 'NewInvest' ? '2px' : '1px',
+                    color: '#28933F',
+                    cursor: 'pointer',
+                    textDecoration: htmlFor == 'NewInvest' && 'underline'
+                  }}
+                >
+                  ROI {checkRoi(value)}%
+                </Typography>
+              </Button>
             </ClickAwayListener>
-            <Typography
-              variant="h6"
-              sx={{
-                position: 'relative',
-                top: htmlFor == 'NewInvest' ? '0px' : '1px',
-                color: '#28933F',
-                cursor: 'pointer'
-                // textDecoration: 'underline'
-              }}
-            >
-              ROI {checkRoi(value)}%
-            </Typography>
           </Box>
         </Stack>
 

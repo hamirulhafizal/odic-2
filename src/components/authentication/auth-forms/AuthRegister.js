@@ -18,7 +18,8 @@ import {
   OutlinedInput,
   TextField,
   Typography,
-  useMediaQuery
+  useMediaQuery,
+  CircularProgress
 } from '@mui/material';
 
 // third party
@@ -101,11 +102,11 @@ const JWTRegister = ({ ...others }) => {
           setLoading(true);
           register({ email: values.email, password: values.password, name: values.name })
             .then((res) => {
-              console.log('res-->', res);
               if (res['email'] == 'The email has already been taken.') {
                 setErrors({ submit: 'Email is already in use.' });
                 setSubmitting(false);
                 setLoading(false);
+                setStatus({ success: true, msg: 'success' });
               }
 
               // if (res?.user_name && res?.user_name[0] == 'Username is already in use.') {
@@ -264,15 +265,16 @@ const JWTRegister = ({ ...others }) => {
               <AnimateButton>
                 <Button
                   disableElevation
-                  sx={{ color: 'white' }}
+                  color={`${status?.success ? 'success' : 'secondary'}`}
                   disabled={isSubmitting}
                   fullWidth
                   size="large"
                   type="submit"
                   variant="contained"
-                  color="secondary"
                 >
-                  Sign up
+                  <FormHelperText id="standard-weight-helper-text-username-login">
+                    {status && status.success ? `${status?.msg}` : isLoading ? <CircularProgress size={20} /> : 'Sign up'}
+                  </FormHelperText>
                 </Button>
               </AnimateButton>
             </Box>

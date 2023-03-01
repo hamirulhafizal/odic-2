@@ -96,6 +96,8 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
         localStorage.removeItem('investVal');
         localStorage.removeItem('resitUploadimg');
         localStorage.removeItem('resitUpload');
+        const { Investment_id } = res?.data;
+        localStorage.setItem('Investment_id', Investment_id);
         setSubmit(false);
         setLoadingSubmit(false);
         setSuccessMessage('UPLOAD');
@@ -504,7 +506,7 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
                 endIcon={<ClearIcon />}
                 onClick={handleSignClear}
               >
-                clear
+                CLEAR
               </Button>
             </AnimateButton>
             <AnimateButton>
@@ -516,7 +518,7 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
                 endIcon={<SendOutlinedIcon />}
                 onClick={handleSignSubmit}
               >
-                Submit
+                SUBMIT
               </Button>
             </AnimateButton>
           </Stack>

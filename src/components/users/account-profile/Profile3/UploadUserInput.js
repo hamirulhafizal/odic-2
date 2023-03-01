@@ -8,6 +8,7 @@ import AnimateButton from 'components/ui-component/extended/AnimateButton';
 import accountReducer from 'store/accountReducer';
 import { openSnackbar } from 'store/slices/snackbar';
 import { dispatch } from 'store';
+import FileUploadIcon from '@mui/icons-material/FileUpload';
 
 const Input = styled('input')({
   display: 'none'
@@ -175,7 +176,7 @@ const UploadUserInput = ({ htmlFor }) => {
                         setFieldImgValue2(e.target.files[0]);
                       }}
                     ></Input>
-                    <Button color="secondary" sx={{ color: 'white' }} variant="contained" component="span">
+                    <Button endIcon={<FileUploadIcon />} color="secondary" sx={{ color: 'white' }} variant="contained" component="span">
                       {'UPLOAD'}
                     </Button>
                   </InputLabel>

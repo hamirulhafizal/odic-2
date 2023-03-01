@@ -257,8 +257,6 @@ export const ApiProvider = ({ children }) => {
         const users = JSON.stringify(res.data[0]);
         localStorage.setItem('users', users);
 
-        console.log('users--->', users);
-
         dispatch({
           payload: {
             isLoggedIn: true,

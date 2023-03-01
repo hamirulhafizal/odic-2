@@ -87,6 +87,7 @@ const BottomAppBar = () => {
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
+    !newOpen && document.getElementById('refreshButton')?.click();
   };
 
   return (

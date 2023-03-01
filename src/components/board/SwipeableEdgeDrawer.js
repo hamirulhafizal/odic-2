@@ -66,6 +66,7 @@ function SwipeableEdgeDrawer({ open, handleToggle }) {
   const drawerBleeding = 0;
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down('sm'));
+  const createdInvestment_id = localStorage.getItem('Investment_id');
 
   const [activeStep, setActiveStep] = React.useState(0);
 
@@ -194,23 +195,31 @@ function SwipeableEdgeDrawer({ open, handleToggle }) {
                       }}
                     >
                       <Paper square elevation={0} sx={{ p: 3 }}>
-                        <Typography variant="h5">
+                        <Typography variant="h3">
                           <strong>ALL STEPS COMPLETED</strong>
                         </Typography>
+
+                        <Typography variant="h5">
+                          <br />
+                          <strong>{`This is your slot ID : ${createdInvestment_id} `} </strong>
+                        </Typography>
+
                         <Typography variant="caption">
                           <br />
-                          {`your slot's will be review within 24 hours working day`}
+                          {`we will reviewing within 24 hours working day.`}
+                          <br />
+                          {`You can check by clicking status slot button`}
                           <br />
                           <br />
                         </Typography>
                         <Stack
-                          direction={matchDownSM ? 'column' : 'row'}
+                          direction={matchDownSM ? 'column-reverse' : 'row'}
                           sx={{
                             gap: 2,
                             justifyContent: 'center',
                             flexWrap: 'wrap',
                             alignItems: 'center',
-                            mt: 2
+                            mt: 1
                           }}
                         >
                           <Button
@@ -219,9 +228,9 @@ function SwipeableEdgeDrawer({ open, handleToggle }) {
                             component="label"
                             type="submit"
                             startIcon={<AddIcon />}
-                            sx={{ width: matchDownSM ? '70%' : '25%' }}
+                            sx={{ width: matchDownSM ? '150px' : '25%' }}
                           >
-                            New Slot
+                            NEW SLOT
                           </Button>
                           <Button
                             onClick={handleToggle(false)}
@@ -229,9 +238,9 @@ function SwipeableEdgeDrawer({ open, handleToggle }) {
                             component="label"
                             type="submit"
                             startIcon={<ListIcon />}
-                            sx={{ width: matchDownSM ? '70%' : '25%' }}
+                            sx={{ width: matchDownSM ? '150px' : '25%', backgroundColor: '#28933F' }}
                           >
-                            Status Slot
+                            STATUS SLOT
                           </Button>
                         </Stack>
                       </Paper>

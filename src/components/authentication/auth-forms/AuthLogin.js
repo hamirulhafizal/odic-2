@@ -189,8 +189,13 @@ const JWTLogin = ({ loginProp, ...others }) => {
                 type="submit"
                 variant="contained"
               >
-                <FormHelperText id="standard-weight-helper-text-username-login">
-                  {status && status.success ? `${status.msg}` : isLoading ? <CircularProgress size={20} /> : 'Sign In'}
+                <FormHelperText
+                  id="standard-weight-helper-text-username-login"
+                  sx={{
+                    fontWeight: 'bold'
+                  }}
+                >
+                  {status && status.success ? `${status.msg}` : isLoading ? <CircularProgress size={20} /> : 'LOGIN'}
                 </FormHelperText>
               </Button>
             </AnimateButton>

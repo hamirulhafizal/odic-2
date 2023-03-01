@@ -27,6 +27,7 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 
 // ==============================|| PROFILE 3 - PROFILE ||============================== //
 
@@ -55,7 +56,12 @@ const Profile = ({ ...others }) => {
       validator={() => ({})}
       validationSchema={Yup.object().shape({
         fullName: Yup.string().required(),
-        phone_no: Yup.number().required(),
+        phone_no: Yup.string()
+          .required()
+          .test('no-special-chars', 'Special characters or alphabet are not allowed', (value) => {
+            return /^[0-9]+$/.test(value);
+          }),
+
         bank_name: Yup.string().required(),
         bank_account: Yup.string().required(),
         identity_card_no: Yup.string().required()
@@ -168,7 +174,11 @@ const Profile = ({ ...others }) => {
                         type="tel"
                         required
                         placeholder="012345678"
-                        value={values.phone_no}
+                        value={values?.phone_no}
+                        inputProps={{
+                          pattern: '[0-9]*',
+                          inputMode: 'numeric'
+                        }}
                         onBlur={handleBlur}
                         onChange={handleChange}
                         error={user?.phone_no ? false : true}
@@ -177,7 +187,7 @@ const Profile = ({ ...others }) => {
                             color: 'red'
                           }
                         }}
-                        helperText={errors.phone_no && touched.phone_no && String(errors.phone_no && 'Phone is required')}
+                        helperText={errors.phone_no && touched.phone_no && String(errors.phone_no)}
                       />
                     </Grid>
 
@@ -247,8 +257,14 @@ const Profile = ({ ...others }) => {
                     <Grid item xs={12}>
                       <Stack direction="row">
                         <AnimateButton>
-                          <Button type="submit" variant="contained" color="secondary" sx={{ color: 'white' }}>
-                            {isLoading ? <CircularProgress sx={{ color: 'white' }} size={20} /> : 'Save'}
+                          <Button
+                            endIcon={!isLoading && <SaveOutlinedIcon />}
+                            type="submit"
+                            variant="contained"
+                            color="secondary"
+                            sx={{ color: 'white' }}
+                          >
+                            {isLoading ? <CircularProgress sx={{ color: 'white' }} size={20} /> : 'SAVE'}
                           </Button>
                         </AnimateButton>
                       </Stack>
@@ -259,9 +275,11 @@ const Profile = ({ ...others }) => {
                     </Grid>
                   </Grid>
                 </SubCard>
-                <SubCard title="Profile Picture" contentSX={{ textAlign: 'center' }}>
-                  <UploadUserInput htmlFor="ProfilePicture" />
-                </SubCard>
+                {user?.identity_card && (
+                  <SubCard title="Profile Picture" contentSX={{ textAlign: 'center' }}>
+                    <UploadUserInput htmlFor="ProfilePicture" />
+                  </SubCard>
+                )}
               </Grid>
             </Grid>
           </Form>

@@ -75,7 +75,9 @@ const CardSlot = ({ data, handleClickOpenModal }) => {
                       textAlign: 'start'
                     }}
                   >
-                    <Typography variant="caption">slot ID : {item?.id}</Typography>
+                    <Typography variant="caption" sx={{ fontWeight: 'bolder' }}>
+                      slot ID : {item?.id}
+                    </Typography>
                   </Stack>
                   <Stack
                     sx={{
@@ -91,26 +93,19 @@ const CardSlot = ({ data, handleClickOpenModal }) => {
                       variant="h5"
                       sx={{
                         textAlign: 'left',
-
                         width: '90%'
-                        // display: 'flex',
-                        // flexGrow: 1
                       }}
                     >
                       RM {numberWithCommas(+item?.amount)}
-                    </Typography>
-                    <Typography
-                      variant="h6"
-                      sx={{
-                        color: '#287F93',
-                        pl: 1,
-                        textAlign: 'right',
-                        width: '100%',
-                        display: 'flex',
-                        flexGrow: 1
-                      }}
-                    >
-                      {/* <span style={{ paddingRight: '2%' }}> = </span> */}= {`Invested ${+item?.amount / 1000} Slot`}
+                      <span
+                        style={{
+                          color: '#287F93',
+                          position: 'relative',
+                          left: '5%'
+                        }}
+                      >
+                        {`=  Invested ${+item?.amount / 1000} Slot`}
+                      </span>
                     </Typography>
                   </Stack>
 
@@ -194,10 +189,25 @@ const CardSlot = ({ data, handleClickOpenModal }) => {
                               }}
                               sx={{
                                 textTransform: 'uppercase',
-                                opacity: item?.status == 'Progress' || item?.status == 'Fail' ? '0.5' : 'none',
-                                backgroundColor: item?.status == 'Withdraw' ? '#28933F' : item?.status == 'Fail' ? '#B53737' : 'none',
+                                opacity:
+                                  item?.status == 'Progress' || item?.status == 'Fail' || item?.status == 'Completed' ? '0.5' : 'none',
+                                backgroundColor:
+                                  item?.status == 'Withdraw'
+                                    ? '#28933F'
+                                    : item?.status == 'Fail'
+                                    ? '#B53737'
+                                    : item?.status == 'Completed'
+                                    ? '#372893'
+                                    : 'none',
                                 '&:hover': {
-                                  backgroundColor: item?.status == 'Withdraw' ? '#28933F' : item?.status == 'Fail' ? '#B53737' : 'none'
+                                  backgroundColor:
+                                    item?.status == 'Withdraw'
+                                      ? '#28933F'
+                                      : item?.status == 'Fail'
+                                      ? '#B53737'
+                                      : item?.status == 'Completed'
+                                      ? '#372893'
+                                      : 'none'
                                 }
                               }}
                             >
@@ -205,6 +215,7 @@ const CardSlot = ({ data, handleClickOpenModal }) => {
                               {item?.status == 'Progress' && 'Progress 📈'}
                               {item?.status == 'Withdraw' && 'Withdraw 💲'}
                               {item?.status == 'Fail' && 'Fail ❌️'}
+                              {item?.status == 'Completed' && 'Completed 💯'}
                             </Button>
                           </AnimateButton>
                         </Box>
