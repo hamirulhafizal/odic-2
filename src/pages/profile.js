@@ -77,7 +77,7 @@ const Profile3 = () => {
           <Tab component={Link} href="#" label="Notifications" {...a11yProps(2)} /> */}
         </Tabs>
         <TabPanel value={value} index={0}>
-          <Profile />
+          <Profile htmlFor="profilePage" />
         </TabPanel>
         {/* <TabPanel value={value} index={1}>
           <Bank />

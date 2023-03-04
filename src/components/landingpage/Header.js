@@ -1,6 +1,6 @@
 // material-ui
 import { useTheme, styled } from '@mui/material/styles';
-import { Box, Button, Container, Grid, Typography } from '@mui/material';
+import { Box, Button, Container, Grid, Typography, useMediaQuery } from '@mui/material';
 
 // third party
 import { motion } from 'framer-motion';
@@ -34,6 +34,8 @@ const HeaderAnimationImage = styled('img')({
 
 const HeaderPage = () => {
   const { user } = useAuth();
+  const theme = useTheme();
+  const matchDownLG = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
     <Container>
@@ -75,9 +77,10 @@ const HeaderPage = () => {
                     lineHeight: 1.4
                   }}
                 >
-                  Welcome to<br></br>
-                  <Box component="span" variant="h2" color="inherit" sx={{ ml: 2, color: 'white' }}>
-                    ONE DREAM INVESTMENT CENTER
+                  <span> welcome to</span>
+                  <br></br>
+                  <Box component="span" variant="h2" color="inherit" sx={{ ml: matchDownLG ? 0 : 2, color: 'white' }}>
+                    ONE DREAM INVESTMENT CENTER (ODIC)
                   </Box>
                 </Typography>
               </motion.div>
@@ -103,7 +106,11 @@ const HeaderPage = () => {
                     lineHeight: 1.4
                   }}
                 >
-                  {`Are you looking to grow your wealth and secure your financial future? Look no further than ODIC. Don't miss out on the opportunity to grow your wealth and secure your financial future. Sign up for ODIC today and start taking control of your investments.`}
+                  {`Are you looking to grow your wealth and secure your financial future? Look no further than ODIC.`}
+                  <br />
+                  <br />
+                  {`Don't miss out on the opportunity to grow your wealth and secure your financial future. Sign up for ODIC today and
+                  start taking control of your investments.`}
                 </Typography>
               </motion.div>
             </Grid>

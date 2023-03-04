@@ -71,7 +71,6 @@ import HowToRegOutlinedIcon from '@mui/icons-material/HowToRegOutlined';
 import AnimateButton from 'components/ui-component/extended/AnimateButton';
 import { getAllInvestment, getInvestments } from 'contexts/ApiInvestment';
 import ScrollDialog from 'components/ui-elements/advance/UIDialog/ScrollDialog';
-import Pwa from 'components/board/Pwa';
 
 // table sort
 function descendingComparator(a, b, orderBy) {
@@ -499,7 +498,6 @@ const Listing = () => {
 
   return (
     <>
-      <Pwa />
       <MainCard
         title={
           <>
@@ -528,7 +526,9 @@ const Listing = () => {
               alignItems: 'center'
             }}
           >
-            <Button id="pwaAppInstallBtn">Install</Button>
+            {/* <Button id="pwaAppInstallBtn" sx={{ display: 'none' }}>
+              Install
+            </Button> */}
 
             {!user?.identity_card ? (
               <>
@@ -557,7 +557,8 @@ const Listing = () => {
                 <AnimateButton>
                   <Button
                     onClick={() => {
-                      router.push('profile');
+                      // router.push('profile');
+                      handleClickOpenModal(0);
                     }}
                     aria-label="delete"
                     sx={{

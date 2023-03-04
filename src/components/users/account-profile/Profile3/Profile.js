@@ -116,166 +116,170 @@ const Profile = ({ ...others }) => {
         <>
           <Form noValidate onSubmit={handleSubmit} {...others}>
             <Grid container spacing={gridSpacing}>
-              <Grid item sm={6} md={4}>
+              <Grid item sm={6} md={others?.htmlFor == 'profilePage' ? 6 : 12}>
                 <SubCard title="*IC Picture" contentSX={{ textAlign: 'center' }}>
                   <UploadUserInput htmlFor="ICPicture" />
                 </SubCard>
               </Grid>
-              <Grid item sm={6} md={8}>
-                <SubCard title="*Edit Account Details">
-                  <Grid container spacing={gridSpacing}>
-                    <Grid item xs={12} md={12}>
-                      <TextField
-                        required
-                        fullWidth
-                        inputProps={{ style: { textTransform: 'UPPERCASE' } }}
-                        label="Full Name (as IC)"
-                        id="outlined-basic1"
-                        name="fullName"
-                        type="text"
-                        value={values.fullName}
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        error={Boolean(errors.fullName && touched.fullName)}
-                        helperText={errors.fullName && touched.fullName && String(errors.fullName && 'Full name is required')}
-                      />
-                    </Grid>
 
-                    <Grid item xs={12} md={6}>
-                      <TextField
-                        fullWidth
-                        id="identity_card_no"
-                        label="No IC"
-                        name="identity_card_no"
-                        type="text"
-                        required
-                        placeholder="970105015223"
-                        value={values.identity_card_no}
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        error={user?.identity_card_no ? false : true}
-                        sx={{
-                          '& .MuiFormHelperText-root ': {
-                            color: 'red'
-                          }
-                        }}
-                        helperText={
-                          errors.identity_card_no && touched.identity_card_no && String(errors.identity_card_no && 'No IC is required')
-                        }
-                      />
-                    </Grid>
-
-                    <Grid item xs={12} md={6}>
-                      <TextField
-                        fullWidth
-                        id="phone_no"
-                        label="Phone"
-                        name="phone_no"
-                        type="tel"
-                        required
-                        placeholder="012345678"
-                        value={values?.phone_no}
-                        inputProps={{
-                          pattern: '[0-9]*',
-                          inputMode: 'numeric'
-                        }}
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        error={user?.phone_no ? false : true}
-                        sx={{
-                          '& .MuiFormHelperText-root ': {
-                            color: 'red'
-                          }
-                        }}
-                        helperText={errors.phone_no && touched.phone_no && String(errors.phone_no)}
-                      />
-                    </Grid>
-
-                    <Grid item xs={12} md={6}>
-                      <TextField fullWidth disabled type="email" value={values.email} name="email" id="filled-disabled" label="Email" />
-                    </Grid>
-
-                    <Grid item xs={12} md={6}>
-                      <TextField
-                        fullWidth
-                        disabled
-                        type="text"
-                        value={user?.username}
-                        name="username"
-                        id="filled-disabled"
-                        label="username"
-                        aria-readonly
-                      />
-                    </Grid>
-
-                    <Grid item xs={12} md={6}>
-                      <TextField
-                        fullWidth
-                        id="outlined-basic4"
-                        label="Bank Name"
-                        name="bank_name"
-                        type="text"
-                        required
-                        placeholder="Cimb"
-                        value={values.bank_name}
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        error={user?.bank_name ? false : true}
-                        sx={{
-                          '& .MuiFormHelperText-root ': {
-                            color: 'red'
-                          }
-                        }}
-                        helperText={errors.bank_name && touched.bank_name && String(errors.bank_name && 'Bank name is required field')}
-                      />
-                    </Grid>
-
-                    <Grid item xs={12} md={6}>
-                      <TextField
-                        fullWidth
-                        id="outlined-basic4"
-                        label="Bank No Acc"
-                        name="bank_account"
-                        type="text"
-                        required
-                        placeholder="Cimb"
-                        value={values.bank_account}
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        error={user?.bank_account ? false : true}
-                        sx={{
-                          '& .MuiFormHelperText-root ': {
-                            color: 'red'
-                          }
-                        }}
-                        helperText={
-                          errors.bank_account && touched.bank_account && String(errors.bank_account && 'Bank No Acc is required field')
-                        }
-                      />
-                    </Grid>
-
-                    <Grid item xs={12}>
-                      <Stack direction="row">
-                        <AnimateButton>
-                          <Button
-                            endIcon={!isLoading && <SaveOutlinedIcon />}
-                            type="submit"
-                            variant="contained"
-                            color="secondary"
-                            sx={{ color: 'white' }}
-                          >
-                            {isLoading ? <CircularProgress sx={{ color: 'white' }} size={20} /> : 'SAVE'}
-                          </Button>
-                        </AnimateButton>
-                      </Stack>
-
-                      <Box sx={{ mt: 3 }}>
-                        <FormHelperText sx={{ color: 'green' }}>{status?.success && `${status?.msg}`}</FormHelperText>
-                      </Box>
-                    </Grid>
-                  </Grid>
-                </SubCard>
+              <Grid item sm={6} md={others?.htmlFor == 'profilePage' ? 6 : 12}>
                 {user?.identity_card && (
+                  <SubCard title="*Edit Account Details">
+                    <Grid container spacing={gridSpacing}>
+                      <Grid item xs={12} md={12}>
+                        <TextField
+                          required
+                          fullWidth
+                          inputProps={{ style: { textTransform: 'UPPERCASE' } }}
+                          label="Full Name (as IC)"
+                          id="outlined-basic1"
+                          name="fullName"
+                          type="text"
+                          value={values.fullName}
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                          error={Boolean(errors.fullName && touched.fullName)}
+                          helperText={errors.fullName && touched.fullName && String(errors.fullName && 'Full name is required')}
+                        />
+                      </Grid>
+
+                      <Grid item xs={12} md={6}>
+                        <TextField
+                          fullWidth
+                          id="identity_card_no"
+                          label="No IC"
+                          name="identity_card_no"
+                          type="text"
+                          required
+                          placeholder="970105015223"
+                          value={values.identity_card_no}
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                          error={user?.identity_card_no ? false : true}
+                          sx={{
+                            '& .MuiFormHelperText-root ': {
+                              color: 'red'
+                            }
+                          }}
+                          helperText={
+                            errors.identity_card_no && touched.identity_card_no && String(errors.identity_card_no && 'No IC is required')
+                          }
+                        />
+                      </Grid>
+
+                      <Grid item xs={12} md={6}>
+                        <TextField
+                          fullWidth
+                          id="phone_no"
+                          label="Phone"
+                          name="phone_no"
+                          type="tel"
+                          required
+                          placeholder="012345678"
+                          value={values?.phone_no}
+                          inputProps={{
+                            pattern: '[0-9]*',
+                            inputMode: 'numeric'
+                          }}
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                          error={user?.phone_no ? false : true}
+                          sx={{
+                            '& .MuiFormHelperText-root ': {
+                              color: 'red'
+                            }
+                          }}
+                          helperText={errors.phone_no && touched.phone_no && String(errors.phone_no)}
+                        />
+                      </Grid>
+
+                      <Grid item xs={12} md={6}>
+                        <TextField fullWidth disabled type="email" value={values.email} name="email" id="filled-disabled" label="Email" />
+                      </Grid>
+
+                      <Grid item xs={12} md={6}>
+                        <TextField
+                          fullWidth
+                          disabled
+                          type="text"
+                          value={user?.username}
+                          name="username"
+                          id="filled-disabled"
+                          label="username"
+                          aria-readonly
+                        />
+                      </Grid>
+
+                      <Grid item xs={12} md={6}>
+                        <TextField
+                          fullWidth
+                          id="outlined-basic4"
+                          label="Bank Name"
+                          name="bank_name"
+                          type="text"
+                          required
+                          placeholder="Cimb"
+                          value={values.bank_name}
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                          error={user?.bank_name ? false : true}
+                          sx={{
+                            '& .MuiFormHelperText-root ': {
+                              color: 'red'
+                            }
+                          }}
+                          helperText={errors.bank_name && touched.bank_name && String(errors.bank_name && 'Bank name is required field')}
+                        />
+                      </Grid>
+
+                      <Grid item xs={12} md={6}>
+                        <TextField
+                          fullWidth
+                          id="outlined-basic4"
+                          label="Bank No Acc"
+                          name="bank_account"
+                          type="text"
+                          required
+                          placeholder="Cimb"
+                          value={values.bank_account}
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                          error={user?.bank_account ? false : true}
+                          sx={{
+                            '& .MuiFormHelperText-root ': {
+                              color: 'red'
+                            }
+                          }}
+                          helperText={
+                            errors.bank_account && touched.bank_account && String(errors.bank_account && 'Bank No Acc is required field')
+                          }
+                        />
+                      </Grid>
+
+                      <Grid item xs={12}>
+                        <Stack direction="row">
+                          <AnimateButton>
+                            <Button
+                              endIcon={!isLoading && <SaveOutlinedIcon />}
+                              type="submit"
+                              variant="contained"
+                              color="secondary"
+                              sx={{ color: 'white' }}
+                            >
+                              {isLoading ? <CircularProgress sx={{ color: 'white' }} size={20} /> : 'SAVE'}
+                            </Button>
+                          </AnimateButton>
+                        </Stack>
+
+                        <Box sx={{ mt: 3 }}>
+                          <FormHelperText sx={{ color: 'green' }}>{status?.success && `${status?.msg}`}</FormHelperText>
+                        </Box>
+                      </Grid>
+                    </Grid>
+                  </SubCard>
+                )}
+
+                {user?.verified_status !== 'Pending' && (
                   <SubCard title="Profile Picture" contentSX={{ textAlign: 'center' }}>
                     <UploadUserInput htmlFor="ProfilePicture" />
                   </SubCard>

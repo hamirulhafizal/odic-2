@@ -35,12 +35,6 @@ const CardSlot = ({ data, handleClickOpenModal }) => {
     return roi;
   };
 
-  const checkTimeStatus = (time) => {
-    let x;
-    console.log('time', time);
-    return x;
-  };
-
   return (
     <>
       {data
@@ -169,7 +163,13 @@ const CardSlot = ({ data, handleClickOpenModal }) => {
                       <Typography variant="h5" sx={{ color: '#B5A837', pr: 2 }}>
                         {`Dividend:`}
                       </Typography>
-                      <CountdownTimer created_date={item?.created_at} created_time={item?.created_time} dividenDate={item?.dividenDate}>
+
+                      <CountdownTimer
+                        created_date={item?.created_at}
+                        status={item?.status}
+                        created_time={item?.created_time}
+                        dividenDate={item?.dividenDate}
+                      >
                         {/* <StatusProgress /> */}
                         <Box
                           sx={{
@@ -189,8 +189,8 @@ const CardSlot = ({ data, handleClickOpenModal }) => {
                               }}
                               sx={{
                                 textTransform: 'uppercase',
-                                opacity:
-                                  item?.status == 'Progress' || item?.status == 'Fail' || item?.status == 'Completed' ? '0.5' : 'none',
+                                width: '140px',
+                                opacity: item?.status == 'Progress' || item?.status == 'Fail' || item?.status == 'Completed' ? '1' : 'none',
                                 backgroundColor:
                                   item?.status == 'Withdraw'
                                     ? '#28933F'
@@ -212,7 +212,7 @@ const CardSlot = ({ data, handleClickOpenModal }) => {
                               }}
                             >
                               {item?.status == 'Pending' && 'Pending 🔍'}
-                              {item?.status == 'Progress' && 'Progress 📈'}
+                              {item?.status == 'Progress' && 'Progress ⏱️'}
                               {item?.status == 'Withdraw' && 'Withdraw 💲'}
                               {item?.status == 'Fail' && 'Fail ❌️'}
                               {item?.status == 'Completed' && 'Completed 💯'}
