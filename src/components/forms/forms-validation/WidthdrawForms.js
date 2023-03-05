@@ -62,6 +62,11 @@ const WidthdrawForms = ({ withDrawData }) => {
     setCheckBox(state);
   };
 
+  const handleCloseScroll = () => {
+    const btnScroll = document.getElementById('scrollBtnEl');
+    btnScroll.click();
+  };
+
   const handleWithdrawApi = async (data) => {
     setLoading(true);
     await setWithDrawAPI(data).then((res) => {
@@ -71,6 +76,8 @@ const WidthdrawForms = ({ withDrawData }) => {
         setTimeout(() => {
           setMessage(true);
           setLoading(false);
+          const refreshBtn = document.getElementById('refreshButton');
+          refreshBtn.click();
         }, 3000);
     });
   };
@@ -85,8 +92,8 @@ const WidthdrawForms = ({ withDrawData }) => {
               pb: 2
             }}
           >
-            <Typography variant="caption">
-              I wanted to express my sincere appreciation for your trust and patience in our investment strategies.
+            <Typography variant="body">
+              we at ODIC, wanted to express deepest sincere appreciation for your trust and patience in our investment strategies.
               <br />
               <br />
               Your commitment and belief in our expertise have been a driving force behind our success. Thank you for your continued
@@ -147,7 +154,7 @@ const WidthdrawForms = ({ withDrawData }) => {
         <AnimateButton>
           <Button
             onClick={() => {
-              !isMessage && handleWithdrawApi(withDrawData);
+              !isLoading && isMessage ? handleCloseScroll() : handleWithdrawApi(withDrawData);
             }}
             fullWidth
             endIcon={
@@ -158,6 +165,7 @@ const WidthdrawForms = ({ withDrawData }) => {
             disabled={isChecked || (!isLoading && isMessage) ? false : true}
             sx={{
               backgroundColor: '#28933F',
+              opacity: !isLoading && isMessage && 0.5,
               '&:hover': {
                 backgroundColor: '#28933F'
               }

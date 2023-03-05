@@ -115,8 +115,8 @@ const Profile = ({ ...others }) => {
       {({ errors, touched, status, handleBlur, handleChange, handleSubmit, values }) => (
         <>
           <Form noValidate onSubmit={handleSubmit} {...others}>
-            <Grid container spacing={gridSpacing}>
-              <Grid item sm={6} md={others?.htmlFor == 'profilePage' ? 6 : 12}>
+            <Grid container spacing={gridSpacing} sx={{ justifyContent: 'center' }}>
+              <Grid item sm={12} md={others?.htmlFor == 'profilePage' ? 6 : 12}>
                 <SubCard title="*IC Picture" contentSX={{ textAlign: 'center' }}>
                   <UploadUserInput htmlFor="ICPicture" />
                 </SubCard>
@@ -278,7 +278,6 @@ const Profile = ({ ...others }) => {
                     </Grid>
                   </SubCard>
                 )}
-
                 {user?.verified_status !== 'Pending' && (
                   <SubCard title="Profile Picture" contentSX={{ textAlign: 'center' }}>
                     <UploadUserInput htmlFor="ProfilePicture" />

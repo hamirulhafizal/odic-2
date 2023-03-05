@@ -195,13 +195,7 @@ const JWTLogin = ({ loginProp, ...others }) => {
                     fontWeight: 'bold'
                   }}
                 >
-                  {status && status.success ? (
-                    `${status.msg}`
-                  ) : isLoading ? (
-                    <CircularProgress sx={{ color: '#b5a837' }} size={20} />
-                  ) : (
-                    'LOGIN'
-                  )}
+                  {status && status.success ? `${status.msg}` : isLoading ? <CircularProgress sx={{ color: 'grey' }} size={20} /> : 'LOGIN'}
                 </FormHelperText>
               </Button>
             </AnimateButton>

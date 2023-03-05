@@ -275,7 +275,7 @@ const JWTRegister = ({ ...others }) => {
                     {status && status.success ? (
                       `${status?.msg}`
                     ) : isLoading ? (
-                      <CircularProgress sx={{ color: '#b5a837' }} size={20} />
+                      <CircularProgress sx={{ color: 'grey' }} size={20} />
                     ) : (
                       'SIGN UP'
                     )}
