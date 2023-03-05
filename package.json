@@ -36,7 +36,6 @@
     "amazon-cognito-identity-js": "^5.2.7",
     "apexcharts": "^3.33.2",
     "axios": "^0.26.0",
-    "browser-image-compression": "^2.0.0",
     "chance": "^1.1.8",
     "clsx": "^1.1.1",
     "compressorjs": "^1.1.1",
