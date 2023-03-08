@@ -158,6 +158,7 @@ const top100Films1 = [
 const filterStatus = [
   { label: 'All 🔍', status: 'All' },
   { label: 'Pending 🔍', status: 'Pending' },
+  { label: 'Progress ⏱️', status: 'Progress' },
   { label: 'Withdraw 💲', status: 'Withdraw' },
   { label: 'Fail ❌️', status: 'Fail' },
   { label: 'Floating 🔄', status: 'Floating' },
@@ -193,7 +194,7 @@ function ComboBox() {
       fullWidth
       options={filterStatus}
       sx={{
-        width: 300
+        width: '100%'
       }}
       value={value != null ? value : filterStatus[0]}
       inputValue={value != null ? value?.label : filterStatus[0].label}
@@ -218,8 +219,10 @@ function ComboBox() {
                 ? '#378FB5'
                 : option.label == 'Completed 💯'
                 ? '#372893'
-                : option.label == 'All 🔍'
+                : option.label == 'Progress ⏱️'
                 ? '#b5a837'
+                : option.label == 'All 🔍'
+                ? 'black'
                 : null,
             ':hover': {
               color:
@@ -233,8 +236,10 @@ function ComboBox() {
                   ? '#378FB5'
                   : option.label == 'Completed 💯'
                   ? '#372893'
-                  : option.label == 'All 🔍'
+                  : option.label == 'Progress ⏱️'
                   ? '#b5a837'
+                  : option.label == 'All 🔍'
+                  ? 'black'
                   : null,
               backgroundColor: 'grey'
             }
@@ -268,7 +273,7 @@ function ComboBox() {
 
 export default function FilterDrawer({ isOpenFilterDrawer, handleCloseFilterDrawer, handleOpenFilterDrawer }) {
   const theme = useTheme();
-  const matchDownSM = useMediaQuery(theme.breakpoints.down('sm'));
+  const matchDownMD = useMediaQuery(theme.breakpoints.down('md'));
 
   const [state, setState] = React.useState({
     top: false,
@@ -305,7 +310,7 @@ export default function FilterDrawer({ isOpenFilterDrawer, handleCloseFilterDraw
         onClose={handleCloseFilterDrawer}
         sx={{
           '.MuiDrawer-paperAnchorRight': {
-            width: matchDownSM ? '60% !important' : '15% !important',
+            width: matchDownMD ? '60% !important' : '15% !important',
             height: '100% !important'
           },
 

@@ -12,7 +12,7 @@ import moment from 'moment';
 
 const CardSlot = ({ data, handleClickOpenModal }) => {
   const theme = useTheme();
-  const matchDownSM = useMediaQuery(theme.breakpoints.down('sm'));
+  const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
 
   const checkRoi = (value) => {
     let roi;
