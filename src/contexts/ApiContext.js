@@ -70,16 +70,15 @@ export const ApiProvider = ({ children }) => {
         password
       })
       .then(async (res) => {
+        if (res?.data?.error === 'Login details are not valid') {
+          throw new Error('Login details are not valid');
+        }
+
         if (typeof window !== 'undefined') {
           localStorage.setItem('access', res?.data?.token);
           localStorage.setItem('refresh', res?.data?.token);
           axiosInstance.defaults.headers['Authorization'] = 'Bearer ' + localStorage.getItem('access');
         }
-
-        // login(email, password, user_name);
-        // updateProfile(user_name, { firstName: first_name, lastName: last_name });
-
-        // await getProfile(res?.data.username);
 
         const {
           token,
@@ -131,20 +130,12 @@ export const ApiProvider = ({ children }) => {
           }
         });
 
-        // dispatch({
-        //   payload: {
-        //     isLoggedIn: true,
-        //     user: users
-        //   }
-        // });
-
-        history.push('/board');
+        // history.push('/board');
+        // location.reload('/board');
 
         return res;
       })
       .catch((err) => {
-        console.log('err-->', err);
-
         return err;
       });
 
@@ -190,6 +181,7 @@ export const ApiProvider = ({ children }) => {
     window.localStorage.removeItem('access');
     window.localStorage.removeItem('refresh');
     window.localStorage.removeItem('users');
+    window.localStorage.removeItem('berry-cart');
   };
 
   const forgetPassword = async (email) => {

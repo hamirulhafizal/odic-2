@@ -184,8 +184,6 @@ function ComboBox() {
     //   setInputValue(newInputValue);
   };
 
-  console.log('value', value);
-
   return (
     <Autocomplete
       onChange={(event, option) => handleSelect(option)}

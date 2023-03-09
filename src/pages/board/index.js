@@ -323,6 +323,7 @@ const Listing = () => {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [search, setSearch] = React.useState('');
   const [rows, setRows] = React.useState([]);
+  const [isFilter, setFilter] = React.useState([]);
   const [isModal, setOpenModal] = React.useState(false);
   const [isSlotId, setSlotId] = React.useState();
 
@@ -340,6 +341,7 @@ const Listing = () => {
   const [open, setOpen] = React.useState(false);
   const [isLoading, setLoading] = React.useState(false);
   const [isMessage, setMessage] = React.useState(false);
+  const [isInitial, setInitial] = React.useState(false);
   const [isOpenFilterDrawer, setOpenFilterDrawer] = React.useState(false);
 
   const handleChange = (event, newValue) => {
@@ -471,13 +473,14 @@ const Listing = () => {
     try {
       setLoading(true);
       await getAllInvestment(username).then((response) => {
-        let results = response.data;
+        let results = response?.data;
 
         const statusFilter = slot[slot.length - 1];
+        const dataFiltered = statusFilter && statusFilter !== 'All' ? results?.filter((item) => item?.status == statusFilter) : results;
 
-        const dataFiltered = results.filter((item) => item?.status == statusFilter);
+        results.length == 0 ? setInitial(true) : setInitial(false);
 
-        setRows(dataFiltered?.length == 0 || slot[slot.length - 1] == 'All' ? results : dataFiltered);
+        setRows(dataFiltered);
         setLoading(false);
       });
     } catch (err) {
@@ -497,7 +500,7 @@ const Listing = () => {
   };
 
   const handleOpenFilterDrawer = () => {
-    setOpenFilterDrawer(true);
+    setOpenFilterDrawer(!isOpenFilterDrawer);
   };
 
   const handleCloseFilterDrawer = () => {
@@ -505,9 +508,9 @@ const Listing = () => {
   };
 
   React.useEffect(() => {
-    fetchAllInvestment(user?.username);
+    user?.username && fetchAllInvestment(user?.username);
 
-    slot?.length > 10 && handleClear();
+    slot?.length > 100 && handleClear();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, slot]);
@@ -600,72 +603,100 @@ const Listing = () => {
                   justifyContent="space-between"
                   direction="row"
                 >
-                  <Box>
-                    Total: <span style={{ fontWeight: 'bold', paddingLeft: '2px' }}>{rows?.length} Slot</span>
-                  </Box>
-                  <AnimateButton>
-                    <Button
-                      variant="text"
-                      size="small"
-                      sx={{
-                        color: 'black',
-                        backgroundColor: 'white',
-                        '&:hover': {
-                          backgroundColor: 'white',
-                          color: 'black'
-                        }
-                      }}
-                      onClick={handleOpenFilterDrawer}
-                      endIcon={<FilterListIcon />}
-                    >
-                      Filter
-                    </Button>
-                  </AnimateButton>
+                  {!isInitial && (
+                    <>
+                      <Box>
+                        Total: <span style={{ fontWeight: 'bold', paddingLeft: '2px' }}>{rows?.length} Slot</span>
+                      </Box>
+                      <AnimateButton>
+                        <Button
+                          variant="text"
+                          size="small"
+                          sx={{
+                            color: 'black',
+                            backgroundColor: 'white',
+                            '&:hover': {
+                              backgroundColor: 'white',
+                              color: 'black'
+                            }
+                          }}
+                          onClick={handleOpenFilterDrawer}
+                          endIcon={<FilterListIcon />}
+                        >
+                          Filter
+                        </Button>
+                      </AnimateButton>
+                    </>
+                  )}
                 </Stack>
                 <Stack
                   direction="column"
                   sx={{
                     justifyContent: 'center',
                     alignItems: 'center',
-                    gap: '3em',
+                    gap: '2em',
                     width: '100%'
                   }}
                 >
                   {rows?.length != 0 ? (
-                    <>{isLoading ? <SkeletonCard /> : <CardSlot data={rows} handleClickOpenModal={handleClickOpenModal} />}</>
+                    <>
+                      {isLoading ? (
+                        <SkeletonCard />
+                      ) : (
+                        <>
+                          <CardSlot data={rows} handleClickOpenModal={handleClickOpenModal} />
+                        </>
+                      )}
+                    </>
                   ) : (
                     <>
                       {isLoading ? (
                         <SkeletonCard />
                       ) : (
                         <>
-                          <Typography
-                            variant="h4"
-                            onClick={() => {
-                              handleSwipe();
-                            }}
-                          >
-                            Start
-                          </Typography>
-                          <IconButton
-                            onClick={() => {
-                              handleSwipe();
-                            }}
-                            aria-label="delete"
-                            sx={{
-                              mt: 1,
-                              maxWidth: 'max-content',
-                              backgroundColor: '#b5a837',
-                              boxShadow:
-                                '0px 3px 5px -1px rgb(0 0 0 / 20%), 0px 6px 10px 0px rgb(0 0 0 / 14%), 0px 1px 18px 0px rgb(0 0 0 / 12%)',
-                              '&:hover': {
-                                backgroundColor: '#b5a837'
-                              }
-                            }}
-                            size="small"
-                          >
-                            <AddIcon sx={{ color: 'white' }} fontSize="small" />
-                          </IconButton>
+                          {slot[slot.length - 1] !== 'All' && !isInitial && (
+                            <Typography
+                              variant="h4"
+                              onClick={() => {
+                                handleSwipe();
+                              }}
+                              sx={{ textTransform: 'uppercase' }}
+                            >
+                              No Slot is {slot[slot.length - 1]}
+                            </Typography>
+                          )}
+
+                          {isInitial && slot[slot.length - 1] == undefined && (
+                            <>
+                              <Typography
+                                variant="h4"
+                                onClick={() => {
+                                  handleSwipe();
+                                }}
+                              >
+                                Start
+                              </Typography>
+                              <IconButton
+                                onClick={() => {
+                                  handleSwipe();
+                                }}
+                                aria-label="delete"
+                                sx={{
+                                  mt: 1,
+                                  maxWidth: 'max-content',
+                                  backgroundColor: '#b5a837',
+                                  boxShadow:
+                                    '0px 3px 5px -1px rgb(0 0 0 / 20%), 0px 6px 10px 0px rgb(0 0 0 / 14%), 0px 1px 18px 0px rgb(0 0 0 / 12%)',
+                                  '&:hover': {
+                                    backgroundColor: '#b5a837'
+                                  }
+                                }}
+                                size="small"
+                              >
+                                <AddIcon sx={{ color: 'white' }} fontSize="small" />
+                              </IconButton>
+                            </>
+                          )}
                         </>
                       )}
                     </>
@@ -690,13 +721,11 @@ const Listing = () => {
         handleClickCloseModal={handleClickCloseModal}
       />
 
-      {rows?.length != 0 && (
-        <FilterDrawer
-          isOpenFilterDrawer={isOpenFilterDrawer}
-          handleCloseFilterDrawer={handleCloseFilterDrawer}
-          handleOpenFilterDrawer={handleOpenFilterDrawer}
-        />
-      )}
+      <FilterDrawer
+        isOpenFilterDrawer={isOpenFilterDrawer}
+        handleCloseFilterDrawer={handleCloseFilterDrawer}
+        handleOpenFilterDrawer={handleOpenFilterDrawer}
+      />
     </>
   );
 };

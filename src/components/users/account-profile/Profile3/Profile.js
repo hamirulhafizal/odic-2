@@ -40,7 +40,7 @@ const Profile = ({ ...others }) => {
   const dispatch = useDispatch();
   const [isLoading, setLoading] = useState(false);
 
-  const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
+  const matchDownMD = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
     <Formik
@@ -122,7 +122,7 @@ const Profile = ({ ...others }) => {
                 </SubCard>
               </Grid>
 
-              <Grid item sm={6} md={others?.htmlFor == 'profilePage' ? 6 : 12}>
+              <Grid item sm={12} md={others?.htmlFor == 'profilePage' ? 6 : 12}>
                 {user?.identity_card && (
                   <SubCard title="*Edit Account Details">
                     <Grid container spacing={gridSpacing}>

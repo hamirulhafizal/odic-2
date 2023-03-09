@@ -4,7 +4,7 @@ import React from 'react';
 
 const SkeletonCard = () => {
   const theme = useTheme();
-  const matchDownSM = useMediaQuery(theme.breakpoints.down('sm'));
+  const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
     <>
