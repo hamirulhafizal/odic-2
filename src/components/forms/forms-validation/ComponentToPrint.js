@@ -2,6 +2,7 @@ import { Avatar, Box, Stack, Typography, useMediaQuery, useTheme } from '@mui/ma
 import React from 'react';
 import moment from 'moment';
 import useAuth from 'hooks/useAuth';
+import { checkRoi, numberWithCommas } from 'utils/helper';
 
 const ComponentToPrint = React.forwardRef((props, ref) => {
   const { children, isPreview } = props;
@@ -9,6 +10,7 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down('sm'));
   const { user } = useAuth();
+  const investAmount = localStorage.getItem('investVal');
 
   return (
     <>
@@ -108,7 +110,7 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
           <br />
           <Stack direction="row" sx={{ width: '100%', textAlign: 'justify', color: 'black' }}>
             <Typography variant="p">
-              <b>OD LEGACY REALTY SDN BHD (1390527M)</b> yang beralamat di No. 79-02 Jalan Aliff 4, Damansara Aliff Square 81200 Johor
+              <b>OD LEGACY REALTY SDN BHD (1390527M)</b> yang beralamat di No. 77-02 & 79-02 Jalan Aliff 4, Damansara Aliff Square 81200 Johor
               Bahru, Johor (selepas ini dirujuk “Pihak Kedua”).
             </Typography>
           </Stack>
@@ -140,14 +142,14 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
                   <br />
                   <ol className="c">
                     <li>
-                      Pihak pertama mengakujanji bahawa pihak pertama akan memberikan wang modal sebanyak Ringgit Malaysia Tiga Ratus Ribu
-                      (RM300,000.00) sahaja.
+                      Pihak pertama mengakujanji bahawa pihak pertama akan memberikan wang modal sebanyak RM
+                      {numberWithCommas(investAmount)} sahaja.
                     </li>
                     <br />
 
                     <li>
-                      Pihak Pertama dan kedua akan menguruskan perniagaan dan bersetuju memberi sebanyak Tiga Puluh Percent (30%) dalam
-                      tempoh 14 bulan daripada jumlah modal.
+                      {`Pihak Pertama dan kedua akan menguruskan perniagaan dan bersetuju memberi sebanyak ${checkRoi(investAmount)} %
+                      dalam tempoh 14 bulan daripada jumlah modal.`}
                     </li>
                     <br />
 
@@ -166,8 +168,8 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
                 <li>
                   Pihak pertama dan pihak kedua bersetuju bahawa melantik{' '}
                   <b>
-                    Tetuan Syazwan Syazani & Partners, Peguambela dan Peguamcara yang beralamat di No 11.01 Jalan Pertama 5, Pusat
-                    Perdagangan Danga Utama 81300 Johor Bahru Johor
+                    Tetuan Syazwan Syazani & Partners, Peguambela dan Peguamcara yang beralamat di No 81 Jalan Aliff 4, Damansara Aliff
+                    Square 81200 Johor Bahru, Johor
                   </b>{' '}
                   setakat menyediakan dan/ atau menguruskan perjanjian pelaburan sehingga tamat perjanjian dan menguruskan setelah kedua-dua
                   belah pihak bersetuju dengan syarat- syarat yang terkandung didalam perjanjian ini.

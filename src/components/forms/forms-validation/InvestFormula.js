@@ -95,7 +95,7 @@ const InvestFormula = ({ value, htmlFor }) => {
               textAlign: 'start'
             }}
           >
-            RM {numberWithCommas(value * 0.33).substring(0, 10)}
+            RM {numberWithCommas(value * (checkRoi(value) / 100)).substring(0, 10)}
           </Typography>
           <Box
             sx={{

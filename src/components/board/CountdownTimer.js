@@ -11,6 +11,8 @@ const CountdownTimer = ({ created_date, created_time, dividenDate, children }) =
   const [currentTime, setCurrentTime] = useState(moment());
   const timeBetween = moment.duration(dividenDate1.diff(currentTime));
 
+  const diffPercentage = dividenDate1.diff(moment(), 'days') / 365;
+  const totaldate = diffPercentage * 100;
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTime(moment());

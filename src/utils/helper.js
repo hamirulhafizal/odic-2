@@ -26,4 +26,14 @@ const stringifyFile = (obj) => {
   return JSON.stringify(obj, replacer);
 };
 
-export { slugify, numberWithCommas, filterByCategory, stringifyFile };
+const checkRoi = (value) => {
+  let roi;
+
+  if (value <= 10000) roi = 25;
+  if (value >= 10000 && value <= 30000) roi = 27;
+  if (value > 30000) roi = 30;
+
+  return roi;
+};
+
+export { slugify, numberWithCommas, checkRoi, filterByCategory, stringifyFile };

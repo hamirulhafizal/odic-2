@@ -6,10 +6,9 @@ const Pwa = () => {
   window.addEventListener('beforeinstallprompt', (e) => {
     //if app can be installed, assign the event to deferred prompt variable
     deferredPrompt = e;
-    deferredPrompt.userChoice = null;
     console.log('masuk');
     // Show the add to home screen prompt
-    deferredPrompt.prompt();
+    deferredPrompt?.prompt();
   });
 
   window.addEventListener('load', () => {
@@ -18,7 +17,7 @@ const Pwa = () => {
     pwaAppInstallBtn.addEventListener('click', async () => {
       if (deferredPrompt !== null) {
         deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
+        const { outcome } = await deferredPrompt?.userChoice;
         if (outcome === 'accepted') {
           deferredPrompt = null;
         }
