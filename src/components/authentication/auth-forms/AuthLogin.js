@@ -73,14 +73,22 @@ const JWTLogin = ({ loginProp, ...others }) => {
         try {
           await login(values.email, values.password)
             .then((res) => {
+              if (res?.message === 'Login details are not valid') {
+                throw new Error('Login details are not valid');
+              }
+
               if (scriptedRef.current) {
                 setLoading(false);
                 setStatus({ success: true, msg: 'SUCCESS' });
                 setSubmitting(false);
+                router.push(`/board`);
               }
-              router.push(`/board`);
             })
             .catch((err) => {
+              if (err?.message === 'Login details are not valid') {
+                throw new Error('Login details are not valid');
+              }
+
               const errJson = JSON.stringify(err);
               const errParse = JSON.parse(errJson);
 
@@ -91,8 +99,6 @@ const JWTLogin = ({ loginProp, ...others }) => {
             });
         } catch (err) {
           if (scriptedRef.current) {
-            console.log('err-->', err);
-
             setStatus({ success: false, msg: 'fail' });
             setErrors({ submit: err.message });
             setSubmitting(false);
@@ -195,7 +201,7 @@ const JWTLogin = ({ loginProp, ...others }) => {
                     fontWeight: 'bold'
                   }}
                 >
-                  {status && status.success ? `${status.msg}` : isLoading ? <CircularProgress size={20} /> : 'LOGIN'}
+                  {status && status.success ? `${status.msg}` : isLoading ? <CircularProgress sx={{ color: 'grey' }} size={20} /> : 'LOGIN'}
                 </FormHelperText>
               </Button>
             </AnimateButton>

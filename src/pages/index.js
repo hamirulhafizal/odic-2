@@ -58,13 +58,13 @@ const HeaderWrapper = styled('div')(({ theme }) => ({
   paddingTop: 30,
   overflowX: 'hidden',
   overflowY: 'clip',
-
-  backgroundImage: `url(${images1})`,
+  boxShadow: 'inset 0px -20px 100vh 2px black',
+  background: 'rgb(0 0 0 / 78%)',
+  backgroundImage: `url(/assets/images/landing/living-room-with-yellow.jpg)`,
   backgroundSize: 'cover',
   backgroundRepeat: 'no-repeat',
   backgroundPosition: 'center',
-  boxShadow: 'inset 0px -20px 100vh 2px black',
-
+  backgroundBlendMode: 'multiply',
   [theme.breakpoints.down('md')]: {
     paddingTop: 42
   }
@@ -95,7 +95,12 @@ const Landing = () => {
 
   return (
     <>
-      <HeaderWrapper id="home" sx={{ height: matchDownLG ? '90vh' : '80vh' }}>
+      <HeaderWrapper
+        id="home"
+        sx={{
+          height: matchDownLG ? '100%' : '100vh'
+        }}
+      >
         <AppBar />
         <Header />
       </HeaderWrapper>

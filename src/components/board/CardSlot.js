@@ -8,22 +8,11 @@ import { useSelector } from 'store';
 import CountdownTimer from './CountdownTimer';
 import StatusProgress from './StatusProgress';
 import AnimateButton from 'components/ui-component/extended/AnimateButton';
+import moment from 'moment';
 
 const CardSlot = ({ data, handleClickOpenModal }) => {
   const theme = useTheme();
-  const matchDownSM = useMediaQuery(theme.breakpoints.down('sm'));
-
-  const { slot } = useSelector((state) => state.product);
-
-  const [open, setOpen] = React.useState(false);
-
-  const handleTooltipClose = () => {
-    setOpen(false);
-  };
-
-  const handleTooltipOpen = () => {
-    setOpen(true);
-  };
+  const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
 
   const checkRoi = (value) => {
     let roi;
@@ -35,10 +24,17 @@ const CardSlot = ({ data, handleClickOpenModal }) => {
     return roi;
   };
 
-  const checkTimeStatus = (time) => {
-    let x;
-    console.log('time', time);
-    return x;
+  const checkDate = (dividenDate, id) => {
+    const currentDate = moment();
+    const futureDate = moment(dividenDate);
+    const totalDuration = moment.duration(futureDate.diff(currentDate));
+    const durationFromNow = totalDuration.as('milliseconds');
+    const totalDurationInMillis = moment.duration(428, 'days').as('milliseconds');
+    const durationPercentage = (durationFromNow / totalDurationInMillis) * 100;
+
+    const result = durationPercentage.toFixed(2) <= 0 ? true : false;
+
+    return result;
   };
 
   return (
@@ -163,13 +159,15 @@ const CardSlot = ({ data, handleClickOpenModal }) => {
                         alignItems: 'start',
                         flexFlow: 'wrap',
                         width: '100%',
-                        pt: 3
+                        pt: item?.status == 'Progress' && 3
                       }}
                     >
-                      <Typography variant="h5" sx={{ color: '#B5A837', pr: 2 }}>
-                        {`Dividend:`}
-                      </Typography>
-                      <CountdownTimer created_date={item?.created_at} created_time={item?.created_time} dividenDate={item?.dividenDate}>
+                      <CountdownTimer
+                        created_date={item?.created_at}
+                        status={item?.status}
+                        created_time={item?.created_time}
+                        dividen_date={item?.dividen_date}
+                      >
                         {/* <StatusProgress /> */}
                         <Box
                           sx={{
@@ -185,37 +183,50 @@ const CardSlot = ({ data, handleClickOpenModal }) => {
                               variant="contained"
                               type="submit"
                               onClick={() => {
+                                item?.status == 'Progress' && checkDate(item?.dividen_date, item?.id) && handleClickOpenModal(item);
                                 item?.status == 'Withdraw' && handleClickOpenModal(item);
                               }}
                               sx={{
                                 textTransform: 'uppercase',
+                                width: '140px',
                                 opacity:
-                                  item?.status == 'Progress' || item?.status == 'Fail' || item?.status == 'Completed' ? '0.5' : 'none',
+                                  item?.status == 'Progress' ||
+                                  item?.status == 'Fail' ||
+                                  item?.status == 'Completed' ||
+                                  item?.status == 'Floating'
+                                    ? '0.6'
+                                    : 'none',
                                 backgroundColor:
-                                  item?.status == 'Withdraw'
+                                  item?.status == 'Withdraw' || (item?.status == 'Progress' && checkDate(item?.dividen_date, item?.id))
                                     ? '#28933F'
                                     : item?.status == 'Fail'
                                     ? '#B53737'
                                     : item?.status == 'Completed'
                                     ? '#372893'
+                                    : item?.status == 'Floating'
+                                    ? '#378FB5'
                                     : 'none',
                                 '&:hover': {
                                   backgroundColor:
-                                    item?.status == 'Withdraw'
+                                    item?.status == 'Withdraw' || (item?.status == 'Progress' && checkDate(item?.dividen_date, item?.id))
                                       ? '#28933F'
                                       : item?.status == 'Fail'
                                       ? '#B53737'
                                       : item?.status == 'Completed'
                                       ? '#372893'
+                                      : item?.status == 'Floating'
+                                      ? '#378FB5'
                                       : 'none'
                                 }
                               }}
                             >
                               {item?.status == 'Pending' && 'Pending 🔍'}
-                              {item?.status == 'Progress' && 'Progress 📈'}
                               {item?.status == 'Withdraw' && 'Withdraw 💲'}
                               {item?.status == 'Fail' && 'Fail ❌️'}
+                              {item?.status == 'Floating' && 'Floating 🔄'}
                               {item?.status == 'Completed' && 'Completed 💯'}
+                              {item?.status == 'Progress' && checkDate(item?.dividen_date, item?.id) && 'Withdraw 💲'}
+                              {item?.status == 'Progress' && !checkDate(item?.dividen_date, item?.id) && 'Progress ⏱️'}
                             </Button>
                           </AnimateButton>
                         </Box>

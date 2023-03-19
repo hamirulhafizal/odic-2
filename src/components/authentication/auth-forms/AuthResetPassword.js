@@ -28,6 +28,8 @@ import { strengthColor, strengthIndicator } from 'utils/password-strength';
 // assets
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import useAuth from 'hooks/useAuth';
+import { useRouter } from 'next/router';
 
 // ========================|| FIREBASE - RESET PASSWORD ||======================== //
 
@@ -37,6 +39,8 @@ const AuthResetPassword = ({ ...others }) => {
   const [showPassword, setShowPassword] = React.useState(false);
   const [strength, setStrength] = React.useState(0);
   const [level, setLevel] = React.useState();
+  const { newPassword } = useAuth();
+  const router = useRouter();
 
   // const { firebaseEmailPasswordSignIn } = useAuth();
 
@@ -75,7 +79,12 @@ const AuthResetPassword = ({ ...others }) => {
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {
-          // await firebaseEmailPasswordSignIn(values.email, values.password);
+          await newPassword({
+            email: router?.query?.email,
+            password: values.password,
+            confirmPassword: values.confirmPassword,
+            token: router?.query?.id
+          });
           if (scriptedRef.current) {
             setStatus({ success: true });
             setSubmitting(false);

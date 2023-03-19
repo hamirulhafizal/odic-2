@@ -15,7 +15,7 @@ import { useEffect, useState } from 'react';
 import { useTheme, styled } from '@mui/material/styles';
 import { Box } from '@mui/material';
 
-import imageCompression from 'browser-image-compression';
+// import imageCompression from 'browser-image-compression';
 const example = 'assets/images/e-commerce/landscape2.jpeg';
 
 const validationSchema = yup.object({
@@ -106,26 +106,26 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
     }
   });
 
-  const preViewImageCover = async (e) => {
-    const image = await resizeFile(e.target.files[0]);
+  // const preViewImageCover = async (e) => {
+  //   const image = await resizeFile(e.target.files[0]);
 
-    if (image?.size >= 1000000) {
-      setMessage('File Size is too largess');
-    } else {
-      setMessage('');
-      setEImg(image);
-      const fileReader = new FileReader();
+  //   if (image?.size >= 1000000) {
+  //     setMessage('File Size is too largess');
+  //   } else {
+  //     setMessage('');
+  //     setEImg(image);
+  //     const fileReader = new FileReader();
 
-      fileReader.onload = () => {
-        if (fileReader.readyState === 2) {
-          formik.setFieldValue('photo', image);
-          formik.setFieldValue('size', image?.size);
-          setAvatarPreview(fileReader.result);
-        }
-      };
-      fileReader.readAsDataURL(image);
-    }
-  };
+  //     fileReader.onload = () => {
+  //       if (fileReader.readyState === 2) {
+  //         formik.setFieldValue('photo', image);
+  //         formik.setFieldValue('size', image?.size);
+  //         setAvatarPreview(fileReader.result);
+  //       }
+  //     };
+  //     fileReader.readAsDataURL(image);
+  //   }
+  // };
 
   const preViewImageAlbum = async (e) => {
     if (window.File && window.FileReader && window.FileList && window.Blob) {
@@ -234,7 +234,7 @@ export default function GalleryForm({ imageProperty, setPaymentData, handleNext,
                   label="Enter SKU"
                   sx={{ display: 'none' }}
                   onChange={(e) => {
-                    preViewImageCover(e);
+                    // preViewImageCover(e);
                   }}
                 />
 

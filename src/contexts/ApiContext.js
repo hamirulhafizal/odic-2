@@ -70,16 +70,15 @@ export const ApiProvider = ({ children }) => {
         password
       })
       .then(async (res) => {
+        if (res?.data?.error === 'Login details are not valid') {
+          throw new Error('Login details are not valid');
+        }
+
         if (typeof window !== 'undefined') {
           localStorage.setItem('access', res?.data?.token);
           localStorage.setItem('refresh', res?.data?.token);
           axiosInstance.defaults.headers['Authorization'] = 'Bearer ' + localStorage.getItem('access');
         }
-
-        // login(email, password, user_name);
-        // updateProfile(user_name, { firstName: first_name, lastName: last_name });
-
-        // await getProfile(res?.data.username);
 
         const {
           token,
@@ -131,20 +130,12 @@ export const ApiProvider = ({ children }) => {
           }
         });
 
-        // dispatch({
-        //   payload: {
-        //     isLoggedIn: true,
-        //     user: users
-        //   }
-        // });
-
-        history.push('/board');
+        // history.push('/board');
+        // location.reload('/board');
 
         return res;
       })
       .catch((err) => {
-        console.log('err-->', err);
-
         return err;
       });
 
@@ -190,21 +181,21 @@ export const ApiProvider = ({ children }) => {
     window.localStorage.removeItem('access');
     window.localStorage.removeItem('refresh');
     window.localStorage.removeItem('users');
+    window.localStorage.removeItem('berry-cart');
   };
 
-  const forgetPassword = async (email, password) => {
+  const forgetPassword = async (email) => {
     const response = await axios
-      .post(`${BACKEND_PATH}/api/auth/forgot-password?email=${email}`, {
-        password
+      .post(`${BACKEND_PATH}/api/auth/forgot-pwd`, {
+        email
       })
       .then(async (res) => {
+        console.log('res', res);
         if (typeof window !== 'undefined') {
           axiosInstance.defaults.headers['Authorization'] = 'Bearer ' + localStorage.getItem('access');
           localStorage.setItem('access', res?.token);
           localStorage.setItem('refresh', res?.token);
         }
-
-        await getProfile(res?.username);
 
         dispatch({
           type: LOGIN,
@@ -226,7 +217,44 @@ export const ApiProvider = ({ children }) => {
     return response;
   };
 
-  const resetPassword = (email) => console.log(email);
+  const newPassword = async ({ email, token, password, confirmPassword }) => {
+    console.log(token);
+    console.log(email);
+    console.log(password);
+    console.log(confirmPassword);
+    const response = await axios
+      .post(`${BACKEND_PATH}/api/auth/new-pwd?email=${email}&token_=${token}&password=${password}&password_confirmation=${confirmPassword}`)
+      .then(async (res) => {
+        console.log('res--->', res);
+        // if (typeof window !== 'undefined') {
+        //   axiosInstance.defaults.headers['Authorization'] = 'Bearer ' + localStorage.getItem('access');
+        //   localStorage.setItem('access', res?.token);
+        //   localStorage.setItem('refresh', res?.token);
+        // }
+
+        // await getProfile(res?.username);
+
+        // dispatch({
+        //   type: LOGIN,
+        //   payload: {
+        //     isLoggedIn: true
+        //   }
+        // });
+
+        history.push('/login');
+
+        return res;
+      })
+      .catch((err) => {
+        console.log('err-->', err);
+
+        return err;
+      });
+
+    return response;
+  };
+
+  // const resetPassword = (email) => console.log(email);
 
   const getProfile = async (username) => {
     console.log(username);
@@ -276,7 +304,7 @@ export const ApiProvider = ({ children }) => {
   }
 
   return (
-    <ApiContext.Provider value={{ ...state, login, logout, register, resetPassword, updateProfile, getProfile, forgetPassword }}>
+    <ApiContext.Provider value={{ ...state, login, logout, register, updateProfile, getProfile, forgetPassword, newPassword }}>
       {children}
     </ApiContext.Provider>
   );

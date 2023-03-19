@@ -164,7 +164,12 @@ const UploadUserInput = ({ htmlFor }) => {
             <>
               <Stack direction="row" sx={{ gap: 2, justifyContent: 'center' }}>
                 <AnimateButton>
-                  <InputLabel htmlFor="photo2">
+                  <InputLabel
+                    htmlFor="photo2"
+                    style={{
+                      boxShadow: '0px 3px 5px -1px rgb(0 0 0 / 20%), 0px 6px 10px 0px rgb(0 0 0 / 14%), 0px 1px 18px 0px rgb(0 0 0 / 12%)'
+                    }}
+                  >
                     <Input
                       accept="image/*"
                       id="photo2"
@@ -176,7 +181,15 @@ const UploadUserInput = ({ htmlFor }) => {
                         setFieldImgValue2(e.target.files[0]);
                       }}
                     ></Input>
-                    <Button endIcon={<FileUploadIcon />} color="secondary" sx={{ color: 'white' }} variant="contained" component="span">
+                    <Button
+                      endIcon={<FileUploadIcon />}
+                      color="secondary"
+                      sx={{
+                        color: 'white'
+                      }}
+                      variant="contained"
+                      component="span"
+                    >
                       {'UPLOAD'}
                     </Button>
                   </InputLabel>

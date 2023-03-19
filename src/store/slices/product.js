@@ -16,7 +16,8 @@ const initialState = {
   reviews: [],
   addresses: [],
   slot: [],
-  receipt: null
+  receipt: null,
+  investDetail: []
 };
 
 const slice = createSlice({
@@ -78,6 +79,11 @@ const slice = createSlice({
       state.slot.push(action.payload);
     },
 
+    // GET InvestDetail
+    getInvestDetail: (state, action) => {
+      state.investDetail.push(action.payload);
+    },
+
     // EDIT SLOT
     editSlot: (state, action) => {
       state.slot.push(action.payload);
@@ -108,6 +114,7 @@ export const {
   addAddressSuccess,
   editAddressSuccess,
   getSlot,
+  getInvestDetail,
   editSlot,
   resetSlot,
   getReceipt
@@ -232,6 +239,16 @@ export function getSlotData(obj) {
   return async (dispatch) => {
     try {
       dispatch(slice.actions.getSlot(obj));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
+
+export function getInvestDetailData(obj) {
+  return async (dispatch) => {
+    try {
+      dispatch(slice.actions.getInvestDetail(obj));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }

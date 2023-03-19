@@ -10,6 +10,8 @@ import Logo from 'components/ui-component/Logo';
 import AuthForgotPassword from 'components/authentication/auth-forms/AuthForgotPassword';
 import AuthFooter from 'components/ui-component/cards/AuthFooter';
 import useAuth from 'hooks/useAuth';
+import { useRouter } from 'next/router';
+import AuthResetPassword from 'components/authentication/auth-forms/AuthResetPassword';
 
 // ============================|| AUTH3 - FORGOT PASSWORD ||============================ //
 
@@ -17,6 +19,7 @@ const ForgotPassword = () => {
   const theme = useTheme();
   const { isLoggedIn } = useAuth();
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
+  const route = useRouter();
 
   return (
     <AuthWrapper1>
@@ -35,18 +38,18 @@ const ForgotPassword = () => {
                     <Grid container alignItems="center" justifyContent="center" textAlign="center" spacing={2}>
                       <Grid item xs={12}>
                         <Typography sx={{ color: 'white' }} gutterBottom variant={matchDownSM ? 'h3' : 'h2'}>
-                          Forgot password?
+                          New Password
                         </Typography>
                       </Grid>
                       <Grid item xs={12}>
                         <Typography color={theme.palette.secondary.main} variant="caption" fontSize="16px" textAlign="center">
-                          Enter your email address below and we&apos;ll send you reset link password.
+                          Enter your new reset password
                         </Typography>
                       </Grid>
                     </Grid>
                   </Grid>
                   <Grid item xs={12}>
-                    <AuthForgotPassword />
+                    <AuthResetPassword />
                   </Grid>
                   <Grid item xs={12}>
                     <Divider />

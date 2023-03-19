@@ -20,7 +20,7 @@ const AuthForgotPassword = ({ ...others }) => {
   const scriptedRef = useScriptRef();
   const dispatch = useDispatch();
 
-  const { resetPassword } = useAuth();
+  const { forgetPassword } = useAuth();
 
   return (
     <Formik
@@ -34,26 +34,26 @@ const AuthForgotPassword = ({ ...others }) => {
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {
-          await resetPassword(values.email);
-
-          if (scriptedRef.current) {
-            setStatus({ success: true });
-            setSubmitting(false);
-            dispatch(
-              openSnackbar({
-                open: true,
-                message: 'Check mail for reset password link',
-                variant: 'alert',
-                alert: {
-                  color: 'success'
-                },
-                close: false
-              })
-            );
-            setTimeout(() => {
-              window.location.replace('/login');
-            }, 1500);
-          }
+          await forgetPassword(values.email).then((res) => {
+            if (res) {
+              setStatus({ success: true });
+              setSubmitting(false);
+              dispatch(
+                openSnackbar({
+                  open: true,
+                  message: 'Check mail for reset password link',
+                  variant: 'alert',
+                  alert: {
+                    color: 'success'
+                  },
+                  close: false
+                })
+              );
+              setTimeout(() => {
+                window.location.replace('/login');
+              }, 1500);
+            }
+          });
         } catch (err) {
           console.error(err);
           if (scriptedRef.current) {
@@ -67,7 +67,7 @@ const AuthForgotPassword = ({ ...others }) => {
       {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
         <form noValidate onSubmit={handleSubmit} {...others}>
           <FormControl fullWidth error={Boolean(touched.email && errors.email)} sx={{ ...theme.typography.customInput }}>
-            <InputLabel htmlFor="outlined-adornment-email-forgot">Email Address / Username</InputLabel>
+            <InputLabel htmlFor="outlined-adornment-email-forgot">Email Address</InputLabel>
             <OutlinedInput
               id="outlined-adornment-email-forgot"
               type="email"
@@ -75,7 +75,7 @@ const AuthForgotPassword = ({ ...others }) => {
               name="email"
               onBlur={handleBlur}
               onChange={handleChange}
-              label="Email Address / Username"
+              label="Email Address"
               inputProps={{}}
             />
             {touched.email && errors.email && (

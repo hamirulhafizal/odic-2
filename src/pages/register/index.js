@@ -38,7 +38,7 @@ const Register = () => {
                       <Grid item>
                         <Stack alignItems="center" justifyContent="center" spacing={1}>
                           <Typography sx={{ color: 'white' }} gutterBottom variant={matchDownSM ? 'h3' : 'h2'}>
-                            Sign up
+                            SIGN UP
                           </Typography>
                           <Typography
                             color={theme.palette.secondary.main}

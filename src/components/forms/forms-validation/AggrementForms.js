@@ -24,7 +24,7 @@ import SignatureCanvas from 'react-signature-canvas';
 
 import { useReactToPrint } from 'react-to-print';
 import ComponentToPrint from './ComponentToPrint';
-import { getSlotData } from 'store/slices/product';
+import { getInvestDetailData, getSlotData } from 'store/slices/product';
 import moment from 'moment';
 import useAuth from 'hooks/useAuth';
 import { createInvestment } from 'contexts/ApiInvestment';
@@ -89,7 +89,7 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
       dividenDate: dividenDate
     };
 
-    dispatch(getSlotData(slot1));
+    dispatch(getInvestDetailData(slot1));
 
     await createInvestment(formData).then((res) => {
       if (res?.status == 200) {

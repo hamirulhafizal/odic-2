@@ -110,7 +110,7 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
           <br />
           <Stack direction="row" sx={{ width: '100%', textAlign: 'justify', color: 'black' }}>
             <Typography variant="p">
-              <b>OD LEGACY REALTY SDN BHD (1390527M)</b> yang beralamat di No. 77-02 & 79-02 Jalan Aliff 4, Damansara Aliff Square 81200 Johor
+              <b>OD LEGACY REALTY SDN BHD (1390527M)</b> yang beralamat di No. 77-02 & 79-02 Jalan Aliff 4, Damansara Aliff Square 81200
               Bahru, Johor (selepas ini dirujuk “Pihak Kedua”).
             </Typography>
           </Stack>
@@ -143,7 +143,7 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
                   <ol className="c">
                     <li>
                       Pihak pertama mengakujanji bahawa pihak pertama akan memberikan wang modal sebanyak RM
-                      {numberWithCommas(investAmount)} sahaja.
+                      {numberWithCommas(Number(investAmount))} sahaja.
                     </li>
                     <br />
 

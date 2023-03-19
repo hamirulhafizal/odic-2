@@ -106,7 +106,6 @@ const JWTRegister = ({ ...others }) => {
                 setErrors({ submit: 'Email is already in use.' });
                 setSubmitting(false);
                 setLoading(false);
-                setStatus({ success: true, msg: 'success' });
               }
 
               // if (res?.user_name && res?.user_name[0] == 'Username is already in use.') {
@@ -272,8 +271,14 @@ const JWTRegister = ({ ...others }) => {
                   type="submit"
                   variant="contained"
                 >
-                  <FormHelperText id="standard-weight-helper-text-username-login">
-                    {status && status.success ? `${status?.msg}` : isLoading ? <CircularProgress size={20} /> : 'Sign up'}
+                  <FormHelperText id="standard-weight-helper-text-username-login" sx={{ fontWeight: 'bold' }}>
+                    {status && status.success ? (
+                      `${status?.msg}`
+                    ) : isLoading ? (
+                      <CircularProgress sx={{ color: 'grey' }} size={20} />
+                    ) : (
+                      'SIGN UP'
+                    )}
                   </FormHelperText>
                 </Button>
               </AnimateButton>

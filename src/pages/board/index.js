@@ -29,7 +29,8 @@ import {
   Tabs,
   Box,
   useMediaQuery,
-  CircularProgress
+  CircularProgress,
+  Skeleton
 } from '@mui/material';
 import AddLocationAltOutlinedIcon from '@mui/icons-material/AddLocationAltOutlined';
 
@@ -71,7 +72,9 @@ import HowToRegOutlinedIcon from '@mui/icons-material/HowToRegOutlined';
 import AnimateButton from 'components/ui-component/extended/AnimateButton';
 import { getAllInvestment, getInvestments } from 'contexts/ApiInvestment';
 import ScrollDialog from 'components/ui-elements/advance/UIDialog/ScrollDialog';
-import Pwa from 'components/board/Pwa';
+import SkeletonCard from 'components/board/SkeletonCard';
+import FilterListIcon from '@mui/icons-material/FilterList';
+import FilterDrawer from 'components/board/FilterDrawer';
 
 // table sort
 function descendingComparator(a, b, orderBy) {
@@ -320,6 +323,7 @@ const Listing = () => {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [search, setSearch] = React.useState('');
   const [rows, setRows] = React.useState([]);
+  const [isFilter, setFilter] = React.useState([]);
   const [isModal, setOpenModal] = React.useState(false);
   const [isSlotId, setSlotId] = React.useState();
 
@@ -337,6 +341,8 @@ const Listing = () => {
   const [open, setOpen] = React.useState(false);
   const [isLoading, setLoading] = React.useState(false);
   const [isMessage, setMessage] = React.useState(false);
+  const [isInitial, setInitial] = React.useState(false);
+  const [isOpenFilterDrawer, setOpenFilterDrawer] = React.useState(false);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -467,8 +473,14 @@ const Listing = () => {
     try {
       setLoading(true);
       await getAllInvestment(username).then((response) => {
-        let results = response.data;
-        setRows(results);
+        let results = response?.data;
+
+        const statusFilter = slot[slot.length - 1];
+        const dataFiltered = statusFilter && statusFilter !== 'All' ? results?.filter((item) => item?.status == statusFilter) : results;
+
+        results.length == 0 ? setInitial(true) : setInitial(false);
+
+        setRows(dataFiltered);
         setLoading(false);
       });
     } catch (err) {
@@ -487,19 +499,24 @@ const Listing = () => {
     dispatch(resetAllSlot());
   };
 
-  React.useEffect(() => {
-    fetchAllInvestment(user?.username);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
+  const handleOpenFilterDrawer = () => {
+    setOpenFilterDrawer(!isOpenFilterDrawer);
+  };
+
+  const handleCloseFilterDrawer = () => {
+    setOpenFilterDrawer(false);
+  };
 
   React.useEffect(() => {
-    // dispatch(getProducts(user?.user_name));
+    user?.username && fetchAllInvestment(user?.username);
+
+    slot?.length > 100 && handleClear();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [paging]);
+  }, [user, slot]);
 
   return (
     <>
-      <Pwa />
       <MainCard
         title={
           <>
@@ -528,7 +545,9 @@ const Listing = () => {
               alignItems: 'center'
             }}
           >
-            <Button id="pwaAppInstallBtn">Install</Button>
+            {/* <Button id="pwaAppInstallBtn" sx={{ display: 'none' }}>
+              Install
+            </Button> */}
 
             {!user?.identity_card ? (
               <>
@@ -537,7 +556,7 @@ const Listing = () => {
                   fontWeight={'normal'}
                   textAlign={'center'}
                   onClick={() => {
-                    router.push('profile');
+                    handleClickOpenModal(0);
                   }}
                 >
                   Dear Investor, <br />
@@ -557,7 +576,8 @@ const Listing = () => {
                 <AnimateButton>
                   <Button
                     onClick={() => {
-                      router.push('profile');
+                      // router.push('profile');
+                      handleClickOpenModal(0);
                     }}
                     aria-label="delete"
                     sx={{
@@ -577,53 +597,111 @@ const Listing = () => {
               </>
             ) : (
               <>
-                {rows?.length == 0 ? (
-                  <>
-                    <Typography
-                      variant="h4"
-                      onClick={() => {
-                        handleSwipe();
-                      }}
-                    >
-                      Start
-                    </Typography>
-                    <IconButton
-                      onClick={() => {
-                        handleSwipe();
-                      }}
-                      aria-label="delete"
-                      sx={{
-                        mt: 1,
-                        maxWidth: 'max-content',
-                        backgroundColor: '#b5a837',
-                        boxShadow:
-                          '0px 3px 5px -1px rgb(0 0 0 / 20%), 0px 6px 10px 0px rgb(0 0 0 / 14%), 0px 1px 18px 0px rgb(0 0 0 / 12%)',
-                        '&:hover': {
-                          backgroundColor: '#b5a837'
-                        }
-                      }}
-                      size="small"
-                    >
-                      <AddIcon sx={{ color: 'white' }} fontSize="small" />
-                    </IconButton>{' '}
-                  </>
-                ) : (
-                  <>
-                    {/* <Button onClick={handleClear} variant="contained" sx={{ mb: 3 }}>
-                CLEAR
-              </Button> */}
-                    <Stack
-                      direction="column"
-                      sx={{
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        gap: '3em'
-                      }}
-                    >
-                      <CardSlot data={rows} handleClickOpenModal={handleClickOpenModal} />
-                    </Stack>
-                  </>
-                )}
+                <Stack
+                  sx={{ mb: 2, width: matchDownSM ? '100%' : '35%', color: 'black', gap: '1em', alignItems: 'center' }}
+                  display="flex"
+                  justifyContent="space-between"
+                  direction="row"
+                >
+                  {!isInitial && (
+                    <>
+                      <Box>
+                        Total: <span style={{ fontWeight: 'bold', paddingLeft: '2px' }}>{rows?.length} Slot</span>
+                      </Box>
+                      <AnimateButton>
+                        <Button
+                          variant="text"
+                          size="small"
+                          sx={{
+                            color: 'black',
+                            backgroundColor: 'white',
+                            '&:hover': {
+                              backgroundColor: 'white',
+                              color: 'black'
+                            }
+                          }}
+                          onClick={handleOpenFilterDrawer}
+                          endIcon={<FilterListIcon />}
+                        >
+                          Filter
+                        </Button>
+                      </AnimateButton>
+                    </>
+                  )}
+                </Stack>
+                <Stack
+                  direction="column"
+                  sx={{
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    gap: '2em',
+                    width: '100%'
+                  }}
+                >
+                  {rows?.length != 0 ? (
+                    <>
+                      {isLoading ? (
+                        <SkeletonCard />
+                      ) : (
+                        <>
+                          <CardSlot data={rows} handleClickOpenModal={handleClickOpenModal} />
+                        </>
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      {isLoading ? (
+                        <SkeletonCard />
+                      ) : (
+                        <>
+                          {slot[slot.length - 1] !== 'All' && !isInitial && (
+                            <Typography
+                              variant="h4"
+                              onClick={() => {
+                                handleSwipe();
+                              }}
+                              sx={{ textTransform: 'uppercase' }}
+                            >
+                              No Slot is {slot[slot.length - 1]}
+                            </Typography>
+                          )}
+
+                          {isInitial && slot[slot.length - 1] == undefined && (
+                            <>
+                              <Typography
+                                variant="h4"
+                                onClick={() => {
+                                  handleSwipe();
+                                }}
+                              >
+                                Start
+                              </Typography>
+                              <IconButton
+                                onClick={() => {
+                                  handleSwipe();
+                                }}
+                                aria-label="delete"
+                                sx={{
+                                  mt: 1,
+                                  maxWidth: 'max-content',
+                                  backgroundColor: '#b5a837',
+                                  boxShadow:
+                                    '0px 3px 5px -1px rgb(0 0 0 / 20%), 0px 6px 10px 0px rgb(0 0 0 / 14%), 0px 1px 18px 0px rgb(0 0 0 / 12%)',
+                                  '&:hover': {
+                                    backgroundColor: '#b5a837'
+                                  }
+                                }}
+                                size="small"
+                              >
+                                <AddIcon sx={{ color: 'white' }} fontSize="small" />
+                              </IconButton>
+                            </>
+                          )}
+                        </>
+                      )}
+                    </>
+                  )}
+                </Stack>
               </>
             )}
           </Stack>
@@ -633,12 +711,20 @@ const Listing = () => {
       <button style={{ display: 'none' }} id="refreshButton" onClick={() => fetchAllInvestment(user?.username)}>
         refresh
       </button>
+
       <BottomAppBar />
+
       <ScrollDialog
         isModal={isModal}
         isSlotId={isSlotId}
         handleClickOpenModal={handleClickOpenModal}
         handleClickCloseModal={handleClickCloseModal}
+      />
+
+      <FilterDrawer
+        isOpenFilterDrawer={isOpenFilterDrawer}
+        handleCloseFilterDrawer={handleCloseFilterDrawer}
+        handleOpenFilterDrawer={handleOpenFilterDrawer}
       />
     </>
   );
