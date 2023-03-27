@@ -15,7 +15,7 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
   return (
     <>
       <div ref={ref} className="parentPage">
-        <div className={isPreview ? 'preview' : 'page'} style={{ height: '100vh', justifyContent: 'start' }}>
+        <div className={isPreview ? 'preview' : 'page'} style={{ height: '100vh', justifyContent: 'start', alignItems: 'center' }}>
           <Stack sx={{ width: '100%', textAlign: 'center' }}>
             <Typography
               variant="h3"
@@ -70,7 +70,7 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
           </Box>
         </div>
 
-        <div className={isPreview ? 'preview' : 'page'}>
+        <div className={isPreview ? 'preview' : 'page'} style={{ height: '100%', justifyContent: 'start' }}>
           <Stack sx={{ width: '100%', textAlign: 'center' }}>
             <Typography
               className="h3Title"
@@ -95,12 +95,18 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
           <br />
           <Stack direction="row" sx={{ width: '100%', textAlign: 'justify', color: 'black' }}>
             <Typography variant="p">
-              <b style={{ textTransform: 'uppercase' }}>
-                {user.name}
-                (NO. K/P: {user.identity_card_no} )
-              </b>{' '}
-              yang beralamat di No 2 Jalan Haji Abu Husin Rahman, Kampung Desa Pahlawan, Jalan Kluang, 86100 Ayer Hitam, Johor (selepas ini
-              dirujuk “Pihak Pertama”);
+              <b style={{ textTransform: 'uppercase' }}>{`${user?.name} (NO. K/P: ${user.identity_card_no}) `}</b>
+              yang beralamat di
+              <span
+                style={{
+                  textTransform: 'capitalize'
+                }}
+              >
+                {` ${user?.address ? user?.address : ' .............'}, `}
+                {` ${user?.postcode ? user?.postcode : ' .............'}, `}
+                {` ${user?.state ? user?.state : ' .............'}, `}
+              </span>
+              (selepas ini dirujuk “Pihak Pertama”);
             </Typography>
           </Stack>
           <br />
@@ -180,7 +186,7 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
           </Stack>
         </div>
 
-        <div className={isPreview ? 'preview' : 'page'} style={{ paddingTop: '5%', justifyContent: 'start' }}>
+        <div className={isPreview ? 'preview' : 'page'} style={{ height: '100%', paddingTop: '5%', justifyContent: 'start' }}>
           <Stack sx={{ width: '100%' }}>
             <Box
               sx={{
@@ -225,7 +231,7 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
           </Stack>
         </div>
 
-        <div className={isPreview ? 'preview' : 'page'} style={{ paddingTop: '5%', justifyContent: 'start' }}>
+        <div className={isPreview ? 'preview' : 'page'} style={{ height: '100vh', paddingTop: '5%', justifyContent: 'start' }}>
           <Stack direction="row" sx={{ width: '100%', textAlign: 'justify', color: 'black' }}>
             <Typography variant="p">
               BAGI MENYAKSIKAN PERJANJIAN INI PIHAK-PIHAK dalam perjanjian ini dengan ini menandatangani perjanjian ini pada hari dan tarikh
@@ -238,7 +244,7 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
 
           <Box
             sx={{
-              width: matchDownSM && isPreview ? '100%' : '100%',
+              width: '100%',
               display: 'flex',
 
               flexDirection: matchDownSM && isPreview ? 'column' : 'none',
@@ -309,7 +315,12 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
 
             <Stack
               direction="row"
-              sx={{ width: matchDownSM && isPreview ? '50%' : '100%', textAlign: 'justify', color: 'black', justifyContent: 'end' }}
+              sx={{
+                width: '100%',
+                textAlign: 'start',
+                color: 'black',
+                justifyContent: 'space-evenly'
+              }}
             >
               <Typography variant="p">
                 <b style={{ textTransform: 'uppercase' }}> {user.name}</b>
@@ -322,7 +333,7 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
 
           <Box
             sx={{
-              width: matchDownSM && isPreview ? '100%' : '100%',
+              width: '100%',
               display: 'flex',
 
               flexDirection: matchDownSM && isPreview ? 'column' : 'none',

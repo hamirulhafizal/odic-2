@@ -10,6 +10,7 @@ import Logo from 'components/ui-component/Logo';
 import AuthRegister from 'components/authentication/auth-forms/AuthRegister';
 import AuthFooter from 'components/ui-component/cards/AuthFooter';
 import useAuth from 'hooks/useAuth';
+import { useRouter } from 'next/router';
 
 // assets
 
@@ -19,6 +20,7 @@ const Register = () => {
   const theme = useTheme();
   const { isLoggedIn } = useAuth();
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
+  const router = useRouter();
 
   return (
     <AuthWrapper1>

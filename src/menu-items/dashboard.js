@@ -27,6 +27,14 @@ const dashboard = {
       url: '/board/',
       icon: icons.IconList,
       breadcrumbs: false
+    },
+    {
+      id: 'businessCenter',
+      title: <FormattedMessage id="businessCenter" />,
+      type: 'item',
+      url: '/business-center/',
+      icon: icons.IconList,
+      breadcrumbs: false
     }
   ]
 };

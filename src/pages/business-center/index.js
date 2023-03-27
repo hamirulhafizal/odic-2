@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import PropTypes from 'prop-types';
 import * as React from 'react';
 import Link from 'Link';
@@ -30,7 +31,10 @@ import {
   Box,
   useMediaQuery,
   CircularProgress,
-  Skeleton
+  Skeleton,
+  ClickAwayListener,
+  tooltipClasses,
+  styled
 } from '@mui/material';
 import AddLocationAltOutlinedIcon from '@mui/icons-material/AddLocationAltOutlined';
 
@@ -57,7 +61,7 @@ import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import { deleteListingById, getListsbyQuery } from 'contexts/ApiListing';
 import { dispatch } from '../../store/index';
 import { openSnackbar } from 'store/slices/snackbar';
-import { numberWithCommas } from 'utils/helper';
+import { generateReferalLink, numberWithCommas } from 'utils/helper';
 
 import BottomAppBar from 'components/board/BottomAppBar';
 
@@ -76,6 +80,19 @@ import SkeletonCard from 'components/board/SkeletonCard';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import FilterDrawer from 'components/board/FilterDrawer';
 import { getApiPartners } from 'contexts/ApiBusinessCenter';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+
+import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
+
+const HtmlTooltip = styled(({ className, ...props }) => <Tooltip {...props} classes={{ popper: className }} />)(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: 'rgba(97, 97, 97, 0.9)',
+    color: 'rgba(0, 0, 0, 0.87)',
+    maxWidth: 220,
+    fontSize: theme.typography.pxToRem(12),
+    border: '1px solid #dadde9'
+  }
+}));
 
 // table sort
 function descendingComparator(a, b, orderBy) {
@@ -309,7 +326,7 @@ const a11yProps = (index) => {
   };
 };
 
-const Listing = () => {
+const businessCenter = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -345,6 +362,17 @@ const Listing = () => {
   const [isInitial, setInitial] = React.useState(false);
   const [isOpenFilterDrawer, setOpenFilterDrawer] = React.useState(false);
   const listofPartner = localStorage.getItem('listofpartner');
+
+  const [openBank, setOpenBank] = React.useState(false);
+
+  const handleBankTooltipClose = () => {
+    setOpenBank(false);
+  };
+
+  const handleBankTooltipOpen = (string) => {
+    navigator.clipboard.writeText(`${string}`);
+    setOpenBank(true);
+  };
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -519,6 +547,8 @@ const Listing = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, slot]);
 
+  console.log('user', user?.username);
+
   return (
     <>
       <MainCard
@@ -532,8 +562,8 @@ const Listing = () => {
                 alignItems: 'center'
               }}
             >
-              <ListIcon sx={{ mr: 1 }} />
-              <Typography variant="h4">INVESTMENT BOARD</Typography>
+              <BusinessCenterIcon sx={{ mr: 1 }} />
+              <Typography variant="h4">BUSINESS CENTER</Typography>
             </Stack>
           </>
         }
@@ -541,7 +571,14 @@ const Listing = () => {
         contentSX={{ p: 0 }}
         sx={{ textAlign: 'center', mb: matchDownSM ? '30%' : '5%' }}
       >
-        <CardContent sx={{ p: 2 }}>
+        <CardContent
+          sx={{
+            p: 2,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '3em'
+          }}
+        >
           <Stack
             direction="column"
             sx={{
@@ -549,176 +586,136 @@ const Listing = () => {
               alignItems: 'center'
             }}
           >
-            {/* <Button id="pwaAppInstallBtn" sx={{ display: 'none' }}>
-              Install
-            </Button> */}
+            <Typography variant={matchDownSM ? 'h4' : 'h1'}>
+              Welcome on board <br /> OD Partner : {user?.od_partner}
+            </Typography>
+          </Stack>
 
-            {user?.identity_card != null && user?.address != null ? (
-              <>
-                <Stack
-                  sx={{ mb: 2, width: matchDownSM ? '100%' : '35%', color: 'black', gap: '1em', alignItems: 'center' }}
-                  display="flex"
-                  justifyContent="space-between"
-                  direction="row"
-                >
-                  {!isInitial && (
-                    <>
-                      <Box>
-                        Total: <span style={{ fontWeight: 'bold', paddingLeft: '2px' }}>{rows?.length} Slot</span>
-                      </Box>
-                      <AnimateButton>
-                        <Button
-                          variant="text"
-                          size="small"
-                          sx={{
-                            color: 'black',
-                            backgroundColor: 'white',
-                            '&:hover': {
-                              backgroundColor: 'white',
-                              color: 'black'
-                            }
-                          }}
-                          onClick={handleOpenFilterDrawer}
-                          endIcon={<FilterListIcon />}
-                        >
-                          Filter
-                        </Button>
-                      </AnimateButton>
-                    </>
-                  )}
-                </Stack>
-                <Stack
-                  direction="column"
-                  sx={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    gap: '2em',
-                    width: '100%'
-                  }}
-                >
-                  {rows?.length != 0 ? (
-                    <>
-                      {isLoading ? (
-                        <SkeletonCard />
-                      ) : (
-                        <>
-                          <CardSlot data={rows} handleClickOpenModal={handleClickOpenModal} />
-                        </>
-                      )}
-                    </>
-                  ) : (
-                    <>
-                      {isLoading ? (
-                        <SkeletonCard />
-                      ) : (
-                        <>
-                          {slot[slot.length - 1] !== 'All' && !isInitial && (
-                            <Typography
-                              variant="h4"
-                              onClick={() => {
-                                handleSwipe();
-                              }}
-                              sx={{ textTransform: 'uppercase' }}
-                            >
-                              No Slot is {slot[slot.length - 1]}
-                            </Typography>
-                          )}
+          <Stack
+            direction={matchDownSM ? 'column' : 'row'}
+            sx={{
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+          >
+            <Typography variant="h4"> {`Referal link :  `}</Typography>
 
-                          {isInitial && slot[slot.length - 1] == undefined && (
-                            <>
-                              <Typography
-                                variant="h4"
-                                onClick={() => {
-                                  handleSwipe();
-                                }}
-                              >
-                                Start
-                              </Typography>
-                              <IconButton
-                                onClick={() => {
-                                  handleSwipe();
-                                }}
-                                aria-label="delete"
-                                sx={{
-                                  mt: 1,
-                                  maxWidth: 'max-content',
-                                  backgroundColor: '#b5a837',
-                                  boxShadow:
-                                    '0px 3px 5px -1px rgb(0 0 0 / 20%), 0px 6px 10px 0px rgb(0 0 0 / 14%), 0px 1px 18px 0px rgb(0 0 0 / 12%)',
-                                  '&:hover': {
-                                    backgroundColor: '#b5a837'
-                                  }
-                                }}
-                                size="small"
-                              >
-                                <AddIcon sx={{ color: 'white' }} fontSize="small" />
-                              </IconButton>
-                            </>
-                          )}
-                        </>
-                      )}
-                    </>
-                  )}
-                </Stack>
-              </>
-            ) : (
-              <>
-                <Typography
-                  variant="h5"
-                  fontWeight={'normal'}
-                  textAlign={'center'}
-                  onClick={() => {
-                    handleClickOpenModal(0);
-                  }}
-                >
-                  Dear Investor, <br />
-                  we are excited to welcome you to our <br />
-                  <strong>ODIC</strong> investment platform.
-                  <br />
-                  <br />
-                  Before you begin investing,
-                  <br /> we need to verify your identity.
-                  <br />
-                  <br />
-                  Please <strong>upload your IC and update profile</strong> to complete <br />
-                  the verification process and grow your wealth by start investing.
-                  <br />
-                  <br />
-                </Typography>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}
+            >
+              <Typography
+                variant={matchDownSM ? 'h6' : 'h4'}
+                sx={{
+                  backgroundColor: 'white',
+                  color: 'black',
+                  fontWeight: 'bold',
+                  pl: 1,
+                  '&:hover': {
+                    backgroundColor: 'white'
+                  }
+                }}
+              >
+                {generateReferalLink(user?.username)}
+              </Typography>
+
+              <ClickAwayListener onClickAway={handleBankTooltipClose}>
                 <AnimateButton>
-                  <Button
-                    onClick={() => {
-                      // router.push('profile');
-                      handleClickOpenModal(0);
-                    }}
+                  <IconButton
+                    size="small"
                     aria-label="delete"
+                    variant="contained"
                     sx={{
-                      maxWidth: 'max-content',
                       backgroundColor: '#b5a837',
-                      boxShadow: '0px 3px 5px -1px rgb(0 0 0 / 20%), 0px 6px 10px 0px rgb(0 0 0 / 14%), 0px 1px 18px 0px rgb(0 0 0 / 12%)',
+                      ml: 1,
+                      boxShadow: '0px 3px 1px -2px rgb(0 0 0/20%) , 0px 2px 2px 0px rgb(0 0 0/14%) , 0px 1px 5px 0px rgb(0 0 0/12%)',
                       '&:hover': {
-                        backgroundColor: '#b5a837'
+                        backgroundColor: 'green',
+                        color: 'white !important'
                       }
                     }}
-                    size="medium"
-                    endIcon={<HowToRegOutlinedIcon sx={{ color: 'white' }} fontSize="medium" />}
+                    onClick={() => {
+                      handleBankTooltipOpen(generateReferalLink(user?.username));
+                    }}
                   >
-                    UPLOAD IC
-                  </Button>
+                    <HtmlTooltip
+                      arrow
+                      placement="bottom-end"
+                      disableFocusListener
+                      disableHoverListener
+                      disableTouchListener
+                      onClose={handleBankTooltipClose}
+                      open={openBank}
+                      title={
+                        <>
+                          <Typography
+                            variant="h5"
+                            sx={{
+                              color: 'white'
+                            }}
+                          >
+                            Copied !
+                          </Typography>
+                        </>
+                      }
+                    >
+                      <ContentCopyIcon
+                        sx={{
+                          color: 'white',
+                          '&:hover': {
+                            color: 'white !important'
+                          }
+                        }}
+                        fontSize="small"
+                      />
+                    </HtmlTooltip>
+                  </IconButton>
                 </AnimateButton>
-              </>
-            )}
+              </ClickAwayListener>
+            </Box>
+          </Stack>
+
+          <Stack
+            direction="column"
+            sx={{
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+          >
+            <Typography variant="h2">Latest Total Sales</Typography>
+            <Typography variant="h4">RM10,000,00</Typography>
+          </Stack>
+
+          <Stack
+            direction="column"
+            sx={{
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+          >
+            <Typography variant="h2">Latest Total Empire Size sales</Typography>
+            <Typography variant="h4">RM1,210,000,00</Typography>
+          </Stack>
+
+          <Stack
+            direction="column"
+            sx={{
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+          >
+            <Typography variant="h2">Latest Total Empire Size</Typography>
+            <Typography variant="h2">10000 OD MEMBER</Typography>
           </Stack>
         </CardContent>
       </MainCard>
 
-      <button style={{ display: 'none' }} id="refreshButton" onClick={() => fetchAllInvestment(user?.username)}>
-        refresh
-      </button>
+      {/* <BottomAppBar /> */}
 
-      <BottomAppBar />
-
-      <ScrollDialog
+      {/* <ScrollDialog
         isModal={isModal}
         isSlotId={isSlotId}
         handleClickOpenModal={handleClickOpenModal}
@@ -729,9 +726,9 @@ const Listing = () => {
         isOpenFilterDrawer={isOpenFilterDrawer}
         handleCloseFilterDrawer={handleCloseFilterDrawer}
         handleOpenFilterDrawer={handleOpenFilterDrawer}
-      />
+      /> */}
     </>
   );
 };
-Listing.Layout = 'authGuard';
-export default Listing;
+businessCenter.Layout = 'authGuard';
+export default businessCenter;

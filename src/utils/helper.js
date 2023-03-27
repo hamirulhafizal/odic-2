@@ -36,4 +36,10 @@ const checkRoi = (value) => {
   return roi;
 };
 
-export { slugify, numberWithCommas, checkRoi, filterByCategory, stringifyFile };
+const generateReferalLink = (username) => {
+  const baseUrl = window.location.origin;
+
+  return ` ${baseUrl}/${username} `;
+};
+
+export { slugify, numberWithCommas, checkRoi, filterByCategory, stringifyFile, generateReferalLink };

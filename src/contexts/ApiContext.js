@@ -74,61 +74,75 @@ export const ApiProvider = ({ children }) => {
           throw new Error('Login details are not valid');
         }
 
-        if (typeof window !== 'undefined') {
-          localStorage.setItem('access', res?.data?.token);
-          localStorage.setItem('refresh', res?.data?.token);
-          axiosInstance.defaults.headers['Authorization'] = 'Bearer ' + localStorage.getItem('access');
-        }
-
-        const {
-          token,
-          id,
-          name,
-          email,
-          email_verified_at,
-          phone_no,
-          profile_image,
-          bank_account,
-          bank_name,
-          username,
-          identity_card,
-          fullname,
-          identity_card_no,
-          verified_status,
-          referrel_url,
-          created_at,
-          updated_at
-        } = res?.data;
-
-        const users = {
-          token,
-          id,
-          name,
-          email,
-          email_verified_at,
-          phone_no,
-          profile_image,
-          bank_account,
-          bank_name,
-          username,
-          identity_card,
-          fullname,
-          identity_card_no,
-          verified_status,
-          referrel_url,
-          created_at,
-          updated_at
-        };
-        let usersData = JSON.stringify(users);
-        localStorage.setItem('users', usersData);
-
-        dispatch({
-          type: LOGIN,
-          payload: {
-            isLoggedIn: true,
-            user: users
+        if (res?.data?.token) {
+          if (typeof window !== 'undefined') {
+            localStorage.setItem('access', res?.data?.token);
+            localStorage.setItem('refresh', res?.data?.token);
+            axiosInstance.defaults.headers['Authorization'] = 'Bearer ' + localStorage.getItem('access');
           }
-        });
+          const {
+            token,
+            id,
+            name,
+            email,
+            email_verified_at,
+            phone_no,
+            profile_image,
+            bank_account,
+            bank_name,
+            username,
+            identity_card,
+            fullname,
+            identity_card_no,
+            verified_status,
+            referrel_url,
+            address,
+            postcode,
+            city,
+            state,
+            od_member,
+            od_partner,
+            created_at,
+            updated_at
+          } = res?.data;
+
+          const users = {
+            token,
+            id,
+            name,
+            email,
+            email_verified_at,
+            phone_no,
+            profile_image,
+            bank_account,
+            bank_name,
+            username,
+            identity_card,
+            fullname,
+            identity_card_no,
+            verified_status,
+            referrel_url,
+            address,
+            postcode,
+            city,
+            state,
+            od_member,
+            od_partner,
+            created_at,
+            updated_at
+          };
+
+          let usersData = JSON.stringify(users);
+          localStorage.setItem('users', usersData);
+
+          dispatch({
+            type: LOGIN,
+            payload: {
+              isLoggedIn: true,
+              user: users
+            }
+          });
+        }
 
         // history.push('/board');
         // location.reload('/board');
@@ -142,12 +156,14 @@ export const ApiProvider = ({ children }) => {
     return response;
   };
 
-  const register = async ({ email, name, password }) => {
+  const register = async ({ email, name, password, od_member, od_partner }) => {
     const password_confirmation = password;
     const respond = await axios
       .post(`${BACKEND_PATH}/api/auth/register`, {
         email,
         name,
+        od_member,
+        od_partner,
         password,
         password_confirmation
       })
@@ -182,6 +198,7 @@ export const ApiProvider = ({ children }) => {
     window.localStorage.removeItem('refresh');
     window.localStorage.removeItem('users');
     window.localStorage.removeItem('berry-cart');
+    window.localStorage.removeItem('listofpartner');
   };
 
   const forgetPassword = async (email) => {
@@ -257,7 +274,6 @@ export const ApiProvider = ({ children }) => {
   // const resetPassword = (email) => console.log(email);
 
   const getProfile = async (username) => {
-    console.log(username);
     axiosInstance.defaults.headers['Authorization'] = 'Bearer ' + localStorage.getItem('access');
     const response = await axiosInstance.get(`${BACKEND_PATH}/api/username/${username}`).then((res) => {
       if (typeof window !== 'undefined') {

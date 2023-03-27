@@ -26,6 +26,7 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { dispatch } from 'store';
 import { getReceiptImg } from 'store/slices/product';
 import { useSelector } from 'store';
+import { useRef } from 'react';
 
 const Input = styled('input')({
   display: 'none'
@@ -36,6 +37,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const UploadResit = ({ handlePreviewImg }) => {
+  const buttonSubmitRef = useRef(null);
   const { updateProfile, user } = useAuth();
   const [photo, setFieldImgValue] = useState(undefined);
   const [message, setMessage] = useState('');
@@ -104,7 +106,14 @@ const UploadResit = ({ handlePreviewImg }) => {
               *Upload image below 1MB
             </Typography>
           )}
-          <InputLabel htmlFor="photo">
+
+          <InputLabel
+            htmlFor="photo"
+            sx={{
+              width: 'max-content',
+              height: '100%'
+            }}
+          >
             {!avatarPreview && isSuccess == null && (
               <>
                 <Input
@@ -118,11 +127,14 @@ const UploadResit = ({ handlePreviewImg }) => {
                     preViewImage(e);
                   }}
                 />
-                <AnimateButton direction="up">
+                <AnimateButton>
                   <Button
+                    ref={buttonSubmitRef}
                     endIcon={<AttachFileIcon />}
                     color="secondary"
-                    sx={{ color: 'white' }}
+                    sx={{
+                      color: 'white'
+                    }}
                     variant="contained"
                     size="small"
                     component="span"

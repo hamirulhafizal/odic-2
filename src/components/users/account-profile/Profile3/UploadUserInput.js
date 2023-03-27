@@ -15,6 +15,7 @@ const Input = styled('input')({
 });
 
 const UploadUserInput = ({ htmlFor }) => {
+  const icPictureRef = useRef(null);
   const { updateProfile, user } = useAuth();
   const [message, setMessage] = useState('');
 
@@ -56,7 +57,7 @@ const UploadUserInput = ({ htmlFor }) => {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [photo1, photo2]);
+  }, [photo1, photo2, avatarPreview2]);
 
   const preViewImage1 = (e) => {
     const fileReader = new FileReader();
@@ -73,6 +74,7 @@ const UploadUserInput = ({ htmlFor }) => {
     fileReader.onload = () => {
       if (fileReader.readyState === 2) {
         setAvatarPreview2(fileReader.result);
+        icPictureRef.current.src = fileReader.result;
       }
     };
     fileReader.readAsDataURL(e.target.files[0]);
@@ -102,14 +104,9 @@ const UploadUserInput = ({ htmlFor }) => {
 
           {htmlFor == 'ICPicture' && (
             <Avatar
+              ref={icPictureRef}
               alt={user?.nickname}
-              src={
-                user?.identity_card !== null
-                  ? avatarPreview2
-                    ? avatarPreview2
-                    : `https://app.onedreamproperty.net/profile/${user?.identity_card}`
-                  : '/assets/sampleIc.PNG'
-              }
+              src={user?.identity_card == null ? '/assets/sampleIc.PNG' : `https://app.onedreamproperty.net/profile/${user?.identity_card}`}
               sx={{
                 height: htmlFor == 'ICPicture' ? 150 : 100,
                 width: htmlFor == 'ICPicture' ? 250 : 100,

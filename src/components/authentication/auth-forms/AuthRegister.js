@@ -36,6 +36,8 @@ import { openSnackbar } from 'store/slices/snackbar';
 // assets
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { getApiPartners, getPartnerbyUsername } from 'contexts/ApiBusinessCenter';
+import FormControlSelect from 'components/ui-component/extended/Form/FormControlSelect';
 
 // ===========================|| FIREBASE - REGISTER ||=========================== //
 
@@ -54,7 +56,16 @@ const JWTRegister = ({ ...others }) => {
   const [msgErr, setMsgErr] = React.useState('');
 
   const [level, setLevel] = React.useState();
+  const [listPartner, setPartner] = React.useState();
+
   const { register } = useAuth();
+
+  // const arryofpartner1 = [];
+
+  const introOD_partner = localStorage.getItem('od_partner_intro');
+
+  const ref = new URLSearchParams(window.location.search);
+  const refUsername = ref.get('ref');
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -72,7 +83,18 @@ const JWTRegister = ({ ...others }) => {
 
   useEffect(() => {
     changePassword('123456');
-  }, []);
+    introOD_partner == null &&
+      getPartnerbyUsername(refUsername).then((res) => {
+        if (res?.data?.length != 0) {
+          setPartner(res?.data[0]);
+          const { od_partner } = res?.data[0];
+
+          localStorage.setItem('od_partner_intro', od_partner);
+        } else {
+          setMsgErr('OD Member are not valid');
+        }
+      });
+  }, [introOD_partner, refUsername, listPartner]);
 
   return (
     <>
@@ -91,28 +113,32 @@ const JWTRegister = ({ ...others }) => {
           email: '',
           password: '',
           name: '',
+          od_partner: introOD_partner || listPartner,
+          od_member: refUsername,
           submit: null
         }}
         validationSchema={Yup.object().shape({
           email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
+          od_partner: Yup.string().max(255).required('You are invalid to register !'),
+          od_member: Yup.string().max(255).required('Introducer Name is required'),
           name: Yup.string().max(255).required('Full Name is required'),
           password: Yup.string().max(255).required('Password is required')
         })}
         onSubmit={(values, { setErrors, setStatus, setSubmitting }) => {
           setLoading(true);
-          register({ email: values.email, password: values.password, name: values.name })
+          register({
+            email: values.email,
+            password: values.password,
+            name: values.name,
+            od_partner: values.od_partner,
+            od_member: values.od_member
+          })
             .then((res) => {
               if (res['email'] == 'The email has already been taken.') {
                 setErrors({ submit: 'Email is already in use.' });
                 setSubmitting(false);
                 setLoading(false);
               }
-
-              // if (res?.user_name && res?.user_name[0] == 'Username is already in use.') {
-              //   setErrors({ submit: 'First Name dan Last Name is already in use.' });
-              //   setSubmitting(false);
-              //   setLoading(false);
-              // }
 
               if (res.status == 200) {
                 setStatus({ success: true });
@@ -144,6 +170,53 @@ const JWTRegister = ({ ...others }) => {
         {({ errors, status, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
           <form onSubmit={handleSubmit} {...others}>
             <Grid container spacing={matchDownSM ? 1 : 2}>
+              {/* {listPartner.length !== 0 && (
+                <FormControlSelect
+                  required
+                  fullWidth
+                  currencies={listPartner}
+                  id="od_partner"
+                  name="od_partner"
+                  captionLabel="OD Partner"
+                  value={values.od_partner}
+                  onChange={handleChange}
+                  // error={user?.od_partner ? false : true}
+                  helperText={errors.od_partner && touched.od_partner && String(errors.od_partner && 'OD Partner is required field')}
+                />
+              )} */}
+              <Grid item xs={6} sm={6}>
+                <TextField
+                  hidden
+                  required
+                  fullWidth
+                  label="OD Partner"
+                  margin="normal"
+                  name="od_partner"
+                  type="text"
+                  value={values.od_partner}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  inputProps={{ style: { textTransform: 'uppercase' } }}
+                  sx={{ ...theme.typography.customInput, display: 'none' }}
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={12}>
+                <TextField
+                  disabled
+                  required
+                  fullWidth
+                  label="OD Member Introducer"
+                  margin="normal"
+                  name="name"
+                  type="text"
+                  value={values.od_member}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  inputProps={{ style: { textTransform: 'uppercase' } }}
+                  sx={{ ...theme.typography.customInput }}
+                />
+              </Grid>
               <Grid item xs={12} sm={12}>
                 <TextField
                   required
@@ -254,11 +327,11 @@ const JWTRegister = ({ ...others }) => {
               </Box>
             )}
 
-            {/* {msgErr && (
+            {msgErr && (
               <Box sx={{ mt: 3 }}>
                 <FormHelperText error>{msgErr}</FormHelperText>
               </Box>
-            )} */}
+            )}
 
             <Box sx={{ mt: 2 }}>
               <AnimateButton>

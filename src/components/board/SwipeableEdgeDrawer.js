@@ -22,7 +22,7 @@ import ListIcon from '@mui/icons-material/List';
 import InvestForms from '../../components/forms/forms-validation/InvestForms';
 import BankAcc from 'components/forms/forms-validation/BankAcc';
 import AggrementForms from 'components/forms/forms-validation/AggrementForms';
-import { useMediaQuery, useTheme } from '@mui/material';
+import { Avatar, useMediaQuery, useTheme } from '@mui/material';
 import MainCard from 'components/ui-component/cards/MainCard';
 
 const steps = [
@@ -38,7 +38,7 @@ const steps = [
   },
   {
     label: 'Sign Aggrement',
-    description: `Your investment slot will be approved within 24hour working day`,
+    description: `Click signature button, then check signature at the bottom of document by scrolling down`,
     component: 'Aggrement'
   }
 ];
@@ -144,17 +144,22 @@ function SwipeableEdgeDrawer({ open, handleToggle }) {
             sx={{
               position: 'relative',
               top: '2%',
-              width: matchDownSM ? '100%' : 'unset'
+              width: matchDownSM ? '100%' : 'unset',
+
+              '& .MuiStepIcon-text': {
+                fill: 'white !important',
+                fontSize: '80%'
+              }
             }}
           >
             {steps?.map((step, index) => (
               <Step key={step.label}>
                 <StepLabel
-                  optional={index === 2 ? <Typography variant="caption">Last step</Typography> : null}
+                  // optional={index === 2 ? <Typography variant="caption">Last step</Typography> : null}
                   sx={{
                     textAlign: 'initial',
                     '& .Mui-active': {
-                      color: 'black'
+                      color: '#b5a837 !important'
                     }
                   }}
                 >
@@ -163,10 +168,32 @@ function SwipeableEdgeDrawer({ open, handleToggle }) {
                 <StepContent>
                   <Typography
                     sx={{
-                      textAlign: 'initial'
+                      textAlign: 'initial',
+                      color: 'black'
                     }}
                   >
-                    {step.description}
+                    {index === 2 ? (
+                      <>
+                        <Stack
+                          direction="row"
+                          sx={{
+                            alignItems: 'center'
+                          }}
+                        >
+                          {step.description}
+                          <Avatar
+                            sx={{
+                              borderRadius: '0px',
+                              backgroundColor: 'white',
+                              scale: '0.7'
+                            }}
+                            src="/assets/images/icons/scroll.png"
+                          />
+                        </Stack>
+                      </>
+                    ) : (
+                      <>{step.description}</>
+                    )}
                   </Typography>
                   {step.component == 'InvestForms' && <InvestForms handleNext={handleNext} handleBack={handleBack} index={index} />}
                   {step.component == 'BankAcc' && <BankAcc handleNext={handleNext} handleBack={handleBack} index={index} />}

@@ -28,6 +28,9 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
+import FormControlSelect from 'components/ui-component/extended/Form/FormControlSelect';
+import { location } from 'utils/constant';
+import { isUser } from 'utils/isUser';
 
 // ==============================|| PROFILE 3 - PROFILE ||============================== //
 
@@ -42,20 +45,38 @@ const Profile = ({ ...others }) => {
 
   const matchDownMD = useMediaQuery(theme.breakpoints.down('md'));
 
+  console.log('user', user);
+
   return (
     <Formik
       enableReinitialize={Boolean(true)}
       initialValues={{
-        fullName: user?.name || '',
+        fullname: user?.fullname || '',
+        od_partner: user?.od_partner || '',
+        od_member: user?.od_member || '',
         email: user?.email || '',
         phone_no: user?.phone_no || '',
+        postcode: user?.postcode || '',
+        city: user?.city || '',
+        address: user?.address || '',
+        state: user?.state || '',
         bank_name: user?.bank_name || '',
         bank_account: user?.bank_account || '',
         identity_card_no: user?.identity_card_no || ''
       }}
       validator={() => ({})}
       validationSchema={Yup.object().shape({
-        fullName: Yup.string().required(),
+        fullname: Yup.string().required(),
+        address: Yup.string().required(),
+        city: Yup.string().required(),
+        postcode: Yup.string().required(),
+        state: Yup.string().required(),
+        od_partner: Yup.string()
+          .max(25)
+          .required()
+          .test('no-special-chars', 'Special characters are not allowed', (value) => {
+            return /^[a-zA-Z0-9]+$/.test(value);
+          }),
         phone_no: Yup.string()
           .required()
           .test('no-special-chars', 'Special characters or alphabet are not allowed', (value) => {
@@ -67,9 +88,11 @@ const Profile = ({ ...others }) => {
         identity_card_no: Yup.string().required()
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-        if (!values.fullName) setErrors({ fullName: 'Required' });
+        if (!values.fullname) setErrors({ fullname: 'Required' });
 
         setLoading(true);
+
+        // values.name = values.fullname;
 
         /* Then create a new FormData obj */
         const formData = new FormData();
@@ -116,33 +139,113 @@ const Profile = ({ ...others }) => {
         <>
           <Form noValidate onSubmit={handleSubmit} {...others}>
             <Grid container spacing={gridSpacing} sx={{ justifyContent: 'center' }}>
-              <Grid item sm={12} md={others?.htmlFor == 'profilePage' ? 6 : 12}>
-                <SubCard title="*IC Picture" contentSX={{ textAlign: 'center' }}>
-                  <UploadUserInput htmlFor="ICPicture" />
-                </SubCard>
-              </Grid>
+              {!user?.identity_card && (
+                <Grid item sm={12} md={others?.htmlFor == 'profilePage' ? 6 : 12}>
+                  <SubCard title="*IC Picture" contentSX={{ textAlign: 'center' }}>
+                    <UploadUserInput htmlFor="ICPicture" />
+                  </SubCard>
+                </Grid>
+              )}
 
               <Grid item sm={12} md={others?.htmlFor == 'profilePage' ? 6 : 12}>
+                {user?.identity_card && user?.verified_status !== 'Pending' && (
+                  <SubCard title="Profile Picture" contentSX={{ textAlign: 'center' }}>
+                    <UploadUserInput htmlFor="ProfilePicture" />
+                  </SubCard>
+                )}
+
                 {user?.identity_card && (
                   <SubCard title="*Edit Account Details">
                     <Grid container spacing={gridSpacing}>
+                      <Grid item xs={12} md={6}>
+                        <TextField
+                          fullWidth
+                          disabled
+                          type="text"
+                          value={user?.username}
+                          name="username"
+                          id="filled-disabled"
+                          label="username"
+                          aria-readonly
+                        />
+                      </Grid>
+                      <Grid item xs={12} md={6}>
+                        <TextField fullWidth disabled type="email" value={values.email} name="email" id="filled-disabled" label="Email" />
+                      </Grid>
+                      {/* {isUser(user?.username) && ( */}
+                      <Grid item xs={12} md={6}>
+                        <TextField
+                          disabled={user?.od_partner == null ? false : true}
+                          required
+                          fullWidth
+                          label="OD Partner Name"
+                          id="outlined-basic1"
+                          name="od_partner"
+                          type="text"
+                          value={values.od_partner}
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                          error={Boolean(errors.od_partner && touched.od_partner)}
+                          inputProps={{
+                            pattern: '[a-zA-Z0-9]+',
+                            inputMode: 'numeric',
+                            maxLength: 25,
+                            style: { textTransform: 'UPPERCASE' }
+                          }}
+                          sx={{
+                            '& .MuiFormHelperText-root ': {
+                              color: 'red'
+                            }
+                          }}
+                          helperText={errors.od_partner && touched.od_partner && String(errors.od_partner)}
+                        />
+                      </Grid>
+                      {/* )} */}
+
+                      <Grid item xs={12} md={6}>
+                        <TextField
+                          disabled
+                          id="filled-disabled"
+                          aria-readonly
+                          required
+                          fullWidth
+                          label="OD Member"
+                          name="od_member"
+                          type="text"
+                          value={user?.username}
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                          error={Boolean(errors.od_member && touched.od_member)}
+                          inputProps={{
+                            pattern: '[a-zA-Z0-9]+',
+                            inputMode: 'numeric',
+                            maxLength: 25,
+                            style: { textTransform: 'UPPERCASE' }
+                          }}
+                          sx={{
+                            '& .MuiFormHelperText-root ': {
+                              color: 'red'
+                            }
+                          }}
+                          helperText={errors.od_member && touched.od_member && String(errors.od_member)}
+                        />
+                      </Grid>
+
                       <Grid item xs={12} md={12}>
                         <TextField
                           required
                           fullWidth
-                          inputProps={{ style: { textTransform: 'UPPERCASE' } }}
                           label="Full Name (as IC)"
                           id="outlined-basic1"
-                          name="fullName"
+                          name="fullname"
                           type="text"
-                          value={values.fullName}
+                          value={values.fullname}
                           onBlur={handleBlur}
                           onChange={handleChange}
-                          error={Boolean(errors.fullName && touched.fullName)}
-                          helperText={errors.fullName && touched.fullName && String(errors.fullName && 'Full name is required')}
+                          error={Boolean(errors.fullname && touched.fullname)}
+                          helperText={errors.fullname && touched.fullname && String(errors.fullname && 'Full name is required')}
                         />
                       </Grid>
-
                       <Grid item xs={12} md={6}>
                         <TextField
                           fullWidth
@@ -166,7 +269,6 @@ const Profile = ({ ...others }) => {
                           }
                         />
                       </Grid>
-
                       <Grid item xs={12} md={6}>
                         <TextField
                           fullWidth
@@ -192,24 +294,89 @@ const Profile = ({ ...others }) => {
                           helperText={errors.phone_no && touched.phone_no && String(errors.phone_no)}
                         />
                       </Grid>
-
-                      <Grid item xs={12} md={6}>
-                        <TextField fullWidth disabled type="email" value={values.email} name="email" id="filled-disabled" label="Email" />
+                      <Grid item xs={12} md={12}>
+                        <TextField
+                          fullWidth
+                          multiline
+                          rows={2}
+                          id="outlined-basic4"
+                          label="Address  (as IC)"
+                          name="address"
+                          type="text"
+                          required
+                          placeholder="149 jalan kejayaan"
+                          value={values.address}
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                          error={user?.address ? false : true}
+                          sx={{
+                            '& .MuiFormHelperText-root ': {
+                              color: 'red'
+                            }
+                          }}
+                          helperText={errors.address && touched.address && String(errors.address && 'Address is required field')}
+                        />
                       </Grid>
-
                       <Grid item xs={12} md={6}>
                         <TextField
                           fullWidth
-                          disabled
-                          type="text"
-                          value={user?.username}
-                          name="username"
-                          id="filled-disabled"
-                          label="username"
-                          aria-readonly
+                          id="postcode"
+                          label="Postcode (as IC)"
+                          name="postcode"
+                          type="number"
+                          required
+                          placeholder="81100"
+                          value={values?.postcode}
+                          inputProps={{
+                            pattern: '[0-9]*',
+                            inputMode: 'numeric'
+                          }}
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                          error={user?.postcode ? false : true}
+                          sx={{
+                            '& .MuiFormHelperText-root ': {
+                              color: 'red'
+                            }
+                          }}
+                          helperText={errors.postcode && touched.postcode && String(errors.postcode)}
                         />
                       </Grid>
-
+                      <Grid item xs={12} md={6}>
+                        <TextField
+                          fullWidth
+                          id="city"
+                          label="City"
+                          name="city"
+                          type="text"
+                          required
+                          placeholder="Johor Bahru"
+                          value={values.city}
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                          error={user?.city ? false : true}
+                          sx={{
+                            '& .MuiFormHelperText-root ': {
+                              color: 'red'
+                            }
+                          }}
+                          helperText={errors.city && touched.city && String(errors.city && 'City is required')}
+                        />
+                      </Grid>
+                      <Grid item xs={12} md={6}>
+                        <FormControlSelect
+                          required
+                          fullWidth
+                          currencies={location}
+                          id="location"
+                          name="state"
+                          captionLabel="Location* (as IC)"
+                          value={values.state}
+                          onChange={handleChange}
+                          error={user?.state ? false : true}
+                          helperText={errors.state && touched.state && String(errors.state && 'State is required field')}
+                        />
+                      </Grid>
                       <Grid item xs={12} md={6}>
                         <TextField
                           fullWidth
@@ -231,7 +398,6 @@ const Profile = ({ ...others }) => {
                           helperText={errors.bank_name && touched.bank_name && String(errors.bank_name && 'Bank name is required field')}
                         />
                       </Grid>
-
                       <Grid item xs={12} md={6}>
                         <TextField
                           fullWidth
@@ -255,7 +421,6 @@ const Profile = ({ ...others }) => {
                           }
                         />
                       </Grid>
-
                       <Grid item xs={12}>
                         <Stack direction="row">
                           <AnimateButton>
@@ -278,12 +443,21 @@ const Profile = ({ ...others }) => {
                     </Grid>
                   </SubCard>
                 )}
-                {user?.verified_status !== 'Pending' && (
+
+                {!user?.identity_card && user?.verified_status !== 'Pending' && (
                   <SubCard title="Profile Picture" contentSX={{ textAlign: 'center' }}>
                     <UploadUserInput htmlFor="ProfilePicture" />
                   </SubCard>
                 )}
               </Grid>
+
+              {user?.identity_card && (
+                <Grid item sm={12} md={others?.htmlFor == 'profilePage' ? 6 : 12}>
+                  <SubCard title="*IC Picture" contentSX={{ textAlign: 'center' }}>
+                    <UploadUserInput htmlFor="ICPicture" />
+                  </SubCard>
+                </Grid>
+              )}
             </Grid>
           </Form>
         </>

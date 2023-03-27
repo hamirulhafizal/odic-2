@@ -2,7 +2,20 @@ import { forwardRef, useRef, useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'store';
 
 // material-ui
-import { Avatar, Box, Button, CircularProgress, Dialog, Grid, IconButton, Slide, Stack, useMediaQuery, useTheme } from '@mui/material';
+import {
+  Avatar,
+  Box,
+  Button,
+  CircularProgress,
+  Dialog,
+  Grid,
+  IconButton,
+  Slide,
+  Stack,
+  Typography,
+  useMediaQuery,
+  useTheme
+} from '@mui/material';
 
 // project imports
 import MainCard from 'components/ui-component/cards/MainCard';
@@ -39,6 +52,8 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
   const dispatch = useDispatch();
   const { slot, receipt } = useSelector((state) => state.product);
   const signRef = useRef(null);
+  const mainCardRef = useRef(null);
+
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -200,19 +215,163 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
   return (
     <>
       <Stack direction={'column'}>
+        <Box
+          sx={{
+            pt: 3,
+            display: 'flex',
+            justifyContent: 'center',
+            width: '100%'
+          }}
+        >
+          <MainCard
+            ref={mainCardRef}
+            sx={{
+              boxShadow: '1px -1px 5px -1px rgb(0 0 0/64%) !important',
+              borderColor: 'transparent',
+              width: matchDownSM ? '100%' : '550px',
+              height:
+                matchDownSM && isSign?.trimmedDataURL && isSuccess !== 'UPLOAD' ? '100vh' : `${isSign?.trimmedDataURL ? '40vh' : '25vh'}`,
+              overflowY: 'scroll',
+              maxWidth: '100%',
+              borderBottomLeftRadius: '0px',
+              borderBottomRightRadius: '0px',
+              position: 'relative',
+              top: '-1px'
+            }}
+          >
+            {isSign?.trimmedDataURL !== null ? (
+              <>
+                <Stack
+                  sx={{
+                    width: '100%',
+                    position: 'relative',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                  }}
+                >
+                  <ComponentToPrint ref={componentRef} isPreview={isPreview}>
+                    {isSuccess != 'UPLOAD' ? (
+                      <Box
+                        sx={{
+                          width: '100%',
+                          display: 'flex',
+                          justifyContent: 'end',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          position: 'relative',
+                          top: '-11%',
+                          left: '20px'
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            width: matchDownSM ? '80px' : '70%',
+                            display: 'flex',
+                            justifyContent: 'end',
+                            position: 'relative',
+                            top: '12px',
+                            left: '10px',
+                            zIndex: 1
+                          }}
+                        >
+                          <IconButton
+                            color="secondary"
+                            variant="contained"
+                            size="large"
+                            aria-label="delete"
+                            onClick={handleSignRemove}
+                            sx={{ p: 0, backgroundColor: 'white' }}
+                          >
+                            <CancelIcon
+                              sx={{
+                                backgroundColor: 'white',
+                                borderRadius: '50%',
+                                color: 'red'
+                              }}
+                            />
+                          </IconButton>
+                        </Box>
+
+                        <Avatar
+                          sx={{
+                            width: matchDownSM ? '80px' : '77%',
+                            height: 'auto',
+                            backgroundColor: 'white',
+                            padding: '12px',
+                            borderBottomLeftRadius: '5px',
+                            borderBottomRightRadius: '5px',
+                            borderRadius: '5px',
+                            border: '1px solid black',
+                            '& .MuiAvatar-img': {
+                              scale: '2',
+                              padding: '5%'
+                            }
+                          }}
+                          alt="signature"
+                          src={isSign?.trimmedDataURL}
+                        />
+                      </Box>
+                    ) : (
+                      <Avatar
+                        sx={{
+                          width: matchDownSM ? '80px' : '77%',
+                          height: 'auto',
+                          backgroundColor: 'white',
+                          padding: '12px'
+                        }}
+                        alt="signature"
+                        src={isSign?.trimmedDataURL}
+                      />
+                    )}
+                  </ComponentToPrint>
+                </Stack>
+              </>
+            ) : (
+              <>
+                <Box
+                  sx={{
+                    width: '100%',
+                    display: 'flex',
+                    justifyContent: 'center'
+                  }}
+                >
+                  <Avatar
+                    sx={{
+                      width: matchDownSM ? '77%' : '77%',
+                      height: 'auto',
+                      backgroundColor: 'white',
+                      borderRadius: '1px',
+
+                      '.MuiAvatar-img': {
+                        border: ' 1px solid black',
+                        borderRadius: '5px',
+                        scale: 1
+                      }
+                    }}
+                    alt="signature"
+                    src={'assets/images/sign/prepdf1.png'}
+                  />
+                </Box>
+              </>
+            )}
+          </MainCard>
+        </Box>
+
         <Stack
           direction="row"
           sx={{
             gap: 2,
+            mb: 2,
+            position: 'relative',
+            top: '-1px',
             justifyContent: 'space-between',
-            mt: 2,
-
             justifyContent: 'space-around',
-            marginTop: '6%',
             py: '5%',
             boxShadow: '1px 2px 5px -1px rgb(0 0 0 /64%)',
-            borderTopLeftRadius: '5px',
-            borderTopRightRadius: '5px'
+            borderBottomLeftRadius: '5px',
+            borderBottomRightRadius: '5px',
+            px: 2
           }}
         >
           {isSign?.trimmedDataURL !== null ? (
@@ -259,6 +418,19 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
                 </>
               ) : (
                 <>
+                  {/* <Stack direction="row">
+                    <Typography variant="caption" sx={{ pb: 2 }}>
+                      *Check your signature at the bottom document by scrolling down
+                    </Typography>
+                    <Avatar
+                      sx={{
+                        borderRadius: '0px',
+                        backgroundColor: 'white',
+                        scale: '0.7'
+                      }}
+                      src="/assets/images/icons/scroll.png"
+                    />
+                  </Stack> */}
                   <AnimateButton>
                     <Button
                       variant="contained"
@@ -289,142 +461,6 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
           )}
         </Stack>
 
-        <Box
-          sx={{
-            pt: 0,
-            pb: 4,
-            display: 'flex',
-            justifyContent: 'center',
-            width: '100%'
-          }}
-        >
-          <MainCard
-            sx={{
-              boxShadow: '1px 2px 5px -1px rgb(0 0 0/64%) !important',
-              borderColor: 'transparent',
-              width: matchDownSM ? '100%' : '550px',
-              overflowX: 'scroll',
-              height: '25vh',
-              overflowY: 'scroll',
-              maxWidth: '100%',
-              borderTopLeftRadius: '0px',
-              borderTopRightRadius: '0px',
-              position: 'relative',
-              top: '-1px'
-            }}
-          >
-            {isSign?.trimmedDataURL !== null ? (
-              <>
-                <Stack
-                  sx={{
-                    width: '100%',
-                    position: 'relative',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center'
-                  }}
-                >
-                  <ComponentToPrint ref={componentRef} isPreview={isPreview}>
-                    {isSuccess != 'UPLOAD' ? (
-                      <Box
-                        sx={{
-                          width: '100%',
-                          display: 'flex',
-                          justifyContent: 'end',
-                          flexDirection: 'column',
-                          alignItems: 'center',
-                          position: 'relative',
-                          top: '-11%'
-                        }}
-                      >
-                        <Box
-                          sx={{
-                            width: matchDownSM ? '80px' : '50%',
-                            display: 'flex',
-                            justifyContent: 'end',
-                            position: 'relative',
-                            top: '12px',
-                            left: '10px',
-                            zIndex: 1
-                          }}
-                        >
-                          <IconButton
-                            color="secondary"
-                            variant="contained"
-                            size="large"
-                            aria-label="delete"
-                            onClick={handleSignRemove}
-                            sx={{ p: 0, backgroundColor: 'white' }}
-                          >
-                            <CancelIcon
-                              sx={{
-                                backgroundColor: 'white',
-                                borderRadius: '50%',
-                                color: 'red'
-                              }}
-                            />
-                          </IconButton>
-                        </Box>
-
-                        <Avatar
-                          sx={{
-                            width: matchDownSM ? '80px' : '77%',
-                            height: 'auto',
-                            backgroundColor: 'white',
-                            padding: '12px',
-                            borderBottomLeftRadius: '5px',
-                            borderBottomRightRadius: '5px',
-                            borderRadius: '5px',
-                            border: '1px solid black'
-                          }}
-                          alt="signature"
-                          src={isSign?.trimmedDataURL}
-                        />
-                      </Box>
-                    ) : (
-                      <Avatar
-                        sx={{
-                          width: matchDownSM ? '80px' : '77%',
-                          height: 'auto',
-                          backgroundColor: 'white',
-                          padding: '12px'
-                        }}
-                        alt="signature"
-                        src={isSign?.trimmedDataURL}
-                      />
-                    )}
-                  </ComponentToPrint>
-                </Stack>
-              </>
-            ) : (
-              <>
-                <Box
-                  sx={{
-                    width: '100%',
-                    display: 'flex',
-                    justifyContent: 'center'
-                  }}
-                >
-                  <Avatar
-                    sx={{
-                      width: matchDownSM ? '77%' : '77%',
-                      height: 'auto',
-                      backgroundColor: 'white',
-                      borderRadius: '1px',
-
-                      '.MuiAvatar-img': {
-                        border: ' 1px solid black',
-                        borderRadius: '5px'
-                      }
-                    }}
-                    alt="signature"
-                    src={'assets/images/sign/prepdf1.png'}
-                  />
-                </Box>
-              </>
-            )}
-          </MainCard>
-        </Box>
         <Grid container spacing={gridSpacing}>
           <Grid
             item

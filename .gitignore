@@ -123,5 +123,7 @@ dist
 /public/worker-*.js.map
 /public/fallback-*.js
 
-# misc
+ public/sw.js
+
+# miscr
 .DS_Store
