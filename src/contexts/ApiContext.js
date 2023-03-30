@@ -99,9 +99,9 @@ export const ApiProvider = ({ children }) => {
             address,
             postcode,
             city,
-            state,
             od_member,
             od_partner,
+            role,
             created_at,
             updated_at
           } = res?.data;
@@ -125,9 +125,9 @@ export const ApiProvider = ({ children }) => {
             address,
             postcode,
             city,
-            state,
             od_member,
             od_partner,
+            role,
             created_at,
             updated_at
           };
@@ -199,6 +199,7 @@ export const ApiProvider = ({ children }) => {
     window.localStorage.removeItem('users');
     window.localStorage.removeItem('berry-cart');
     window.localStorage.removeItem('listofpartner');
+    window.localStorage.removeItem(' Investment_id');
   };
 
   const forgetPassword = async (email) => {

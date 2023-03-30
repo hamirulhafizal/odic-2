@@ -547,8 +547,6 @@ const businessCenter = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, slot]);
 
-  console.log('user', user?.username);
-
   return (
     <>
       <MainCard
@@ -708,7 +706,7 @@ const businessCenter = () => {
             }}
           >
             <Typography variant="h2">Latest Total Empire Size</Typography>
-            <Typography variant="h2">10000 OD MEMBER</Typography>
+            <Typography variant="h4">10000 OD MEMBER</Typography>
           </Stack>
         </CardContent>
       </MainCard>

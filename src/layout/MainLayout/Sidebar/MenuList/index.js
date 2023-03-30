@@ -9,8 +9,26 @@ import menuItem from 'menu-items';
 
 // ==============================|| SIDEBAR MENU LIST ||============================== //
 
-const MenuList = () => {
-  const navItems = menuItem.items.map((item) => {
+const MenuList = ({ user }) => {
+  let a;
+
+  const checkRole = (user) => {
+    if (user?.role == 'Normal') {
+      return (a = menuItem?.item);
+    }
+
+    if (user?.role == 'Partner') {
+      return (a = menuItem?.items);
+    }
+
+    if (user?.role == 'Member') {
+      return (a = menuItem?.items);
+    }
+  };
+
+  checkRole(user);
+
+  const navItems = a?.map((item) => {
     switch (item.type) {
       case 'group':
         return <NavGroup key={item.id} item={item} />;

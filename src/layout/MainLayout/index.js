@@ -10,7 +10,7 @@ import Breadcrumbs from 'components/ui-component/extended/Breadcrumbs';
 import Header from './Header';
 import Sidebar from './Sidebar';
 import Customization from '../Customization';
-import navigation from 'menu-items';
+import { navigation } from 'menu-items';
 import useConfig from 'hooks/useConfig';
 import { drawerWidth } from 'store/constant';
 import { openDrawer } from 'store/slices/menu';
@@ -114,13 +114,13 @@ const MainLayout = ({ children }) => {
           {/* breadcrumb */}
           {container && (
             <Container sx={{ p: 0 }} maxWidth="lg">
-              <Breadcrumbs separator={IconChevronRight} navigation={navigation} icon title rightAlign />
+              {/* <Breadcrumbs separator={IconChevronRight} navigation={navigation} icon title rightAlign /> */}
               {children}
             </Container>
           )}
           {!container && (
             <>
-              <Breadcrumbs separator={IconChevronRight} navigation={navigation} icon title rightAlign />
+              {/* <Breadcrumbs separator={IconChevronRight} navigation={navigation} icon title rightAlign /> */}
               {children}
             </>
           )}

@@ -14,6 +14,7 @@ import LogoSection from '../LogoSection';
 import { openDrawer } from 'store/slices/menu';
 import { useDispatch, useSelector } from 'store';
 import { drawerWidth } from 'store/constant';
+import useAuth from 'hooks/useAuth';
 
 // ==============================|| SIDEBAR DRAWER ||============================== //
 
@@ -23,6 +24,7 @@ const Sidebar = ({ window }) => {
 
   const dispatch = useDispatch();
   const { drawerOpen } = useSelector((state) => state.menu);
+  const { user } = useAuth();
 
   const logo = useMemo(
     () => (
@@ -45,11 +47,11 @@ const Sidebar = ({ window }) => {
           paddingRight: '16px'
         }}
       >
-        <MenuList />
+        <MenuList user={user} />
       </PerfectScrollbar>
     ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [matchUpMd]
+    [matchUpMd, user]
   );
 
   const container = window !== undefined ? () => window.document.body : undefined;

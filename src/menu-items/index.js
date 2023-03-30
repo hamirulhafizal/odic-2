@@ -1,11 +1,12 @@
 import application from './application';
-import dashboard from './dashboard';
+import { dashboard, dashboard1 } from './dashboard';
 import pages from './pages';
 
 // ==============================|| MENU ITEMS ||============================== //
 
 const menuItems = {
-  items: [dashboard]
+  item: [dashboard],
+  items: [dashboard1]
 };
 
 export default menuItems;
