@@ -165,7 +165,7 @@ const WidthdrawForms = ({ withDrawData }) => {
             disabled={isChecked || (!isLoading && isMessage) ? false : true}
             sx={{
               backgroundColor: '#28933F',
-              opacity: !isLoading && isMessage && 0.5,
+              opacity: !isLoading && isMessage && 1,
               '&:hover': {
                 backgroundColor: '#28933F'
               }

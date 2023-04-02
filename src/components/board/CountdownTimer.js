@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { checkDateEnd } from 'utils/helper';
 
 const CountdownTimer = ({ created_date, created_time, dividen_date, children, status }) => {
   const theme = useTheme();
@@ -64,7 +65,7 @@ const CountdownTimer = ({ created_date, created_time, dividen_date, children, st
               justifyContent: 'space-evenly'
             }}
           >
-            {status == 'Progress' ? (
+            {status == 'Progress' && !checkDateEnd(targetTime) ? (
               <>
                 <span style={{ fontSize: '14px', fontWeight: 'bold' }}>
                   {timeBetween.years()}{' '}
@@ -106,6 +107,7 @@ const CountdownTimer = ({ created_date, created_time, dividen_date, children, st
                   {status == 'Floating' && `ODIC currently processing your money + dividen`}
                   {status == 'Completed' && `Congrats ! ODIC already transfed your money + dividen to your accout bank`}
                   {status == 'Fail' && `Something when wrong, make sure you upload IC or contact us for direct support`}
+                  {status == 'Progress' && checkDateEnd(targetTime) && `Please refresh to update slot status`}
                 </span>
               </Typography>
             )}

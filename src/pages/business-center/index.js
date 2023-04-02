@@ -79,7 +79,7 @@ import ScrollDialog from 'components/ui-elements/advance/UIDialog/ScrollDialog';
 import SkeletonCard from 'components/board/SkeletonCard';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import FilterDrawer from 'components/board/FilterDrawer';
-import { getApiPartners } from 'contexts/ApiBusinessCenter';
+import { getApiDirectSales, getApiEmpireSales, getApiPartners } from 'contexts/ApiBusinessCenter';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
@@ -362,6 +362,10 @@ const businessCenter = () => {
   const [isInitial, setInitial] = React.useState(false);
   const [isOpenFilterDrawer, setOpenFilterDrawer] = React.useState(false);
   const listofPartner = localStorage.getItem('listofpartner');
+  const [directSale, setDataDirectSale] = React.useState(null);
+  const [empireSale, setDataEmpireSale] = React.useState(null);
+  const [empireSize, setDataEmpireSize] = React.useState(null);
+  const [directSize, setDataDirectSize] = React.useState(null);
 
   const [openBank, setOpenBank] = React.useState(false);
 
@@ -538,9 +542,22 @@ const businessCenter = () => {
   };
 
   React.useEffect(() => {
-    user?.username && fetchAllInvestment(user?.username);
+    // user?.username && fetchAllInvestment(user?.username);
 
     listofPartner == null && getApiPartners();
+    directSale == null &&
+      getApiDirectSales().then((res) => {
+        const totalDirectSales = res?.data?.reduce((sum, item) => sum + item?.total_direct_sales, 0);
+        setDataDirectSale(totalDirectSales);
+        setDataDirectSize(res?.data?.length);
+      });
+
+    empireSale == null &&
+      getApiEmpireSales().then((res) => {
+        const totalEmpireSales = res?.data?.reduce((sum, item) => sum + item?.total_empire_sales, 0);
+        setDataEmpireSale(totalEmpireSales);
+        setDataEmpireSize(res?.data?.length);
+      });
 
     slot?.length > 100 && handleClear();
 
@@ -574,7 +591,7 @@ const businessCenter = () => {
             p: 2,
             display: 'flex',
             flexDirection: 'column',
-            gap: '3em'
+            gap: '2em'
           }}
         >
           <Stack
@@ -585,7 +602,16 @@ const businessCenter = () => {
             }}
           >
             <Typography variant={matchDownSM ? 'h4' : 'h1'}>
-              Welcome on board <br /> OD Partner : {user?.od_partner}
+              {user?.role == 'Partner' && (
+                <>
+                  Welcome on board <br /> OD Partner : {user?.od_partner}
+                </>
+              )}
+              {user?.role == 'Member' && (
+                <>
+                  Welcome on board <br /> OD Member : {user?.username}
+                </>
+              )}
             </Typography>
           </Stack>
 
@@ -683,8 +709,8 @@ const businessCenter = () => {
               alignItems: 'center'
             }}
           >
-            <Typography variant="h2">Latest Total Sales</Typography>
-            <Typography variant="h4">RM10,000,00</Typography>
+            <Typography variant="h4">Latest Total Registered</Typography>
+            <Typography variant="h2">{directSize}</Typography>
           </Stack>
 
           <Stack
@@ -694,20 +720,34 @@ const businessCenter = () => {
               alignItems: 'center'
             }}
           >
-            <Typography variant="h2">Latest Total Empire Size sales</Typography>
-            <Typography variant="h4">RM1,210,000,00</Typography>
+            <Typography variant="h4">Latest Total Direct Sales</Typography>
+            <Typography variant="h2">RM {numberWithCommas(100 * directSale)}</Typography>
           </Stack>
 
-          <Stack
-            direction="column"
-            sx={{
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}
-          >
-            <Typography variant="h2">Latest Total Empire Size</Typography>
-            <Typography variant="h4">10000 OD MEMBER</Typography>
-          </Stack>
+          {user?.role == 'Partner' && (
+            <>
+              <Stack
+                direction="column"
+                sx={{
+                  justifyContent: 'center',
+                  alignItems: 'center'
+                }}
+              >
+                <Typography variant="h4">Latest Total Empire sales</Typography>
+                <Typography variant="h2">RM {numberWithCommas(100 * empireSale)}</Typography>
+              </Stack>
+              <Stack
+                direction="column"
+                sx={{
+                  justifyContent: 'center',
+                  alignItems: 'center'
+                }}
+              >
+                <Typography variant="h4">Latest Total Empire Size (*Investor)</Typography>
+                <Typography variant="h2"> {empireSize}</Typography>
+              </Stack>
+            </>
+          )}
         </CardContent>
       </MainCard>
 

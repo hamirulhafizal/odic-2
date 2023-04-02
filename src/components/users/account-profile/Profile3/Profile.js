@@ -210,7 +210,7 @@ const Profile = ({ ...others }) => {
                           aria-readonly
                           required
                           fullWidth
-                          label="OD Member"
+                          label="OD Member (Introducer)"
                           name="od_member"
                           type="text"
                           value={user?.od_member}

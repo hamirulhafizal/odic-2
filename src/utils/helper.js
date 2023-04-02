@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 const slugify = (str) => {
   str
     ?.toLowerCase()
@@ -42,4 +44,10 @@ const generateReferalLink = (username) => {
   return ` ${baseUrl}/${username} `;
 };
 
-export { slugify, numberWithCommas, checkRoi, filterByCategory, stringifyFile, generateReferalLink };
+const checkDateEnd = (dividenDate, id) => {
+  const currentDate = moment();
+  const hasPassed = currentDate.isAfter(dividenDate);
+  return hasPassed;
+};
+
+export { slugify, numberWithCommas, checkRoi, filterByCategory, stringifyFile, generateReferalLink, checkDateEnd };

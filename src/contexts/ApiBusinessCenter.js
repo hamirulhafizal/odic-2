@@ -30,4 +30,28 @@ const getPartnerbyUsername = async (username) => {
   return response;
 };
 
-export { getApiPartners, getPartnerbyUsername };
+const getApiDirectSales = async () => {
+  const response = await axiosInstance
+    .get(`${BACKEND_PATH}/api/total-direct-sales`)
+    .then(async (res) => {
+      return res;
+    })
+    .catch((err) => {
+      return err;
+    });
+  return response;
+};
+
+const getApiEmpireSales = async () => {
+  const response = await axiosInstance
+    .get(`${BACKEND_PATH}/api/total-empire-sales`)
+    .then(async (res) => {
+      return res;
+    })
+    .catch((err) => {
+      return err;
+    });
+  return response;
+};
+
+export { getApiPartners, getPartnerbyUsername, getApiDirectSales, getApiEmpireSales };
