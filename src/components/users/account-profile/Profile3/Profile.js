@@ -53,7 +53,6 @@ const Profile = ({ ...others }) => {
       initialValues={{
         fullname: user?.fullname || '',
         od_partner: user?.od_partner || '',
-        od_member: user?.od_member || '',
         email: user?.email || '',
         phone_no: user?.phone_no || '',
         postcode: user?.postcode || '',
@@ -73,7 +72,6 @@ const Profile = ({ ...others }) => {
         state: Yup.string().required(),
         od_partner: Yup.string()
           .max(25)
-          .required()
           .test('no-special-chars', 'Special characters are not allowed', (value) => {
             return /^[a-zA-Z0-9]+$/.test(value);
           }),
@@ -172,37 +170,40 @@ const Profile = ({ ...others }) => {
                       <Grid item xs={12} md={6}>
                         <TextField fullWidth disabled type="email" value={values.email} name="email" id="filled-disabled" label="Email" />
                       </Grid>
-                      {/* {isUser(user?.username) && ( */}
-                      <Grid item xs={12} md={6}>
-                        <TextField
-                          disabled={user?.od_partner == null ? false : true}
-                          required
-                          fullWidth
-                          label="OD Partner Name"
-                          id="outlined-basic1"
-                          name="od_partner"
-                          type="text"
-                          value={values.od_partner}
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                          error={Boolean(errors.od_partner && touched.od_partner)}
-                          inputProps={{
-                            pattern: '[a-zA-Z0-9]+',
-                            inputMode: 'numeric',
-                            maxLength: 25,
-                            style: { textTransform: 'UPPERCASE' }
-                          }}
-                          sx={{
-                            '& .MuiFormHelperText-root ': {
-                              color: 'red'
-                            }
-                          }}
-                          helperText={errors.od_partner && touched.od_partner && String(errors.od_partner)}
-                        />
-                      </Grid>
-                      {/* )} */}
 
-                      <Grid item xs={12} md={6}>
+                      {user?.role == 'Partner' && (
+                        <>
+                          <Grid item xs={12} md={6}>
+                            <TextField
+                              required
+                              fullWidth
+                              label="OD Partner Name"
+                              id="outlined-basic1"
+                              disabled={true}
+                              name="od_partner"
+                              type="text"
+                              value={values.od_partner}
+                              onBlur={handleBlur}
+                              onChange={handleChange}
+                              error={Boolean(errors.od_partner && touched.od_partner)}
+                              inputProps={{
+                                pattern: '[a-zA-Z0-9]+',
+                                inputMode: 'numeric',
+                                maxLength: 25,
+                                style: { textTransform: 'UPPERCASE' }
+                              }}
+                              sx={{
+                                '& .MuiFormHelperText-root ': {
+                                  color: 'red'
+                                }
+                              }}
+                              helperText={errors.od_partner && touched.od_partner && String(errors.od_partner)}
+                            />
+                          </Grid>
+                        </>
+                      )}
+
+                      <Grid item xs={12} md={user?.role == 'Partner' ? 6 : 12}>
                         <TextField
                           disabled
                           id="filled-disabled"
@@ -212,22 +213,22 @@ const Profile = ({ ...others }) => {
                           label="OD Member"
                           name="od_member"
                           type="text"
-                          value={user?.username}
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                          error={Boolean(errors.od_member && touched.od_member)}
-                          inputProps={{
-                            pattern: '[a-zA-Z0-9]+',
-                            inputMode: 'numeric',
-                            maxLength: 25,
-                            style: { textTransform: 'UPPERCASE' }
-                          }}
+                          value={user?.od_member}
+                          // onBlur={handleBlur}
+                          // onChange={handleChange}
+                          // error={Boolean(errors.od_member && touched.od_member)}
+                          // inputProps={{
+                          //   pattern: '[a-zA-Z0-9]+',
+                          //   inputMode: 'numeric',
+                          //   maxLength: 25,
+                          //   style: { textTransform: 'UPPERCASE' }
+                          // }}
                           sx={{
                             '& .MuiFormHelperText-root ': {
                               color: 'red'
                             }
                           }}
-                          helperText={errors.od_member && touched.od_member && String(errors.od_member)}
+                          // helperText={errors.od_member && touched.od_member && String(errors.od_member)}
                         />
                       </Grid>
 

@@ -99,8 +99,8 @@ export const ApiProvider = ({ children }) => {
             address,
             postcode,
             city,
-            od_member,
             od_partner,
+            od_member,
             role,
             created_at,
             updated_at
@@ -125,8 +125,8 @@ export const ApiProvider = ({ children }) => {
             address,
             postcode,
             city,
-            od_member,
             od_partner,
+            od_member,
             role,
             created_at,
             updated_at
