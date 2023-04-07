@@ -710,7 +710,7 @@ const businessCenter = () => {
             }}
           >
             <Typography variant="h4">Latest Total Registered</Typography>
-            <Typography variant="h2">{directSize}</Typography>
+            <Typography variant="h2">{directSize !== null ? directSize : 0}</Typography>
           </Stack>
 
           <Stack
@@ -720,8 +720,9 @@ const businessCenter = () => {
               alignItems: 'center'
             }}
           >
-            <Typography variant="h4">Latest Total Direct Sales</Typography>
-            <Typography variant="h2">RM {numberWithCommas(100 * directSale)}</Typography>
+            <Typography variant="h4">Latest Total Commission for Direct Sales</Typography>
+            <Typography variant="h6">2% from every slot</Typography>
+            <Typography variant="h2">RM {directSale ? numberWithCommas(directSale) : 0}</Typography>
           </Stack>
 
           {user?.role == 'Partner' && (
@@ -733,8 +734,9 @@ const businessCenter = () => {
                   alignItems: 'center'
                 }}
               >
-                <Typography variant="h4">Latest Total Empire sales</Typography>
-                <Typography variant="h2">RM {numberWithCommas(100 * empireSale)}</Typography>
+                <Typography variant="h4">Latest Total Commission for Empire sales</Typography>
+                <Typography variant="h6">1% from every slot</Typography>
+                <Typography variant="h2">RM {empireSale && numberWithCommas(empireSale)}</Typography>
               </Stack>
               <Stack
                 direction="column"
@@ -743,8 +745,8 @@ const businessCenter = () => {
                   alignItems: 'center'
                 }}
               >
-                <Typography variant="h4">Latest Total Empire Size (*Investor)</Typography>
-                <Typography variant="h2"> {empireSize}</Typography>
+                <Typography variant="h4">Latest Total Empire Size</Typography>
+                <Typography variant="h2"> {empireSize ? empireSize - 1 : 0}</Typography>
               </Stack>
             </>
           )}
