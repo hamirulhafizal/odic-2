@@ -38,117 +38,116 @@ const HeaderPage = () => {
   const matchDownLG = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
-    <Container>
-      <Grid
-        container
-        alignItems="center"
-        justifyContent="center"
-        spacing={gridSpacing}
-        sx={{
-          mt: { xs: 10, sm: 6, md: 18.75 },
-          mb: { xs: 2.5, md: 10 }
-        }}
-      >
-        <Grid item xs={12}>
-          <Grid
-            container
-            spacing={gridSpacing}
-            sx={{
-              textAlign: 'center',
-              justifyContent: 'center'
-            }}
-          >
-            <Grid item xs={12}>
-              <motion.div
-                initial={{ opacity: 0, translateY: 550 }}
-                animate={{ opacity: 1, translateY: 0 }}
-                transition={{
-                  type: 'spring',
-                  stiffness: 150,
-                  damping: 30
+    <Grid
+      container
+      alignItems="center"
+      justifyContent="center"
+      spacing={gridSpacing}
+      sx={{
+        mt: { xs: 10, sm: 6, md: 18.75 },
+        mb: { xs: 2.5, md: 10 },
+        height: { sm: '100vh', md: '60vh' }
+      }}
+    >
+      <Grid item xs={12}>
+        <Grid
+          container
+          spacing={gridSpacing}
+          sx={{
+            textAlign: 'center',
+            justifyContent: 'center'
+          }}
+        >
+          <Grid item xs={12}>
+            <motion.div
+              initial={{ opacity: 0, translateY: 550 }}
+              animate={{ opacity: 1, translateY: 0 }}
+              transition={{
+                type: 'spring',
+                stiffness: 150,
+                damping: 30
+              }}
+            >
+              <Typography
+                variant="h6"
+                color="secondary"
+                sx={{
+                  fontSize: { xs: '1.50rem', sm: '3rem', md: '2.5rem', xl: '4rem' },
+                  fontWeight: 900,
+                  lineHeight: 1.4
                 }}
               >
-                <Typography
-                  variant="h6"
-                  color="secondary"
-                  sx={{
-                    fontSize: { xs: '1.50rem', sm: '3rem', md: '4rem' },
-                    fontWeight: 900,
-                    lineHeight: 1.4
-                  }}
-                >
-                  <span> welcome to</span>
-                  <br></br>
-                  <Box component="span" variant="h2" color="inherit" sx={{ ml: matchDownLG ? 0 : 2, color: 'white' }}>
-                    ONE DREAM INVESTMENT CENTER (ODIC)
-                  </Box>
-                </Typography>
-              </motion.div>
-            </Grid>
-            <Grid item xs={12} lg={10}>
-              <motion.div
-                initial={{ opacity: 0, translateY: 550 }}
-                animate={{ opacity: 1, translateY: 0 }}
-                transition={{
-                  type: 'spring',
-                  stiffness: 150,
-                  damping: 30,
-                  delay: 0.2
+                <span> welcome to</span>
+                <br></br>
+                <Box component="span" variant="h2" color="inherit" sx={{ ml: matchDownLG ? 0 : 2, color: 'white' }}>
+                  ONE DREAM INVESTMENT CENTER (ODIC)
+                </Box>
+              </Typography>
+            </motion.div>
+          </Grid>
+          <Grid item xs={12} lg={10}>
+            <motion.div
+              initial={{ opacity: 0, translateY: 550 }}
+              animate={{ opacity: 1, translateY: 0 }}
+              transition={{
+                type: 'spring',
+                stiffness: 150,
+                damping: 30,
+                delay: 0.2
+              }}
+            >
+              <Typography
+                variant="h4"
+                component="div"
+                color="white"
+                sx={{
+                  fontSize: { xs: '1rem', md: '1.125rem' },
+                  fontWeight: 400,
+                  lineHeight: 1.4
                 }}
               >
-                <Typography
-                  variant="h4"
-                  component="div"
-                  color="white"
-                  sx={{
-                    fontSize: { xs: '1rem', md: '1.125rem' },
-                    fontWeight: 400,
-                    lineHeight: 1.4
-                  }}
-                >
-                  {`Are you looking to grow your wealth and secure your financial future? Look no further than ODIC.`}
-                  <br />
-                  <br />
-                  {`Don't miss out on the opportunity to grow your wealth and secure your financial future. Sign up for ODIC today and
+                {`Are you looking to grow your wealth and secure your financial future? Look no further than ODIC.`}
+                <br />
+                <br />
+                {`Don't miss out on the opportunity to grow your wealth and secure your financial future. Sign up for ODIC today and
                   start taking control of your investments.`}
-                </Typography>
-              </motion.div>
-            </Grid>
+              </Typography>
+            </motion.div>
+          </Grid>
 
-            <Grid item xs={12} sx={{ my: 3.25 }}>
-              <motion.div
-                initial={{ opacity: 0, translateY: 550 }}
-                animate={{ opacity: 1, translateY: 0 }}
-                transition={{
-                  type: 'spring',
-                  stiffness: 150,
-                  damping: 30,
-                  delay: 0.4
-                }}
-              >
-                <Grid container spacing={2} sx={{ justifyContent: { xs: 'center', md: 'center' } }}>
-                  <Grid item>
-                    <AnimateButton>
-                      <Button
-                        sx={{ color: 'white' }}
-                        component={Link}
-                        href={user == null ? '/register' : '/board'}
-                        size="large"
-                        variant="contained"
-                        color="secondary"
-                        startIcon={user == null ? <LoginIcon /> : <ListIcon />}
-                      >
-                        {user == null ? 'SIGN UP NOW' : 'VIEW BOARD'}
-                      </Button>
-                    </AnimateButton>
-                  </Grid>
+          <Grid item xs={12} sx={{ my: 3.25 }}>
+            <motion.div
+              initial={{ opacity: 0, translateY: 550 }}
+              animate={{ opacity: 1, translateY: 0 }}
+              transition={{
+                type: 'spring',
+                stiffness: 150,
+                damping: 30,
+                delay: 0.4
+              }}
+            >
+              <Grid container spacing={2} sx={{ justifyContent: { xs: 'center', md: 'center' } }}>
+                <Grid item>
+                  <AnimateButton>
+                    <Button
+                      sx={{ color: 'white' }}
+                      component={Link}
+                      href={user == null ? '/login' : '/board'}
+                      size="large"
+                      variant="contained"
+                      color="secondary"
+                      startIcon={user == null ? <LoginIcon /> : <ListIcon />}
+                    >
+                      {user == null ? 'LOGIN' : 'VIEW BOARD'}
+                    </Button>
+                  </AnimateButton>
                 </Grid>
-              </motion.div>
-            </Grid>
+              </Grid>
+            </motion.div>
           </Grid>
         </Grid>
       </Grid>
-    </Container>
+    </Grid>
   );
 };
 

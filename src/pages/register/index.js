@@ -22,6 +22,8 @@ const Register = () => {
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
   const router = useRouter();
 
+  router.query.ref == undefined && router.push('/login');
+
   return (
     <AuthWrapper1>
       <Grid container direction="column" justifyContent="flex-end" sx={{ minHeight: '100vh' }}>

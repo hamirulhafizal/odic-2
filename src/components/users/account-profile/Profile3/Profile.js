@@ -45,8 +45,6 @@ const Profile = ({ ...others }) => {
 
   const matchDownMD = useMediaQuery(theme.breakpoints.down('md'));
 
-  console.log('user', user);
-
   return (
     <Formik
       enableReinitialize={Boolean(true)}

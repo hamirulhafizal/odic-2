@@ -19,8 +19,20 @@ const getApiPartners = async () => {
 };
 
 const getPartnerbyUsername = async (username) => {
-  const response = await axiosInstance
+  const response = await axios
     .get(`${BACKEND_PATH}/api/partner/${username}`)
+    .then(async (res) => {
+      return res;
+    })
+    .catch((err) => {
+      return err;
+    });
+  return response;
+};
+
+const getStatusbyUsername = async (username) => {
+  const response = await axios
+    .get(`${BACKEND_PATH}/api/status/${username}`)
     .then(async (res) => {
       return res;
     })
@@ -54,4 +66,4 @@ const getApiEmpireSales = async () => {
   return response;
 };
 
-export { getApiPartners, getPartnerbyUsername, getApiDirectSales, getApiEmpireSales };
+export { getApiPartners, getPartnerbyUsername, getApiDirectSales, getApiEmpireSales, getStatusbyUsername };

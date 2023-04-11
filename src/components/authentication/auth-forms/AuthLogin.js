@@ -77,17 +77,16 @@ const JWTLogin = ({ loginProp, ...others }) => {
                 throw new Error('Login details are not valid');
               }
 
-              if (scriptedRef.current && res?.token) {
+              if (res?.data?.msg === 'Email not yet verification! Email verification link sent on your email address.') {
+                setErrors({ submit: 'Email not verified yet' });
+                setLoading(false);
+              }
+
+              if (res?.token) {
                 setLoading(false);
                 setStatus({ success: true, msg: 'SUCCESS' });
                 setSubmitting(false);
                 router.push(`/board`);
-              }
-
-              if (res?.data?.msg === 'Email not yet verification! Email verification link sent on your email address.') {
-                // throw new Error('Email not yet verification! Email verification link sent on your email address.');
-                setErrors({ submit: 'Email not verified yet' });
-                setLoading(false);
               }
             })
             .catch((err) => {

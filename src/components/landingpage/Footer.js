@@ -70,34 +70,12 @@ const FooterPage = () => {
               <Stack alignItems="center" justifyContent={matchDownSM ? 'center' : 'flex-start'} direction={matchDownSM ? 'column' : 'row'}>
                 <LogoSection htmlFor="footer" />
                 <Typography sx={{ ml: 1 }} variant="subtitle1" component="div" color="inherit">
-                  ONE DREAM PROPERTY
+                  ONE DREAM INVESTMENT CENTER
                 </Typography>
               </Stack>
 
               <Typography variant="subtitle2" component="div" color="inherit">
-                One-stop property platform in Malaysia.<br></br> Find properties for rent, sell and manage.
-              </Typography>
-            </Grid>
-            <Grid item xs={12} sm={2}>
-              <Typography variant="subtitle1" component="div" color="inherit">
-                ONE DREAM
-              </Typography>
-              <Typography variant="subtitle2" component="div" color="inherit">
-                Privacy Policy
-              </Typography>
-              <Typography variant="subtitle2" component="div" color="inherit">
-                Term of Use
-              </Typography>
-            </Grid>
-            <Grid item xs={12} sm={2}>
-              <Typography variant="subtitle1" component="div" color="inherit">
-                SERVICES
-              </Typography>
-              <Typography variant="subtitle2" component="div" color="inherit">
-                Property for Rent
-              </Typography>
-              <Typography variant="subtitle2" component="div" color="inherit">
-                Property for Buy
+                Turning Dreams into Reality: Your One-Stop Investment Destination
               </Typography>
             </Grid>
             <Grid item xs={12} sm={3}>

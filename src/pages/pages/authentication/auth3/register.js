@@ -10,6 +10,7 @@ import Logo from 'components/ui-component/Logo';
 import AuthRegister from 'components/authentication/auth-forms/AuthRegister';
 import AuthFooter from 'components/ui-component/cards/AuthFooter';
 import useAuth from 'hooks/useAuth';
+import { useRouter } from 'next/router';
 
 // assets
 

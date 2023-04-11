@@ -36,7 +36,7 @@ import { openSnackbar } from 'store/slices/snackbar';
 // assets
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { getApiPartners, getPartnerbyUsername } from 'contexts/ApiBusinessCenter';
+import { getApiPartners, getPartnerbyUsername, getStatusbyUsername } from 'contexts/ApiBusinessCenter';
 import FormControlSelect from 'components/ui-component/extended/Form/FormControlSelect';
 
 // ===========================|| FIREBASE - REGISTER ||=========================== //
@@ -56,13 +56,11 @@ const JWTRegister = ({ ...others }) => {
   const [msgErr, setMsgErr] = React.useState('');
 
   const [level, setLevel] = React.useState();
-  const [listPartner, setPartner] = React.useState();
+  const [listPartner, setPartner] = React.useState('');
 
   const { register } = useAuth();
 
   // const arryofpartner1 = [];
-
-  const introOD_partner = localStorage.getItem('od_partner_intro');
 
   const ref = new URLSearchParams(window.location.search);
   const refUsername = ref.get('ref');
@@ -83,18 +81,22 @@ const JWTRegister = ({ ...others }) => {
 
   useEffect(() => {
     changePassword('123456');
-    introOD_partner == null &&
-      getPartnerbyUsername(refUsername).then((res) => {
-        if (res?.data?.length != 0) {
-          setPartner(res?.data[0]);
-          const { od_partner } = res?.data[0];
-
-          localStorage.setItem('od_partner_intro', od_partner);
+    listPartner == '' &&
+      getStatusbyUsername(refUsername).then((res) => {
+        if (res.data == 'Partner' || res.data == 'Member') {
+          getPartnerbyUsername(refUsername).then((res) => {
+            if (res?.data?.length != 0) {
+              setPartner(res?.data[0]);
+              const { od_partner } = res?.data[0];
+            } else {
+              setMsgErr('OD Member are not valid');
+            }
+          });
         } else {
           setMsgErr('OD Member are not valid');
         }
       });
-  }, [introOD_partner, refUsername, listPartner]);
+  }, [refUsername, listPartner]);
 
   return (
     <>
@@ -113,7 +115,7 @@ const JWTRegister = ({ ...others }) => {
           email: '',
           password: '',
           name: '',
-          od_partner: introOD_partner || listPartner,
+          od_partner: listPartner,
           od_member: refUsername,
           submit: null
         }}
@@ -338,11 +340,16 @@ const JWTRegister = ({ ...others }) => {
                 <Button
                   disableElevation
                   color={`${status?.success ? 'success' : 'secondary'}`}
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || msgErr == 'OD Member are not valid'}
                   fullWidth
                   size="large"
                   type="submit"
                   variant="contained"
+                  sx={{
+                    '&.Mui-disabled': {
+                      backgroundColor: '#4a4a4a'
+                    }
+                  }}
                 >
                   <FormHelperText id="standard-weight-helper-text-username-login" sx={{ fontWeight: 'bold' }}>
                     {status && status.success ? (

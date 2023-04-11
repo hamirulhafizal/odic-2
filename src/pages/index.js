@@ -95,12 +95,7 @@ const Landing = () => {
 
   return (
     <>
-      <HeaderWrapper
-        id="home"
-        sx={{
-          height: matchDownLG ? '100%' : '100vh'
-        }}
-      >
+      <HeaderWrapper id="home">
         <AppBar />
         <Header />
       </HeaderWrapper>
