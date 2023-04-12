@@ -80,23 +80,29 @@ const JWTRegister = ({ ...others }) => {
   };
 
   useEffect(() => {
+    let isMounted = true;
     changePassword('123456');
-    listPartner == '' &&
-      getStatusbyUsername(refUsername).then((res) => {
-        if (res.data == 'Partner' || res.data == 'Member') {
-          getPartnerbyUsername(refUsername).then((res) => {
-            if (res?.data?.length != 0) {
-              setPartner(res?.data[0]);
-              const { od_partner } = res?.data[0];
-            } else {
-              setMsgErr('OD Member are not valid');
+    getStatusbyUsername(refUsername).then((res) => {
+      if (res.data == 'Partner' || res.data == 'Member') {
+        getPartnerbyUsername(refUsername).then((res) => {
+          if (res?.data?.length != 0) {
+            const { od_partner } = res?.data[0];
+            if (isMounted) {
+              setPartner(od_partner);
             }
-          });
-        } else {
-          setMsgErr('OD Member are not valid');
-        }
-      });
-  }, [refUsername, listPartner]);
+          } else {
+            setMsgErr('OD Member are not valid');
+          }
+        });
+      } else {
+        setMsgErr('OD Member are not valid');
+      }
+    });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [listPartner, refUsername]);
 
   return (
     <>
@@ -121,8 +127,8 @@ const JWTRegister = ({ ...others }) => {
         }}
         validationSchema={Yup.object().shape({
           email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-          od_partner: Yup.string().max(255).required('You are invalid to register !'),
-          od_member: Yup.string().max(255).required('Introducer Name is required'),
+          od_partner: Yup.string().max(255),
+          od_member: Yup.string().max(255),
           name: Yup.string().max(255).required('Full Name is required'),
           password: Yup.string().max(255).required('Password is required')
         })}
@@ -132,7 +138,7 @@ const JWTRegister = ({ ...others }) => {
             email: values.email,
             password: values.password,
             name: values.name,
-            od_partner: values.od_partner,
+            od_partner: listPartner,
             od_member: values.od_member
           })
             .then((res) => {
@@ -172,45 +178,29 @@ const JWTRegister = ({ ...others }) => {
         {({ errors, status, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
           <form onSubmit={handleSubmit} {...others}>
             <Grid container spacing={matchDownSM ? 1 : 2}>
-              {/* {listPartner.length !== 0 && (
-                <FormControlSelect
-                  required
-                  fullWidth
-                  currencies={listPartner}
-                  id="od_partner"
-                  name="od_partner"
-                  captionLabel="OD Partner"
-                  value={values.od_partner}
-                  onChange={handleChange}
-                  // error={user?.od_partner ? false : true}
-                  helperText={errors.od_partner && touched.od_partner && String(errors.od_partner && 'OD Partner is required field')}
-                />
-              )} */}
-              <Grid item xs={6} sm={6}>
+              <Grid item xs={12} sm={12}>
                 <TextField
-                  hidden
-                  required
+                  disabled
                   fullWidth
-                  label="OD Partner"
+                  label="Team"
                   margin="normal"
                   name="od_partner"
                   type="text"
-                  value={values.od_partner}
+                  value={listPartner}
                   onBlur={handleBlur}
                   onChange={handleChange}
                   inputProps={{ style: { textTransform: 'uppercase' } }}
-                  sx={{ ...theme.typography.customInput, display: 'none' }}
+                  sx={{ ...theme.typography.customInput }}
                 />
               </Grid>
 
               <Grid item xs={12} sm={12}>
                 <TextField
                   disabled
-                  required
                   fullWidth
                   label="OD Member Introducer"
                   margin="normal"
-                  name="name"
+                  name="od_member"
                   type="text"
                   value={values.od_member}
                   onBlur={handleBlur}
@@ -340,7 +330,7 @@ const JWTRegister = ({ ...others }) => {
                 <Button
                   disableElevation
                   color={`${status?.success ? 'success' : 'secondary'}`}
-                  disabled={isSubmitting || msgErr == 'OD Member are not valid'}
+                  disabled={msgErr == 'OD Member are not valid'}
                   fullWidth
                   size="large"
                   type="submit"
