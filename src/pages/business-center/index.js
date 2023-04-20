@@ -83,6 +83,7 @@ import { getApiDirectSales, getApiEmpireSales, getApiPartners } from 'contexts/A
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
+import { LatestOrder } from 'components/widget/Data/LatestOrder';
 
 const HtmlTooltip = styled(({ className, ...props }) => <Tooltip {...props} classes={{ popper: className }} />)(({ theme }) => ({
   [`& .${tooltipClasses.tooltip}`]: {
@@ -549,14 +550,17 @@ const businessCenter = () => {
       getApiDirectSales().then((res) => {
         const totalDirectSales = res?.data?.reduce((sum, item) => sum + item?.total_direct_sales, 0);
         setDataDirectSale(totalDirectSales);
-        setDataDirectSize(res?.data?.length);
+        setDataDirectSize(res?.data);
+
+        localStorage.setItem('OD Member', JSON.stringify(res?.data));
       });
 
     empireSale == null &&
       getApiEmpireSales().then((res) => {
         const totalEmpireSales = res?.data?.reduce((sum, item) => sum + item?.total_empire_sales, 0);
         setDataEmpireSale(totalEmpireSales);
-        setDataEmpireSize(res?.data?.length);
+        setDataEmpireSize(res?.data);
+        localStorage.setItem('Empire', JSON.stringify(res?.data));
       });
 
     slot?.length > 100 && handleClear();
@@ -601,18 +605,20 @@ const businessCenter = () => {
               alignItems: 'center'
             }}
           >
-            <Typography variant={matchDownSM ? 'h4' : 'h1'}>
-              {user?.role == 'Partner' && (
-                <>
-                  Welcome on board <br /> OD Partner : {user?.od_partner}
-                </>
-              )}
-              {user?.role == 'Member' && (
-                <>
-                  Welcome on board <br /> OD Member : {user?.username}
-                </>
-              )}
-            </Typography>
+            <Typography variant={matchDownSM ? 'h4' : 'h4'}>Welcome on board</Typography>
+            {user?.role == 'Partner' && (
+              <Typography variant={matchDownSM ? 'h4' : 'h1'}>
+                <br /> OD Partner : {user?.od_partner}
+              </Typography>
+            )}
+
+            {user?.role == 'Member' && (
+              <>
+                <Typography variant={matchDownSM ? 'h4' : 'h1'}>
+                  <br /> OD Member : {user?.username}
+                </Typography>
+              </>
+            )}
           </Stack>
 
           <Stack
@@ -702,18 +708,7 @@ const businessCenter = () => {
             </Box>
           </Stack>
 
-          <Stack
-            direction="column"
-            sx={{
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}
-          >
-            <Typography variant="h4">Latest Total Registered</Typography>
-            <Typography variant="h2">{directSize !== null ? directSize : 0}</Typography>
-          </Stack>
-
-          <Stack
+          {/* <Stack
             direction="column"
             sx={{
               justifyContent: 'center',
@@ -723,6 +718,16 @@ const businessCenter = () => {
             <Typography variant="h4">Latest Total Commission for Direct Sales</Typography>
             <Typography variant="h6">2% from every slot</Typography>
             <Typography variant="h2">RM {directSale ? numberWithCommas(directSale) : 0}</Typography>
+          </Stack> */}
+
+          <Stack
+            direction="column"
+            sx={{
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+          >
+            <LatestOrder title="OD Member" data={directSize} handleClickOpenModal={handleClickOpenModal} />
           </Stack>
 
           {user?.role == 'Partner' && (
@@ -734,35 +739,30 @@ const businessCenter = () => {
                   alignItems: 'center'
                 }}
               >
-                <Typography variant="h4">Latest Total Commission for Empire sales</Typography>
-                <Typography variant="h6">1% from every slot</Typography>
-                <Typography variant="h2">RM {empireSale && numberWithCommas(empireSale)}</Typography>
-              </Stack>
-              <Stack
-                direction="column"
-                sx={{
-                  justifyContent: 'center',
-                  alignItems: 'center'
-                }}
-              >
-                <Typography variant="h4">Latest Total Empire Size</Typography>
-                <Typography variant="h2"> {empireSize ? empireSize - 1 : 0}</Typography>
+                <LatestOrder title="Empire" data={empireSize} handleClickOpenModal={handleClickOpenModal} />
               </Stack>
             </>
           )}
         </CardContent>
       </MainCard>
 
-      {/* <BottomAppBar /> */}
+      {/* <button
+        id="openModel"
+        onClick={() => {
+          handleClickOpenModal('withdraw');
+        }}
+      >
+        masuk
+      </button> */}
 
-      {/* <ScrollDialog
+      <ScrollDialog
         isModal={isModal}
         isSlotId={isSlotId}
         handleClickOpenModal={handleClickOpenModal}
         handleClickCloseModal={handleClickCloseModal}
       />
 
-      <FilterDrawer
+      {/* <FilterDrawer
         isOpenFilterDrawer={isOpenFilterDrawer}
         handleCloseFilterDrawer={handleCloseFilterDrawer}
         handleOpenFilterDrawer={handleOpenFilterDrawer}

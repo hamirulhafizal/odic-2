@@ -122,6 +122,78 @@ const Chip = ({ chipcolor, disabled, sx = {}, variant, ...others }) => {
         };
       }
       break;
+    case 'floating':
+      if (variant === 'outlined') {
+        outlineSX = {
+          // color: theme.palette.blue,
+          color: 'white',
+          bgcolor: 'transparent',
+          border: '1px solid',
+          borderColor: 'blue',
+          ':hover': {
+            color: 'white',
+            bgcolor: 'blue'
+          }
+        };
+      } else {
+        defaultSX = {
+          color: '#376fb5',
+          bgcolor: '#cce3ff',
+          ':hover': {
+            bgcolor: '#376fb5',
+            color: '#cce3ff'
+          }
+        };
+      }
+      break;
+    case 'pending':
+      if (variant === 'outlined') {
+        outlineSX = {
+          // color: theme.palette.blue,
+          color: 'white',
+          bgcolor: 'transparent',
+          border: '1px solid',
+          borderColor: 'blue',
+          ':hover': {
+            color: 'white',
+            bgcolor: 'blue'
+          }
+        };
+      } else {
+        defaultSX = {
+          bgcolor: '#e1dbdb',
+          color: 'grey',
+          ':hover': {
+            color: '#e1dbdb',
+            bgcolor: 'grey'
+          }
+        };
+      }
+      break;
+    case 'completed':
+      if (variant === 'outlined') {
+        outlineSX = {
+          // color: theme.palette.blue,
+          color: 'white',
+          bgcolor: 'transparent',
+          border: '1px solid',
+          borderColor: 'blue',
+          ':hover': {
+            color: 'white',
+            bgcolor: '#ded9ff'
+          }
+        };
+      } else {
+        defaultSX = {
+          color: '#372893',
+          bgcolor: '#ded9ff',
+          ':hover': {
+            color: '#ded9ff',
+            bgcolor: '#372893'
+          }
+        };
+      }
+      break;
     case 'warning':
       if (variant === 'outlined') {
         outlineSX = {

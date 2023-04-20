@@ -9,6 +9,7 @@ import PaidOutlinedIcon from '@mui/icons-material/PaidOutlined';
 import CloseIcon from '@mui/icons-material/Close';
 import HowToRegOutlinedIcon from '@mui/icons-material/HowToRegOutlined';
 import Profile from '../../../users/account-profile/Profile3/Profile';
+import DataTable from 'components/widget/Data/DataTable';
 // src\components\users\account-profile\Profile3\Profile.js
 // ===============================|| UI DIALOG - SCROLLABLE ||=============================== //
 
@@ -28,7 +29,7 @@ export default function ScrollDialog({ isModal, handleClickOpenModal, handleClic
         aria-labelledby="scroll-dialog-title"
         aria-describedby="scroll-dialog-description"
         fullWidth={true}
-        maxWidth={'sm'}
+        maxWidth={isSlotId == 'withdraw' ? 'sm' : 'sm'}
         TransitionComponent={Transition}
         transitionDuration={500}
         keepMounted
@@ -56,7 +57,18 @@ export default function ScrollDialog({ isModal, handleClickOpenModal, handleClic
           >
             {isSlotId !== 0 ? (
               <>
-                <PaidOutlinedIcon sx={{ mr: 1 }} /> <Typography variant="h4"> WITHDRAW SLOT </Typography>
+                {isSlotId !== 'withdraw' ? (
+                  <>
+                    <PaidOutlinedIcon sx={{ mr: 1 }} /> <Typography variant="h4"> WITHDRAW SLOT </Typography>
+                  </>
+                ) : (
+                  <>
+                    <Stack sx={{ textAlign: 'center' }}>
+                      <Typography variant="h4"> WITHDRAW COMMISION </Typography>
+                      <Typography variant="caption">Commision will show once the slot under Progress</Typography>
+                    </Stack>
+                  </>
+                )}
               </>
             ) : (
               <>
@@ -66,7 +78,19 @@ export default function ScrollDialog({ isModal, handleClickOpenModal, handleClic
           </Stack>
         </DialogTitle>
         <DialogContent dividers={true}>
-          {isSlotId !== undefined && isSlotId !== 0 ? <WidthdrawForms withDrawData={isSlotId} /> : <Profile htmlFor="scrollDialog" />}
+          {isSlotId !== undefined && isSlotId !== 0 ? (
+            <>
+              {isSlotId !== 'withdraw' ? (
+                <>
+                  <WidthdrawForms withDrawData={isSlotId} />
+                </>
+              ) : (
+                <DataTable />
+              )}
+            </>
+          ) : (
+            <Profile htmlFor="scrollDialog" />
+          )}
         </DialogContent>
       </Dialog>
     </div>

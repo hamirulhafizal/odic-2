@@ -68,6 +68,11 @@ const Palette = (navType, presetColor) => {
         main: colors.orangeMain,
         dark: colors.orangeDark
       },
+      blue: {
+        light: colors.blueLight,
+        main: colors.blueMain,
+        dark: colors.blueDark
+      },
       warning: {
         light: colors.warningLight,
         main: colors.warningMain,

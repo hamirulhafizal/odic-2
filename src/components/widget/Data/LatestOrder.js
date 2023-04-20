@@ -11,7 +11,10 @@ import {
   TableCell,
   TableContainer,
   TableHead,
-  TableRow
+  TableRow,
+  Typography,
+  useMediaQuery,
+  useTheme
 } from '@mui/material';
 
 // project imports
@@ -19,86 +22,139 @@ import Chip from 'components/ui-component/extended/Chip';
 import { gridSpacing } from 'store/constant';
 
 // assets
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import MainCard from 'components/ui-component/cards/MainCard';
-
-const Phone1 = '/assets/images/widget/PHONE1.jpg';
-const Phone2 = '/assets/images/widget/PHONE2.jpg';
-const Phone3 = '/assets/images/widget/PHONE3.jpg';
-const Phone4 = '/assets/images/widget/PHONE4.jpg';
-
-// table data
-function createData(customer, cid, photo, product, quantity, date, status, statuscolor) {
-  return { customer, cid, photo, product, quantity, date, status, statuscolor };
-}
-
-const rows = [
-  createData('John Deo', '#81412314', Phone1, 'Moto G5', '10', '17-2-2017', 'Pending', 'warning'),
-  createData('Jenny William', '#68457898', Phone2, 'iPhone 8', '16', '20-2-2017', 'Paid', 'primary'),
-  createData('Lori Moore', '#45457898', Phone3, 'Redmi 4', '20', '17-2-2017', 'Success', 'success'),
-  createData('Austin Pena', '#62446232', Phone4, 'Jio', '15', '25-4-2017', 'Failed', 'error')
-];
+import { numberWithCommas } from 'utils/helper';
 
 // =========================|| LATEST ORDER CARD ||========================= //
 
-export default function LatestOrder() {
+function ccyFormat(num) {
+  return `${num.toFixed(2)}`;
+}
+
+const LatestOrder = ({ title, data, handleClickOpenModal }) => {
+  const theme = useTheme();
+  const matchDownSM = useMediaQuery(theme.breakpoints.down('sm'));
+
   return (
     <Grid container spacing={gridSpacing}>
       <Grid item xs={12}>
-        <MainCard title="Latest Order" content={false}>
-          <TableContainer>
-            <Table sx={{ minWidth: 350 }} aria-label="simple table">
+        <MainCard title={title} content={false}>
+          <TableContainer
+            sx={{
+              maxHeight: '40vh'
+            }}
+          >
+            <Table stickyHeader sx={{ minWidth: 350 }} aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <TableCell sx={{ pl: 3 }}>Customer</TableCell>
-                  <TableCell>Order Id</TableCell>
-                  <TableCell>Photo</TableCell>
-                  <TableCell>Product</TableCell>
-                  <TableCell align="right">Total</TableCell>
-                  <TableCell align="center">Date</TableCell>
-                  <TableCell align="center">Status</TableCell>
-                  <TableCell align="center" sx={{ pr: 3 }}>
-                    Action
-                  </TableCell>
+                  <TableCell align="center">USERNAME</TableCell>
+                  <TableCell align="center">ID</TableCell>
+                  <TableCell align="center">SLOT</TableCell>
+                  <TableCell align="center">AMOUNT</TableCell>
+                  <TableCell align="center">ROI</TableCell>
+                  <TableCell align="center">ROI AMOUNT</TableCell>
+                  <TableCell align="center">DIVIDEN DATE</TableCell>
+                  <TableCell align="center">STATUS</TableCell>
+                  <TableCell align="left">COMMISION {title == 'OD Member' ? '2%' : '1%'} </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows.map((row, index) => (
-                  <TableRow hover key={index}>
-                    <TableCell sx={{ pl: 3 }}>{row.customer}</TableCell>
-                    <TableCell>{row.cid}</TableCell>
-                    <TableCell>
-                      <CardMedia component="img" image={row.photo} title="image" sx={{ width: 20, height: 'auto' }} />
-                    </TableCell>
-                    <TableCell>{row.product}</TableCell>
-                    <TableCell align="right">{row.quantity}</TableCell>
-                    <TableCell align="center">{row.date}</TableCell>
-                    <TableCell align="center">
-                      <Chip chipcolor={row.statuscolor} label={row.status} size="small" />
-                    </TableCell>
-                    <TableCell align="center" sx={{ pr: 3 }}>
-                      <Stack direction="row" justifyContent="center" alignItems="center">
-                        <IconButton color="primary" size="large">
-                          <EditOutlinedIcon />
-                        </IconButton>
-                        <IconButton color="inherit" size="large">
-                          <DeleteOutlineOutlinedIcon />
-                        </IconButton>
-                      </Stack>
-                    </TableCell>
-                  </TableRow>
-                ))}
+                {data &&
+                  data?.map((row, index) => (
+                    <>
+                      <TableRow hover key={index}>
+                        <TableCell align="center">{row.username}</TableCell>
+                        <TableCell align="center">{row.id}</TableCell>
+                        <TableCell align="center">{row.slot}</TableCell>
+                        <TableCell align="center">RM {row.amount ? numberWithCommas(row.amount) : 0}</TableCell>
+                        <TableCell align="center">{row.roi} %</TableCell>
+                        <TableCell align="center">RM {row.roi_amount ? numberWithCommas(row.roi_amount) : 0}</TableCell>
+                        <TableCell align="center">{row.dividen_date}</TableCell>
+                        <TableCell align="center">
+                          <Chip
+                            chipcolor={
+                              row.status == 'Completed'
+                                ? 'completed'
+                                : row.status == 'Progress'
+                                ? 'secondary'
+                                : row.status == 'Floating'
+                                ? 'floating'
+                                : row.status == 'Fail'
+                                ? 'error'
+                                : row.status == 'Withdraw'
+                                ? 'success'
+                                : row.status == 'Pending'
+                                ? 'pending'
+                                : 'warning'
+                              // warning, success, orange, error,secondary
+                            }
+                            label={row.status}
+                            size="small"
+                          />
+                        </TableCell>
+                        <TableCell align="left">RM {row.total_direct_sales ? numberWithCommas(row.total_direct_sales) : 0}</TableCell>
+                      </TableRow>
+                    </>
+                  ))}
+
+                <TableRow sx={{ position: 'sticky', bottom: 0, backgroundColor: '#f3f3f3', color: '#00a139' }}>
+                  <TableCell align="center" colSpan={matchDownSM ? 6 : 7}></TableCell>
+                  <TableCell align={matchDownSM ? 'left' : 'center'} colSpan={matchDownSM ? 3 : 0}>
+                    <b>TOTAL VALID INVESTMENT</b> <br /> <Typography variant="caption">*Status Progress</Typography>
+                  </TableCell>
+                  <TableCell
+                    align="left"
+                    sx={{
+                      backgroundColor: '#9fffb2',
+                      color: '#00a139'
+                    }}
+                  >
+                    <Stack
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'space-between'
+                      }}
+                    >
+                      RM
+                      {data &&
+                        numberWithCommas(data?.reduce((sum, item) => item?.status == 'Progress' && sum + item?.total_direct_sales, 0))}
+                      {/* <Button
+                        onClick={() => {
+                          handleClickOpenModal('withdraw');
+                        }}
+                        sx={{
+                          ml: 2,
+                          background: 'green'
+                        }}
+                        variant="contained"
+                      >
+                        {`Withdraw  💲`}
+                      </Button> */}
+                    </Stack>
+                  </TableCell>
+                </TableRow>
+
+                {data?.length == 0 && (
+                  <>
+                    <TableRow hover key={0}>
+                      <TableCell align="center">No Data</TableCell>
+                    </TableRow>
+                  </>
+                )}
               </TableBody>
             </Table>
           </TableContainer>
-          <CardActions sx={{ justifyContent: 'flex-end' }}>
+          {/* <CardActions sx={{ justifyContent: 'flex-end' }}>
             <Button variant="text" size="small">
               View all Orders
             </Button>
-          </CardActions>
+          </CardActions> */}
         </MainCard>
       </Grid>
     </Grid>
   );
-}
+};
+
+export { LatestOrder };
