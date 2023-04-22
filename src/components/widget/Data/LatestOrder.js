@@ -27,13 +27,11 @@ import { numberWithCommas } from 'utils/helper';
 
 // =========================|| LATEST ORDER CARD ||========================= //
 
-function ccyFormat(num) {
-  return `${num.toFixed(2)}`;
-}
-
 const LatestOrder = ({ title, data, handleClickOpenModal }) => {
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down('sm'));
+
+  console.log('data', data);
 
   return (
     <Grid container spacing={gridSpacing}>
@@ -59,7 +57,7 @@ const LatestOrder = ({ title, data, handleClickOpenModal }) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {data &&
+                {data !== null &&
                   data?.map((row, index) => (
                     <>
                       <TableRow hover key={index}>
@@ -92,7 +90,10 @@ const LatestOrder = ({ title, data, handleClickOpenModal }) => {
                             size="small"
                           />
                         </TableCell>
-                        <TableCell align="left">RM {row.total_direct_sales ? numberWithCommas(row.total_direct_sales) : 0}</TableCell>
+                        <TableCell align="left">
+                          {(title = 'Empire' && row?.total_empire_sales ? `RM ${numberWithCommas(row?.total_empire_sales)}` : 0)}
+                          {(title = 'OD Member' && row?.total_direct_sales ? `RM ${numberWithCommas(row?.total_direct_sales)}` : 0)}
+                        </TableCell>
                       </TableRow>
                     </>
                   ))}
@@ -117,9 +118,15 @@ const LatestOrder = ({ title, data, handleClickOpenModal }) => {
                         justifyContent: 'space-between'
                       }}
                     >
-                      RM
-                      {data &&
-                        numberWithCommas(data?.reduce((sum, item) => item?.status == 'Progress' && sum + item?.total_direct_sales, 0))}
+                      {title == 'Empire' &&
+                        `RM ${numberWithCommas(
+                          data?.reduce((sum, item) => item?.status == 'Progress' && sum + item?.total_empire_sales, 0)
+                        )}`}
+
+                      {title == 'OD Member' &&
+                        `RM ${numberWithCommas(
+                          data?.reduce((sum, item) => item?.status == 'Progress' && sum + item?.total_direct_sales, 0)
+                        )}`}
                       {/* <Button
                         onClick={() => {
                           handleClickOpenModal('withdraw');
