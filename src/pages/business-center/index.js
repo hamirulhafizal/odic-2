@@ -606,19 +606,13 @@ const businessCenter = () => {
             }}
           >
             <Typography variant={matchDownSM ? 'h4' : 'h4'}>Welcome on board</Typography>
-            {user?.role == 'Partner' && (
-              <Typography variant={matchDownSM ? 'h4' : 'h1'}>
-                <br /> OD Partner : {user?.od_partner}
-              </Typography>
-            )}
+            <Typography variant={matchDownSM ? 'h4' : 'h3'}>
+              <br /> Team : {user?.od_partner}
+            </Typography>
 
-            {user?.role == 'Member' && (
-              <>
-                <Typography variant={matchDownSM ? 'h4' : 'h1'}>
-                  <br /> OD Member : {user?.username}
-                </Typography>
-              </>
-            )}
+            <Typography variant={matchDownSM ? 'h4' : 'h3'}>
+              <br /> OD Member : {user?.od_member}
+            </Typography>
           </Stack>
 
           <Stack
