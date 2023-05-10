@@ -35,7 +35,7 @@ const BankQr = ({ value, children }) => {
   };
 
   const handleBankTooltipOpen = () => {
-    navigator.clipboard.writeText('25101200032810');
+    navigator.clipboard.writeText('01041010083127');
     setOpenBank(true);
   };
 
