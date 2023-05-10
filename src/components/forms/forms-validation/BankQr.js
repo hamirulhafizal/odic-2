@@ -75,8 +75,8 @@ const BankQr = ({ value, children }) => {
             Bank Account No:
           </Typography>
           <Avatar
-            src="assets/images/rhb-logo.png"
-            style={{
+            src="assets/images/bank-islam.png"
+            sx={{
               width: '50px',
               height: 'auto',
               borderRadius: '0px',
@@ -102,7 +102,7 @@ const BankQr = ({ value, children }) => {
                 }
               }}
             >
-              25101200032810
+              01041010083127
             </Typography>
 
             <ClickAwayListener onClickAway={handleBankTooltipClose}>
@@ -165,7 +165,7 @@ const BankQr = ({ value, children }) => {
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center',
+            alignItems: 'start',
             justifyContent: 'space-between',
             width: 'inherit',
             textAlign: 'start',
@@ -181,13 +181,13 @@ const BankQr = ({ value, children }) => {
                   }}
                   primary={
                     <>
-                      <b>Bank Detail: </b>
-                      {`Bank Account Address: 14&16 Jalan Padi Emas 6/1 Bandar Baru Uda 81200 JB`}
+                      <b>Bank Account Name: </b>
+                      {`Syazwan Syazani & Partner`}
                     </>
                   }
                 />
               </ListItem>
-              <ListItem disablePadding>
+              {/* <ListItem disablePadding>
                 <ListItemText
                   primary={
                     <>
@@ -195,8 +195,8 @@ const BankQr = ({ value, children }) => {
                     </>
                   }
                 />
-              </ListItem>
-              <ListItem disablePadding>
+              </ListItem> */}
+              {/* <ListItem disablePadding>
                 <ListItemText
                   primary={
                     <>
@@ -204,7 +204,7 @@ const BankQr = ({ value, children }) => {
                     </>
                   }
                 />
-              </ListItem>
+              </ListItem> */}
             </List>
           </Box>
 
