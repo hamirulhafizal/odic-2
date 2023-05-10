@@ -1,0 +1,73 @@
+{
+  "name": "OneDream Investment Center",
+  "short_name": "ODIC",
+  "description": "Sign up for ODIC today and start taking control of your investments.",
+  "categories": ["Utilities"],
+  "display": "standalone",
+  "orientation": "portrait",
+  "scope": "/ODIC/",
+  "id": "/ODIC/index.html?utm_source=standalone&utm_medium=pwa",
+  "start_url": "/ODIC/index.html?utm_source=standalone&utm_medium=pwa",
+  "icons": [
+    {
+      "src": "img/android-icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "img/android-icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "img/android-icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "img/android-icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "screenshots": [
+    {
+      "src": "img/screenshot-mobile-1.jpg",
+      "sizes": "552x890",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "img/screenshot-mobile-2.jpg",
+      "sizes": "552x890",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "img/screenshot-mobile-3.jpg",
+      "sizes": "552x890",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "img/screenshot-mobile-4.jpg",
+      "sizes": "552x890",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "img/screenshot-mobile-5.jpg",
+      "sizes": "552x890",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "img/screenshot-mobile-6.jpg",
+      "sizes": "552x890",
+      "type": "image/jpeg"
+    }
+  ],
+  "lang": "en",
+  "splash_pages": null
+}

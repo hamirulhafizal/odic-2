@@ -31,8 +31,6 @@ const LatestOrder = ({ title, data, handleClickOpenModal }) => {
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down('sm'));
 
-  console.log('data', data);
-
   return (
     <Grid container spacing={gridSpacing}>
       <Grid item xs={12}>
@@ -43,19 +41,22 @@ const LatestOrder = ({ title, data, handleClickOpenModal }) => {
             }}
           >
             <Table stickyHeader sx={{ minWidth: 350 }} aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell align="center">USERNAME</TableCell>
-                  <TableCell align="center">ID</TableCell>
-                  <TableCell align="center">SLOT</TableCell>
-                  <TableCell align="center">AMOUNT</TableCell>
-                  <TableCell align="center">ROI</TableCell>
-                  <TableCell align="center">ROI AMOUNT</TableCell>
-                  <TableCell align="center">DIVIDEN DATE</TableCell>
-                  <TableCell align="center">STATUS</TableCell>
-                  <TableCell align="left">COMMISION {title == 'OD Member' ? '2%' : '1%'} </TableCell>
-                </TableRow>
-              </TableHead>
+              {data?.length != 0 && (
+                <TableHead>
+                  <TableRow>
+                    <TableCell align="center">USERNAME</TableCell>
+                    <TableCell align="center">ID</TableCell>
+                    <TableCell align="center">SLOT</TableCell>
+                    <TableCell align="center">AMOUNT</TableCell>
+                    <TableCell align="center">ROI</TableCell>
+                    <TableCell align="center">ROI AMOUNT</TableCell>
+                    <TableCell align="center">DIVIDEN DATE</TableCell>
+                    <TableCell align="center">STATUS</TableCell>
+                    <TableCell align="left">COMMISION {title == 'OD Member' ? '2%' : '1%'} </TableCell>
+                  </TableRow>
+                </TableHead>
+              )}
+
               <TableBody>
                 {data !== null &&
                   data?.map((row, index) => (
@@ -91,62 +92,68 @@ const LatestOrder = ({ title, data, handleClickOpenModal }) => {
                           />
                         </TableCell>
                         <TableCell align="left">
-                          {(title = 'Empire' && row?.total_empire_sales ? `RM ${numberWithCommas(row?.total_empire_sales)}` : 0)}
-                          {(title = 'OD Member' && row?.total_direct_sales ? `RM ${numberWithCommas(row?.total_direct_sales)}` : 0)}
+                          {title == 'OD Member' && row?.total_direct_sales && `RM ${numberWithCommas(row?.total_direct_sales)}`}
+                          {title == 'Empire' && row?.total_empire_sales && `RM ${numberWithCommas(row?.total_empire_sales)}`}
                         </TableCell>
-                      </TableRow>
+                      </TableRow>{' '}
                     </>
                   ))}
 
-                <TableRow sx={{ position: 'sticky', bottom: 0, backgroundColor: '#f3f3f3', color: '#00a139' }}>
-                  <TableCell align="center" colSpan={matchDownSM ? 6 : 7}></TableCell>
-                  <TableCell align={matchDownSM ? 'left' : 'center'} colSpan={matchDownSM ? 3 : 0}>
-                    <b>TOTAL VALID INVESTMENT</b> <br /> <Typography variant="caption">*Status Progress</Typography>
-                  </TableCell>
-                  <TableCell
-                    align="left"
-                    sx={{
-                      backgroundColor: '#9fffb2',
-                      color: '#00a139'
-                    }}
-                  >
-                    <Stack
+                {data != null && data.length != 0 && (
+                  <TableRow sx={{ position: 'sticky', bottom: 0, backgroundColor: '#f3f3f3', color: '#00a139' }}>
+                    <TableCell align="center" colSpan={matchDownSM ? 6 : 7}></TableCell>
+                    <TableCell align={matchDownSM ? 'left' : 'center'} colSpan={matchDownSM ? 3 : 0}>
+                      <b>TOTAL VALID INVESTMENT</b> <br /> <Typography variant="caption">*Status Progress</Typography>
+                    </TableCell>
+                    <TableCell
+                      align="left"
                       sx={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        justifyContent: 'space-between'
+                        backgroundColor: '#9fffb2',
+                        color: '#00a139'
                       }}
                     >
-                      {title == 'Empire' &&
-                        `RM ${numberWithCommas(
-                          data?.reduce((sum, item) => item?.status == 'Progress' && sum + item?.total_empire_sales, 0)
-                        )}`}
-
-                      {title == 'OD Member' &&
-                        `RM ${numberWithCommas(
-                          data?.reduce((sum, item) => item?.status == 'Progress' && sum + item?.total_direct_sales, 0)
-                        )}`}
-                      {/* <Button
-                        onClick={() => {
-                          handleClickOpenModal('withdraw');
-                        }}
+                      <Stack
                         sx={{
-                          ml: 2,
-                          background: 'green'
+                          display: 'flex',
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                          justifyContent: 'space-between'
                         }}
-                        variant="contained"
                       >
-                        {`Withdraw  💲`}
-                      </Button> */}
-                    </Stack>
-                  </TableCell>
-                </TableRow>
+                        {title == 'OD Member' &&
+                          data &&
+                          `RM ${numberWithCommas(
+                            data?.filter((item) => item.status === 'Progress')?.reduce((sum, item) => sum + item?.total_direct_sales, 0)
+                          )}`}
+
+                        {title == 'Empire' &&
+                          data &&
+                          `RM ${numberWithCommas(
+                            data?.filter((item) => item.status === 'Progress')?.reduce((sum, item) => sum + item?.total_empire_sales, 0)
+                          )}`}
+
+                        {/* <Button
+                  onClick={() => {
+                    handleClickOpenModal('withdraw');
+                  }}
+
+                  sx={{
+                    ml: 2,
+                    background: 'green'
+                  }}
+                  variant="contained"
+                >
+                  {`Withdraw  💲`}
+                </Button> */}
+                      </Stack>
+                    </TableCell>
+                  </TableRow>
+                )}
 
                 {data?.length == 0 && (
                   <>
                     <TableRow hover key={0}>
-                      <TableCell align="center">No Data</TableCell>
+                      <TableCell align={matchDownSM ? 'left' : 'center'}>No Data</TableCell>
                     </TableRow>
                   </>
                 )}
