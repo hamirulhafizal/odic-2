@@ -68,11 +68,7 @@ const Profile = ({ ...others }) => {
         city: Yup.string().required(),
         postcode: Yup.string().required(),
         state: Yup.string().required(),
-        od_partner: Yup.string()
-          .max(25)
-          .test('no-special-chars', 'Special characters are not allowed', (value) => {
-            return /^[a-zA-Z0-9]+$/.test(value);
-          }),
+        od_partner: Yup.string(),
         phone_no: Yup.string()
           .required()
           .test('no-special-chars', 'Special characters or alphabet are not allowed', (value) => {
@@ -185,9 +181,9 @@ const Profile = ({ ...others }) => {
                               onChange={handleChange}
                               error={Boolean(errors.od_partner && touched.od_partner)}
                               inputProps={{
-                                pattern: '[a-zA-Z0-9]+',
-                                inputMode: 'numeric',
-                                maxLength: 25,
+                                // pattern: '[a-zA-Z0-9]+',
+                                // inputMode: 'numeric',
+                                // maxLength: 25,
                                 style: { textTransform: 'UPPERCASE' }
                               }}
                               sx={{
@@ -405,7 +401,7 @@ const Profile = ({ ...others }) => {
                           name="bank_account"
                           type="text"
                           required
-                          placeholder="Cimb"
+                          placeholder="123456789"
                           value={values.bank_account}
                           onBlur={handleBlur}
                           onChange={handleChange}
