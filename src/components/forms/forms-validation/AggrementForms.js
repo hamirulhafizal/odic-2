@@ -350,7 +350,7 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
                       }
                     }}
                     alt="signature"
-                    src={'assets/images/sign/prepdf1.png'}
+                    src={'assets/images/sign/prepdf2.png'}
                   />
                 </Box>
               </>

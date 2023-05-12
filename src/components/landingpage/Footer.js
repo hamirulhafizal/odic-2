@@ -83,7 +83,7 @@ const FooterPage = () => {
                 GET IN TOUCH WITH US
               </Typography>
               <Typography variant="subtitle2" component="div" color="inherit" wrap>
-                No 77-02 & 79-02 Jalan Aliff 4, Damansara Aliff Square 81200 Johor Bahru
+                No. 6, Jalan Setia Tropika 4/21, Taman Setia Tropika, 81200 Johor Bahru, Johor.
               </Typography>
             </Grid>
           </Grid>
@@ -92,7 +92,7 @@ const FooterPage = () => {
       <FooterSubWrapper>
         <Container>
           <Typography variant="subtitle2" component="div" sx={{ color: 'white' }}>
-            © 2022 ONE LEGACY REALTY SDN BHD E(1) 2004. All rights reserved
+            © 2023 ONE DREAM GROUP EMPIRE (202203004957 (LA0041709-T)). All rights reserved
           </Typography>
         </Container>
       </FooterSubWrapper>

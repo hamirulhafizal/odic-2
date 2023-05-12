@@ -5,16 +5,13 @@ export default function Document() {
   return (
     <Html>
       <Head>
-        <meta name="title" content="Most Professional Real Estate Agency" />
-        <meta
-          name="description"
-          content="ONE LEGACY REALTY SDN BHD E(1) 2004 is a registered Real Estate Agents (REA) with Board of Valuers, Appraisers, Estate Agents and Property Managers (BOVAEA). Our agency was incorporated on APRIL 2018 and which is located at Johor Bahru area that’s include our HQ Office at Damansara Aliff Tampoi and our New Branch at Taman Adda Height."
-        />
+        <meta name="title" content="ODIC - ONE DREAM INVESTMENT CENTER" />
+        <meta name="description" content="ONE DREAM GROUP EMPIRE" />
         <meta
           name="keywords"
           content="sewa rumah, sewa rumah murah, rent a house, house for rent johor bahru, house for rent mount austin, house for rent skudai, house for rent gelang patah,   house for rent masai,  rumah sewa johor bahru, rumah sewa skudai, rumah sewa masai, iproperty, propertyguru, ibilik, mudah, rumah sewa murah, apartment johor bahru, apartment for rent johor bahru, apartment for rent mount austin, apartment for rent, apartment for rent kuala lumpur, house for rent, hoom, hoomventure, hoom venture sdn bhd, bryce wong, raymond koo, bosskoo, Real Estate Agents (REA), Johor Bahru, property, rumah sewa, rumah lelong, beli rumah,  Rent / Sale , Buy property, Academy , Training Services, Valuation Consultancy Services, Property Investment Consultancy, Property Legal Consultancy, Refinance Consultancy, Find properties for rent, sell and short-stay"
         />
-        <meta property="og:image" content={`${BASE_PATH}assets/images/previewImg1.jpg`} />
+        <meta property="og:image" content={`${BASE_PATH}assets/images/LogoODLegacy1.png`} />
         <link rel="manifest" href="/manifest.json" />
         <meta name="application-name" content="ODIC" />
         <meta name="description" content="OD Investment Center" />
@@ -77,19 +74,14 @@ export default function Document() {
         <meta property="og:locale" content="en_US" />
         <meta property="og:type" content="website" />
         <meta property="article:publisher" content="https://www.facebook.com/OneDreamLegacyJohor" />
-        <meta property="og:title" content="One Dream Legacy - Most Professional Real Estate Agency" />
-        <meta
-          property="og:description"
-          content="ONE LEGACY REALTY SDN BHD E(1) 2004 is a registered Real Estate Agents (REA) with Board of Valuers, Appraisers, Estate Agents and Property Managers (BOVAEA). Our agency was incorporated on APRIL 2018 and which is located at Johor Bahru area that’s include our HQ Office at Damansara Aliff Tampoi and our New Branch at Taman Adda Height"
-        />
+        <meta property="og:title" content="ONE DREAM GROUP EMPIRE - ONE DREAM INVESTMENT CENTER" />
+        <meta property="og:description" content="ONE DREAM GROUP EMPIRE" />
+        <br />
         <meta name="twitter:card" content="summary" />
         {/* <meta property="twitter:url" content="https://onedreamproperty.com.my" /> */}
-        <meta property="twitter:title" content="One Dream Legacy - Most Professional Real Estate Agency" />
-        <meta property="twitter:image" content={`${BASE_PATH}assets/images/previewImg1.jpg`} />
-        <meta
-          name="twitter:description"
-          content="ONE LEGACY REALTY SDN BHD E(1) 2004 is a registered Real Estate Agents (REA) with Board of Valuers, Appraisers, Estate Agents and Property Managers (BOVAEA). Our agency was incorporated on APRIL 2018 and which is located at Johor Bahru area that’s include our HQ Office at Damansara Aliff Tampoi and our New Branch at Taman Adda Height"
-        />
+        <meta property="twitter:title" content="ODIC - ONE DREAM INVESTMENT CENTER" />
+        <meta property="twitter:image" content={`${BASE_PATH}assets/images/LogoODLegacy1.png`} />
+        <meta name="twitter:description" content="ONE DREAM GROUP EMPIRE" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap"

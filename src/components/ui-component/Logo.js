@@ -29,7 +29,7 @@ const Logo = ({ htmlFor }) => {
      */
     <>
       {htmlFor != 'footer' ? (
-        <img src={`${BASE_PATH}assets/images/LogoODLegacy.png`} width="150px" height="auto" alt="Onedream Property Legacy" />
+        <img src={`${BASE_PATH}assets/images/LogoODLegacy1.png`} width="150px" height="auto" alt="Onedream Property Legacy" />
       ) : (
         <svg width={`30`} height={`30`} viewBox="0 0 63 37" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path

@@ -33,7 +33,7 @@ const AggrementPdf = ({ signImg }) => {
         <span>DAN</span>
         <br />
         <br />
-        <span>OD LEGACY REALTY SDN [BHD SSM NO: 1390527M]</span>
+        <span>ONE DREAM GROUP EMPIRE [BHD SSM NO: LA0041709-T]</span>
         <br />
         <br />
         <span>[ investee ]</span>
