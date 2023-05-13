@@ -75,7 +75,7 @@ const FooterPage = () => {
               </Stack>
 
               <Typography variant="subtitle2" component="div" color="inherit">
-                Turning Dreams into Reality: Your One-Stop Investment Destination
+                Turning Dreams into Reality: <br /> Your One-Stop Investment Destination
               </Typography>
             </Grid>
             <Grid item xs={12} sm={3}>
@@ -83,7 +83,7 @@ const FooterPage = () => {
                 GET IN TOUCH WITH US
               </Typography>
               <Typography variant="subtitle2" component="div" color="inherit" wrap>
-                No. 6, Jalan Setia Tropika 4/21, Taman Setia Tropika, 81200 Johor Bahru, Johor.
+                No. 77-02 & 79-02 Jalan Aliff 4, Damansara Aliff Square 81200 Bahru, Johor.
               </Typography>
             </Grid>
           </Grid>

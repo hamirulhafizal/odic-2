@@ -116,8 +116,8 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
           <br />
           <Stack direction="row" sx={{ width: '100%', textAlign: 'justify', color: 'black' }}>
             <Typography variant="p">
-              <b>ONE DREAM GROUP EMPIRE (202203004957 (LA0041709-T))</b> yang beralamat di No. 6, Jalan Setia Tropika 4/21, Taman Setia
-              Tropika, 81200 Johor Bahru, Johor (selepas ini dirujuk “Pihak Kedua”).
+              <b>ONE DREAM GROUP EMPIRE (202203004957 (LA0041709-T))</b> yang beralamat di No. 77-02 & 79-02 Jalan Aliff 4, Damansara Aliff
+              Bahru, Johor (selepas ini dirujuk “Pihak Kedua”).
             </Typography>
           </Stack>
           <br />
@@ -149,7 +149,7 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
                   <ol className="c">
                     <li>
                       Pihak pertama mengakujanji bahawa pihak pertama akan memberikan wang modal sebanyak RM
-                      {numberWithCommas(Number(investAmount))} sahaja.
+                      {numberWithCommas(Number(window.investVal))} sahaja.
                     </li>
                     <br />
 
@@ -385,13 +385,14 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
                 <Box>
                   <Avatar
                     sx={{
-                      width: '100%',
+                      width: '80%',
                       height: 'auto',
                       backgroundColor: 'white',
-                      padding: '12px'
+                      padding: '12px',
+                      borderRadius: 0
                     }}
                     alt="signature"
-                    src={'/assets/images/sign/sign1.jpg'}
+                    src={'/assets/images/sign/sign3.jpg'}
                   />
                 </Box>
               </Box>

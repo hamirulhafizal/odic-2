@@ -65,6 +65,8 @@ const InvestForms = ({ handleNext, handleBack, index }) => {
     onSubmit: (values) => {
       localStorage.setItem('investVal', values?.investVal);
 
+      window.investVal = values?.investVal;
+
       handleNext();
     }
   });

@@ -210,21 +210,21 @@ export const ApiProvider = ({ children }) => {
         email
       })
       .then(async (res) => {
-        console.log('res', res);
-        if (typeof window !== 'undefined') {
-          axiosInstance.defaults.headers['Authorization'] = 'Bearer ' + localStorage.getItem('access');
-          localStorage.setItem('access', res?.token);
-          localStorage.setItem('refresh', res?.token);
-        }
+        // console.log('res', res);
+        // if (typeof window !== 'undefined') {
+        //   axiosInstance.defaults.headers['Authorization'] = 'Bearer ' + localStorage.getItem('access');
+        //   localStorage.setItem('access', res?.token);
+        //   localStorage.setItem('refresh', res?.token);
+        // }
 
-        dispatch({
-          type: LOGIN,
-          payload: {
-            isLoggedIn: true
-          }
-        });
+        // dispatch({
+        //   type: LOGIN,
+        //   payload: {
+        //     isLoggedIn: true
+        //   }
+        // });
 
-        history.push('/board');
+        // history.push('/board');
 
         return res;
       })

@@ -1,6 +1,8 @@
+import React, { useEffect } from 'react';
+
 // material-ui
 import { useTheme } from '@mui/material/styles';
-import { Box, Button, FormControl, FormHelperText, InputLabel, OutlinedInput } from '@mui/material';
+import { Box, Button, FormControl, FormHelperText, InputLabel, OutlinedInput, CircularProgress } from '@mui/material';
 import { useDispatch } from 'store';
 
 // third party
@@ -19,6 +21,7 @@ const AuthForgotPassword = ({ ...others }) => {
   const theme = useTheme();
   const scriptedRef = useScriptRef();
   const dispatch = useDispatch();
+  const [isLoading, setLoading] = React.useState(false);
 
   const { forgetPassword } = useAuth();
 
@@ -33,6 +36,8 @@ const AuthForgotPassword = ({ ...others }) => {
         email: Yup.string().email('Must be a valid email').max(255).required('Email is required')
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
+        setLoading(true);
+
         try {
           await forgetPassword(values.email).then((res) => {
             if (res) {
@@ -49,13 +54,15 @@ const AuthForgotPassword = ({ ...others }) => {
                   close: false
                 })
               );
-              setTimeout(() => {
-                window.location.replace('/login');
-              }, 1500);
+              setLoading(false);
+              // setTimeout(() => {
+              //   window.location.replace('/login');
+              // }, 1500);
             }
           });
         } catch (err) {
           console.error(err);
+          setLoading(false);
           if (scriptedRef.current) {
             setStatus({ success: false });
             setErrors({ submit: err.message });
@@ -94,7 +101,7 @@ const AuthForgotPassword = ({ ...others }) => {
           <Box sx={{ mt: 2 }}>
             <AnimateButton>
               <Button disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained" color="secondary">
-                Send Mail
+                {isLoading ? <CircularProgress sx={{ color: 'grey' }} size={20} /> : 'Send Mail'}
               </Button>
             </AnimateButton>
           </Box>

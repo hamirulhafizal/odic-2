@@ -60,7 +60,7 @@ const ForgotPassword = () => {
                         sx={{ textDecoration: 'none' }}
                         color={theme.palette.secondary.main}
                       >
-                        Already have an account?
+                        Login
                       </Typography>
                     </Grid>
                   </Grid>

@@ -120,7 +120,7 @@ const Register = () => {
               <Grid item xs={12}>
                 <Grid item container direction="column" alignItems="flex-end" xs={12}>
                   <Typography component={Link} href="/pages/authentication/auth1/login" variant="subtitle1" sx={{ textDecoration: 'none' }}>
-                    Already have an account?
+                    Login
                   </Typography>
                 </Grid>
               </Grid>
