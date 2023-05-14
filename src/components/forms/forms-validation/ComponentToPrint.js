@@ -61,7 +61,8 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
             <br />
             <br />
             <Typography variant="h4" className="h3Title">
-              ONE DREAM GROUP EMPIRE <br /> [SSM NO: 202203004957 (LA0041709-T)]
+              ONE DREAM GROUP EMPIRE <br />
+              [SSM NO: 202203004957 (LA0041709-T)]
             </Typography>
             <br />
             <br />
