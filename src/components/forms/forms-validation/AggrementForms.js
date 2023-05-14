@@ -318,7 +318,13 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
                           width: matchDownSM ? '80px' : '77%',
                           height: 'auto',
                           backgroundColor: 'white',
-                          padding: '12px'
+                          padding: '12px',
+                          '& .MuiAvatar-img': {
+                            scale: '2',
+                            borderRadius: 0,
+                            position: 'relative',
+                            left: '5%'
+                          }
                         }}
                         alt="signature"
                         src={isSign?.trimmedDataURL}

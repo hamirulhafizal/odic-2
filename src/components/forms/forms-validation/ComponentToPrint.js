@@ -154,7 +154,7 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
                     <br />
 
                     <li>
-                      {`Pihak Pertama dan kedua akan menguruskan perniagaan dan bersetuju memberi sebanyak ${checkRoi(investAmount)} %
+                      {`Pihak Pertama dan kedua akan menguruskan perniagaan dan bersetuju memberi sebanyak ${checkRoi(window.investVal)}%
                       dalam tempoh 14 bulan daripada jumlah modal.`}
                     </li>
                     <br />
