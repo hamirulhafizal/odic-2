@@ -54,7 +54,7 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
             </Typography>
             <br />
             <br />
-            <Typography variant="h3" className="h3Title">{`[INVESTOR]`}</Typography>
+            <Typography variant="h3" className="h3Title">{`[PELABUR]`}</Typography>
             <br />
             <br />
             <Typography variant="h3" className="h3Title">{`DAN`}</Typography>
@@ -66,7 +66,7 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
             </Typography>
             <br />
             <br />
-            <Typography variant="h3" className="h3Title">{`[INVESTEE]`}</Typography>
+            <Typography variant="h3" className="h3Title">{`[PENERIMA PELABUR]`}</Typography>
             <br />
           </Box>
         </div>
@@ -138,9 +138,7 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
               }}
             >
               <ol>
-                <li>
-                  Pihak pertama bersetuju memberi modal untuk memberi modal untuk satu perniagaan yang sah bawah undang-undang di Malaysia
-                </li>
+                <li>Pihak pertama bersetuju memberi modal untuk satu perniagaan yang sah bawah undang-undang di Malaysia.</li>
                 <br />
 
                 <li>
@@ -155,17 +153,18 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
                     <br />
 
                     <li>
-                      {`Pihak Pertama dan kedua akan menguruskan perniagaan dan bersetuju memberi sebanyak ${checkRoi(window.investVal)}%
+                      {`Pihak kedua akan menguruskan perniagaan dan bersetuju memberi sebanyak ${checkRoi(window.investVal)}%
                       dalam tempoh 14 bulan daripada jumlah modal.`}
                     </li>
                     <br />
 
                     <li>
-                      Pihak pertama dan kedua bersetuju bahawa perjanjian ini hanya mengikat kedua-dua belah pihak sehingga/ setakat tempoh
+                      Pihak pertama dan kedua bersetuju bahawa perjanjian ini hanya mengikat kedua-dua belah pihak sehingga/setakat tempoh
                       perjanjian ini selama 14 bulan iaitu bermula{' '}
                       <b>
                         {moment(date).format('DD MMMM YYYY')} sehingga {moment(date.setMonth(date.getMonth() + 14)).format('DD MMMM YYYY')}
                       </b>
+                      .
                     </li>
                   </ol>
                 </li>
@@ -175,11 +174,11 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
                 <li>
                   Pihak pertama dan pihak kedua bersetuju bahawa melantik{' '}
                   <b>
-                    Tetuan Syazwan Syazani & Partners, Peguambela dan Peguamcara yang beralamat di No 81 Jalan Aliff 4, Damansara Aliff
+                    Tetuan Syazwan Syazani & Partners, Peguambela dan Peguamcara yang beralamat di No 81-02 Jalan Aliff 4, Damansara Aliff
                     Square 81200 Johor Bahru, Johor
                   </b>{' '}
-                  setakat menyediakan dan/ atau menguruskan perjanjian pelaburan sehingga tamat perjanjian dan menguruskan setelah kedua-dua
-                  belah pihak bersetuju dengan syarat- syarat yang terkandung didalam perjanjian ini.
+                  setakat menyediakan dan menguruskan perjanjian pelaburan sehingga tamat perjanjian dan menguruskan setelah kedua-dua belah
+                  belah pihak bersetuju dengan syarat-syarat yang terkandung didalam perjanjian ini.
                 </li>
                 <br />
               </ol>
@@ -199,20 +198,20 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
               <ol start="4">
                 <li>
                   Pihak pertama dan pihak kedua bersetuju bahawa Tetuan Syazwan Syazani & Partners hanya terlibat dalam penyediaan dan/atau
-                  pengurusan Perjanjian Pelaburan antara keduadua belah pihak dan sebarang perbincangan lanjut berkenaan permohonan tersebut
-                  adaah diluar bidang kuasa <b>Tetuan Syazwan Syazani & Partners.</b>
+                  pengurusan Perjanjian Pelaburan antara kedua-dua belah pihak dan sebarang perbincangan lanjut berkenaan permohonan
+                  tersebut adalah diluar bidang kuasa <b>Tetuan Syazwan Syazani & Partners.</b>
                 </li>
 
                 <br />
                 <li>
-                  Pihak Kedua bersetuju bahawa akan menanggung kos guaman, kos kaveat, kos setem perjanjian dan perbelanjaan berkaitan
+                  Pihak kedua bersetuju bahawa akan menanggung kos guaman, kos kaveat, kos setem perjanjian dan perbelanjaan berkaitan
                   perjanjian pelaburan yang ditandatangani akan dibayar kepada <b>Tetuan Syazwan Syazani & Partners.</b>
                 </li>
 
                 <br />
 
                 <li>
-                  Selagi apa-apa maklumat yang terkandung di dalam Perjanjian ini dana pa- apa maklumat yang disediakan kepada mana-mana
+                  Selagi apa-apa maklumat yang terkandung di dalam perjanjian ini dan apa-apa maklumat yang disediakan kepada mana-mana
                   pihak di bawah ini tidak diterbitkan atau diketahui umum, maka maklumat tersebut akan dianggap sebagai makulmat sulit dan
                   setiap pihak bersetuju bahawa tidak mendedahkan kepada pengetahuan kepada mana-mana pihak ketiga.
                 </li>
