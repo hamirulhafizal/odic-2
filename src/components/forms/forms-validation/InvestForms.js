@@ -116,7 +116,7 @@ const InvestForms = ({ handleNext, handleBack, index }) => {
                 }}
                 value={formik.values.investVal}
                 onChange={formik.handleChange}
-                error={formik.errors.investVal}
+                error={Boolean(formik.errors.investVal)}
                 placeholder={'1000'}
                 helperText={
                   formik.values.investVal >= 1000 && formik.values.investVal <= 1000000

@@ -53,6 +53,7 @@ const CardSlot = ({ data, handleClickOpenModal }) => {
                   }}
                 >
                   <Stack
+                    key={index}
                     direction="row"
                     sx={{
                       width: '100%',

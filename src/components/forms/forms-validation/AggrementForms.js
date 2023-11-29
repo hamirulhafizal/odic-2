@@ -88,6 +88,7 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
     formData.append('amount', amount);
     formData.append('username', user?.username);
     formData.append('receipt', receipt);
+    // formData.append('agrementPdf', pdf);
 
     // const todayDate = moment().format('DD MMM YYYY h:mma');
     const todayDate = moment().format('DD MMM YYYY');
@@ -106,22 +107,30 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
 
     dispatch(getInvestDetailData(slot1));
 
-    await createInvestment(formData).then((res) => {
-      if (res?.status == 200) {
-        localStorage.removeItem('investVal');
-        localStorage.removeItem('resitUploadimg');
-        localStorage.removeItem('resitUpload');
-        const { Investment_id } = res?.data;
-        localStorage.setItem('Investment_id', Investment_id);
-        setSubmit(false);
-        setLoadingSubmit(false);
-        setSuccessMessage('UPLOAD');
-      } else {
-        setLoadingSubmit(false);
-        setErrMessage('ERROR');
-        setSuccessMessage('');
-      }
-    });
+    // debugger
+
+    await createInvestment(formData)
+      .then((res) => {
+        if (res?.status == 200) {
+          localStorage.removeItem('investVal');
+          localStorage.removeItem('resitUploadimg');
+          localStorage.removeItem('resitUpload');
+          const { Investment_id } = res?.data;
+          localStorage.setItem('Investment_id', Investment_id);
+          setSubmit(false);
+          setLoadingSubmit(false);
+          setSuccessMessage('UPLOAD');
+          // debugger;
+          handlePrint();
+        } else {
+          setLoadingSubmit(false);
+          setErrMessage('ERROR');
+          setSuccessMessage('');
+        }
+      })
+      .catch((err) => {
+        console.log('err--->', err);
+      });
   };
 
   const handleClickOpen = () => {

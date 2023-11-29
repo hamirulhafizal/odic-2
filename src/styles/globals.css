@@ -16,9 +16,9 @@
 
 @font-face {
   font-family: "Times New Roman";
-  src: url("/src/fonts/times-new-roman.woff2") format("woff2"),
-    url("/src/fonts/times-new-roman.woff") format("woff"),
-    url("/src/fonts/times-new-roman.ttf") format("truetype"),
+  src: url("/fonts/times-new-roman.woff2") format("woff2"),
+    url("/fonts/times-new-roman.woff") format("woff"),
+    url("/fonts/times-new-roman.ttf") format("truetype"),
 }
 
 .has-text-align-left {

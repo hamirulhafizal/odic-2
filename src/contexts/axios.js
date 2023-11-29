@@ -6,7 +6,7 @@ const baseURL = BACKEND_PATH;
 
 const axiosInstance = axios.create({
   baseURL: baseURL,
-  timeout: 5000,
+  timeout: 50000,
   headers: {
     Authorization:
       typeof window !== 'undefined'
