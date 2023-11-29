@@ -113,6 +113,7 @@ const LatestOrder = ({ title, data, handleClickOpenModal }) => {
                       }}
                     >
                       <Stack
+                        key={0}
                         sx={{
                           display: 'flex',
                           flexDirection: 'row',

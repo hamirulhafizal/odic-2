@@ -10,6 +10,7 @@ import StatusProgress from './StatusProgress';
 import AnimateButton from 'components/ui-component/extended/AnimateButton';
 import moment from 'moment';
 import { ConstructionSharp } from '@mui/icons-material';
+import GetAppIcon from '@mui/icons-material/GetApp';
 
 const CardSlot = ({ data, handleClickOpenModal }) => {
   const theme = useTheme();
@@ -23,6 +24,10 @@ const CardSlot = ({ data, handleClickOpenModal }) => {
     if (value > 30000) roi = 30;
 
     return roi;
+  };
+
+  const downlodaPdf = (id) => {
+    alert(`Are you sure want to download this no id ${id} aggrement pdf ?`);
   };
 
   return (
@@ -57,12 +62,28 @@ const CardSlot = ({ data, handleClickOpenModal }) => {
                     direction="row"
                     sx={{
                       width: '100%',
-                      textAlign: 'start'
+                      textAlign: 'start',
+                      justifyContent: 'space-between',
+                      alignItems: 'center'
                     }}
                   >
                     <Typography variant="caption" sx={{ fontWeight: 'bolder' }}>
                       slot ID : {item?.id}
                     </Typography>
+
+                    {item?.status !== 'Fail' && item?.status !== 'Pending' && (
+                      <AnimateButton>
+                        <IconButton
+                          aria-label="delete"
+                          size="small"
+                          onClick={() => {
+                            downlodaPdf(item?.id);
+                          }}
+                        >
+                          <GetAppIcon />
+                        </IconButton>
+                      </AnimateButton>
+                    )}
                   </Stack>
                   <Stack
                     sx={{
@@ -163,7 +184,8 @@ const CardSlot = ({ data, handleClickOpenModal }) => {
                             pt: 2,
                             width: '100%',
                             display: 'flex',
-                            justifyContent: 'end'
+                            justifyContent: 'end',
+                            gap: '2%'
                           }}
                         >
                           <AnimateButton>

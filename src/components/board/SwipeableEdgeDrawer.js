@@ -166,35 +166,44 @@ function SwipeableEdgeDrawer({ open, handleToggle }) {
                   {step.label}
                 </StepLabel>
                 <StepContent>
-                  <Typography
-                    sx={{
-                      textAlign: 'initial',
-                      color: 'black'
-                    }}
-                  >
-                    {index === 2 ? (
-                      <>
-                        <Stack
-                          direction="row"
+                  {index === 2 ? (
+                    <>
+                      <Stack
+                        direction="row"
+                        sx={{
+                          alignItems: 'center'
+                        }}
+                      >
+                        <Typography
                           sx={{
-                            alignItems: 'center'
+                            textAlign: 'initial',
+                            color: 'black'
                           }}
                         >
                           {step.description}
-                          <Avatar
-                            sx={{
-                              borderRadius: '0px',
-                              backgroundColor: 'white',
-                              scale: '0.7'
-                            }}
-                            src="/assets/images/icons/scroll.png"
-                          />
-                        </Stack>
-                      </>
-                    ) : (
-                      <>{step.description}</>
-                    )}
-                  </Typography>
+                        </Typography>
+                        <Avatar
+                          sx={{
+                            borderRadius: '0px',
+                            backgroundColor: 'white',
+                            scale: '0.7'
+                          }}
+                          src="/assets/images/icons/scroll.png"
+                        />
+                      </Stack>
+                    </>
+                  ) : (
+                    <>
+                      <Typography
+                        sx={{
+                          textAlign: 'initial',
+                          color: 'black'
+                        }}
+                      >
+                        {step.description}
+                      </Typography>
+                    </>
+                  )}
                   {step.component == 'InvestForms' && <InvestForms handleNext={handleNext} handleBack={handleBack} index={index} />}
                   {step.component == 'BankAcc' && <BankAcc handleNext={handleNext} handleBack={handleBack} index={index} />}
                   {step.component == 'Aggrement' && <AggrementForms handleNext={handleNext} handleBack={handleBack} index={index} />}
