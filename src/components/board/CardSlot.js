@@ -26,8 +26,12 @@ const CardSlot = ({ data, handleClickOpenModal }) => {
     return roi;
   };
 
-  const downlodaPdf = (id) => {
-    alert(`Are you sure want to download this no id ${id} aggrement pdf ?`);
+  const downlodaPdf = async (item) => {
+    const { id, hash_id, agreement } = item;
+
+    const pdfUrl = `https://app.onedreamproperty.net/public/investment/agreement/${agreement}`;
+
+    window.open(pdfUrl, '_blank');
   };
 
   return (
@@ -77,7 +81,7 @@ const CardSlot = ({ data, handleClickOpenModal }) => {
                           aria-label="delete"
                           size="small"
                           onClick={() => {
-                            downlodaPdf(item?.id);
+                            downlodaPdf(item);
                           }}
                         >
                           <GetAppIcon />

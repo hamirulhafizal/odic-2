@@ -201,7 +201,8 @@ export const ApiProvider = ({ children }) => {
     window.localStorage.removeItem('users');
     window.localStorage.removeItem('berry-cart');
     window.localStorage.removeItem('listofpartner');
-    window.localStorage.removeItem(' Investment_id');
+    window.localStorage.removeItem('Investment_id');
+    window.localStorage.removeItem('Hash_id');
   };
 
   const forgetPassword = async (email) => {

@@ -233,6 +233,10 @@ ol.c {
   padding-right: 5%;
 }
 
+.html2pdf__page-break {
+  text-align: center;
+}
+
 @media only screen and (max-width: 425px) {
 
   .preview {

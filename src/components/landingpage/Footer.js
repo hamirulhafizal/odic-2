@@ -82,7 +82,7 @@ const FooterPage = () => {
               <Typography variant="subtitle1" component="div" color="inherit">
                 GET IN TOUCH WITH US
               </Typography>
-              <Typography variant="subtitle2" component="div" color="inherit" wrap>
+              <Typography variant="subtitle2" component="div" color="inherit" wrap="true">
                 No. 77-02 & 79-02 Jalan Aliff 4, Damansara Aliff Square 81200 Bahru, Johor.
               </Typography>
             </Grid>

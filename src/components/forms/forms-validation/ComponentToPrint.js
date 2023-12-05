@@ -15,7 +15,10 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
   return (
     <>
       <div ref={ref} className="parentPage">
-        <div className={isPreview ? 'preview' : 'page'} style={{ height: '100vh', justifyContent: 'start', alignItems: 'center' }}>
+        <div
+          className={isPreview ? 'preview' : 'html2pdf__page-break'}
+          style={{ height: '100vh', justifyContent: 'start', alignItems: 'center' }}
+        >
           <Stack sx={{ width: '100%', textAlign: 'center' }}>
             <Typography
               variant="h3"
@@ -71,7 +74,7 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
           </Box>
         </div>
 
-        <div className={isPreview ? 'preview' : 'page'} style={{ height: '100%', justifyContent: 'start' }}>
+        <div className={isPreview ? 'preview' : 'html2pdf__page-break'} style={{ height: '100%', justifyContent: 'start' }}>
           <Stack sx={{ width: '100%', textAlign: 'center' }}>
             <Typography
               className="h3Title"
@@ -186,7 +189,10 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
           </Stack>
         </div>
 
-        <div className={isPreview ? 'preview' : 'page'} style={{ height: '100%', paddingTop: '5%', justifyContent: 'start' }}>
+        <div
+          className={isPreview ? 'preview' : 'html2pdf__page-break'}
+          style={{ height: '100%', paddingTop: '5%', justifyContent: 'start' }}
+        >
           <Stack sx={{ width: '100%' }}>
             <Box
               sx={{
@@ -231,7 +237,10 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
           </Stack>
         </div>
 
-        <div className={isPreview ? 'preview' : 'page'} style={{ height: '100vh', paddingTop: '5%', justifyContent: 'start' }}>
+        <div
+          className={isPreview ? 'preview' : 'html2pdf__page-break'}
+          style={{ height: '100vh', paddingTop: '5%', justifyContent: 'start' }}
+        >
           <Stack direction="row" sx={{ width: '100%', textAlign: 'justify', color: 'black' }}>
             <Typography variant="p">
               BAGI MENYAKSIKAN PERJANJIAN INI PIHAK-PIHAK dalam perjanjian ini dengan ini menandatangani perjanjian ini pada hari dan tarikh
