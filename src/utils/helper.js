@@ -50,4 +50,25 @@ const checkDateEnd = (dividenDate, id) => {
   return hasPassed;
 };
 
-export { slugify, numberWithCommas, checkRoi, filterByCategory, stringifyFile, generateReferalLink, checkDateEnd };
+function openBlobInNewTab(blob, fileName) {
+  const objectUrl = URL.createObjectURL(blob);
+
+  const link = document.createElement('a');
+  link.href = objectUrl;
+  link.target = '_blank';
+  link.download = fileName || 'document.pdf'; // You can specify the file name if needed
+
+  // Append the link to the document and trigger a click event
+  document.body.appendChild(link);
+  link.click();
+
+  // Remove the link from the document
+  document.body.removeChild(link);
+
+  // Revoke the object URL to free up resources
+  URL.revokeObjectURL(objectUrl);
+}
+
+// Example usage
+
+export { slugify, numberWithCommas, checkRoi, filterByCategory, stringifyFile, generateReferalLink, checkDateEnd, openBlobInNewTab };

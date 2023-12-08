@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 'use strict';
 
 import { forwardRef, useRef, useState, useCallback, useEffect } from 'react';
@@ -40,12 +39,11 @@ import DownloadIcon from '@mui/icons-material/Download';
 import SignatureCanvas from 'react-signature-canvas';
 
 import { useReactToPrint } from 'react-to-print';
-import ComponentToPrint from './ComponentToPrint';
+import { ComponentToPrint } from './ComponentToPrint';
 import { getInvestDetailData, getSlotData } from 'store/slices/product';
 import moment from 'moment';
 import useAuth from 'hooks/useAuth';
 import { createInvestment, savePdfInvestment } from 'contexts/ApiInvestment';
-
 // ==============================|| FORM VALIDATION - LOGIN FORMIK  ||============================== //
 
 const Transition = forwardRef(function Transition(props, ref) {
@@ -123,11 +121,10 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
 
           localStorage.setItem('Hash_id', Hash_id);
           localStorage.setItem('Investment_id', Investment_id);
+          handlePrint();
           setSubmit(false);
           setLoadingSubmit(false);
           setSuccessMessage('UPLOAD');
-          // debugger;
-          handlePrint();
         } else {
           setLoadingSubmit(false);
           setErrMessage('ERROR');
@@ -166,9 +163,7 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
     setSuccessMessage();
   };
 
-  const handleAfterPrint = useCallback(async () => {
-    await generatePDF(<ComponentToPrint ref={componentRef} isPreview={isPreview} />);
-  }, []);
+  const handleAfterPrint = useCallback(async () => {}, []);
 
   const handleBeforePrint = useCallback(() => {}, []);
 
@@ -193,18 +188,18 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [componentRef.current]);
 
-  const generatePDF = async (componentToPrint) => {
+  const generatePDF = async (dom) => {
     const options = {
-      margin: 10,
+      margin: 0,
       filename: 'ODIC.pdf',
       image: { type: 'jpeg', quality: 0.98 },
       html2canvas: { scale: 2 },
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
     };
 
-    console.log('masuk');
+    const clonedElement = dom.cloneNode(true);
 
-    const pdfBlob = await html2pdf(componentToPrint.ref.current, options).toPdf().output('blob');
+    const pdfBlob = await html2pdf(clonedElement, options).output('blob');
 
     var formData = new FormData();
 
@@ -219,7 +214,14 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
 
     const response = await savePdfInvestment(formData);
 
-    if (response) {
+    console.log('response', response);
+
+    // debugger;
+
+    if (response.status == 200) {
+      setLoading(false);
+      setPreview(true);
+    } else {
       setLoading(false);
       setPreview(true);
     }
@@ -232,7 +234,12 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
     onBeforePrint: handleBeforePrint,
     onAfterPrint: handleAfterPrint,
     removeAfterPrint: true,
-    print: async (printIframe) => {}
+    print: async (printIframe) => {
+      const content = printIframe.contentWindow.document.body;
+      const testDom = document.querySelector('#parentPage');
+
+      await generatePDF(testDom);
+    }
   });
 
   useEffect(() => {
@@ -468,6 +475,7 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
                       src="/assets/images/icons/scroll.png"
                     />
                   </Stack> */}
+
                   <AnimateButton>
                     <Button
                       variant="contained"

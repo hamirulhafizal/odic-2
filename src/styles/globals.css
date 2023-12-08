@@ -196,9 +196,13 @@ a {
 
 
 
-.parentPage {
+
+#parentPage {
   font-family: 'Times New Roman';
   color: black;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
 .h3Title {
@@ -207,7 +211,7 @@ a {
   color: black;
 }
 
-.parentPage li {
+#parentPage li {
   text-align: start;
 }
 
@@ -233,9 +237,16 @@ ol.c {
   padding-right: 5%;
 }
 
-.html2pdf__page-break {
+/* .html2pdf__page-break {
   text-align: center;
-}
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 280mm;
+  border: 1px solid;
+  border-radius: 5px;
+  padding: 3%;
+} */
 
 @media only screen and (max-width: 425px) {
 
@@ -243,24 +254,26 @@ ol.c {
     height: unset;
   }
 
-  .page {
+  /* .page {
     height: unset;
-  }
+  } */
 }
 
 .page {
-  min-height: 840px;
-  height: 100vh;
-  display: flex;
+  /* min-height: 840px; */
+  /* height: 279mm; */
+  /* display: flex;
   justify-content: flex-start;
   align-items: center;
   flex-direction: column;
   padding-top: 10%;
   text-align: center;
-  padding: 1%;
+  padding: 3%;
   margin-bottom: 5%;
   padding-left: 5%;
-  padding-right: 5%;
+  padding-right: 5%; */
+  border: 1px solid black;
+  border-radius: 5px;
 }
 
 /* .page h3 {
