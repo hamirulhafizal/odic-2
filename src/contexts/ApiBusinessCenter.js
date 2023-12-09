@@ -2,7 +2,9 @@
 /* eslint-disable camelcase */
 
 import { BACKEND_PATH } from 'config';
-import axiosInstance from './axios';
+// import axiosInstance from './axios';
+import { axiosInstance, axiosInstance1 } from 'contexts/axios';
+
 import axios from 'axios';
 
 const getApiPartners = async () => {

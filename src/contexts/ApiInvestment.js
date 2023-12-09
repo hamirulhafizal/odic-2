@@ -2,7 +2,9 @@
 /* eslint-disable camelcase */
 
 import { BACKEND_PATH } from 'config';
-import axiosInstance from './axios';
+// import axiosInstance from './axios';
+import { axiosInstance, axiosInstance1 } from 'contexts/axios';
+
 import axios from 'axios';
 
 const createInvestment = async (form_data) => {
@@ -17,8 +19,13 @@ const createInvestment = async (form_data) => {
   return response;
 };
 
-const savePdfInvestment = async (form_data) => {
-  const response = await axiosInstance
+async function savePdfInvestment(form_data) {
+  // const headers = {
+  //   ...axiosInstance.defaults.headers,
+  //   'Content-Type': 'application/pdf'
+  // };
+
+  const response = await axiosInstance1
     .post(`${BACKEND_PATH}/api/investments/agreement`, form_data)
     .then(async (res) => {
       return res;
@@ -27,7 +34,7 @@ const savePdfInvestment = async (form_data) => {
       return err;
     });
   return response;
-};
+}
 
 const getPdfInvestment = async (hashId) => {
   console.log('form_data', hashId);

@@ -8,7 +8,10 @@ import { LOGIN, LOGOUT } from 'store/actions';
 import Loader from 'components/ui-component/Loader';
 
 import { BACKEND_PATH } from 'config';
-import axiosInstance from './axios';
+// import axiosInstance from './axios';
+
+import { axiosInstance, axiosInstance1 } from 'contexts/axios';
+
 import axios, { Axios } from 'axios';
 
 const setProduct = async (form_data) => {

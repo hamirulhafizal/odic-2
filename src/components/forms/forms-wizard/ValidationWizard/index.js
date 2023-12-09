@@ -11,7 +11,7 @@ import Review from './Review';
 import MainCard from 'components/ui-component/cards/MainCard';
 import AnimateButton from 'components/ui-component/extended/AnimateButton';
 import { Router, useRouter } from 'next/router';
-import axiosInstance from 'contexts/axios';
+import { axiosInstance, axiosInstance1 } from 'contexts/axios';
 import { setProduct, updateListingById } from 'contexts/ApiListing';
 import slugify from 'utils/helper';
 import useAuth from 'hooks/useAuth';

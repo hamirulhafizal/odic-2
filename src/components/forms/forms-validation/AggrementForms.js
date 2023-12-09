@@ -109,8 +109,6 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
 
     dispatch(getInvestDetailData(slot1));
 
-    // debugger
-
     await createInvestment(formData)
       .then((res) => {
         if (res?.status == 200) {
@@ -194,37 +192,64 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
       filename: 'ODIC.pdf',
       image: { type: 'jpeg', quality: 0.98 },
       html2canvas: { scale: 2 },
-      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+      autoDownload: false
     };
 
     const clonedElement = dom.cloneNode(true);
 
-    const pdfBlob = await html2pdf(clonedElement, options).output('blob');
+    const pdfBlob = html2pdf() // move your config in the .set({...}) function below
+      .from(clonedElement)
+      .set({
+        margin: 0,
+        filename: 'ODIC.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      })
+      .output('blob')
+      .then(async (pdfBlob) => {
+        var formData = new FormData();
 
-    var formData = new FormData();
+        // Create a File from the Blob
+        const pdfFile = new File([pdfBlob], 'ODIC.pdf', { type: 'application/pdf' });
 
-    // Create a File from the Blob
-    const pdfFile = new File([pdfBlob], 'ODIC.pdf', { type: 'application/pdf' });
+        console.log('pdfFile-->', pdfFile);
+        console.log('pdfBlob-->', pdfBlob);
 
-    // Create FormData to append the PDF File
-    const Hash_id = localStorage.getItem('Hash_id');
+        // Create FormData to append the PDF File
+        const Hash_id = localStorage.getItem('Hash_id');
 
-    formData.append('agreement', pdfFile);
-    formData.append('hash_id', Hash_id);
+        formData.append('agreement', pdfFile);
+        formData.append('hash_id', Hash_id);
 
-    const response = await savePdfInvestment(formData);
+        await savePdfInvestment(formData).then((response) => {
+          if (response.status == 200) {
+            setLoading(false);
+            setPreview(true);
+          } else {
+            alert('Something when wrong, Please Try Again !');
+            setLoading(false);
+            setPreview(true);
+            setSuccessMessage('ERROR');
+          }
+        });
+      });
 
-    console.log('response', response);
+    const pdfBlob1 = await html2pdf(clonedElement, options).output('blob');
 
-    // debugger;
+    console.log('pdfBlob1-->', pdfBlob1);
 
-    if (response.status == 200) {
-      setLoading(false);
-      setPreview(true);
-    } else {
-      setLoading(false);
-      setPreview(true);
-    }
+    // .save();
+    // .outputPdf() // add this to replace implicite .save() method, which triggers file download
+    // .get('pdf')
+    // .then(function (pdfObj) {
+    //   console.log('pdfObj--->', pdfObj);
+    //   pdfObj.autoPrint();
+    //   window.open(pdfObj.output('bloburl'), 'F');
+    // });
+
+    // console.log('response', response);
   };
 
   const handlePrint = useReactToPrint({

@@ -1,7 +1,10 @@
 // third-party
 import { createSlice } from '@reduxjs/toolkit';
 import { BACKEND_PATH } from 'config';
-import axiosInstance from 'contexts/axios';
+// import axiosInstance from 'contexts/axios';
+
+import { axiosInstance, axiosInstance1 } from 'contexts/axios';
+
 import useAuth from 'hooks/useAuth';
 
 // project imports

@@ -18,7 +18,9 @@ import Loader from 'components/ui-component/Loader';
 import axios from 'utils/axios';
 
 import { BACKEND_PATH } from 'config';
-import axiosInstance from './axios';
+// import axiosInstance from './axios';
+
+import { axiosInstance, axiosInstance1 } from 'contexts/axios';
 
 //next
 import { useRouter } from 'next/router';
