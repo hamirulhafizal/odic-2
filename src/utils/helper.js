@@ -69,6 +69,43 @@ function openBlobInNewTab(blob, fileName) {
   URL.revokeObjectURL(objectUrl);
 }
 
-// Example usage
+const DownloadAgremeentPdf = async () => {
+  const testDom = document.querySelector('#parentPage');
 
-export { slugify, numberWithCommas, checkRoi, filterByCategory, stringifyFile, generateReferalLink, checkDateEnd, openBlobInNewTab };
+  // Save the PDF and get the blob
+  const pdfBlob = html2pdf() // move your config in the .set({...}) function below
+    .from(testDom)
+    .set({
+      margin: 0,
+      filename: 'ODIC.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    })
+    .outputPdf();
+
+  // Create a Blob URL for the PDF blob
+  const pdfBlobUrl = URL.createObjectURL(new Blob([pdfBlob], { type: 'application/pdf' }));
+
+  // Open a new tab with the Blob URL
+  window.open(pdfBlobUrl, '_blank');
+};
+
+const downloadPdf = async (id) => {
+  const pdfUrl = `https://app.onedreamproperty.net/public/investment/agreement/${id}`;
+
+  window.open(pdfUrl, '_blank');
+};
+
+export {
+  slugify,
+  numberWithCommas,
+  checkRoi,
+  filterByCategory,
+  stringifyFile,
+  generateReferalLink,
+  checkDateEnd,
+  openBlobInNewTab,
+  DownloadAgremeentPdf,
+  downloadPdf
+};

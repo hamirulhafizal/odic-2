@@ -145,7 +145,7 @@ const InvestForms = ({ handleNext, handleBack, index }) => {
                       }}
                     />
                   }
-                  label={`By ticking this Box, your agreed with our T&C`}
+                  label={`By ticking this box, your agreed with our T&C`}
                 />
               </Box>
             </Grid>

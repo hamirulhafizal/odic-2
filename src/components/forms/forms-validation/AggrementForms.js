@@ -44,6 +44,7 @@ import { getInvestDetailData, getSlotData } from 'store/slices/product';
 import moment from 'moment';
 import useAuth from 'hooks/useAuth';
 import { createInvestment, savePdfInvestment } from 'contexts/ApiInvestment';
+import { downloadPdf } from 'utils/helper';
 // ==============================|| FORM VALIDATION - LOGIN FORMIK  ||============================== //
 
 const Transition = forwardRef(function Transition(props, ref) {
@@ -90,9 +91,7 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
     formData.append('amount', amount);
     formData.append('username', user?.username);
     formData.append('receipt', receipt);
-    // formData.append('agrementPdf', pdf);
 
-    // const todayDate = moment().format('DD MMM YYYY h:mma');
     const todayDate = moment().format('DD MMM YYYY');
     const todayTime = moment().format('H');
 
@@ -115,6 +114,7 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
           localStorage.removeItem('investVal');
           localStorage.removeItem('resitUploadimg');
           localStorage.removeItem('resitUpload');
+          localStorage.removeItem('fileNamePdf');
           const { Investment_id, Hash_id } = res?.data;
 
           localStorage.setItem('Hash_id', Hash_id);
@@ -136,6 +136,16 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
 
   const handleClickOpen = () => {
     setOpen(true);
+  };
+
+  const handleReprint = () => {
+    if (Boolean(loading)) {
+      handlePrint();
+    } else {
+      const fileNamePdf = localStorage.getItem('fileNamePdf');
+
+      downloadPdf(fileNamePdf);
+    }
   };
 
   const handleClose = () => {
@@ -224,16 +234,19 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
           if (response.status == 200) {
             setLoading(false);
             setPreview(true);
+
+            document.querySelector('#nextAggrementButton').classList.remove('Mui-disabled');
+            document.querySelector('#nextAggrementButton').disabled = false;
+
+            localStorage.setItem('fileNamePdf', response.data.filename);
           } else {
-            // alert('Something when wrong, Please Try Again !');
+            alert('Something when wrong, Please try again later !');
             setLoading(false);
             setPreview(true);
             setSuccessMessage('ERROR');
           }
         });
       });
-
-    // const pdfBlob1 = await html2pdf(clonedElement, options).save();
   };
 
   const handlePrint = useReactToPrint({
@@ -244,26 +257,11 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
     onAfterPrint: handleAfterPrint,
     removeAfterPrint: true,
     print: async (printIframe) => {
-      const content = printIframe.contentWindow.document.body;
       const testDom = document.querySelector('#parentPage');
 
       await generatePDF(testDom);
     }
   });
-
-  const DownloadAgain = async () => {
-    const testDom = document.querySelector('#parentPage');
-
-    const options = {
-      margin: 0,
-      filename: 'ODIC.pdf',
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-    };
-
-    await html2pdf(testDom, options);
-  };
 
   useEffect(() => {
     if (text === 'New, Updated Text!' && typeof onBeforeGetContentResolve.current === 'function') {
@@ -360,12 +358,10 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
                             height: 'auto',
                             backgroundColor: 'white',
                             padding: '12px',
-                            borderBottomLeftRadius: '5px',
-                            borderBottomRightRadius: '5px',
-                            borderRadius: '5px',
+                            borderRadius: '0px',
                             border: '1px solid black',
                             '& .MuiAvatar-img': {
-                              scale: '2',
+                              scale: '1.5',
                               padding: '5%'
                             }
                           }}
@@ -376,10 +372,11 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
                     ) : (
                       <Avatar
                         sx={{
-                          width: matchDownSM ? '150px' : '77%',
+                          width: matchDownSM ? '130px' : '77%',
                           height: 'auto',
                           backgroundColor: 'white',
                           padding: '12px',
+                          borderRadius: 0,
                           '& .MuiAvatar-img': {
                             scale: '2',
                             borderRadius: 0,
@@ -458,9 +455,7 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
                           <DownloadIcon />
                         )
                       }
-                      onClick={() => {
-                        !loading ? handlePrint() : DownloadAgain();
-                      }}
+                      onClick={handleReprint}
                     >
                       {loading ? 'LOADING...' : 'DOWNLOAD'}
                     </Button>
@@ -545,10 +540,11 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
             </AnimateButton>
             <AnimateButton>
               <Button
-                disabled={isSuccess ? false : true}
+                disabled={isSuccess && !loading ? false : true}
                 endIcon={<ArrowForwardIcon />}
                 variant="contained"
                 type="submit"
+                id="nextAggrementButton"
                 onClick={handleNext}
               >
                 NEXT

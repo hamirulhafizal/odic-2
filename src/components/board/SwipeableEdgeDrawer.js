@@ -230,14 +230,14 @@ function SwipeableEdgeDrawer({ open, handleToggle }) {
                         height: 'auto'
                       }}
                     >
-                      <Paper square elevation={0} sx={{ p: 3 }}>
-                        <Typography variant="h3">
-                          <strong>ALL STEP COMPLETED</strong>
+                      <Paper square elevation={0}>
+                        <Typography variant="h5" sx={{ pb: 1 }}>
+                          ALL STEP COMPLETED
                         </Typography>
 
-                        <Typography variant="h5">
+                        <Typography variant="h2">
                           <br />
-                          <strong>{`This is your slot ID : ${createdInvestment_id} `} </strong>
+                          <strong>{`Slot ID : ${createdInvestment_id} `} </strong>
                         </Typography>
 
                         <Typography variant="caption">

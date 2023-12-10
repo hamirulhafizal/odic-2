@@ -680,8 +680,8 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
         <Box
           className={isPreview && 'page'}
           sx={{
-            // height: '842pt',
-            padding: '4%'
+            padding: '4%',
+            paddingBottom: '20%'
           }}
         >
           <Stack direction="row" sx={{ width: '100%', textAlign: 'justify', color: 'black' }}>
@@ -809,7 +809,7 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
               </Stack>
             </Box>
 
-            <Box sx={{ width: '50%' }}>
+            <Box sx={{ width: '50%', pb: 4 }}>
               <Box
                 sx={{
                   display: 'flex',
