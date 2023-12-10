@@ -435,7 +435,9 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
-            alignItems: 'center'
+            alignItems: 'center',
+            paddingTop: '25%',
+            paddingBottom: '25%'
           }}
         >
           <Stack sx={{ width: '100%', textAlign: 'center' }}>

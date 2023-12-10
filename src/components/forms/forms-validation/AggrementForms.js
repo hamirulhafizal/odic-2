@@ -214,9 +214,6 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
         // Create a File from the Blob
         const pdfFile = new File([pdfBlob], 'ODIC.pdf', { type: 'application/pdf' });
 
-        console.log('pdfFile-->', pdfFile);
-        console.log('pdfBlob-->', pdfBlob);
-
         // Create FormData to append the PDF File
         const Hash_id = localStorage.getItem('Hash_id');
 
@@ -228,7 +225,7 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
             setLoading(false);
             setPreview(true);
           } else {
-            alert('Something when wrong, Please Try Again !');
+            // alert('Something when wrong, Please Try Again !');
             setLoading(false);
             setPreview(true);
             setSuccessMessage('ERROR');
@@ -236,20 +233,7 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
         });
       });
 
-    const pdfBlob1 = await html2pdf(clonedElement, options).output('blob');
-
-    console.log('pdfBlob1-->', pdfBlob1);
-
-    // .save();
-    // .outputPdf() // add this to replace implicite .save() method, which triggers file download
-    // .get('pdf')
-    // .then(function (pdfObj) {
-    //   console.log('pdfObj--->', pdfObj);
-    //   pdfObj.autoPrint();
-    //   window.open(pdfObj.output('bloburl'), 'F');
-    // });
-
-    // console.log('response', response);
+    // const pdfBlob1 = await html2pdf(clonedElement, options).save();
   };
 
   const handlePrint = useReactToPrint({
@@ -266,6 +250,20 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
       await generatePDF(testDom);
     }
   });
+
+  const DownloadAgain = async () => {
+    const testDom = document.querySelector('#parentPage');
+
+    const options = {
+      margin: 0,
+      filename: 'ODIC.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+
+    await html2pdf(testDom, options);
+  };
 
   useEffect(() => {
     if (text === 'New, Updated Text!' && typeof onBeforeGetContentResolve.current === 'function') {
@@ -378,7 +376,7 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
                     ) : (
                       <Avatar
                         sx={{
-                          width: matchDownSM ? '80px' : '77%',
+                          width: matchDownSM ? '150px' : '77%',
                           height: 'auto',
                           backgroundColor: 'white',
                           padding: '12px',
@@ -461,7 +459,7 @@ const AggrementForms = ({ handleNext, handleBack, index }) => {
                         )
                       }
                       onClick={() => {
-                        handlePrint();
+                        !loading ? handlePrint() : DownloadAgain();
                       }}
                     >
                       {loading ? 'LOADING...' : 'DOWNLOAD'}
